@@ -1,0 +1,804 @@
+"use client";
+
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+  type ComponentType,
+  type RefAttributes,
+} from "react";
+import dynamic from "next/dynamic";
+import type { GraphData, GraphNode, GraphLink } from "@/lib/types";
+import {
+  computeSocialMapLayout,
+  detectFriendClusters,
+  compactNumber,
+  MEMBER_NODE_RADIUS,
+  PROXIMITY_RINGS,
+  SELF_COLOR,
+  SELF_NODE_RADIUS,
+  strongestTies,
+} from "@/lib/graphUtils";
+
+type FGNode = GraphNode & {
+  x?: number;
+  y?: number;
+  fx?: number;
+  fy?: number;
+};
+type FGLink = {
+  source: string | FGNode;
+  target: string | FGNode;
+  kind: GraphLink["kind"];
+  weight?: number;
+  inbound?: number;
+  outbound?: number;
+  reciprocityObserved?: boolean;
+};
+
+type AvatarState = "loading" | "loaded" | "error";
+type AvatarCacheEntry = {
+  image: HTMLImageElement;
+  state: AvatarState;
+};
+
+interface ForceGraphProps {
+  width: number;
+  height: number;
+  graphData: { nodes: FGNode[]; links: FGLink[] };
+  backgroundColor?: string;
+  cooldownTicks?: number;
+  d3AlphaDecay?: number;
+  minZoom?: number;
+  maxZoom?: number;
+  onEngineStop?: () => void;
+  nodeCanvasObject?: (
+    node: FGNode,
+    ctx: CanvasRenderingContext2D,
+    scale: number,
+  ) => void;
+  nodePointerAreaPaint?: (
+    node: FGNode,
+    color: string,
+    ctx: CanvasRenderingContext2D,
+  ) => void;
+  onNodeHover?: (node: FGNode | null) => void;
+  onNodeClick?: (node: FGNode) => void;
+  onBackgroundClick?: () => void;
+  onRenderFramePre?: (ctx: CanvasRenderingContext2D, scale: number) => void;
+  linkColor?: (link: FGLink) => string;
+  linkWidth?: (link: FGLink) => number;
+  linkCanvasObject?: (
+    link: FGLink,
+    ctx: CanvasRenderingContext2D,
+    globalScale: number,
+  ) => void;
+  linkCanvasObjectMode?: string | ((link: FGLink) => string | undefined);
+}
+
+interface ForceGraphInstance {
+  zoomToFit: (
+    ms?: number,
+    px?: number,
+    filter?: (node: FGNode) => boolean,
+  ) => void;
+  centerAt: (x?: number, y?: number, ms?: number) => void;
+  zoom: (k?: number, ms?: number) => void;
+  d3Force: (name: string, force?: unknown) => unknown;
+}
+
+const ForceGraph2D = dynamic(
+  () => import("react-force-graph-2d"),
+  { ssr: false },
+) as unknown as ComponentType<ForceGraphProps & RefAttributes<ForceGraphInstance>>;
+
+const DEFAULT_LABEL_COUNT = 4;
+
+function endpointId(end: string | FGNode): string {
+  return typeof end === "string" ? end : (end.id as string);
+}
+
+function nodeRadius(node: FGNode): number {
+  if (node.group === "self") return SELF_NODE_RADIUS;
+  return MEMBER_NODE_RADIUS;
+}
+
+/** Neutral color for commenters that aren't part of any detected friend pod. */
+const UNCLUSTERED_COLOR = "#8b93a7";
+
+/** Comments they left on your posts (received). */
+const RECEIVED_COLOR = "#3b82f6";
+/** Comments you left on their posts (sent). */
+const SENT_COLOR = "#ef4444";
+
+/** Deterministic 0–1 hash for per-node entrance stagger. */
+function hash01(input: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < input.length; i++) {
+    h ^= input.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0) / 4294967296;
+}
+
+function linkEndpoints(l: FGLink): { source: FGNode; target: FGNode } | null {
+  const source = l.source as FGNode;
+  const target = l.target as FGNode;
+  if (source.x == null || source.y == null || target.x == null || target.y == null) {
+    return null;
+  }
+  return { source, target };
+}
+
+function drawArrowhead(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  angle: number,
+  size: number,
+) {
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x - size * Math.cos(angle - 0.42), y - size * Math.sin(angle - 0.42));
+  ctx.lineTo(x - size * Math.cos(angle + 0.42), y - size * Math.sin(angle + 0.42));
+  ctx.closePath();
+  ctx.fill();
+}
+
+function formatEdgeCount(n: number): string {
+  return n >= 1000 ? compactNumber(n) : String(n);
+}
+
+function paintCommentLink(
+  l: FGLink,
+  ctx: CanvasRenderingContext2D,
+  globalScale: number,
+  opts: {
+    alpha: number;
+    emphasize: boolean;
+  },
+) {
+  const ends = linkEndpoints(l);
+  if (!ends) return;
+
+  const { source, target } = ends;
+  const sx = source.x!;
+  const sy = source.y!;
+  const tx = target.x!;
+  const ty = target.y!;
+
+  const dx = tx - sx;
+  const dy = ty - sy;
+  const len = Math.hypot(dx, dy);
+  if (len < 1) return;
+
+  const ux = dx / len;
+  const uy = dy / len;
+
+  const sourceR = nodeRadius(source);
+  const targetR = nodeRadius(target);
+  const pad = 5 / globalScale;
+  const lineStart = sourceR + pad;
+  const lineEnd = len - targetR - pad;
+  if (lineEnd <= lineStart) return;
+
+  const received = l.inbound ?? target.comments ?? 0;
+  const outboundVal =
+    l.outbound ??
+    target.outboundFromTarget ??
+    target.features?.outboundCommentsFromTarget;
+  const sentKnown = outboundVal != null;
+  const sent = sentKnown ? outboundVal : 0;
+  const sentLabel = sentKnown ? formatEdgeCount(sent) : "—";
+
+  const angleToTarget = Math.atan2(dy, dx);
+  const angleToSource = angleToTarget + Math.PI;
+
+  const stubLen = Math.min((lineEnd - lineStart) * 0.22, 32 / globalScale);
+  const lineWidth = Math.max(2.2, (opts.emphasize ? 3.2 : 2.6) / globalScale);
+  const arrowSize = Math.max(9, (opts.emphasize ? 12 : 10) / globalScale);
+  const fontSize = Math.max(12, (opts.emphasize ? 15 : 13) / globalScale);
+  const font = `700 ${fontSize}px ui-sans-serif, system-ui`;
+
+  const sentOriginX = sx + ux * lineStart;
+  const sentOriginY = sy + uy * lineStart;
+  const recvOriginX = sx + ux * lineEnd;
+  const recvOriginY = sy + uy * lineEnd;
+
+  const midX = sx + ux * ((lineStart + lineEnd) / 2);
+  const midY = sy + uy * ((lineStart + lineEnd) / 2);
+
+  ctx.save();
+  ctx.globalAlpha = opts.alpha;
+
+  // Neutral spine between the two colored stubs
+  const spineInset = stubLen + arrowSize * 0.6;
+  if (lineEnd - lineStart > spineInset * 2) {
+    ctx.beginPath();
+    ctx.moveTo(sx + ux * (lineStart + spineInset), sy + uy * (lineStart + spineInset));
+    ctx.lineTo(sx + ux * (lineEnd - spineInset), sy + uy * (lineEnd - spineInset));
+    ctx.lineWidth = Math.max(1, 1.2 / globalScale);
+    ctx.strokeStyle = "rgba(255,255,255,0.18)";
+    ctx.stroke();
+  }
+
+  // Red arrow at you → them (sent)
+  ctx.strokeStyle = SENT_COLOR;
+  ctx.fillStyle = SENT_COLOR;
+  ctx.lineWidth = lineWidth;
+  ctx.lineCap = "round";
+  const sentTipX = sentOriginX + Math.cos(angleToTarget) * stubLen;
+  const sentTipY = sentOriginY + Math.sin(angleToTarget) * stubLen;
+  ctx.beginPath();
+  ctx.moveTo(sentOriginX, sentOriginY);
+  ctx.lineTo(sentTipX, sentTipY);
+  ctx.stroke();
+  drawArrowhead(ctx, sentTipX, sentTipY, angleToTarget, arrowSize);
+
+  // Blue arrow at them → you (received)
+  ctx.strokeStyle = RECEIVED_COLOR;
+  ctx.fillStyle = RECEIVED_COLOR;
+  const recvTipX = recvOriginX + Math.cos(angleToSource) * stubLen;
+  const recvTipY = recvOriginY + Math.sin(angleToSource) * stubLen;
+  ctx.beginPath();
+  ctx.moveTo(recvOriginX, recvOriginY);
+  ctx.lineTo(recvTipX, recvTipY);
+  ctx.stroke();
+  drawArrowhead(ctx, recvTipX, recvTipY, angleToSource, arrowSize);
+
+  // Center label: sent (red) · received (blue)
+  const sep = "·";
+  ctx.font = font;
+  const sentW = ctx.measureText(sentLabel).width;
+  const sepW = ctx.measureText(sep).width;
+  const recvW = ctx.measureText(formatEdgeCount(received)).width;
+  const gap = fontSize * 0.28;
+  const pillW = sentW + gap + sepW + gap + recvW + fontSize * 1.1;
+  const pillH = fontSize * 1.45;
+  const pillX = midX - pillW / 2;
+  const pillY = midY - pillH / 2;
+
+  ctx.fillStyle = "rgba(0,0,0,0.9)";
+  ctx.beginPath();
+  ctx.roundRect(pillX, pillY, pillW, pillH, pillH * 0.28);
+  ctx.fill();
+  ctx.strokeStyle = "rgba(255,255,255,0.35)";
+  ctx.lineWidth = Math.max(1.2, 1.4 / globalScale);
+  ctx.stroke();
+
+  ctx.textBaseline = "middle";
+  let cursorX = pillX + fontSize * 0.55;
+
+  ctx.textAlign = "left";
+  ctx.fillStyle = SENT_COLOR;
+  ctx.fillText(sentLabel, cursorX, midY);
+  cursorX += sentW + gap;
+
+  ctx.fillStyle = "rgba(255,255,255,0.45)";
+  ctx.fillText(sep, cursorX, midY);
+  cursorX += sepW + gap;
+
+  ctx.fillStyle = RECEIVED_COLOR;
+  ctx.fillText(formatEdgeCount(received), cursorX, midY);
+
+  ctx.restore();
+}
+
+interface Props {
+  data: GraphData;
+  className?: string;
+  interactive?: boolean;
+  selectedId?: string | null;
+  onSelect?: (node: GraphNode | null) => void;
+}
+
+export default function GraphVisualizer({
+  data,
+  className,
+  interactive = true,
+  selectedId = null,
+  onSelect,
+}: Props) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const fgRef = useRef<ForceGraphInstance | null>(null);
+  const avatarCacheRef = useRef(new Map<string, AvatarCacheEntry>());
+  const appearStartRef = useRef<number>(0);
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  const [hovered, setHovered] = useState<string | null>(null);
+  const [avatarRevision, setAvatarRevision] = useState(0);
+  const [showHint, setShowHint] = useState(true);
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      setSize({ width, height });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    for (const node of data.nodes) {
+      const url = node.profilePicUrl;
+      if (!url || avatarCacheRef.current.has(url)) continue;
+
+      const image = new Image();
+      const entry: AvatarCacheEntry = { image, state: "loading" };
+      avatarCacheRef.current.set(url, entry);
+      image.onload = () => {
+        entry.state = "loaded";
+        setAvatarRevision((revision) => revision + 1);
+      };
+      image.onerror = () => {
+        entry.state = "error";
+        setAvatarRevision((revision) => revision + 1);
+      };
+      image.src = url;
+    }
+  }, [data.nodes]);
+
+  const members = useMemo(
+    () => data.nodes.filter((n) => n.group === "member"),
+    [data.nodes],
+  );
+
+  const friendClusters = useMemo(() => {
+    const fromGraph = data.circles.map((c) => ({
+      id: c.id,
+      memberIds: members.filter((m) => m.clusterId === c.id).map((m) => m.id),
+      kind: c.kind ?? ("strong" as const),
+      label: c.label,
+      subtitle: c.subtitle ?? "",
+      color: c.color,
+    }));
+    return fromGraph.length ? fromGraph : detectFriendClusters(members);
+  }, [data.circles, members]);
+
+  const mapLayout = useMemo(() => {
+    if (!size.width || !size.height) return null;
+    return computeSocialMapLayout(members, friendClusters, size.width, size.height);
+  }, [members, friendClusters, size.width, size.height]);
+
+  const clusterColorByMember = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const cluster of friendClusters) {
+      for (const id of cluster.memberIds) map.set(id, cluster.color);
+    }
+    return map;
+  }, [friendClusters]);
+
+  const defaultLabelIds = useMemo(() => {
+    return new Set(
+      [...members]
+        .sort(
+          (a, b) =>
+            (b.presenceScore ?? 0) - (a.presenceScore ?? 0) ||
+            b.comments - a.comments,
+        )
+        .slice(0, DEFAULT_LABEL_COUNT)
+        .map((n) => n.id),
+    );
+  }, [members]);
+
+  useEffect(() => {
+    if (mapLayout && appearStartRef.current === 0) {
+      appearStartRef.current = performance.now();
+    }
+  }, [mapLayout]);
+
+  const selectedNode = useMemo(
+    () => (selectedId ? members.find((m) => m.id === selectedId) : undefined),
+    [members, selectedId],
+  );
+
+  const highlightClusterId = selectedNode?.clusterId ?? null;
+
+  const selectedTieIds = useMemo(() => {
+    if (!selectedId) return new Set<string>();
+    return new Set(strongestTies(selectedId, members, 3).map((t) => t.targetId));
+  }, [selectedId, members]);
+
+  const graphData = useMemo(() => {
+    const nodes = data.nodes.map((n) => {
+      if (n.group === "self") {
+        return { ...n, x: 0, y: 0, fx: 0, fy: 0 } as FGNode;
+      }
+      const pos = mapLayout?.positions.get(n.id) ?? { x: 0, y: 0 };
+      return { ...n, x: pos.x, y: pos.y, fx: pos.x, fy: pos.y } as FGNode;
+    });
+
+    const selfId = nodes.find((n) => n.group === "self")?.id;
+    const links: FGLink[] = [];
+
+    // Spokes: always derive counts from nodes (survives older cached graph payloads).
+    if (selfId) {
+      for (const member of nodes) {
+        if (member.group !== "member") continue;
+        links.push({
+          source: selfId,
+          target: member.id,
+          kind: "comment",
+          inbound: member.comments,
+          outbound: member.outboundFromTarget,
+          reciprocityObserved: member.features?.reciprocityObserved,
+        });
+      }
+    }
+
+    for (const l of data.links) {
+      if (l.kind !== "friend") continue;
+      links.push({
+        source: endpointId(l.source as string | FGNode),
+        target: endpointId(l.target as string | FGNode),
+        kind: "friend",
+        weight: l.weight,
+      });
+    }
+
+    return { nodes, links };
+  }, [data.nodes, data.links, mapLayout]);
+
+  useEffect(() => {
+    const fg = fgRef.current;
+    if (!fg || !size.width) return;
+    fg.d3Force("charge", null);
+    fg.d3Force("link", null);
+    fg.d3Force("center", null);
+  }, [size.width, graphData]);
+
+  const isDim = useCallback(
+    (node: FGNode) => {
+      if (node.group === "self") return false;
+      if (!selectedId && highlightClusterId == null) return false;
+      if (selectedId && node.id === selectedId) return false;
+      if (selectedId && selectedTieIds.has(node.id)) return false;
+      if (highlightClusterId != null && highlightClusterId >= 0) {
+        return node.clusterId !== highlightClusterId;
+      }
+      return node.id !== selectedId;
+    },
+    [selectedId, highlightClusterId, selectedTieIds],
+  );
+
+  const renderBackground = useCallback(
+    (ctx: CanvasRenderingContext2D, scale: number) => {
+      if (!mapLayout) return;
+
+      mapLayout.ringGuides.forEach((radius, index) => {
+        ctx.beginPath();
+        ctx.arc(0, 0, radius, 0, Math.PI * 2);
+        ctx.lineWidth = 1 / Math.sqrt(scale);
+        ctx.strokeStyle = "rgba(255,255,255,0.06)";
+        ctx.stroke();
+
+        const ring = PROXIMITY_RINGS[index];
+        if (!ring) return;
+        const fontSize = Math.max(7, 9 / Math.sqrt(scale));
+        ctx.font = `600 ${fontSize}px ui-sans-serif, system-ui`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "rgba(255,255,255,0.32)";
+        ctx.fillText(ring.label.toUpperCase(), 0, -radius + fontSize * 0.9);
+      });
+
+      for (const [clusterId, bounds] of mapLayout.clusterBounds.entries()) {
+        const isHighlighted =
+          highlightClusterId != null && highlightClusterId === clusterId;
+        const dimmed = highlightClusterId != null && !isHighlighted;
+
+        ctx.beginPath();
+        ctx.arc(bounds.cx, bounds.cy, bounds.radius, 0, Math.PI * 2);
+        ctx.fillStyle = isHighlighted
+          ? `${bounds.color}22`
+          : dimmed
+            ? `${bounds.color}08`
+            : `${bounds.color}14`;
+        ctx.fill();
+        ctx.lineWidth = 1.2 / Math.sqrt(scale);
+        ctx.strokeStyle = isHighlighted
+          ? `${bounds.color}88`
+          : dimmed
+            ? `${bounds.color}22`
+            : `${bounds.color}33`;
+        ctx.stroke();
+
+        if (bounds.radius > 36 / Math.sqrt(scale) && !dimmed) {
+          const fontSize = Math.max(8, 11 / Math.sqrt(scale));
+          ctx.font = `600 ${fontSize}px ui-sans-serif, system-ui`;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = isHighlighted
+            ? `${bounds.color}ee`
+            : `${bounds.color}aa`;
+          ctx.fillText(bounds.label, bounds.cx, bounds.cy - bounds.radius - fontSize * 0.6);
+        }
+      }
+    },
+    [mapLayout, highlightClusterId],
+  );
+
+  const paintNode = useCallback(
+    (node: FGNode, ctx: CanvasRenderingContext2D, scale: number) => {
+      if (avatarRevision < 0) return;
+      const dim = isDim(node);
+      const x = node.x ?? 0;
+      const y = node.y ?? 0;
+      const r = nodeRadius(node);
+      const color =
+        node.group === "self"
+          ? SELF_COLOR
+          : clusterColorByMember.get(node.id) ?? UNCLUSTERED_COLOR;
+      const avatar = node.profilePicUrl
+        ? avatarCacheRef.current.get(node.profilePicUrl)
+        : undefined;
+
+      const isSelected = node.id === selectedId;
+      const isHovered = node.id === hovered;
+
+      let appear = 1;
+      if (node.group !== "self" && appearStartRef.current > 0) {
+        const delay = hash01(node.id) * 220;
+        const elapsed = performance.now() - appearStartRef.current - delay;
+        appear = Math.max(0, Math.min(1, elapsed / 300));
+      }
+
+      ctx.save();
+      ctx.globalAlpha = (dim ? 0.22 : 1) * appear;
+
+      if (node.group === "self" || isHovered || isSelected) {
+        ctx.shadowColor = color;
+        ctx.shadowBlur = isSelected ? 22 : 14;
+      }
+
+      ctx.beginPath();
+      ctx.arc(x, y, r + 1.5, 0, 2 * Math.PI);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, 2 * Math.PI);
+      ctx.clip();
+      if (avatar?.state === "loaded") {
+        ctx.drawImage(avatar.image, x - r, y - r, r * 2, r * 2);
+      } else {
+        ctx.fillStyle = color;
+        ctx.fillRect(x - r, y - r, r * 2, r * 2);
+        ctx.fillStyle = "rgba(255,255,255,0.92)";
+        ctx.font = `${node.group === "self" ? "700" : "600"} ${Math.max(8, r * 0.78)}px ui-sans-serif, system-ui`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(node.label.charAt(0).toUpperCase(), x, y + 0.5);
+      }
+      ctx.restore();
+
+      ctx.beginPath();
+      ctx.arc(x, y, r + 1.5, 0, 2 * Math.PI);
+      ctx.lineWidth = node.group === "self" ? 2.2 : 1.3;
+      ctx.strokeStyle = node.group === "self" ? "rgba(255,255,255,0.95)" : color;
+      ctx.stroke();
+
+      if (isSelected) {
+        ctx.beginPath();
+        ctx.arc(x, y, r + 4, 0, 2 * Math.PI);
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = "rgba(255,255,255,0.85)";
+        ctx.stroke();
+      }
+
+      const showLabel =
+        node.group === "self" ||
+        isHovered ||
+        isSelected ||
+        defaultLabelIds.has(node.id);
+
+      if (showLabel) {
+        const label = `@${node.label}`;
+        const fontSize = Math.max(3.5, 10 / scale);
+        ctx.font = `${node.group === "self" ? "700" : "500"} ${fontSize}px ui-sans-serif, system-ui`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "rgba(255,255,255,0.9)";
+        ctx.fillText(label, x, y + r + fontSize + 2);
+      }
+
+      ctx.restore();
+    },
+    [avatarRevision, hovered, selectedId, defaultLabelIds, isDim, clusterColorByMember],
+  );
+
+  const paintPointerArea = useCallback(
+    (node: FGNode, color: string, ctx: CanvasRenderingContext2D) => {
+      const r = nodeRadius(node) + 5;
+      ctx.beginPath();
+      ctx.arc(node.x ?? 0, node.y ?? 0, r, 0, 2 * Math.PI);
+      ctx.fillStyle = color;
+      ctx.fill();
+    },
+    [],
+  );
+
+  const linkTouchesSelection = useCallback(
+    (l: FGLink) => {
+      if (!selectedId) return false;
+      const s = endpointId(l.source);
+      const t = endpointId(l.target);
+      return s === selectedId || t === selectedId;
+    },
+    [selectedId],
+  );
+
+  const linkTouchesHover = useCallback(
+    (l: FGLink) => {
+      if (!hovered) return false;
+      const s = endpointId(l.source);
+      const t = endpointId(l.target);
+      return s === hovered || t === hovered;
+    },
+    [hovered],
+  );
+
+  const commentLinkStyle = useCallback(
+    (l: FGLink) => {
+      const emphasize = linkTouchesSelection(l) || linkTouchesHover(l);
+      const dim = (selectedId != null || hovered != null) && !emphasize;
+      return {
+        alpha: dim ? 0.4 : emphasize ? 1 : 0.92,
+        emphasize,
+      };
+    },
+    [selectedId, hovered, linkTouchesSelection, linkTouchesHover],
+  );
+
+  const linkColor = useCallback(
+    (l: FGLink) => {
+      if (l.kind === "comment") return "rgba(0,0,0,0)";
+      if (!selectedId) return "rgba(255,255,255,0.07)";
+      return linkTouchesSelection(l) ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.04)";
+    },
+    [selectedId, linkTouchesSelection],
+  );
+
+  const linkWidth = useCallback(
+    (l: FGLink) => {
+      if (l.kind === "comment") return 0;
+      if (!selectedId) return 0.4 + (l.weight ?? 0.3) * 0.6;
+      return linkTouchesSelection(l) ? 0.8 + (l.weight ?? 0.3) : 0.4;
+    },
+    [selectedId, linkTouchesSelection],
+  );
+
+  const paintLink = useCallback(
+    (l: FGLink, ctx: CanvasRenderingContext2D, globalScale: number) => {
+      if (l.kind !== "comment") return;
+      paintCommentLink(l, ctx, globalScale, commentLinkStyle(l));
+    },
+    [commentLinkStyle],
+  );
+
+  const linkCanvasObjectMode = useCallback(
+    (l: FGLink) => (l.kind === "comment" ? "replace" : undefined),
+    [],
+  );
+
+  return (
+    <div ref={wrapRef} className={className}>
+      {interactive && (
+        <div className="pointer-events-none absolute left-3 top-3 z-10 max-w-[280px] rounded-xl border border-white/10 bg-black/50 px-3 py-2.5 backdrop-blur">
+          <div className="text-[11px] font-semibold text-white/75">How to read this</div>
+          <p className="mt-1 text-[10px] leading-relaxed text-white/45">
+            <span className="text-white/65">Distance</span> = closeness: closer to you means
+            more recent, consistent interaction. <span className="text-white/65">Color</span> =
+            friend group. <span className="text-white/65">Spokes</span> = comment exchange with
+            you.
+          </p>
+          <div className="mt-2 space-y-1 border-t border-white/10 pt-2 text-[10px]">
+            <div className="flex items-center gap-2">
+              <span
+                className="inline-block h-0.5 w-4 rounded-full"
+                style={{ backgroundColor: SENT_COLOR }}
+              />
+              <span className="text-white/55">
+                <span style={{ color: SENT_COLOR }}>Red → them</span>
+                {" "}
+                comments you sent
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span
+                className="inline-block h-0.5 w-4 rounded-full"
+                style={{ backgroundColor: RECEIVED_COLOR }}
+              />
+              <span className="text-white/55">
+                <span style={{ color: RECEIVED_COLOR }}>Blue → you</span>
+                {" "}
+                comments they sent
+              </span>
+            </div>
+            <p className="pt-0.5 text-white/40">
+              Spoke label: <span style={{ color: SENT_COLOR }}>sent</span>
+              {" · "}
+              <span style={{ color: RECEIVED_COLOR }}>received</span>
+              {" "}
+              (— = their posts weren&apos;t scraped)
+            </p>
+          </div>
+          <div className="mt-2.5 space-y-1.5 border-t border-white/10 pt-2">
+            {PROXIMITY_RINGS.map((ring) => (
+              <div key={ring.id} className="flex items-center gap-2 text-[10px]">
+                <span className="flex h-3 w-3 shrink-0 items-center justify-center">
+                  <span
+                    className="rounded-full border border-white/40"
+                    style={{ width: 4 + ring.id * 3, height: 4 + ring.id * 3 }}
+                  />
+                </span>
+                <div>
+                  <span className="font-medium text-white/65">{ring.label}</span>
+                  <span className="text-white/40"> — {ring.subtitle}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {interactive && showHint && members.length > 0 && (
+        <div className="pointer-events-none absolute bottom-6 left-1/2 z-10 -translate-x-1/2 animate-pulse rounded-full border border-white/15 bg-black/60 px-4 py-1.5 text-[11px] font-medium text-white/70 backdrop-blur">
+          Click anyone to explore their connections
+        </div>
+      )}
+
+      {size.width > 0 && (
+        <ForceGraph2D
+          ref={fgRef}
+          width={size.width}
+          height={size.height}
+          graphData={graphData}
+          backgroundColor="rgba(0,0,0,0)"
+          cooldownTicks={0}
+          d3AlphaDecay={1}
+          minZoom={0.35}
+          maxZoom={6}
+          onEngineStop={() => fgRef.current?.zoomToFit(700, 56)}
+          onRenderFramePre={renderBackground}
+          nodeCanvasObject={paintNode}
+          nodePointerAreaPaint={paintPointerArea}
+          onNodeHover={
+            interactive
+              ? (node) => {
+                  if (node) setShowHint(false);
+                  setHovered(node ? (node.id as string) : null);
+                }
+              : undefined
+          }
+          onNodeClick={
+            interactive
+              ? (node) => {
+                  setShowHint(false);
+                  if (node.group === "self") {
+                    onSelect?.(null);
+                    return;
+                  }
+                  onSelect?.(node);
+                  fgRef.current?.centerAt(node.x ?? 0, node.y ?? 0, 500);
+                  fgRef.current?.zoom(2, 500);
+                }
+              : undefined
+          }
+          onBackgroundClick={
+            interactive ? () => onSelect?.(null) : undefined
+          }
+          linkColor={linkColor}
+          linkWidth={linkWidth}
+          linkCanvasObject={paintLink}
+          linkCanvasObjectMode={linkCanvasObjectMode}
+        />
+      )}
+    </div>
+  );
+}

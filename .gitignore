@@ -34,3 +34,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Scraped / pinned data — keep public repo code-only; production uses Vercel Blob
+/data/raw/*.json
+/data/snapshots/*.json
+!data/raw/.gitkeep
+!data/snapshots/.gitkeep
