@@ -1,0 +1,3650 @@
+{
+  "profile": {
+    "username": "jp_jppap",
+    "fullName": "jp_jppap",
+    "biography": "",
+    "profilePicUrl": "",
+    "followersCount": 0,
+    "followingCount": 0,
+    "postsCount": 0,
+    "isPrivate": false,
+    "isVerified": false,
+    "highlightReelCount": 0
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "jp_jppap",
+        "label": "jp_jppap",
+        "group": "self",
+        "circle": -1,
+        "clusterId": -1,
+        "comments": 0,
+        "val": 24,
+        "presenceScore": 1,
+        "isVerified": false
+      },
+      {
+        "id": "stayshadedd",
+        "label": "stayshadedd",
+        "group": "member",
+        "circle": 0,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 10.813302664071557,
+        "presenceScore": 0.6813302664071558,
+        "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.82787-19/573101050_18053989358652492_3620358822442231025_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=102&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=Cqb3YB-md9sQ7kNvwG4eAak&_nc_oc=AdpH6Eh-NlSXYSmLp0xoqVRc1ADelyTPv4FmCRchHJJn0GHBUeA3eHJ33FjK5LqhvfI&_nc_zt=24&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_gid=9ADhGD_GmUAA4nVqCi9_pA&_nc_ss=72a8c&oh=00_AQCVz94NvmgwH1nkrJR7PQCkz85iLEjRB7Wp5QvaZAiZTg&oe=6A4BB13E",
+        "history": [
+          {
+            "authorUsername": "stayshadedd",
+            "postId": "https://www.instagram.com/p/DZ7sXMZDjGn/",
+            "text": "🔥🔥🔥",
+            "when": "4 days ago",
+            "timestamp": "2026-06-27T17:34:21.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.98,
+          "relationshipStrengthScore": 0.379,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-06-27T17:34:21.000Z",
+          "mostRecentInteractionDate": "2026-06-27T17:34:21.000Z",
+          "mostRecentDaysAgo": 4,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "stayshadedd",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "hollyhood4prez",
+        "label": "hollyhood4prez",
+        "group": "member",
+        "circle": 0,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 10.506992000315659,
+        "presenceScore": 0.650699200031566,
+        "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.82787-19/590388283_17845868967657445_7520462199792204985_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=101&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=X1P1NTqr5woQ7kNvwEud3ZG&_nc_oc=Adp7UF29l8kq5zELhTDff_-10Al3UOcdbJNwylISN8zzk8wdoPksXTsZ1I9OR9FiENE&_nc_zt=24&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_gid=9ADhGD_GmUAA4nVqCi9_pA&_nc_ss=72a8c&oh=00_AQCl6F06K4vTp45sjad1tMqe8B682ffXVasT1rE2posYEg&oe=6A4BB7F8",
+        "history": [
+          {
+            "authorUsername": "hollyhood4prez",
+            "postId": "https://www.instagram.com/p/DZ7sXMZDjGn/",
+            "text": "Brotha ⛹️‍♂️",
+            "when": "1 week ago",
+            "timestamp": "2026-06-25T00:39:27.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "family_reference"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "highly_personal",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": true
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "family",
+            "label": "Likely family context",
+            "color": "#2bbbad",
+            "reason": "Assumed from visible family-language in their comments.",
+            "kind": "primary",
+            "context": "family",
+            "confidence": 0.58,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment included family-language signals"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.96,
+          "relationshipStrengthScore": 0.514,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 1,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 1,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-06-25T00:39:27.000Z",
+          "mostRecentInteractionDate": "2026-06-25T00:39:27.000Z",
+          "mostRecentDaysAgo": 7,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "hollyhood4prez",
+          "inferredContext": "family",
+          "interactionTags": [],
+          "confidence": 0.58,
+          "evidence": [
+            {
+              "label": "1 comment included family-language signals"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "kamara_usman",
+        "label": "kamara_usman",
+        "group": "member",
+        "circle": 0,
+        "clusterId": -1,
+        "comments": 2,
+        "val": 10.864510033930522,
+        "presenceScore": 0.6864510033930521,
+        "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.82787-19/655962359_18318849367248493_6057281177528924878_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=108&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=jBMEaxdRCacQ7kNvwH-NTgc&_nc_oc=Adr8dlwKf87N1LW-99azcT-9fJR90Lj6BWZrr5xdQc4KeEFUb_6wAhLwDIY5aYSL7cY&_nc_zt=24&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_gid=Wh-E_37Tqsbvf-z_2OtDlQ&_nc_ss=72a8c&oh=00_AQCCB7tOSAtV035O2B9cNHAyF2TY3yhE7y_vqdSZNi-OzA&oe=6A4BCE49",
+        "history": [
+          {
+            "authorUsername": "kamara_usman",
+            "postId": "https://www.instagram.com/p/DYw4VP_DuQD/",
+            "text": "🔥🔥",
+            "when": "5 weeks ago",
+            "timestamp": "2026-05-25T16:30:32.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          },
+          {
+            "authorUsername": "kamara_usman",
+            "postId": "https://www.instagram.com/p/DZ7sXMZDjGn/",
+            "text": "🔥🔥",
+            "when": "1 week ago",
+            "timestamp": "2026-06-24T16:39:34.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "2 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 2,
+          "recencyWeightedComments": 1.77,
+          "relationshipStrengthScore": 0.442,
+          "uniquePostsCommentedOn": 2,
+          "commentsPerMonth": 2,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-05-25T16:30:32.000Z",
+          "mostRecentInteractionDate": "2026-06-24T16:39:34.000Z",
+          "mostRecentDaysAgo": 7,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.15000000000000002
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "kamara_usman",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "2 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "j.easy6",
+        "label": "j.easy6",
+        "group": "member",
+        "circle": 0,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 10.333789634944008,
+        "presenceScore": 0.6333789634944008,
+        "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/469000065_575027178809676_7323949626114053423_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=105&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=0Q8UgRXbhV4Q7kNvwHBtDh_&_nc_oc=AdpK7TJ-NhOTZcR1j_2TJBTuhU9XGUK-isLvuGjY-xduA_UQE4iMkgw8oROohsBt6Q4&_nc_zt=24&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_ss=72a8c&oh=00_AQB1NBTYoDxwm63rUbvvF2HqTEszREPyoVow3CBmDW7N8A&oe=6A4BB8B5",
+        "history": [
+          {
+            "authorUsername": "j.easy6",
+            "postId": "https://www.instagram.com/p/DZ7sXMZDjGn/",
+            "text": "🔥🔥",
+            "when": "1 week ago",
+            "timestamp": "2026-06-24T00:46:18.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.96,
+          "relationshipStrengthScore": 0.377,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-06-24T00:46:18.000Z",
+          "mostRecentInteractionDate": "2026-06-24T00:46:18.000Z",
+          "mostRecentDaysAgo": 8,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "j.easy6",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "zaythe_prophet",
+        "label": "zaythe_prophet",
+        "group": "member",
+        "circle": 0,
+        "clusterId": -1,
+        "comments": 2,
+        "val": 10.762435100286842,
+        "presenceScore": 0.6762435100286842,
+        "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/91153088_212908316711989_2074578674094440448_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=106&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy43OTQuQzMifQ%3D%3D&_nc_ohc=0JFKyLgwCy4Q7kNvwFU5Lfq&_nc_oc=AdpQALU6JURUXHy51qHNL5Wtw999T9-yUWGO9LGFDoXoLEW8BV5fG72bKsKTSLedrHU&_nc_zt=24&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_ss=72a8c&oh=00_AQDuReFm-TnYmb3AKdkYwdz-fQk5vAO_tdEZFLODlgNbtw&oe=6A4BC291",
+        "history": [
+          {
+            "authorUsername": "zaythe_prophet",
+            "postId": "https://www.instagram.com/p/DYw4VP_DuQD/",
+            "text": "〽️ajor Vibes",
+            "when": "5 weeks ago",
+            "timestamp": "2026-05-25T16:10:11.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          },
+          {
+            "authorUsername": "zaythe_prophet",
+            "postId": "https://www.instagram.com/p/DZ7sXMZDjGn/",
+            "text": "Nobody more 〽️ajor",
+            "when": "1 week ago",
+            "timestamp": "2026-06-23T21:05:10.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "2 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 2,
+          "recencyWeightedComments": 1.77,
+          "relationshipStrengthScore": 0.442,
+          "uniquePostsCommentedOn": 2,
+          "commentsPerMonth": 2,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-05-25T16:10:11.000Z",
+          "mostRecentInteractionDate": "2026-06-23T21:05:10.000Z",
+          "mostRecentDaysAgo": 8,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.15000000000000002
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "zaythe_prophet",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "2 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "mir.ransom",
+        "label": "mir.ransom",
+        "group": "member",
+        "circle": 0,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 10.30037635902461,
+        "presenceScore": 0.6300376359024609,
+        "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/471379013_1306069757402407_1858698927319071606_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=109&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=iC37k6AN_q0Q7kNvwFYR0NQ&_nc_oc=AdqtbZyovC5vO2kHWh5N9pHj2btHg_suHT48ll51NZVS0FMGWDkbtNB0yibj7qIssII&_nc_zt=24&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_ss=72a8c&oh=00_AQCUj0bPN4aUMNhioLzpYmM92nHSrcgyDaFKyQWDErE4Wg&oe=6A4BB7B9",
+        "history": [
+          {
+            "authorUsername": "mir.ransom",
+            "postId": "https://www.instagram.com/p/DZ7sXMZDjGn/",
+            "text": "🔥🔥",
+            "when": "1 week ago",
+            "timestamp": "2026-06-23T18:18:31.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.95,
+          "relationshipStrengthScore": 0.377,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-06-23T18:18:31.000Z",
+          "mostRecentInteractionDate": "2026-06-23T18:18:31.000Z",
+          "mostRecentDaysAgo": 8,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "mir.ransom",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "big_grizzley",
+        "label": "big_grizzley",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 10.295030836611085,
+        "presenceScore": 0.6295030836611085,
+        "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.82787-19/588395056_18433302514128525_1331949993830326870_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=101&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=AyDuwyE7BJ8Q7kNvwESGOpg&_nc_oc=Adpf-7wDk85FhSQNdOGeltQ_9TGZeNPOS46zV6kN9veepozCptZE0SbYGwewSd2_sIY&_nc_zt=24&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_gid=9ADhGD_GmUAA4nVqCi9_pA&_nc_ss=72a8c&oh=00_AQA1DPYlakMcjBpbCm60t-9QcN2aN7NEngUvNogMqvxxeA&oe=6A4BCD90",
+        "history": [
+          {
+            "authorUsername": "big_grizzley",
+            "postId": "https://www.instagram.com/p/DZ7sXMZDjGn/",
+            "text": "Yall ain't fw Lido",
+            "when": "1 week ago",
+            "timestamp": "2026-06-23T17:16:16.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.404Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.404Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.95,
+          "relationshipStrengthScore": 0.377,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-06-23T17:16:16.000Z",
+          "mostRecentInteractionDate": "2026-06-23T17:16:16.000Z",
+          "mostRecentDaysAgo": 8,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "big_grizzley",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.404Z"
+        }
+      },
+      {
+        "id": "wewant_neef",
+        "label": "wewant_neef",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 10.29274103055243,
+        "presenceScore": 0.6292741030552429,
+        "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.82787-19/719009877_18588553546046351_7031512870790052593_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=103&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=Co3K97_loTUQ7kNvwG2EnKX&_nc_oc=AdqZQKCHoIQgC96aJBUDOLOlhdT2apHShReuW7YJr6rWt29tbmfmIH4L6WfCAGG7P4U&_nc_zt=24&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_gid=9ADhGD_GmUAA4nVqCi9_pA&_nc_ss=72a8c&oh=00_AQB4TanXxdsuMa_aPJMnU7LcZimo_P4Sb4G_RKoaT6AUuw&oe=6A4BCD13",
+        "history": [
+          {
+            "authorUsername": "wewant_neef",
+            "postId": "https://www.instagram.com/p/DZ7sXMZDjGn/",
+            "text": "That guy ‼️",
+            "when": "1 week ago",
+            "timestamp": "2026-06-23T16:49:35.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.404Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.404Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.95,
+          "relationshipStrengthScore": 0.377,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-06-23T16:49:35.000Z",
+          "mostRecentInteractionDate": "2026-06-23T16:49:35.000Z",
+          "mostRecentDaysAgo": 8,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "wewant_neef",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.404Z"
+        }
+      },
+      {
+        "id": "hassonmajied",
+        "label": "hassonmajied",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 10.285665784049002,
+        "presenceScore": 0.6285665784049003,
+        "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.82787-19/655320315_18566760340007922_220008499374020558_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=100&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=OZbQCrvmeBkQ7kNvwE3fWBm&_nc_oc=AdqY2Ld4Xbyqmi_AX3qNvQKJYZUJXVgDjcz0zM-xOZkd2HO0AieYrtQZpL53pp9fN7Y&_nc_zt=24&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_gid=9ADhGD_GmUAA4nVqCi9_pA&_nc_ss=72a8c&oh=00_AQCFPQ3-837-xNyNX4pvywGSGYT3KyLwz6jxhnYlQ-SuKA&oe=6A4BA4A0",
+        "history": [
+          {
+            "authorUsername": "hassonmajied",
+            "postId": "https://www.instagram.com/p/DZ7sXMZDjGn/",
+            "text": "🔥",
+            "when": "1 week ago",
+            "timestamp": "2026-06-23T15:27:04.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.404Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.404Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.95,
+          "relationshipStrengthScore": 0.377,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-06-23T15:27:04.000Z",
+          "mostRecentInteractionDate": "2026-06-23T15:27:04.000Z",
+          "mostRecentDaysAgo": 9,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "hassonmajied",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.404Z"
+        }
+      },
+      {
+        "id": "midas.trell",
+        "label": "midas.trell",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 10.284022207850786,
+        "presenceScore": 0.6284022207850786,
+        "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.82787-19/574734749_18196059079321369_3212742194929572837_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=111&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=uknB27JXyfgQ7kNvwEAoC3d&_nc_oc=Adoyuc_uq4uJW0fFGZmc-wS5ziNy_mY1FWTf_obR42dMwpMXgdwSTJcLG9D2z1AhRPM&_nc_zt=24&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_gid=9ADhGD_GmUAA4nVqCi9_pA&_nc_ss=72a8c&oh=00_AQAUs52ugBP0n8o6sZ5tq2i_DLyuv8giZ9TZnhrrqNpK5w&oe=6A4BA0F9",
+        "history": [
+          {
+            "authorUsername": "midas.trell",
+            "postId": "https://www.instagram.com/p/DZ7sXMZDjGn/",
+            "text": "🔥🔥🔥",
+            "when": "1 week ago",
+            "timestamp": "2026-06-23T15:07:53.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.404Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.404Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.95,
+          "relationshipStrengthScore": 0.377,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-06-23T15:07:53.000Z",
+          "mostRecentInteractionDate": "2026-06-23T15:07:53.000Z",
+          "mostRecentDaysAgo": 9,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "midas.trell",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.404Z"
+        }
+      },
+      {
+        "id": "stephanie_coucq",
+        "label": "stephanie_coucq",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 8.967378699878203,
+        "presenceScore": 0.4967378699878204,
+        "profilePicUrl": "https://scontent-lga3-1.cdninstagram.com/v/t51.2885-19/152611779_117672383694125_4086632726455855108_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=109&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=gBG4x6EEBEcQ7kNvwHkR1ih&_nc_oc=AdrGSYwGrUl-N5xGdt0__xp1s_sieNk8dws4HBExS9CIiDMJzFB3M5qX0eyuhg84rIc&_nc_zt=24&_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_ss=72a8c&oh=00_AQC_P18lQEd08fcXgdI1VqCDy9k01Euq2xRBJIR6mmIMHQ&oe=6A4BA2F8",
+        "history": [
+          {
+            "authorUsername": "stephanie_coucq",
+            "postId": "https://www.instagram.com/p/DYw4VP_DuQD/",
+            "text": "Had a quick thought about your specific process—dropped it in your hidden messages so I don't clutter the comments! 👇",
+            "when": "3 weeks ago",
+            "timestamp": "2026-06-11T11:37:37.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.89,
+          "relationshipStrengthScore": 0.437,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-06-11T11:37:37.000Z",
+          "mostRecentInteractionDate": "2026-06-11T11:37:37.000Z",
+          "mostRecentDaysAgo": 21,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "stephanie_coucq",
+          "inferredContext": "acquaintance",
+          "interactionTags": [],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "zentheproducer",
+        "label": "zentheproducer",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 8.262061001459145,
+        "presenceScore": 0.4262061001459145,
+        "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/301489136_575108780979596_663565846401355392_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=102&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=FdTlQ05eHI8Q7kNvwGqHXSk&_nc_oc=Adpz7udaAfpmSqBu-Nr_REgevOtDfgJfJCgph62Q6J763IJIX1oh8TTggkJk2qOauPc&_nc_zt=24&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_ss=72a8c&oh=00_AQBJjK3F0uDabH22uB4sqBhgsk1ldVIF_NHjGIj8HIg8hw&oe=6A4BC246",
+        "history": [
+          {
+            "authorUsername": "zentheproducer",
+            "postId": "https://www.instagram.com/p/DYw4VP_DuQD/",
+            "text": "🙌🙌",
+            "when": "4 weeks ago",
+            "timestamp": "2026-06-03T08:42:57.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.85,
+          "relationshipStrengthScore": 0.371,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-06-03T08:42:57.000Z",
+          "mostRecentInteractionDate": "2026-06-03T08:42:57.000Z",
+          "mostRecentDaysAgo": 29,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "zentheproducer",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "lockedin.emp",
+        "label": "lockedin.emp",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 8.23996646006329,
+        "presenceScore": 0.423996646006329,
+        "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/470974766_8754802481234384_4372287625506089292_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=107&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=Y2ePPg0Kt90Q7kNvwE7lgWr&_nc_oc=AdpjCBg6YOJlW4ou3zUCj6mWaC8qF_3Xg0-JG0y1ey2cdWxPZbkUOgeW9IDrMvXkIN0&_nc_zt=24&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_ss=72a8c&oh=00_AQAUHPEj-JX2P0FpNO14TcD4mHn79iZYvGn6dDp7wujgPA&oe=6A4BCD8F",
+        "history": [
+          {
+            "authorUsername": "lockedin.emp",
+            "postId": "https://www.instagram.com/p/DYw4VP_DuQD/",
+            "text": "playa. 🥂",
+            "when": "4 weeks ago",
+            "timestamp": "2026-06-03T02:01:11.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.85,
+          "relationshipStrengthScore": 0.371,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-06-03T02:01:11.000Z",
+          "mostRecentInteractionDate": "2026-06-03T02:01:11.000Z",
+          "mostRecentDaysAgo": 29,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "lockedin.emp",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "hustlemanmarketing",
+        "label": "hustlemanmarketing",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 8.065026616325943,
+        "presenceScore": 0.40650266163259424,
+        "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.82787-19/721224175_18075570431438310_4442587143722563090_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=101&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=wvapxc7pJvMQ7kNvwH8Avt1&_nc_oc=AdpwkjmsQJMWKpVhpU9e1cTaQPRJ7tffYUTqjiuLd13sIdEp9iu7jtV7oW1bKmC9sFA&_nc_zt=24&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_gid=Wh-E_37Tqsbvf-z_2OtDlQ&_nc_ss=72a8c&oh=00_AQDfiwIbchfs_SlBXHU4IJ-LVC6NuXJK7qFalf90FKfy7w&oe=6A4BC4A9",
+        "history": [
+          {
+            "authorUsername": "hustlemanmarketing",
+            "postId": "https://www.instagram.com/p/DYw4VP_DuQD/",
+            "text": "Dm me 💪🏾",
+            "when": "4 weeks ago",
+            "timestamp": "2026-05-31T19:31:25.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "practical_help"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "practical"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.84,
+          "relationshipStrengthScore": 0.434,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-05-31T19:31:25.000Z",
+          "mostRecentInteractionDate": "2026-05-31T19:31:25.000Z",
+          "mostRecentDaysAgo": 31,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "hustlemanmarketing",
+          "inferredContext": "acquaintance",
+          "interactionTags": [],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "lawoffical",
+        "label": "lawoffical",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 7.650524516168067,
+        "presenceScore": 0.3650524516168067,
+        "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/394386398_3165045197125798_1835564712936356908_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=101&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=zZ0t8w7gz-gQ7kNvwE64icF&_nc_oc=AdqTAdAtKVLF4Ghi-xS1o9G5a3a82_uVuvLRbftDW3dNLU5j4XhT566K4tdFAcDBrGs&_nc_zt=24&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_ss=72a8c&oh=00_AQARWzDThT07ATXAg3FX8RkKZuOcIUVEfeIj1MozZ94OPQ&oe=6A4BCC31",
+        "history": [
+          {
+            "authorUsername": "lawoffical",
+            "postId": "https://www.instagram.com/p/DYw4VP_DuQD/",
+            "text": "That's 〽️ajor!!🔥🔥",
+            "when": "5 weeks ago",
+            "timestamp": "2026-05-25T22:36:02.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.81,
+          "relationshipStrengthScore": 0.369,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-05-25T22:36:02.000Z",
+          "mostRecentInteractionDate": "2026-05-25T22:36:02.000Z",
+          "mostRecentDaysAgo": 37,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "lawoffical",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "babysphinxx",
+        "label": "babysphinxx",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 7.6390610714663545,
+        "presenceScore": 0.3639061071466354,
+        "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/312065249_459372149508374_4188189266961874287_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=105&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy41NDcuQzMifQ%3D%3D&_nc_ohc=DLnvo_ti4kMQ7kNvwElO0W3&_nc_oc=AdpEuN5RJR9ruutidBy8pFaygHYTb1_op2Htk9MannBe472zW_xQ2ycT8RkFmuUcieA&_nc_zt=24&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_ss=72a8c&oh=00_AQA-6G9I07kLxR7J07SufZjG3BkCYgfxhQBu8bggGROxEw&oe=6A4BA899",
+        "history": [
+          {
+            "authorUsername": "babysphinxx",
+            "postId": "https://www.instagram.com/p/DYw4VP_DuQD/",
+            "text": "🔥",
+            "when": "5 weeks ago",
+            "timestamp": "2026-05-25T18:26:15.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.81,
+          "relationshipStrengthScore": 0.369,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-05-25T18:26:15.000Z",
+          "mostRecentInteractionDate": "2026-05-25T18:26:15.000Z",
+          "mostRecentDaysAgo": 37,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "babysphinxx",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "dcalvo__",
+        "label": "dcalvo__",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 7.637283485950215,
+        "presenceScore": 0.36372834859502157,
+        "profilePicUrl": "https://scontent-lga3-1.cdninstagram.com/v/t51.2885-19/31109130_2144988975530734_7963176263672135680_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=103&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=laqhTc8a8XUQ7kNvwG7aWDw&_nc_oc=Ado-yBvNNDqYZs3YBOxA7EYfmk0Be_Sk7QwK6BNJhZFmC9HqRt4ed8tOm7iy4wsjY0o&_nc_zt=24&_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_ss=72a8c&oh=00_AQDl58Qcm237wweuzU_imswz9jU5RgdAfAuECDeDukyxLQ&oe=6A4BC992",
+        "history": [
+          {
+            "authorUsername": "dcalvo__",
+            "postId": "https://www.instagram.com/p/DYw4VP_DuQD/",
+            "text": "🎯🎯🤘🏾 Slimeeeeeee",
+            "when": "5 weeks ago",
+            "timestamp": "2026-05-25T17:47:26.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.81,
+          "relationshipStrengthScore": 0.369,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-05-25T17:47:26.000Z",
+          "mostRecentInteractionDate": "2026-05-25T17:47:26.000Z",
+          "mostRecentDaysAgo": 37,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "dcalvo__",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "italy_evann",
+        "label": "italy_evann",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 7.635378824390301,
+        "presenceScore": 0.3635378824390301,
+        "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.82787-19/628901358_18103616920871118_1257193272564191932_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=105&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy45NzQuQzMifQ%3D%3D&_nc_ohc=QBpTVtyuyRIQ7kNvwFxzWHm&_nc_oc=AdpDJ2M-vmZvoTHTvlp8-FlG-WpNKbt0OFb2lsVGs8ERuhVU7LTJwkTCYJNPcLJNkJE&_nc_zt=24&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_gid=Wh-E_37Tqsbvf-z_2OtDlQ&_nc_ss=72a8c&oh=00_AQARzRnEOChPgjbwSE7nL9lUs-D51WlTGc7RZRe77ZFi1g&oe=6A4BCD36",
+        "history": [
+          {
+            "authorUsername": "italy_evann",
+            "postId": "https://www.instagram.com/p/DYw4VP_DuQD/",
+            "text": "🔥",
+            "when": "5 weeks ago",
+            "timestamp": "2026-05-25T17:05:49.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.46,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.81,
+          "relationshipStrengthScore": 0.369,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 1,
+          "historicalActivityScore": 0,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2026-05-25T17:05:49.000Z",
+          "mostRecentInteractionDate": "2026-05-25T17:05:49.000Z",
+          "mostRecentDaysAgo": 37,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "italy_evann",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.46,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "m.d.kofi",
+        "label": "m.d.kofi",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.467091086662542,
+        "presenceScore": 0.04670910866625419,
+        "profilePicUrl": "https://scontent-lax3-2.cdninstagram.com/v/t51.89012-19/573323465_1219825463302212_7278921664109726296_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=1&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy5DMyJ9&_nc_ohc=_zrBf_yIeLcQ7kNvwGvKP7g&_nc_oc=Ado28b4Lr0Dc41th0dH30amgTnzJUdSRmY8dNXtUjX3UDjfJTZjAMXbFghQyaRG75dE&_nc_zt=24&_nc_ht=scontent-lax3-2.cdninstagram.com&_nc_gid=BVXTdWZybkTPkJO0ZypGRg&_nc_ss=7ca8c&oh=00_AQAlpupZ0WjRzoJFiXWXEz8SUNF1UahkExPA6Ru5W2G5CA&oe=6A4BA7A2",
+        "history": [
+          {
+            "authorUsername": "m.d.kofi",
+            "postId": "https://www.instagram.com/p/DPihAKODawp/",
+            "text": "🔥🔥🔥👏👏👏",
+            "when": "36 weeks ago",
+            "timestamp": "2025-10-25T06:34:04.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.26,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.402Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.402Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.25,
+          "relationshipStrengthScore": 0.055,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-10-25T06:34:04.000Z",
+          "mostRecentInteractionDate": "2025-10-25T06:34:04.000Z",
+          "mostRecentDaysAgo": 250,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "m.d.kofi",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.26,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.402Z"
+        }
+      },
+      {
+        "id": "mixbydav",
+        "label": "mixbydav",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.4595818444409545,
+        "presenceScore": 0.04595818444409544,
+        "profilePicUrl": "https://scontent-lax7-1.cdninstagram.com/v/t51.2885-19/479171800_2342942639394267_8189381523664826829_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=105&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=PQ1uG1rvUtQQ7kNvwG7a7qE&_nc_oc=Adq2XXqI17_x4CjF5sZRls0u4kSttFctEyPKbxi5M0LC2OW6rKBYYdXgMCz0eDGVjS8&_nc_zt=24&_nc_ht=scontent-lax7-1.cdninstagram.com&_nc_ss=7ca8c&oh=00_AQAh44Zc1baKoE4dS1z89WItTBcC-fDeLcdnbOdgSmp_8w&oe=6A4BBF3A",
+        "history": [
+          {
+            "authorUsername": "mixbydav",
+            "postId": "https://www.instagram.com/p/DPihAKODawp/",
+            "text": "👏👏👏",
+            "when": "38 weeks ago",
+            "timestamp": "2025-10-09T08:12:47.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.26,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.402Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.402Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.23,
+          "relationshipStrengthScore": 0.054,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-10-09T08:12:47.000Z",
+          "mostRecentInteractionDate": "2025-10-09T08:12:47.000Z",
+          "mostRecentDaysAgo": 266,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "mixbydav",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.26,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "lapoz_tvt",
+        "label": "lapoz_tvt",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.459579580391741,
+        "presenceScore": 0.045957958039174074,
+        "profilePicUrl": "https://scontent-lax3-2.cdninstagram.com/v/t51.82787-19/609030794_18108263662726484_5571118689088519747_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=100&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=psmZRoJCbV8Q7kNvwEJiCs6&_nc_oc=Adoe4Xxj8EbC7-NZceZeGWmCamuj3MCMqK6pofFfbm46guBsmfaW-EzutvrJJp475d8&_nc_zt=24&_nc_ht=scontent-lax3-2.cdninstagram.com&_nc_gid=BVXTdWZybkTPkJO0ZypGRg&_nc_ss=7ca8c&oh=00_AQD2xp16mFs383Dsm1Cgc5CbOu4aqWbuHmZAkzN9FLZKkw&oe=6A4BB940",
+        "history": [
+          {
+            "authorUsername": "lapoz_tvt",
+            "postId": "https://www.instagram.com/p/DPihAKODawp/",
+            "text": "🔥🔥",
+            "when": "38 weeks ago",
+            "timestamp": "2025-10-09T08:04:29.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.26,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.23,
+          "relationshipStrengthScore": 0.054,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-10-09T08:04:29.000Z",
+          "mostRecentInteractionDate": "2025-10-09T08:04:29.000Z",
+          "mostRecentDaysAgo": 266,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "lapoz_tvt",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.26,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "irash.melvida.5",
+        "label": "irash.melvida.5",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.4593442018799285,
+        "presenceScore": 0.04593442018799286,
+        "profilePicUrl": "https://scontent-lax3-1.cdninstagram.com/v/t51.2885-19/472964202_1332037471544807_3955653275029480757_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=104&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=Wwme-ZoIsWcQ7kNvwGyj46y&_nc_oc=AdopSOhnP6b3PO4y6bsYv90KlpE1oVVs28rFVx_BvGVhxWRxhRlDfNQJcZM_vT1mJkY&_nc_zt=24&_nc_ht=scontent-lax3-1.cdninstagram.com&_nc_ss=7ca8c&oh=00_AQBgLfhuNSDLaT2uj13ayRQDyGrZGJAp3MhR3VUgDxyY4A&oe=6A4B9AFB",
+        "history": [
+          {
+            "authorUsername": "irash.melvida.5",
+            "postId": "https://www.instagram.com/p/DPihAKODawp/",
+            "text": "🚶🏼‍♀️allons nous inscrire ooh",
+            "when": "38 weeks ago",
+            "timestamp": "2025-10-08T17:35:44.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.26,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.23,
+          "relationshipStrengthScore": 0.054,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-10-08T17:35:44.000Z",
+          "mostRecentInteractionDate": "2025-10-08T17:35:44.000Z",
+          "mostRecentDaysAgo": 266,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "irash.melvida.5",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.26,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "228_damiana",
+        "label": "228_damiana",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.459304685026696,
+        "presenceScore": 0.045930468502669575,
+        "profilePicUrl": "https://scontent-lax7-1.cdninstagram.com/v/t51.2885-19/439840709_772978898256735_5681288750035074852_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=105&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=9PxewXQ0ESYQ7kNvwGz65lm&_nc_oc=AdrSWfUypMBMBIAQBfYaDohIWsEFQRyqfiCdlbZygtWapdHgFgOENiVop9WYj36H4Lo&_nc_zt=24&_nc_ht=scontent-lax7-1.cdninstagram.com&_nc_ss=7ca8c&oh=00_AQDsyiRJdo59SvsKskS14D5cgSZCxy7vQ8MUopXNoBzTNg&oe=6A4BB492",
+        "history": [
+          {
+            "authorUsername": "228_damiana",
+            "postId": "https://www.instagram.com/p/DPihAKODawp/",
+            "text": "🙌🔥",
+            "when": "38 weeks ago",
+            "timestamp": "2025-10-08T15:08:44.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.26,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.23,
+          "relationshipStrengthScore": 0.054,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-10-08T15:08:44.000Z",
+          "mostRecentInteractionDate": "2025-10-08T15:08:44.000Z",
+          "mostRecentDaysAgo": 267,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "228_damiana",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.26,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      },
+      {
+        "id": "rena_morgana",
+        "label": "rena_morgana",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.459189480342049,
+        "presenceScore": 0.04591894803420493,
+        "profilePicUrl": "https://scontent-lax3-2.cdninstagram.com/v/t51.82787-19/628142814_18072937340575297_3958876207341210610_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=100&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=UD2UfFsJvoUQ7kNvwFHQnAD&_nc_oc=AdpRz7jG8qhdZSy9gwMK0sZ10KKelZQRkVH6dP-HwEQYaEgnwEEk63i_fxU1XNh8VLk&_nc_zt=24&_nc_ht=scontent-lax3-2.cdninstagram.com&_nc_gid=BVXTdWZybkTPkJO0ZypGRg&_nc_ss=7ca8c&oh=00_AQBdJQOonOjKnxlRzgrsaMKvAuxWIZpryAjnrD86TGC16w&oe=6A4BBC7F",
+        "history": [
+          {
+            "authorUsername": "rena_morgana",
+            "postId": "https://www.instagram.com/p/DPihAKODawp/",
+            "text": "Je m'en vais m'inscrire 🚶🏿‍♀️‍➡️😁",
+            "when": "38 weeks ago",
+            "timestamp": "2025-10-08T07:58:16.000Z",
+            "post": "Instagram post",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.26,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-02T04:05:04.403Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.23,
+          "relationshipStrengthScore": 0.054,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-10-08T07:58:16.000Z",
+          "mostRecentInteractionDate": "2025-10-08T07:58:16.000Z",
+          "mostRecentDaysAgo": 267,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "jp_jppap",
+          "toUserId": "rena_morgana",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.26,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-02T04:05:04.403Z"
+        }
+      }
+    ],
+    "links": [
+      {
+        "source": "jp_jppap",
+        "target": "stayshadedd",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "hollyhood4prez",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "kamara_usman",
+        "kind": "comment",
+        "inbound": 2
+      },
+      {
+        "source": "jp_jppap",
+        "target": "j.easy6",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "zaythe_prophet",
+        "kind": "comment",
+        "inbound": 2
+      },
+      {
+        "source": "jp_jppap",
+        "target": "mir.ransom",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "big_grizzley",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "wewant_neef",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "hassonmajied",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "midas.trell",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "stephanie_coucq",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "zentheproducer",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "lockedin.emp",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "hustlemanmarketing",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "lawoffical",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "babysphinxx",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "dcalvo__",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "italy_evann",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "m.d.kofi",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "mixbydav",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "lapoz_tvt",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "irash.melvida.5",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "228_damiana",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "jp_jppap",
+        "target": "rena_morgana",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "kamara_usman",
+        "target": "zaythe_prophet",
+        "kind": "friend",
+        "weight": 0.3
+      }
+    ],
+    "circles": []
+  },
+  "stats": {
+    "scanned": 28,
+    "shown": 24,
+    "circleCount": 0,
+    "totalComments": 26,
+    "topCommentators": [
+      {
+        "username": "kamara_usman",
+        "comments": 2,
+        "circle": 0
+      },
+      {
+        "username": "zaythe_prophet",
+        "comments": 2,
+        "circle": 0
+      },
+      {
+        "username": "stayshadedd",
+        "comments": 1,
+        "circle": 0
+      },
+      {
+        "username": "hollyhood4prez",
+        "comments": 1,
+        "circle": 0
+      },
+      {
+        "username": "j.easy6",
+        "comments": 1,
+        "circle": 0
+      },
+      {
+        "username": "mir.ransom",
+        "comments": 1,
+        "circle": 0
+      },
+      {
+        "username": "big_grizzley",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "wewant_neef",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "hassonmajied",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "midas.trell",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "stephanie_coucq",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "zentheproducer",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "lockedin.emp",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "hustlemanmarketing",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "lawoffical",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "babysphinxx",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "dcalvo__",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "italy_evann",
+        "comments": 1,
+        "circle": 2
+      },
+      {
+        "username": "m.d.kofi",
+        "comments": 1,
+        "circle": 2
+      },
+      {
+        "username": "mixbydav",
+        "comments": 1,
+        "circle": 2
+      },
+      {
+        "username": "lapoz_tvt",
+        "comments": 1,
+        "circle": 2
+      },
+      {
+        "username": "irash.melvida.5",
+        "comments": 1,
+        "circle": 2
+      },
+      {
+        "username": "228_damiana",
+        "comments": 1,
+        "circle": 2
+      },
+      {
+        "username": "rena_morgana",
+        "comments": 1,
+        "circle": 2
+      }
+    ],
+    "recentCommentators": [
+      {
+        "username": "stayshadedd",
+        "comments": 1,
+        "circle": 0,
+        "latestCommentWhen": "4 days ago",
+        "latestCommentTime": 1782581661000
+      },
+      {
+        "username": "hollyhood4prez",
+        "comments": 1,
+        "circle": 0,
+        "latestCommentWhen": "1 week ago",
+        "latestCommentTime": 1782347967000
+      },
+      {
+        "username": "kamara_usman",
+        "comments": 2,
+        "circle": 0,
+        "latestCommentWhen": "1 week ago",
+        "latestCommentTime": 1782319174000
+      },
+      {
+        "username": "j.easy6",
+        "comments": 1,
+        "circle": 0,
+        "latestCommentWhen": "1 week ago",
+        "latestCommentTime": 1782261978000
+      },
+      {
+        "username": "zaythe_prophet",
+        "comments": 2,
+        "circle": 0,
+        "latestCommentWhen": "1 week ago",
+        "latestCommentTime": 1782248710000
+      },
+      {
+        "username": "mir.ransom",
+        "comments": 1,
+        "circle": 0,
+        "latestCommentWhen": "1 week ago",
+        "latestCommentTime": 1782238711000
+      },
+      {
+        "username": "big_grizzley",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "1 week ago",
+        "latestCommentTime": 1782234976000
+      },
+      {
+        "username": "wewant_neef",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "1 week ago",
+        "latestCommentTime": 1782233375000
+      },
+      {
+        "username": "hassonmajied",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "1 week ago",
+        "latestCommentTime": 1782228424000
+      },
+      {
+        "username": "midas.trell",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "1 week ago",
+        "latestCommentTime": 1782227273000
+      },
+      {
+        "username": "stephanie_coucq",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "3 weeks ago",
+        "latestCommentTime": 1781177857000
+      },
+      {
+        "username": "zentheproducer",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "4 weeks ago",
+        "latestCommentTime": 1780476177000
+      },
+      {
+        "username": "lockedin.emp",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "4 weeks ago",
+        "latestCommentTime": 1780452071000
+      },
+      {
+        "username": "hustlemanmarketing",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "4 weeks ago",
+        "latestCommentTime": 1780255885000
+      },
+      {
+        "username": "lawoffical",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "5 weeks ago",
+        "latestCommentTime": 1779748562000
+      },
+      {
+        "username": "babysphinxx",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "5 weeks ago",
+        "latestCommentTime": 1779733575000
+      },
+      {
+        "username": "dcalvo__",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "5 weeks ago",
+        "latestCommentTime": 1779731246000
+      },
+      {
+        "username": "italy_evann",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "5 weeks ago",
+        "latestCommentTime": 1779728749000
+      },
+      {
+        "username": "m.d.kofi",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "36 weeks ago",
+        "latestCommentTime": 1761374044000
+      },
+      {
+        "username": "mixbydav",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "38 weeks ago",
+        "latestCommentTime": 1759997567000
+      },
+      {
+        "username": "lapoz_tvt",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "38 weeks ago",
+        "latestCommentTime": 1759997069000
+      },
+      {
+        "username": "irash.melvida.5",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "38 weeks ago",
+        "latestCommentTime": 1759944944000
+      },
+      {
+        "username": "228_damiana",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "38 weeks ago",
+        "latestCommentTime": 1759936124000
+      },
+      {
+        "username": "rena_morgana",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "38 weeks ago",
+        "latestCommentTime": 1759910296000
+      }
+    ],
+    "biggestCircle": {
+      "label": "Shared circle",
+      "size": 0
+    }
+  },
+  "budget": {
+    "postLimit": 10,
+    "commentsPerPost": 10,
+    "reciprocityEnabled": true,
+    "reciprocityFriends": 4,
+    "reciprocityPostsPerFriend": 3,
+    "maxComments": 220,
+    "maxReciprocityComments": 120,
+    "estimatedCostUsd": 0,
+    "withinFreeTier": true,
+    "needsPaymentPrompt": false
+  },
+  "cached": true,
+  "demo": false,
+  "pinned": true,
+  "scrapedAt": 1782965104408
+}

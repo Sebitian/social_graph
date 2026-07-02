@@ -35,8 +35,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Scraped / pinned data — keep public repo code-only; production uses Vercel Blob
+# Other scrape exports stay local; jp_jppap is committed for pinned deploy without Blob.
 /data/raw/*.json
 /data/snapshots/*.json
-!data/raw/.gitkeep
-!data/snapshots/.gitkeep
+!data/raw/jp_jppap-comments.json
+!data/snapshots/jp_jppap.json
