@@ -8,11 +8,17 @@ import { compactNumber, CIRCLE_COLORS } from "@/lib/graphUtils";
 
 interface Props {
   stats: Stats;
+  onSelectUsername?: (username: string) => void;
+  selectedUsername?: string | null;
 }
 
 type CommentatorView = "all-time" | "present";
 
-export default function NetworkStats({ stats }: Props) {
+export default function NetworkStats({
+  stats,
+  onSelectUsername,
+  selectedUsername,
+}: Props) {
   const [view, setView] = useState<CommentatorView>("all-time");
   const cards = [
     { label: "Clusters", value: String(stats.circleCount), icon: Layers, color: "text-ig-pink" },
@@ -83,31 +89,59 @@ export default function NetworkStats({ stats }: Props) {
             </div>
           </div>
           <ul className="flex flex-col gap-2">
-            {visibleCommentators.slice(0, 8).map((u, i) => (
-              <li
-                key={u.username}
-                className="flex items-center justify-between gap-2 text-sm"
-              >
-                <span className="flex min-w-0 items-center gap-2 text-white/80">
-                  <span className="w-4 shrink-0 text-white/30">{i + 1}</span>
-                  <span
-                    className="h-2 w-2 shrink-0 rounded-full"
-                    style={{
-                      backgroundColor:
-                        CIRCLE_COLORS[u.circle] ?? CIRCLE_COLORS[CIRCLE_COLORS.length - 1],
-                    }}
-                  />
-                  <span className="truncate">@{u.username}</span>
-                </span>
-                <span className="shrink-0 text-right font-mono text-[11px] text-white/50">
-                  {view === "present" && "latestCommentWhen" in u
-                    ? `${u.latestCommentWhen} · ${compactNumber(u.comments)} comments`
-                    : `${compactNumber(u.comments)} comments`}
-                </span>
-              </li>
-            ))}
+            {visibleCommentators.slice(0, 8).map((u, i) => {
+              const isSelected = selectedUsername === u.username;
+              const row = (
+                <>
+                  <span className="flex min-w-0 items-center gap-2 text-white/80">
+                    <span className="w-4 shrink-0 text-white/30">{i + 1}</span>
+                    <span
+                      className="h-2 w-2 shrink-0 rounded-full"
+                      style={{
+                        backgroundColor:
+                          CIRCLE_COLORS[u.circle] ?? CIRCLE_COLORS[CIRCLE_COLORS.length - 1],
+                      }}
+                    />
+                    <span className="truncate">@{u.username}</span>
+                  </span>
+                  <span className="shrink-0 text-right font-mono text-[11px] text-white/50">
+                    {view === "present" && "latestCommentWhen" in u
+                      ? `${u.latestCommentWhen} · ${compactNumber(u.comments)} comments`
+                      : `${compactNumber(u.comments)} comments`}
+                  </span>
+                </>
+              );
+
+              if (!onSelectUsername) {
+                return (
+                  <li
+                    key={u.username}
+                    className="flex items-center justify-between gap-2 text-sm"
+                  >
+                    {row}
+                  </li>
+                );
+              }
+
+              return (
+                <li key={u.username}>
+                  <button
+                    type="button"
+                    onClick={() => onSelectUsername(u.username)}
+                    className={`flex w-full items-center justify-between gap-2 rounded-xl px-2 py-1.5 text-left text-sm transition ${
+                      isSelected
+                        ? "bg-white/10 text-white"
+                        : "text-white/80 hover:bg-white/5"
+                    }`}
+                  >
+                    {row}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
           <p className="mt-2 border-t border-white/10 pt-2 text-[10px] leading-relaxed text-white/40">
+            {onSelectUsername ? "Tap a name to read their comments. " : ""}
             {view === "all-time"
               ? "Ranked by total comments in this scan."
               : "Ranked by graph distance — most recent activity first, then consistency."}

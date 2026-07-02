@@ -15,6 +15,7 @@ import {
 import type { Circle, GraphNode, ScrapeResult } from "@/lib/types";
 import PersonPanel from "@/components/PersonPanel";
 import GraphVisualizer from "@/components/GraphVisualizer";
+import { GraphHowToRead } from "@/components/GraphHowToRead";
 import NetworkStats from "@/components/NetworkStats";
 import ShareCard from "@/components/ShareCard";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -130,6 +131,22 @@ export default function GraphResult({
     for (const c of data?.graph.circles ?? []) m.set(c.id, c);
     return m;
   }, [data]);
+
+  const nodeByUsername = useMemo(() => {
+    const m = new Map<string, GraphNode>();
+    for (const node of data?.graph.nodes ?? []) {
+      if (node.group === "member") m.set(node.label.toLowerCase(), node);
+    }
+    return m;
+  }, [data]);
+
+  const selectMemberByUsername = useCallback(
+    (username: string) => {
+      const node = nodeByUsername.get(username.toLowerCase());
+      if (node) setSelected(node);
+    },
+    [nodeByUsername],
+  );
 
   useEffect(() => {
     if (pinned) return;
@@ -398,19 +415,51 @@ export default function GraphResult({
 
       <div className="mx-auto grid min-h-screen max-w-7xl grid-cols-1 gap-4 px-4 pb-6 pt-20 lg:grid-cols-[1fr_340px]">
         {/* Graph */}
-        <motion.div
-          ref={graphWrapRef}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="relative min-h-[420px] overflow-hidden rounded-3xl border border-white/10 bg-black/20"
-        >
-          <GraphVisualizer
-            data={data.graph}
-            className="absolute inset-0"
-            selectedId={selected?.id ?? null}
-            onSelect={setSelected}
-          />
+        <div className="relative min-h-[420px]">
+          <motion.div
+            ref={graphWrapRef}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="relative flex min-h-[420px] flex-col overflow-hidden rounded-3xl border border-white/10 bg-black/20"
+          >
+            <GraphHowToRead className="shrink-0" />
+
+            <div className="relative min-h-[320px] flex-1">
+              <GraphVisualizer
+                data={data.graph}
+                className="absolute inset-0"
+                selectedId={selected?.id ?? null}
+                onSelect={setSelected}
+              />
+
+              <div className="pointer-events-none absolute bottom-4 right-4 flex max-w-[240px] flex-col gap-2 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur">
+                <span className="flex items-center gap-1.5 text-xs text-white/60">
+                  <span
+                    className="h-2.5 w-2.5 rounded-full"
+                    style={{ backgroundColor: SELF_COLOR }}
+                  />
+                  You
+                </span>
+                {(data.graph.circles.length > 0
+                  ? data.graph.circles
+                  : [{ id: -1, label: "Independent", color: "#94a3b8", size: 0, comments: 0 }]
+                ).slice(0, 5).map((cluster) => (
+                  <span
+                    key={cluster.id}
+                    className="flex items-center gap-1.5 text-xs text-white/55"
+                  >
+                    <span
+                      className="h-2.5 w-2.5 rounded-full ring-1 ring-white/10"
+                      style={{ backgroundColor: cluster.color }}
+                    />
+                    {cluster.label}
+                    {cluster.size > 0 ? ` (${cluster.size})` : ""}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
 
           <PersonPanel
             node={selected}
@@ -426,32 +475,7 @@ export default function GraphResult({
             }
             onClose={() => setSelected(null)}
           />
-          <div className="pointer-events-none absolute bottom-4 right-4 flex max-w-[240px] flex-col gap-2 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur">
-            <span className="flex items-center gap-1.5 text-xs text-white/60">
-              <span
-                className="h-2.5 w-2.5 rounded-full"
-                style={{ backgroundColor: SELF_COLOR }}
-              />
-              You
-            </span>
-            {(data.graph.circles.length > 0
-              ? data.graph.circles
-              : [{ id: -1, label: "Independent", color: "#94a3b8", size: 0, comments: 0 }]
-            ).slice(0, 5).map((cluster) => (
-              <span
-                key={cluster.id}
-                className="flex items-center gap-1.5 text-xs text-white/55"
-              >
-                <span
-                  className="h-2.5 w-2.5 rounded-full ring-1 ring-white/10"
-                  style={{ backgroundColor: cluster.color }}
-                />
-                {cluster.label}
-                {cluster.size > 0 ? ` (${cluster.size})` : ""}
-              </span>
-            ))}
-          </div>
-        </motion.div>
+        </div>
 
         {/* Sidebar */}
         <aside className="flex flex-col gap-4">
@@ -473,7 +497,11 @@ export default function GraphResult({
             </div>
           </div>
 
-          <NetworkStats stats={data.stats} />
+          <NetworkStats
+            stats={data.stats}
+            onSelectUsername={selectMemberByUsername}
+            selectedUsername={selected?.label ?? null}
+          />
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
             <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-white/80">
               <ShieldAlert className="h-4 w-4 text-ig-orange" /> Scrape budget

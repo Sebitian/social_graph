@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { BadgeCheck, MessageCircle, Search, X } from "lucide-react";
 import type { Circle, GraphNode, PostComment } from "@/lib/types";
@@ -203,7 +204,26 @@ export default function PersonPanel({ node, proximityRing, friendCluster, onClos
   const color = proximityRing?.color ?? friendCluster?.color ?? "#94a3b8";
   const initial = (node?.label ?? "?").charAt(0).toUpperCase();
   const history = useMemo(() => node?.history ?? [], [node?.history]);
-  const [showComments, setShowComments] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  const isOpen = Boolean(node && node.group !== "self");
+
+  useEffect(() => {
+    if (!isOpen || !isMobile) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isOpen, isMobile, node?.id]);
 
   const tags = useMemo(() => (node ? deriveSimpleTags(node) : []), [node]);
   const explanation = useMemo(
@@ -212,18 +232,34 @@ export default function PersonPanel({ node, proximityRing, friendCluster, onClos
   );
   const features = node?.features;
 
-  return (
+  const panel = (
     <AnimatePresence>
-      {node && node.group !== "self" && (
-        <motion.div
-          key={node.id}
-          initial={{ opacity: 0, x: 24 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 24 }}
-          transition={{ type: "spring", stiffness: 280, damping: 28 }}
-          className="absolute right-3 top-3 z-20 flex max-h-[calc(100%-1.5rem)] w-[300px] max-w-[calc(100%-1.5rem)] flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/70 backdrop-blur-xl"
-        >
-          <div className="relative p-4">
+      {isOpen && node && (
+        <>
+          <motion.button
+            type="button"
+            key={`${node.id}-backdrop`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-black/65 sm:hidden"
+            onClick={onClose}
+            aria-label="Close profile"
+          />
+          <motion.div
+            key={node.id}
+            initial={isMobile ? { y: "100%" } : { opacity: 0, x: 24 }}
+            animate={isMobile ? { y: 0 } : { opacity: 1, x: 0 }}
+            exit={isMobile ? { y: "100%" } : { opacity: 0, x: 24 }}
+            transition={{ type: "spring", stiffness: 320, damping: 32 }}
+            className="z-50 flex w-full flex-col border border-white/10 bg-black/90 backdrop-blur-xl max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:max-h-[min(88dvh,100%)] max-sm:overflow-y-auto max-sm:overscroll-y-contain max-sm:touch-pan-y max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:pb-[max(1rem,env(safe-area-inset-bottom))] sm:absolute sm:right-3 sm:top-3 sm:max-h-[calc(100%-1.5rem)] sm:w-[300px] sm:max-w-[calc(100%-1.5rem)] sm:overflow-hidden sm:rounded-2xl"
+            onTouchMove={(event) => event.stopPropagation()}
+            onWheel={(event) => event.stopPropagation()}
+          >
+            <div className="mx-auto mt-2 h-1 w-10 shrink-0 rounded-full bg-white/20 sm:hidden" />
+
+            <div className="relative shrink-0 p-4">
             <button
               onClick={onClose}
               className="absolute right-3 top-3 rounded-full p-1 text-white/40 transition hover:bg-white/10 hover:text-white"
@@ -333,16 +369,12 @@ export default function PersonPanel({ node, proximityRing, friendCluster, onClos
             )}
           </div>
 
-          <div className="min-h-0 flex-1 overflow-y-auto border-t border-white/10 px-4 py-3">
-            {history.length > 0 && !showComments ? (
-              <button
-                onClick={() => setShowComments(true)}
-                className="w-full rounded-xl border border-white/10 px-3 py-2.5 text-xs text-white/55 transition hover:bg-white/10"
-              >
-                View {history.length} comment{history.length === 1 ? "" : "s"}
-              </button>
-            ) : history.length > 0 ? (
-              <CommentReceiptList key={node.id} history={history} />
+          <div className="shrink-0 border-t border-white/10 px-4 py-3 sm:min-h-0 sm:flex-1 sm:overflow-y-auto sm:overscroll-y-contain sm:touch-pan-y">
+            {history.length > 0 ? (
+              <>
+                <h3 className="mb-2 text-xs font-semibold text-white/70">What they wrote</h3>
+                <CommentReceiptList key={node.id} history={history} />
+              </>
             ) : (
               <p className="text-xs leading-relaxed text-white/40">
                 No comments from this person were returned by the scrape.
@@ -350,7 +382,14 @@ export default function PersonPanel({ node, proximityRing, friendCluster, onClos
             )}
           </div>
         </motion.div>
+        </>
       )}
     </AnimatePresence>
   );
+
+  if (isMobile && typeof document !== "undefined") {
+    return createPortal(panel, document.body);
+  }
+
+  return panel;
 }

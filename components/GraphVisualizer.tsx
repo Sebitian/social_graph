@@ -688,65 +688,6 @@ export default function GraphVisualizer({
 
   return (
     <div ref={wrapRef} className={className}>
-      {interactive && (
-        <div className="pointer-events-none absolute left-3 top-3 z-10 max-w-[280px] rounded-xl border border-white/10 bg-black/50 px-3 py-2.5 backdrop-blur">
-          <div className="text-[11px] font-semibold text-white/75">How to read this</div>
-          <p className="mt-1 text-[10px] leading-relaxed text-white/45">
-            <span className="text-white/65">Distance</span> = closeness: closer to you means
-            more recent, consistent interaction. <span className="text-white/65">Color</span> =
-            friend group. <span className="text-white/65">Spokes</span> = comment exchange with
-            you.
-          </p>
-          <div className="mt-2 space-y-1 border-t border-white/10 pt-2 text-[10px]">
-            <div className="flex items-center gap-2">
-              <span
-                className="inline-block h-0.5 w-4 rounded-full"
-                style={{ backgroundColor: SENT_COLOR }}
-              />
-              <span className="text-white/55">
-                <span style={{ color: SENT_COLOR }}>Red → them</span>
-                {" "}
-                comments you sent
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span
-                className="inline-block h-0.5 w-4 rounded-full"
-                style={{ backgroundColor: RECEIVED_COLOR }}
-              />
-              <span className="text-white/55">
-                <span style={{ color: RECEIVED_COLOR }}>Blue → you</span>
-                {" "}
-                comments they sent
-              </span>
-            </div>
-            <p className="pt-0.5 text-white/40">
-              Spoke label: <span style={{ color: SENT_COLOR }}>sent</span>
-              {" · "}
-              <span style={{ color: RECEIVED_COLOR }}>received</span>
-              {" "}
-              (— = their posts weren&apos;t scraped)
-            </p>
-          </div>
-          <div className="mt-2.5 space-y-1.5 border-t border-white/10 pt-2">
-            {PROXIMITY_RINGS.map((ring) => (
-              <div key={ring.id} className="flex items-center gap-2 text-[10px]">
-                <span className="flex h-3 w-3 shrink-0 items-center justify-center">
-                  <span
-                    className="rounded-full border border-white/40"
-                    style={{ width: 4 + ring.id * 3, height: 4 + ring.id * 3 }}
-                  />
-                </span>
-                <div>
-                  <span className="font-medium text-white/65">{ring.label}</span>
-                  <span className="text-white/40"> — {ring.subtitle}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
       {interactive && showHint && members.length > 0 && (
         <div className="pointer-events-none absolute bottom-6 left-1/2 z-10 -translate-x-1/2 animate-pulse rounded-full border border-white/15 bg-black/60 px-4 py-1.5 text-[11px] font-medium text-white/70 backdrop-blur">
           Click anyone to explore their connections
