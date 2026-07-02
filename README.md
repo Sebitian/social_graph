@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# social_graph
 
-## Getting Started
+Instagram interaction graph — visualize who comments on your posts, cluster friend groups, and share pinned snapshots without re-scraping.
 
-First, run the development server:
+## Local dev
 
 ```bash
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Without `APIFY_TOKEN`, demo data is used (`/graph/wanderlust`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Pinned snapshots (no scrape data in git)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Scraped JSON lives in **Vercel Blob** (production) or gitignored `data/snapshots/` (local).
 
-## Learn More
+```bash
+# Import raw comment export → local snapshot
+npm run import-raw-snapshot -- jp_jppap data/raw/jp_jppap-comments.json
 
-To learn more about Next.js, take a look at the following resources:
+# After deploy, push to production Blob
+npm run import-raw-snapshot -- jp_jppap data/raw/jp_jppap-comments.json --push https://your-app.vercel.app
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Share link: `/graph/<handle>/pinned`
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Import this repo on [Vercel](https://vercel.com)
+2. Add **Blob** storage (connects `BLOB_READ_WRITE_TOKEN`)
+3. Set `NEXT_PUBLIC_SITE_URL` and `SNAPSHOT_PIN_SECRET`
+4. Upload snapshot with `--push` (see above)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Optional: `APIFY_TOKEN` + Vercel KV for live scrapes.
