@@ -705,7 +705,7 @@ export default function GraphVisualizer({
           d3AlphaDecay={1}
           minZoom={0.35}
           maxZoom={6}
-          onEngineStop={() => fgRef.current?.zoomToFit(700, 56)}
+          onEngineStop={() => fgRef.current?.zoomToFit(700, 80)}
           onRenderFramePre={renderBackground}
           nodeCanvasObject={paintNode}
           nodePointerAreaPaint={paintPointerArea}

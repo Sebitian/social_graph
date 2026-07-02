@@ -48,9 +48,9 @@ export const SELF_COLOR = "#fccc63";
 export const AVATAR_DIAMETER = 40;
 export const SELF_NODE_RADIUS = 22;
 export const MEMBER_NODE_RADIUS = AVATAR_DIAMETER / 2;
-export const MIN_NODE_CENTER_SPACING = AVATAR_DIAMETER + 18;
-export const MAX_CLUSTER_LOCAL_OFFSET = 45;
-export const MAX_RADIAL_ADJUSTMENT = 22;
+export const MIN_NODE_CENTER_SPACING = AVATAR_DIAMETER + 26;
+export const MAX_CLUSTER_LOCAL_OFFSET = 58;
+export const MAX_RADIAL_ADJUSTMENT = 34;
 
 const AFFINITY_PAIR_CAP = 20;
 const AFFINITY_THRESHOLD = 0.3;
@@ -90,13 +90,13 @@ export interface SocialMapLayout {
   >;
 }
 
-/** Responsive ring radii — compressed ~25% vs the old fixed layout. */
+/** Responsive ring radii — tuned for readable spacing on dense graphs. */
 export function responsiveRingRadii(width: number, height: number): ProximityRadii {
   const minDim = Math.min(width, height);
   return {
-    mostPresent: minDim * 0.13,
-    regular: minDim * 0.27,
-    outer: minDim * 0.42,
+    mostPresent: minDim * 0.19,
+    regular: minDim * 0.38,
+    outer: minDim * 0.56,
   };
 }
 
@@ -506,7 +506,7 @@ function preferredRadiusForNode(
 
   return (
     tierRadius +
-    (nextRadius - tierRadius) * clamp01(localT) * 0.35 +
+    (nextRadius - tierRadius) * clamp01(localT) * 0.48 +
     scoreBias
   );
 }
@@ -531,7 +531,7 @@ function distance(a: { x: number; y: number }, b: { x: number; y: number }): num
 function resolveCollisions(
   positions: Map<string, { x: number; y: number }>,
   preferredRadii: Map<string, number>,
-  iterations = 10,
+  iterations = 16,
 ): void {
   const ids = [...positions.keys()];
   for (let iter = 0; iter < iterations; iter++) {
