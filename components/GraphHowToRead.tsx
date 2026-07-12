@@ -14,8 +14,8 @@ export function GraphHowToRead({ className = "" }: { className?: string }) {
       <p className="mt-1.5 text-xs leading-relaxed text-white/60 sm:text-[10px] sm:leading-relaxed sm:text-white/45">
         <span className="text-white/75">Distance</span> = closeness: closer to you means
         more recent, consistent interaction. <span className="text-white/75">Color</span> =
-        friend group. <span className="text-white/75">Spokes</span> = comment exchange with
-        you.
+        people who comment on the same posts as each other (not distance).{" "}
+        <span className="text-white/75">Spokes</span> = comments with you.
       </p>
       <div className="mt-2.5 grid gap-2 border-t border-white/10 pt-2.5 text-xs sm:grid-cols-2 sm:text-[10px]">
         <div className="flex items-center gap-2">

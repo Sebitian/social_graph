@@ -1,6 +1,6 @@
 # social_graph
 
-Instagram interaction graph — visualize who comments on your posts, cluster friend groups, and share pinned snapshots without re-scraping.
+Instagram / LinkedIn interaction graph — visualize who comments on your posts, cluster friend groups, and share pinned snapshots without re-scraping.
 
 ## Local dev
 
@@ -10,18 +10,18 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Without `APIFY_TOKEN`, demo data is used (`/graph/wanderlust`).
+Open [http://localhost:3000](http://localhost:3000). Without `APIFY_TOKEN`, demo data is used (`/graph/wanderlust`). Pinned LinkedIn demo: [`/graph/diandra/pinned`](http://localhost:3000/graph/diandra/pinned).
 
-## Pinned snapshots (no scrape data in git)
+## Pinned snapshots (no scrape data in git by default)
 
-Scraped JSON lives in **Vercel Blob** (production) or gitignored `data/snapshots/` (local).
+Scraped JSON lives in **Vercel Blob** (production) or gitignored `data/snapshots/` (local). The Diandra LinkedIn snapshot is committed for a shareable pinned demo.
 
 ```bash
-# Import raw comment export → local snapshot
-npm run import-raw-snapshot -- jp_jppap data/raw/jp_jppap-comments.json
+# Import raw export → local snapshot (Instagram comments or LinkedIn HarvestAPI dataset)
+npm run import-raw-snapshot -- diandra data/raw/diandra_linkedin_scrape_71226.json
 
 # After deploy, push to production Blob
-npm run import-raw-snapshot -- jp_jppap data/raw/jp_jppap-comments.json --push https://your-app.vercel.app
+npm run import-raw-snapshot -- diandra data/raw/diandra_linkedin_scrape_71226.json --push https://your-app.vercel.app
 ```
 
 Share link: `/graph/<handle>/pinned`

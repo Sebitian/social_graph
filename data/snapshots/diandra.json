@@ -1,0 +1,3955 @@
+{
+  "profile": {
+    "username": "diandra",
+    "fullName": "Diandra Dumitru",
+    "biography": "Fractional Marketing & GTM | Turning complex products into category leaders.",
+    "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4D03AQHE5UistvKrfA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1729619117297?e=1785369600&v=beta&t=DEclUGaNqVsVFaCgTR4rtRA2Zmuah8uAwEjNLLznUKs",
+    "followersCount": 0,
+    "followingCount": 0,
+    "postsCount": 20,
+    "isPrivate": false,
+    "isVerified": false,
+    "highlightReelCount": 0
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "diandra",
+        "label": "diandra",
+        "group": "self",
+        "circle": -1,
+        "clusterId": -1,
+        "comments": 0,
+        "val": 24,
+        "presenceScore": 1,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4D03AQHE5UistvKrfA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1729619117297?e=1785369600&v=beta&t=DEclUGaNqVsVFaCgTR4rtRA2Zmuah8uAwEjNLLznUKs",
+        "isVerified": false,
+        "fullName": "Diandra Dumitru"
+      },
+      {
+        "id": "ievabarauskaite",
+        "label": "ievabarauskaite",
+        "fullName": "Ieva Barauskaite",
+        "group": "member",
+        "circle": 0,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.444853490031846,
+        "presenceScore": 0.04448534900318467,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQFN4J3IdxpcZw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1677244157915?e=1785369600&v=beta&t=hwmlJoHJa7qPACQI52YT7HEe8P5R0X2hOJhtst68XHg",
+        "history": [
+          {
+            "authorId": "ACoAAAHhd0UBTGH3PP29IwKXlduDJ4Btg0VdX7Y",
+            "authorUsername": "ievabarauskaite",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_the-best-time-to-build-the-team-you-want-activity-7355928549800763392--Vgx",
+            "text": "Wow how exciting is this Imogen Lees! 👑",
+            "when": "49 weeks ago",
+            "timestamp": "2025-07-31T13:47:18.555Z",
+            "post": "The best time to build the team you want is before you're too busy to d…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.33,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.084Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.15,
+          "relationshipStrengthScore": 0.113,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-07-31T13:47:18.555Z",
+          "mostRecentInteractionDate": "2025-07-31T13:47:18.555Z",
+          "mostRecentDaysAgo": 346,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "ievabarauskaite",
+          "inferredContext": "acquaintance",
+          "interactionTags": [],
+          "confidence": 0.33,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.084Z"
+        }
+      },
+      {
+        "id": "camilla-guida-32597813b",
+        "label": "camilla-guida-32597813b",
+        "fullName": "Camilla Guida",
+        "group": "member",
+        "circle": 0,
+        "clusterId": 0,
+        "comments": 3,
+        "val": 4.508810629817787,
+        "presenceScore": 0.05088106298177864,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHsSSzRTTUMDg/profile-displayphoto-shrink_800_800/B4EZXCtVRLG0Ag-/0/1742728418837?e=1785369600&v=beta&t=Bgt0R1g0NfISa5oqwuGUR1Jma3S4vk4gSCM2WJxkGOY",
+        "history": [
+          {
+            "authorId": "ACoAACIjCs0BzJUN-LICTENf4sFXSeuAchVtGnA",
+            "authorUsername": "camilla-guida-32597813b",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_the-best-time-to-build-the-team-you-want-activity-7355928549800763392--Vgx",
+            "text": "3 is better than 1! 💃💃💃 Exciting to see our work paying off and starting to scale",
+            "when": "50 weeks ago",
+            "timestamp": "2025-07-31T11:04:52.921Z",
+            "post": "The best time to build the team you want is before you're too busy to d…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "work_or_collaboration_reference"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": true,
+              "referencesOngoingRelationship": true
+            }
+          },
+          {
+            "authorId": "ACoAACIjCs0BzJUN-LICTENf4sFXSeuAchVtGnA",
+            "authorUsername": "camilla-guida-32597813b",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_were-thrilled-to-announce-stackones-20m-activity-7325433288645337088-lexa",
+            "text": "Congratulations! Diandra and StackOne  team 🥇",
+            "when": "62 weeks ago",
+            "timestamp": "2025-05-06T09:26:42.202Z",
+            "post": "Couldn't be more proud of the StackOne team for their amazing $20M Seri…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "support_or_encouragement",
+                "group_reference"
+              ],
+              "namedPeople": [],
+              "locations": [
+                "Congratulations"
+              ],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          },
+          {
+            "authorId": "ACoAACIjCs0BzJUN-LICTENf4sFXSeuAchVtGnA",
+            "authorUsername": "camilla-guida-32597813b",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Couldn’t ask for a better partner to build with. Diandra Sovailescu Let’s go!!",
+            "when": "67 weeks ago",
+            "timestamp": "2025-03-27T15:49:03.637Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "work_connection",
+            "label": "Appears to be part of your work circle",
+            "color": "#2bbbad",
+            "reason": "Assumed from visible work, project, or creative references.",
+            "kind": "primary",
+            "context": "work_connection",
+            "confidence": 0.49,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment referenced work, projects, or creative output"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.085Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "reciprocal_engager",
+            "label": "Reciprocal engager",
+            "color": "#4c68d7",
+            "reason": "The profile owner replies to this person relatively often.",
+            "kind": "tag",
+            "tag": "reciprocal_engager",
+            "confidence": 0.783,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Owner reply rate 33%"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.085Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 3,
+          "recencyWeightedComments": 0.31,
+          "relationshipStrengthScore": 0.155,
+          "uniquePostsCommentedOn": 3,
+          "commentsPerMonth": 0.72,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0.2928242700796943,
+          "workCollaborationScore": 0.47235424431382605,
+          "familySchoolCommunityEvidenceScore": 0.2928242700796943,
+          "reciprocityScore": 0.333,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-03-27T15:49:03.637Z",
+          "mostRecentInteractionDate": "2025-07-31T11:04:52.921Z",
+          "mostRecentDaysAgo": 347,
+          "strongestTopicsEvents": [
+            "unknown",
+            "Congratulations"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.2
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "camilla-guida-32597813b",
+          "inferredContext": "work_connection",
+          "interactionTags": [
+            "reciprocal_engager"
+          ],
+          "confidence": 0.49,
+          "evidence": [
+            {
+              "label": "1 comment referenced work, projects, or creative output"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.085Z"
+        }
+      },
+      {
+        "id": "clazar",
+        "label": "clazar",
+        "fullName": "Cornel Lazar",
+        "group": "member",
+        "circle": 0,
+        "clusterId": 0,
+        "comments": 3,
+        "val": 4.494895822713743,
+        "presenceScore": 0.04948958227137433,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQFjPQcIiYv01w/profile-displayphoto-crop_800_800/B4EZ7ffY59KcAI-/0/1781866009191?e=1785369600&v=beta&t=oHT3PSPDyzRo0Js5p997lEnUQRON67az6rr0wdlzhYM",
+        "history": [
+          {
+            "authorId": "ACoAAANjbOIBC8E3bLzUrx8nmnGWWwdauqxxf0s",
+            "authorUsername": "clazar",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_the-best-time-to-build-the-team-you-want-activity-7355928549800763392--Vgx",
+            "text": "Exciting to follow the progress. Congrats!",
+            "when": "50 weeks ago",
+            "timestamp": "2025-07-30T07:46:38.717Z",
+            "post": "The best time to build the team you want is before you're too busy to d…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "support_or_encouragement",
+                "celebration_or_congratulations"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          },
+          {
+            "authorId": "ACoAAANjbOIBC8E3bLzUrx8nmnGWWwdauqxxf0s",
+            "authorUsername": "clazar",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "That’s fantastic news! 👏👏👏",
+            "when": "67 weeks ago",
+            "timestamp": "2025-03-27T15:17:25.666Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          },
+          {
+            "authorId": "ACoAAANjbOIBC8E3bLzUrx8nmnGWWwdauqxxf0s",
+            "authorUsername": "clazar",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_in-2024-i-took-a-leap-of-faith-and-it-activity-7284555999594614784-AWrs",
+            "text": "Fantastic! That’s excellent 👏👏👏",
+            "when": "78 weeks ago",
+            "timestamp": "2025-01-13T21:41:32.599Z",
+            "post": "In 2024, I took a leap of faith — and it paid off. Six years in the sta…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light social connection from supportive or personal public interaction.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.52,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "2 comments carried supportive, celebratory, shared-memory, or joke signals"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.086Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "celebration_connection",
+            "label": "Celebration connection",
+            "color": "#4c68d7",
+            "reason": "Often appears around milestones, encouragement, or celebration.",
+            "kind": "tag",
+            "tag": "celebration_connection",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "2 comments were supportive or celebratory"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.086Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "reciprocal_engager",
+            "label": "Reciprocal engager",
+            "color": "#4c68d7",
+            "reason": "The profile owner replies to this person relatively often.",
+            "kind": "tag",
+            "tag": "reciprocal_engager",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Owner reply rate 67%"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.086Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.086Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 3,
+          "recencyWeightedComments": 0.27,
+          "relationshipStrengthScore": 0.109,
+          "uniquePostsCommentedOn": 3,
+          "commentsPerMonth": 0.46,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.2833333333333334,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0.5452069250528304,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0.667,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-01-13T21:41:32.599Z",
+          "mostRecentInteractionDate": "2025-07-30T07:46:38.717Z",
+          "mostRecentDaysAgo": 348,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.2
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "clazar",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "celebration_connection",
+            "reciprocal_engager",
+            "low_context_connection"
+          ],
+          "confidence": 0.52,
+          "evidence": [
+            {
+              "label": "2 comments carried supportive, celebratory, shared-memory, or joke signals"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.086Z"
+        }
+      },
+      {
+        "id": "sophie-aspden-95011965",
+        "label": "sophie-aspden-95011965",
+        "fullName": "Sophie Aspden",
+        "group": "member",
+        "circle": 0,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.474728426653653,
+        "presenceScore": 0.04747284266536529,
+        "history": [
+          {
+            "authorId": "ACoAAA24rwwBVla2eG1Kxh8k7i16W1-nspn-FQ4",
+            "authorUsername": "sophie-aspden-95011965",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_the-best-time-to-build-the-team-you-want-activity-7355928549800763392--Vgx",
+            "text": "Working with Imogen Lees is a true dream - best there is 💓",
+            "when": "50 weeks ago",
+            "timestamp": "2025-07-29T14:58:59.104Z",
+            "post": "The best time to build the team you want is before you're too busy to d…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "work_or_collaboration_reference"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "work_connection",
+            "label": "Appears to be part of your work circle",
+            "color": "#2bbbad",
+            "reason": "Assumed from visible work, project, or creative references.",
+            "kind": "primary",
+            "context": "work_connection",
+            "confidence": 0.45,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment referenced work, projects, or creative output"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.085Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.14,
+          "relationshipStrengthScore": 0.113,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 1,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-07-29T14:58:59.104Z",
+          "mostRecentInteractionDate": "2025-07-29T14:58:59.104Z",
+          "mostRecentDaysAgo": 348,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "sophie-aspden-95011965",
+          "inferredContext": "work_connection",
+          "interactionTags": [],
+          "confidence": 0.45,
+          "evidence": [
+            {
+              "label": "1 comment referenced work, projects, or creative output"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.085Z"
+        }
+      },
+      {
+        "id": "imogen-lees-profile",
+        "label": "imogen-lees-profile",
+        "fullName": "Imogen Lees",
+        "group": "member",
+        "circle": 0,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.444727038711926,
+        "presenceScore": 0.04447270387119262,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQGeu7eyd7MdUg/profile-displayphoto-crop_800_800/B4EZrqVs6mHEAI-/0/1764868149389?e=1785369600&v=beta&t=4zumPx1vGyEXxflcnozwWwxTkiAM-B0KZxGCKS-fpCA",
+        "history": [
+          {
+            "authorId": "ACoAACGVAbsBXYNAuWKsgWJIln7VI0mBZB9acPM",
+            "authorUsername": "imogen-lees-profile",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_the-best-time-to-build-the-team-you-want-activity-7355928549800763392--Vgx",
+            "text": "So excited to see where this takes us! I'm already loving being in a team with such smart marketing minds 💃💃💃",
+            "when": "50 weeks ago",
+            "timestamp": "2025-07-29T14:27:07.530Z",
+            "post": "The best time to build the team you want is before you're too busy to d…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "group_reference"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": true,
+              "referencesOngoingRelationship": true
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "community_member",
+            "label": "Appears in your community",
+            "color": "#2bbbad",
+            "reason": "Assumed from visible group, event, travel, or community references.",
+            "kind": "primary",
+            "context": "community_member",
+            "confidence": 0.53,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment referenced a group, event, trip, or shared public setting"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.086Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "reciprocal_engager",
+            "label": "Reciprocal engager",
+            "color": "#4c68d7",
+            "reason": "The profile owner replies to this person relatively often.",
+            "kind": "tag",
+            "tag": "reciprocal_engager",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Owner reply rate 100%"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.086Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.14,
+          "relationshipStrengthScore": 0.113,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 1,
+          "reciprocityScore": 1,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-07-29T14:27:07.530Z",
+          "mostRecentInteractionDate": "2025-07-29T14:27:07.530Z",
+          "mostRecentDaysAgo": 348,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "imogen-lees-profile",
+          "inferredContext": "community_member",
+          "interactionTags": [
+            "reciprocal_engager"
+          ],
+          "confidence": 0.53,
+          "evidence": [
+            {
+              "label": "1 comment referenced a group, event, trip, or shared public setting"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.086Z"
+        }
+      },
+      {
+        "id": "eangela",
+        "label": "eangela",
+        "fullName": "Elena Angela",
+        "group": "member",
+        "circle": 0,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.480725331444724,
+        "presenceScore": 0.04807253314447235,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQGxOxvsn4buNQ/profile-displayphoto-crop_800_800/B4EZrgoesKHUAI-/0/1764705300842?e=1785369600&v=beta&t=8hfTO8sqvJQiCtPucd-JRjGd-TBQL0Ztz56IWU_P4MM",
+        "history": [
+          {
+            "authorId": "ACoAAAKoSMkBEIbuYVAvKVKttg48gvBwaP705K8",
+            "authorUsername": "eangela",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_the-best-time-to-build-the-team-you-want-activity-7355928549800763392--Vgx",
+            "text": "Love to see the team growing, well done Diandra! 👏",
+            "when": "50 weeks ago",
+            "timestamp": "2025-07-29T13:47:54.868Z",
+            "post": "The best time to build the team you want is before you're too busy to d…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise",
+                "support_or_encouragement",
+                "group_reference"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "supportive"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "community_member",
+            "label": "Appears in your community",
+            "color": "#2bbbad",
+            "reason": "Assumed from visible group, event, travel, or community references.",
+            "kind": "primary",
+            "context": "community_member",
+            "confidence": 0.45,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment referenced a group, event, trip, or shared public setting"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.086Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.14,
+          "relationshipStrengthScore": 0.113,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 1,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 1,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-07-29T13:47:54.868Z",
+          "mostRecentInteractionDate": "2025-07-29T13:47:54.868Z",
+          "mostRecentDaysAgo": 348,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "eangela",
+          "inferredContext": "community_member",
+          "interactionTags": [],
+          "confidence": 0.45,
+          "evidence": [
+            {
+              "label": "1 comment referenced a group, event, trip, or shared public setting"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.086Z"
+        }
+      },
+      {
+        "id": "juliaodoherty",
+        "label": "juliaodoherty",
+        "fullName": "Julia O'Doherty",
+        "group": "member",
+        "circle": 1,
+        "clusterId": 0,
+        "comments": 2,
+        "val": 4.445795662347925,
+        "presenceScore": 0.04457956623479252,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHLFmbOjCfenw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1718328368620?e=1785369600&v=beta&t=H6Lin-LKhRoWTqnlDPj6QQB-qCjSBges3ekbLj9k5D8",
+        "history": [
+          {
+            "authorId": "ACoAAAQBo1gBoaJAFvuN2j6JkA6nwVpwB3T8dqc",
+            "authorUsername": "juliaodoherty",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_the-best-time-to-build-the-team-you-want-activity-7355928549800763392--Vgx",
+            "text": "I love seeing your success Diandra Dumitru and watching your business grow. I still remember our first buddy chat by the Barbican where you talked about one day starting a business, and now here you are 💖",
+            "when": "50 weeks ago",
+            "timestamp": "2025-07-29T12:17:22.100Z",
+            "post": "The best time to build the team you want is before you're too busy to d…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": true,
+              "referencesOngoingRelationship": true
+            }
+          },
+          {
+            "authorId": "ACoAAAQBo1gBoaJAFvuN2j6JkA6nwVpwB3T8dqc",
+            "authorUsername": "juliaodoherty",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Love seeing what you're building and all your success 💖",
+            "when": "67 weeks ago",
+            "timestamp": "2025-03-27T15:42:47.272Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.45,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "2 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.086Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "reciprocal_engager",
+            "label": "Reciprocal engager",
+            "color": "#4c68d7",
+            "reason": "The profile owner replies to this person relatively often.",
+            "kind": "tag",
+            "tag": "reciprocal_engager",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Owner reply rate 100%"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.086Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 2,
+          "recencyWeightedComments": 0.22,
+          "relationshipStrengthScore": 0.133,
+          "uniquePostsCommentedOn": 2,
+          "commentsPerMonth": 0.48,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 1,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-03-27T15:42:47.272Z",
+          "mostRecentInteractionDate": "2025-07-29T12:17:22.100Z",
+          "mostRecentDaysAgo": 348,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.15000000000000002
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "juliaodoherty",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "reciprocal_engager"
+          ],
+          "confidence": 0.45,
+          "evidence": [
+            {
+              "label": "2 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.086Z"
+        }
+      },
+      {
+        "id": "martina-redmond-17932423",
+        "label": "martina-redmond-17932423",
+        "fullName": "Martina Redmond",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.48044890799453,
+        "presenceScore": 0.04804489079945301,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4D03AQFevg3xjBm43g/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1517023028190?e=1785369600&v=beta&t=mbCigBBmMGZTRCT6L0rfGvYlW1BJr3iP0UQ1PGBVgtE",
+        "history": [
+          {
+            "authorId": "ACoAAATaUe0BljiYSahEeroGNvUxRtuRxQwgcnY",
+            "authorUsername": "martina-redmond-17932423",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Congratulations Diandra!",
+            "when": "50 weeks ago",
+            "timestamp": "2025-07-24T22:24:11.929Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "support_or_encouragement"
+              ],
+              "namedPeople": [],
+              "locations": [
+                "Congratulations Diandra"
+              ],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light social connection from supportive or personal public interaction.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.45,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment carried supportive, celebratory, shared-memory, or joke signals"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.14,
+          "relationshipStrengthScore": 0.112,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 1,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-07-24T22:24:11.929Z",
+          "mostRecentInteractionDate": "2025-07-24T22:24:11.929Z",
+          "mostRecentDaysAgo": 353,
+          "strongestTopicsEvents": [
+            "unknown",
+            "Congratulations Diandra"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "martina-redmond-17932423",
+          "inferredContext": "acquaintance",
+          "interactionTags": [],
+          "confidence": 0.45,
+          "evidence": [
+            {
+              "label": "1 comment carried supportive, celebratory, shared-memory, or joke signals"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "emily-girvan",
+        "label": "emily-girvan",
+        "fullName": "Emily Girvan",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.474421011649617,
+        "presenceScore": 0.04744210116496172,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQElPB9Xw95YxQ/profile-displayphoto-shrink_800_800/B4EZZeQRj9H0Ac-/0/1745338048539?e=1785369600&v=beta&t=oiwB6cTrDgJoLzIc7cZlBg6wZPOkFyk1gF_wbMja9Bc",
+        "history": [
+          {
+            "authorId": "ACoAACj82AYBrGTKlK5lX7tkjqdIbPEnWyVVa5g",
+            "authorUsername": "emily-girvan",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "I'm very late to the party - but this is really exciting Diandra!! Can't wait to see all the successes you have with Citadelle! 💗",
+            "when": "51 weeks ago",
+            "timestamp": "2025-07-24T10:29:44.892Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "travel_or_event_reference"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "community_member",
+            "label": "Appears in your community",
+            "color": "#2bbbad",
+            "reason": "Assumed from visible group, event, travel, or community references.",
+            "kind": "primary",
+            "context": "community_member",
+            "confidence": 0.45,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment referenced a group, event, trip, or shared public setting"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.14,
+          "relationshipStrengthScore": 0.112,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 1,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-07-24T10:29:44.892Z",
+          "mostRecentInteractionDate": "2025-07-24T10:29:44.892Z",
+          "mostRecentDaysAgo": 354,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "emily-girvan",
+          "inferredContext": "community_member",
+          "interactionTags": [],
+          "confidence": 0.45,
+          "evidence": [
+            {
+              "label": "1 comment referenced a group, event, trip, or shared public setting"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "company-up-world",
+        "label": "company-up-world",
+        "fullName": "Up World",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.444015321198688,
+        "presenceScore": 0.04440153211986882,
+        "history": [
+          {
+            "authorUsername": "company-up-world",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_mentor-socialmediamarketing-influencermarketing-activity-7350900140481630211-LEqD",
+            "text": "This is amazing!!!!! Wow ❤️",
+            "when": "52 weeks ago",
+            "timestamp": "2025-07-16T12:36:49.889Z",
+            "post": "Nothing more rewarding than being able to support smart people through…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "warm"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.25,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.086Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.086Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.13,
+          "relationshipStrengthScore": 0.048,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-07-16T12:36:49.889Z",
+          "mostRecentInteractionDate": "2025-07-16T12:36:49.889Z",
+          "mostRecentDaysAgo": 361,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "company-up-world",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.25,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.086Z"
+        }
+      },
+      {
+        "id": "seanwestwood",
+        "label": "seanwestwood",
+        "fullName": "Sean Westwood",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.442340310762714,
+        "presenceScore": 0.04423403107627138,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D5603AQGdkEmIDLWGkA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1707189248850?e=1785369600&v=beta&t=zMBNWzAxVpEeOkU7JZkZwr5hoSl61CNf4tyfkVGo0mo",
+        "history": [
+          {
+            "authorId": "ACoAAALiLhMBYuCOgStISB0XM6koe8HrWqE17j4",
+            "authorUsername": "seanwestwood",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_were-thrilled-to-announce-stackones-20m-activity-7325433288645337088-lexa",
+            "text": "Wow, that’s amazing Diandra Sovailescu! 👏",
+            "when": "62 weeks ago",
+            "timestamp": "2025-05-06T12:15:52.107Z",
+            "post": "Couldn't be more proud of the StackOne team for their amazing $20M Seri…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "warm"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.33,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.086Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.09,
+          "relationshipStrengthScore": 0.109,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-05-06T12:15:52.107Z",
+          "mostRecentInteractionDate": "2025-05-06T12:15:52.107Z",
+          "mostRecentDaysAgo": 432,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "seanwestwood",
+          "inferredContext": "acquaintance",
+          "interactionTags": [],
+          "confidence": 0.33,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "shashank-mishra-8a34051b5",
+        "label": "shashank-mishra-8a34051b5",
+        "fullName": "Shashank Mishra",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 2,
+        "val": 4.445667092004822,
+        "presenceScore": 0.044566709200482175,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D5603AQF9rj3ukaSF_A/profile-displayphoto-crop_800_800/B56Z6o.cBHI8AI-/0/1780951401705?e=1785369600&v=beta&t=9TGXwTj4ypKpPjBXQOpqnaevGJZkrMOItyMMOngJLRw",
+        "history": [
+          {
+            "authorId": "ACoAADISZrsBlaF9su8QhXy8KVrqNZY54xCcW_Q",
+            "authorUsername": "shashank-mishra-8a34051b5",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_were-thrilled-to-announce-stackones-20m-activity-7325433288645337088-lexa",
+            "text": "Congratulations Diandra Sovailescu.",
+            "when": "62 weeks ago",
+            "timestamp": "2025-05-06T08:20:38.200Z",
+            "post": "Couldn't be more proud of the StackOne team for their amazing $20M Seri…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "support_or_encouragement"
+              ],
+              "namedPeople": [],
+              "locations": [
+                "Congratulations Diandra Sovailescu"
+              ],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          },
+          {
+            "authorId": "ACoAADISZrsBlaF9su8QhXy8KVrqNZY54xCcW_Q",
+            "authorUsername": "shashank-mishra-8a34051b5",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_brand-marketing-toneofvoice-activity-7206234698702819330-MlMC",
+            "text": "Provide value first. Sell second.",
+            "when": "2 years ago",
+            "timestamp": "2024-06-23T05:02:48.244Z",
+            "post": "If you’re using social media to shove company info down people’s throat…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light social connection from supportive or personal public interaction.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.4,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment carried supportive, celebratory, shared-memory, or joke signals"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 2,
+          "recencyWeightedComments": 0.11,
+          "relationshipStrengthScore": 0.094,
+          "uniquePostsCommentedOn": 2,
+          "commentsPerMonth": 0.19,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.35000000000000003,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0.8534442544379955,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2024-06-23T05:02:48.244Z",
+          "mostRecentInteractionDate": "2025-05-06T08:20:38.200Z",
+          "mostRecentDaysAgo": 433,
+          "strongestTopicsEvents": [
+            "unknown",
+            "Congratulations Diandra Sovailescu"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.15000000000000002
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "shashank-mishra-8a34051b5",
+          "inferredContext": "acquaintance",
+          "interactionTags": [],
+          "confidence": 0.4,
+          "evidence": [
+            {
+              "label": "1 comment carried supportive, celebratory, shared-memory, or joke signals"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "mel-chacksfield-b587383a",
+        "label": "mel-chacksfield-b587383a",
+        "fullName": "Mel Chacksfield",
+        "group": "member",
+        "circle": 1,
+        "clusterId": 0,
+        "comments": 2,
+        "val": 4.506267301791101,
+        "presenceScore": 0.05062673017911007,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4D03AQEu56Nj1w1NYw/profile-displayphoto-shrink_800_800/B4DZVl_P8fHkAg-/0/1741172834477?e=1785369600&v=beta&t=Z2X0L7Q9JPfIERF6JEoFBm5_kLEcErO27mnN7pR84KM",
+        "history": [
+          {
+            "authorId": "ACoAAAhLo3QBv4BqqWaGEE5YpimkuPY4L3Y0U7Y",
+            "authorUsername": "mel-chacksfield-b587383a",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "This is amazing news, huge congratulations Diandra, let's catch up soon x",
+            "when": "64 weeks ago",
+            "timestamp": "2025-04-24T05:48:58.378Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise",
+                "support_or_encouragement",
+                "planning_or_future_reference"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "highly_personal",
+              "tone": [
+                "celebratory",
+                "warm"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": true
+            }
+          },
+          {
+            "authorId": "ACoAAAhLo3QBv4BqqWaGEE5YpimkuPY4L3Y0U7Y",
+            "authorUsername": "mel-chacksfield-b587383a",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_in-2024-i-took-a-leap-of-faith-and-it-activity-7284555999594614784-AWrs",
+            "text": "You're amazing and I was very lucky to work with you in Q3 and Q4. I'm looking forward to your 2025, and hoping we can work together again very soon.",
+            "when": "78 weeks ago",
+            "timestamp": "2025-01-13T14:10:38.339Z",
+            "post": "In 2024, I took a leap of faith — and it paid off. Six years in the sta…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise",
+                "work_or_collaboration_reference"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "warm"
+              ],
+              "hasSharedExperience": true,
+              "referencesOngoingRelationship": true
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "work_connection",
+            "label": "Appears to be part of your work circle",
+            "color": "#2bbbad",
+            "reason": "Assumed from visible work, project, or creative references.",
+            "kind": "primary",
+            "context": "work_connection",
+            "confidence": 0.56,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment referenced work, projects, or creative output"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "reciprocal_engager",
+            "label": "Reciprocal engager",
+            "color": "#4c68d7",
+            "reason": "The profile owner replies to this person relatively often.",
+            "kind": "tag",
+            "tag": "reciprocal_engager",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Owner reply rate 100%"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 2,
+          "recencyWeightedComments": 0.13,
+          "relationshipStrengthScore": 0.164,
+          "uniquePostsCommentedOn": 2,
+          "commentsPerMonth": 0.6,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.775,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0.6362617850650117,
+          "workCollaborationScore": 0.36373821493498815,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 1,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-01-13T14:10:38.339Z",
+          "mostRecentInteractionDate": "2025-04-24T05:48:58.378Z",
+          "mostRecentDaysAgo": 445,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.15000000000000002
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "mel-chacksfield-b587383a",
+          "inferredContext": "work_connection",
+          "interactionTags": [
+            "reciprocal_engager"
+          ],
+          "confidence": 0.56,
+          "evidence": [
+            {
+              "label": "1 comment referenced work, projects, or creative output"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "andreea-stefanescu-9618763a",
+        "label": "andreea-stefanescu-9618763a",
+        "fullName": "Andreea Stefanescu",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.478130018279787,
+        "presenceScore": 0.0478130018279787,
+        "history": [
+          {
+            "authorId": "ACoAAAhQpNkBx25QaKabfTgy4WZLANGeVyLOiU8",
+            "authorUsername": "andreea-stefanescu-9618763a",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Congratulations, Diandra! 🤗",
+            "when": "66 weeks ago",
+            "timestamp": "2025-04-06T20:08:50.178Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "support_or_encouragement"
+              ],
+              "namedPeople": [],
+              "locations": [
+                "Congratulations"
+              ],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light social connection from supportive or personal public interaction.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.52,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment carried supportive, celebratory, shared-memory, or joke signals"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "reciprocal_engager",
+            "label": "Reciprocal engager",
+            "color": "#4c68d7",
+            "reason": "The profile owner replies to this person relatively often.",
+            "kind": "tag",
+            "tag": "reciprocal_engager",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Owner reply rate 100%"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.08,
+          "relationshipStrengthScore": 0.109,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 1,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 1,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-04-06T20:08:50.178Z",
+          "mostRecentInteractionDate": "2025-04-06T20:08:50.178Z",
+          "mostRecentDaysAgo": 462,
+          "strongestTopicsEvents": [
+            "unknown",
+            "Congratulations"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "andreea-stefanescu-9618763a",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "reciprocal_engager"
+          ],
+          "confidence": 0.52,
+          "evidence": [
+            {
+              "label": "1 comment carried supportive, celebratory, shared-memory, or joke signals"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "claudio-bruno",
+        "label": "claudio-bruno",
+        "fullName": "Claudio Bruno",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.538111026518056,
+        "presenceScore": 0.05381110265180562,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/C5603AQEvNnl7lLYmvA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1571987491953?e=1785369600&v=beta&t=XE6BzLa_iBOtrOsyyzlEmhyeMbdiAVNQvs1bvNcm5rI",
+        "history": [
+          {
+            "authorId": "ACoAAC3bNkYBHlcVURzaX8Ald_agAODlY8xXNfc",
+            "authorUsername": "claudio-bruno",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Congrats and good luck Camilla Guida !",
+            "when": "67 weeks ago",
+            "timestamp": "2025-04-02T21:01:17.770Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "support_or_encouragement",
+                "celebration_or_congratulations",
+                "travel_or_event_reference"
+              ],
+              "namedPeople": [],
+              "locations": [
+                "Camilla Guida"
+              ],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "community_member",
+            "label": "Appears in your community",
+            "color": "#2bbbad",
+            "reason": "Assumed from visible group, event, travel, or community references.",
+            "kind": "primary",
+            "context": "community_member",
+            "confidence": 0.44,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment referenced a group, event, trip, or shared public setting"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "celebration_connection",
+            "label": "Celebration connection",
+            "color": "#4c68d7",
+            "reason": "Often appears around milestones, encouragement, or celebration.",
+            "kind": "tag",
+            "tag": "celebration_connection",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "2 comments were supportive or celebratory"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.08,
+          "relationshipStrengthScore": 0.109,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 1,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 1,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-04-02T21:01:17.770Z",
+          "mostRecentInteractionDate": "2025-04-02T21:01:17.770Z",
+          "mostRecentDaysAgo": 466,
+          "strongestTopicsEvents": [
+            "unknown",
+            "Camilla Guida"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "claudio-bruno",
+          "inferredContext": "community_member",
+          "interactionTags": [
+            "celebration_connection"
+          ],
+          "confidence": 0.44,
+          "evidence": [
+            {
+              "label": "1 comment referenced a group, event, trip, or shared public setting"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "ssantoshc18",
+        "label": "ssantoshc18",
+        "fullName": "Santosh Choudhary",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 2,
+        "val": 4.5534745291084455,
+        "presenceScore": 0.055347452910844544,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHF3FhdhYh9JQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1684919071400?e=1785369600&v=beta&t=YFaWV8drrLDOaHBCBeBH5LGiBDICTokefSa1VO5-2uY",
+        "history": [
+          {
+            "authorId": "ACoAAAfr0E8BGhmEggHFACIDoy5qnc5JZz4ZaUE",
+            "authorUsername": "ssantoshc18",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Great news and huge congrats Diandra and Camilla!",
+            "when": "67 weeks ago",
+            "timestamp": "2025-03-28T16:12:39.968Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "support_or_encouragement",
+                "celebration_or_congratulations",
+                "travel_or_event_reference"
+              ],
+              "namedPeople": [],
+              "locations": [
+                "Camilla"
+              ],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          },
+          {
+            "authorId": "ACoAAAfr0E8BGhmEggHFACIDoy5qnc5JZz4ZaUE",
+            "authorUsername": "ssantoshc18",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_have-you-ever-had-a-moment-that-forever-changed-activity-7290320877223645184--FI1",
+            "text": "Congrats Diandra!!!",
+            "when": "76 weeks ago",
+            "timestamp": "2025-01-29T15:35:34.128Z",
+            "post": "Have you ever had a moment that forever changed the way you think about…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "support_or_encouragement",
+                "celebration_or_congratulations"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "community_member",
+            "label": "Appears in your community",
+            "color": "#2bbbad",
+            "reason": "Assumed from visible group, event, travel, or community references.",
+            "kind": "primary",
+            "context": "community_member",
+            "confidence": 0.52,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment referenced a group, event, trip, or shared public setting"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "celebration_connection",
+            "label": "Celebration connection",
+            "color": "#4c68d7",
+            "reason": "Often appears around milestones, encouragement, or celebration.",
+            "kind": "tag",
+            "tag": "celebration_connection",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "4 comments were supportive or celebratory"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "reciprocal_engager",
+            "label": "Reciprocal engager",
+            "color": "#4c68d7",
+            "reason": "The profile owner replies to this person relatively often.",
+            "kind": "tag",
+            "tag": "reciprocal_engager",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Owner reply rate 100%"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 2,
+          "recencyWeightedComments": 0.13,
+          "relationshipStrengthScore": 0.128,
+          "uniquePostsCommentedOn": 2,
+          "commentsPerMonth": 1.03,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 1,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0.5799005963579765,
+          "reciprocityScore": 1,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-01-29T15:35:34.128Z",
+          "mostRecentInteractionDate": "2025-03-28T16:12:39.968Z",
+          "mostRecentDaysAgo": 471,
+          "strongestTopicsEvents": [
+            "unknown",
+            "Camilla"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.15000000000000002
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "ssantoshc18",
+          "inferredContext": "community_member",
+          "interactionTags": [
+            "celebration_connection",
+            "reciprocal_engager"
+          ],
+          "confidence": 0.52,
+          "evidence": [
+            {
+              "label": "1 comment referenced a group, event, trip, or shared public setting"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "lottiewoolley",
+        "label": "lottiewoolley",
+        "fullName": "Lottie Woolley",
+        "group": "member",
+        "circle": 1,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.508088352681972,
+        "presenceScore": 0.050808835268197274,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQESz6ba2avaOw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1694534489842?e=1785369600&v=beta&t=Ojl1q2lD01O89m3Fvr3YJXjQyMb_jMyRT-FYUKd5s84",
+        "history": [
+          {
+            "authorId": "ACoAABHC2gwB734m5y4gWZnJ50wMddXEoWILOKM",
+            "authorUsername": "lottiewoolley",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Congrats!!! x",
+            "when": "67 weeks ago",
+            "timestamp": "2025-03-28T15:15:17.716Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "support_or_encouragement",
+                "celebration_or_congratulations"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light social connection from supportive or personal public interaction.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.52,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "2 comments carried supportive, celebratory, shared-memory, or joke signals"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "celebration_connection",
+            "label": "Celebration connection",
+            "color": "#4c68d7",
+            "reason": "Often appears around milestones, encouragement, or celebration.",
+            "kind": "tag",
+            "tag": "celebration_connection",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "2 comments were supportive or celebratory"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "reciprocal_engager",
+            "label": "Reciprocal engager",
+            "color": "#4c68d7",
+            "reason": "The profile owner replies to this person relatively often.",
+            "kind": "tag",
+            "tag": "reciprocal_engager",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Owner reply rate 100%"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.07,
+          "relationshipStrengthScore": 0.108,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 1,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 1,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-03-28T15:15:17.716Z",
+          "mostRecentInteractionDate": "2025-03-28T15:15:17.716Z",
+          "mostRecentDaysAgo": 471,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "lottiewoolley",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "celebration_connection",
+            "reciprocal_engager"
+          ],
+          "confidence": 0.52,
+          "evidence": [
+            {
+              "label": "2 comments carried supportive, celebratory, shared-memory, or joke signals"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "tommaso-guida-50512620a",
+        "label": "tommaso-guida-50512620a",
+        "fullName": "Tommaso Guida",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.472087906382979,
+        "presenceScore": 0.04720879063829788,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGfhAZZMHWpSw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1668449381079?e=1785369600&v=beta&t=PQz_WkgdkO9Nd93YmV0aqySyMboB7PRMFBjoyzHVl1A",
+        "history": [
+          {
+            "authorId": "ACoAADUOOVUBI3XxNEsaIOZwunmUaSCYp2ooO94",
+            "authorUsername": "tommaso-guida-50512620a",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Super Camilla Guida!!!👏🏻👏🏻",
+            "when": "67 weeks ago",
+            "timestamp": "2025-03-28T12:37:34.697Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise",
+                "travel_or_event_reference"
+              ],
+              "namedPeople": [],
+              "locations": [
+                "Super Camilla Guida"
+              ],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "community_member",
+            "label": "Appears in your community",
+            "color": "#2bbbad",
+            "reason": "Assumed from visible group, event, travel, or community references.",
+            "kind": "primary",
+            "context": "community_member",
+            "confidence": 0.44,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment referenced a group, event, trip, or shared public setting"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.07,
+          "relationshipStrengthScore": 0.108,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 1,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-03-28T12:37:34.697Z",
+          "mostRecentInteractionDate": "2025-03-28T12:37:34.697Z",
+          "mostRecentDaysAgo": 471,
+          "strongestTopicsEvents": [
+            "unknown",
+            "Super Camilla Guida"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "tommaso-guida-50512620a",
+          "inferredContext": "community_member",
+          "interactionTags": [],
+          "confidence": 0.44,
+          "evidence": [
+            {
+              "label": "1 comment referenced a group, event, trip, or shared public setting"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "davidseinker",
+        "label": "davidseinker",
+        "fullName": "David Seinker",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.442087106753489,
+        "presenceScore": 0.04420871067534882,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGGfXwYJdN6CA/profile-displayphoto-crop_800_800/B4DZ62JWWIKQAM-/0/1781172366953?e=1785369600&v=beta&t=GnyhINONXfJXfaFnXZQHICinrK-rKKHb8nWv0IXBsqA",
+        "history": [
+          {
+            "authorId": "ACoAAAfQADABy6VZKzhaIJ_Y1rU2iuuhpU2pl_8",
+            "authorUsername": "davidseinker",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Well done!",
+            "when": "67 weeks ago",
+            "timestamp": "2025-03-28T07:54:02.083Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.25,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.07,
+          "relationshipStrengthScore": 0.044,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-03-28T07:54:02.083Z",
+          "mostRecentInteractionDate": "2025-03-28T07:54:02.083Z",
+          "mostRecentDaysAgo": 472,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "davidseinker",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "low_context_connection"
+          ],
+          "confidence": 0.25,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "pamelahsieh",
+        "label": "pamelahsieh",
+        "fullName": "🌱 Pamela Hsieh",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.538085563592678,
+        "presenceScore": 0.05380855635926782,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4E03AQHxNSTJeCRCTg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516267540904?e=1785369600&v=beta&t=RtcNqWHx3OJdBugWdX1SaFv3NSd0eaBSNhqXlr9b99U",
+        "history": [
+          {
+            "authorId": "ACoAAAB9m6IBH4K0qhSzZhCZDqMWSiOEs8gPvSA",
+            "authorUsername": "pamelahsieh",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Congrats Camilla Guida 👏",
+            "when": "67 weeks ago",
+            "timestamp": "2025-03-27T22:43:18.423Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "generic_praise",
+                "support_or_encouragement",
+                "celebration_or_congratulations",
+                "travel_or_event_reference"
+              ],
+              "namedPeople": [],
+              "locations": [
+                "Congrats Camilla Guida"
+              ],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "community_member",
+            "label": "Appears in your community",
+            "color": "#2bbbad",
+            "reason": "Assumed from visible group, event, travel, or community references.",
+            "kind": "primary",
+            "context": "community_member",
+            "confidence": 0.44,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment referenced a group, event, trip, or shared public setting"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "celebration_connection",
+            "label": "Celebration connection",
+            "color": "#4c68d7",
+            "reason": "Often appears around milestones, encouragement, or celebration.",
+            "kind": "tag",
+            "tag": "celebration_connection",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "2 comments were supportive or celebratory"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.07,
+          "relationshipStrengthScore": 0.108,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 1,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 1,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-03-27T22:43:18.423Z",
+          "mostRecentInteractionDate": "2025-03-27T22:43:18.423Z",
+          "mostRecentDaysAgo": 472,
+          "strongestTopicsEvents": [
+            "unknown",
+            "Congrats Camilla Guida"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "pamelahsieh",
+          "inferredContext": "community_member",
+          "interactionTags": [
+            "celebration_connection"
+          ],
+          "confidence": 0.44,
+          "evidence": [
+            {
+              "label": "1 comment referenced a group, event, trip, or shared public setting"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "stephanie-pryor-840075151",
+        "label": "stephanie-pryor-840075151",
+        "fullName": "Stephanie Pryor",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.538084471478382,
+        "presenceScore": 0.053808447147838216,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQGran1MV_aKoA/profile-displayphoto-crop_800_800/B4EZlt_40XIkAI-/0/1758487089340?e=1785369600&v=beta&t=kzoN-YzXBm8_YT11hq2vSDB0rGvycwiVWzk_9J7JbsE",
+        "history": [
+          {
+            "authorId": "ACoAACR-rXAB3mAdTIeqi7ejjBdbrnq6ZTsPB9o",
+            "authorUsername": "stephanie-pryor-840075151",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Congratulations Camilla Guida 🎉",
+            "when": "67 weeks ago",
+            "timestamp": "2025-03-27T16:10:42.136Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": false,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "support_or_encouragement",
+                "celebration_or_congratulations",
+                "travel_or_event_reference"
+              ],
+              "namedPeople": [],
+              "locations": [
+                "Congratulations Camilla Guida"
+              ],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "community_member",
+            "label": "Appears in your community",
+            "color": "#2bbbad",
+            "reason": "Assumed from visible group, event, travel, or community references.",
+            "kind": "primary",
+            "context": "community_member",
+            "confidence": 0.44,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment referenced a group, event, trip, or shared public setting"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "celebration_connection",
+            "label": "Celebration connection",
+            "color": "#4c68d7",
+            "reason": "Often appears around milestones, encouragement, or celebration.",
+            "kind": "tag",
+            "tag": "celebration_connection",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "2 comments were supportive or celebratory"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.07,
+          "relationshipStrengthScore": 0.108,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 1,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 1,
+          "reciprocityScore": 0,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-03-27T16:10:42.136Z",
+          "mostRecentInteractionDate": "2025-03-27T16:10:42.136Z",
+          "mostRecentDaysAgo": 472,
+          "strongestTopicsEvents": [
+            "unknown",
+            "Congratulations Camilla Guida"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "stephanie-pryor-840075151",
+          "inferredContext": "community_member",
+          "interactionTags": [
+            "celebration_connection"
+          ],
+          "confidence": 0.44,
+          "evidence": [
+            {
+              "label": "1 comment referenced a group, event, trip, or shared public setting"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "anastasiia-adeeva",
+        "label": "anastasiia-adeeva",
+        "fullName": "Anastasiia Adeeva • MBA",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.478084073722965,
+        "presenceScore": 0.04780840737229649,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQE5PbyWKk-OBQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1677724716268?e=1785369600&v=beta&t=Da7lmv9gaXl19_J77phcJ4nCFxayTxB2j2OzvA4N670",
+        "history": [
+          {
+            "authorId": "ACoAACeUPiEBx3qVTc7E2y3Gsq_mh8QNuc2GoOI",
+            "authorUsername": "anastasiia-adeeva",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Huge congratulations Diandra Sovailescu ! Exciting to see Citadelle growing 🤩",
+            "when": "67 weeks ago",
+            "timestamp": "2025-03-27T13:47:07.197Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "support_or_encouragement"
+              ],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light social connection from supportive or personal public interaction.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.52,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment carried supportive, celebratory, shared-memory, or joke signals"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "reciprocal_engager",
+            "label": "Reciprocal engager",
+            "color": "#4c68d7",
+            "reason": "The profile owner replies to this person relatively often.",
+            "kind": "tag",
+            "tag": "reciprocal_engager",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Owner reply rate 100%"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.07,
+          "relationshipStrengthScore": 0.108,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 1,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 1,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-03-27T13:47:07.197Z",
+          "mostRecentInteractionDate": "2025-03-27T13:47:07.197Z",
+          "mostRecentDaysAgo": 472,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "anastasiia-adeeva",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "reciprocal_engager"
+          ],
+          "confidence": 0.52,
+          "evidence": [
+            {
+              "label": "1 comment carried supportive, celebratory, shared-memory, or joke signals"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "nurimaninabintimohdfaidzal",
+        "label": "nurimaninabintimohdfaidzal",
+        "fullName": "Nur Imanina Mohd Faidzal",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.478084059667139,
+        "presenceScore": 0.04780840596671388,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQEn5JXce1zL6g/profile-displayphoto-crop_800_800/B4EZh7FMwiGYAU-/0/1754411617803?e=1785369600&v=beta&t=KEPT5v9HbHXoZS4fhm8xhXoaA2mO_cdWzHZ7VSwBEGM",
+        "history": [
+          {
+            "authorId": "ACoAACzu4VMBeRxZmj2oguF7IDON_nnOLHuFKnU",
+            "authorUsername": "nurimaninabintimohdfaidzal",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "I remember you talking about your plans to grow the agency - I'm so excited that it's coming into fruition. Congratulations, Diandra and hello, Citadelle! 🥳",
+            "when": "67 weeks ago",
+            "timestamp": "2025-03-27T13:42:02.414Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [
+                "support_or_encouragement"
+              ],
+              "namedPeople": [],
+              "locations": [
+                "Congratulations"
+              ],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "contextual",
+              "tone": [
+                "celebratory"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light social connection from supportive or personal public interaction.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.52,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 comment carried supportive, celebratory, shared-memory, or joke signals"
+              },
+              {
+                "label": "Low-confidence assumption from public comments only"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "reciprocal_engager",
+            "label": "Reciprocal engager",
+            "color": "#4c68d7",
+            "reason": "The profile owner replies to this person relatively often.",
+            "kind": "tag",
+            "tag": "reciprocal_engager",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Owner reply rate 100%"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.07,
+          "relationshipStrengthScore": 0.108,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.55,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 1,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 1,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-03-27T13:42:02.414Z",
+          "mostRecentInteractionDate": "2025-03-27T13:42:02.414Z",
+          "mostRecentDaysAgo": 472,
+          "strongestTopicsEvents": [
+            "unknown",
+            "Congratulations"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "nurimaninabintimohdfaidzal",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "reciprocal_engager"
+          ],
+          "confidence": 0.52,
+          "evidence": [
+            {
+              "label": "1 comment carried supportive, celebratory, shared-memory, or joke signals"
+            },
+            {
+              "label": "Low-confidence assumption from public comments only"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      },
+      {
+        "id": "sophie-callery-42b176188",
+        "label": "sophie-callery-42b176188",
+        "fullName": "Sophie Callery",
+        "group": "member",
+        "circle": 2,
+        "clusterId": -1,
+        "comments": 1,
+        "val": 4.442084020953563,
+        "presenceScore": 0.04420840209535627,
+        "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQEDTCuKQ4Z35A/profile-displayphoto-crop_800_800/B4EZ5KCrO8H0AI-/0/1779358676231?e=1785369600&v=beta&t=AJXf7CfHMHBmKxSxt83ES0DDMbjMurOhGBFmhGEPlvo",
+        "history": [
+          {
+            "authorId": "ACoAACwpreMBfmJAQRx8q9AaRi88-6eu_hdbE68",
+            "authorUsername": "sophie-callery-42b176188",
+            "postId": "https://www.linkedin.com/posts/diandra-dumitru_and-then-there-were-two-im-excited-to-activity-7311015108099383298-AOHP",
+            "text": "Go Citadelle! Xx",
+            "when": "67 weeks ago",
+            "timestamp": "2025-03-27T13:28:02.835Z",
+            "post": "And then there were two 🚀 I'm excited to welcome Camilla Guida as Cita…",
+            "isReply": false,
+            "isTopLevel": true,
+            "ownerReplied": true,
+            "mentionedUsers": [],
+            "postType": "unknown",
+            "captionCategory": "unknown",
+            "signals": {
+              "categories": [],
+              "namedPeople": [],
+              "locations": [],
+              "events": [],
+              "organizations": [],
+              "recurringPhrases": [],
+              "specificity": "generic",
+              "tone": [
+                "neutral"
+              ],
+              "hasSharedExperience": false,
+              "referencesOngoingRelationship": false
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": "acquaintance",
+            "label": "Light public interaction",
+            "color": "#2bbbad",
+            "reason": "Assumed light public interaction from visible comments.",
+            "kind": "primary",
+            "context": "acquaintance",
+            "confidence": 0.33,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "1 public comments found"
+              },
+              {
+                "label": "No stronger public relationship cue was visible"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "reciprocal_engager",
+            "label": "Reciprocal engager",
+            "color": "#4c68d7",
+            "reason": "The profile owner replies to this person relatively often.",
+            "kind": "tag",
+            "tag": "reciprocal_engager",
+            "confidence": 1,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Owner reply rate 100%"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          },
+          {
+            "id": "low_context_connection",
+            "label": "Low-context connection",
+            "color": "#4c68d7",
+            "reason": "Comments are mostly generic or emoji-based, so relationship context is unclear.",
+            "kind": "tag",
+            "tag": "low_context_connection",
+            "confidence": 0.5,
+            "source": "ai_inference",
+            "visibility": "private",
+            "evidence": [
+              {
+                "label": "Low comment-specificity score"
+              }
+            ],
+            "lastUpdatedAt": "2026-07-12T23:49:36.087Z",
+            "needsConfirmation": true
+          }
+        ],
+        "features": {
+          "totalComments": 1,
+          "recencyWeightedComments": 0.07,
+          "relationshipStrengthScore": 0.044,
+          "uniquePostsCommentedOn": 1,
+          "commentsPerMonth": 1,
+          "recentActivityScore": 0,
+          "historicalActivityScore": 1,
+          "interactionConsistencyScore": 1,
+          "commentSpecificityScore": 0.15,
+          "sharedMemoryScore": 0,
+          "insideJokeScore": 0,
+          "supportScore": 0,
+          "workCollaborationScore": 0,
+          "familySchoolCommunityEvidenceScore": 0,
+          "reciprocityScore": 1,
+          "trajectory": "intermittent",
+          "firstInteractionDate": "2025-03-27T13:28:02.835Z",
+          "mostRecentInteractionDate": "2025-03-27T13:28:02.835Z",
+          "mostRecentDaysAgo": 472,
+          "strongestTopicsEvents": [
+            "unknown"
+          ],
+          "bridgeScore": 0.15,
+          "anchorScore": 0.1
+        },
+        "relationshipEdge": {
+          "fromUserId": "diandra",
+          "toUserId": "sophie-callery-42b176188",
+          "inferredContext": "acquaintance",
+          "interactionTags": [
+            "reciprocal_engager",
+            "low_context_connection"
+          ],
+          "confidence": 0.33,
+          "evidence": [
+            {
+              "label": "1 public comments found"
+            },
+            {
+              "label": "No stronger public relationship cue was visible"
+            }
+          ],
+          "trajectory": "intermittent",
+          "source": "ai_inference",
+          "visibility": "private",
+          "needsConfirmation": true,
+          "lastUpdatedAt": "2026-07-12T23:49:36.087Z"
+        }
+      }
+    ],
+    "links": [
+      {
+        "source": "diandra",
+        "target": "ievabarauskaite",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "camilla-guida-32597813b",
+        "kind": "comment",
+        "inbound": 3
+      },
+      {
+        "source": "diandra",
+        "target": "clazar",
+        "kind": "comment",
+        "inbound": 3
+      },
+      {
+        "source": "diandra",
+        "target": "sophie-aspden-95011965",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "imogen-lees-profile",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "eangela",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "juliaodoherty",
+        "kind": "comment",
+        "inbound": 2
+      },
+      {
+        "source": "diandra",
+        "target": "martina-redmond-17932423",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "emily-girvan",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "company-up-world",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "seanwestwood",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "shashank-mishra-8a34051b5",
+        "kind": "comment",
+        "inbound": 2
+      },
+      {
+        "source": "diandra",
+        "target": "mel-chacksfield-b587383a",
+        "kind": "comment",
+        "inbound": 2
+      },
+      {
+        "source": "diandra",
+        "target": "andreea-stefanescu-9618763a",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "claudio-bruno",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "ssantoshc18",
+        "kind": "comment",
+        "inbound": 2
+      },
+      {
+        "source": "diandra",
+        "target": "lottiewoolley",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "tommaso-guida-50512620a",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "davidseinker",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "pamelahsieh",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "stephanie-pryor-840075151",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "anastasiia-adeeva",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "nurimaninabintimohdfaidzal",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "diandra",
+        "target": "sophie-callery-42b176188",
+        "kind": "comment",
+        "inbound": 1
+      },
+      {
+        "source": "camilla-guida-32597813b",
+        "target": "juliaodoherty",
+        "kind": "friend",
+        "weight": 0.3
+      },
+      {
+        "source": "clazar",
+        "target": "juliaodoherty",
+        "kind": "friend",
+        "weight": 0.3
+      },
+      {
+        "source": "clazar",
+        "target": "mel-chacksfield-b587383a",
+        "kind": "friend",
+        "weight": 0.3
+      }
+    ],
+    "circles": [
+      {
+        "id": 0,
+        "label": "Same-post regulars",
+        "subtitle": "Overlapped on 3 of your posts",
+        "color": "#ff6b9d",
+        "size": 4,
+        "comments": 10,
+        "kind": "strong"
+      }
+    ]
+  },
+  "stats": {
+    "scanned": 64,
+    "shown": 24,
+    "circleCount": 1,
+    "totalComments": 32,
+    "topCommentators": [
+      {
+        "username": "camilla-guida-32597813b",
+        "comments": 3,
+        "circle": 0
+      },
+      {
+        "username": "clazar",
+        "comments": 3,
+        "circle": 0
+      },
+      {
+        "username": "juliaodoherty",
+        "comments": 2,
+        "circle": 1
+      },
+      {
+        "username": "shashank-mishra-8a34051b5",
+        "comments": 2,
+        "circle": 1
+      },
+      {
+        "username": "mel-chacksfield-b587383a",
+        "comments": 2,
+        "circle": 1
+      },
+      {
+        "username": "ssantoshc18",
+        "comments": 2,
+        "circle": 1
+      },
+      {
+        "username": "ievabarauskaite",
+        "comments": 1,
+        "circle": 0
+      },
+      {
+        "username": "sophie-aspden-95011965",
+        "comments": 1,
+        "circle": 0
+      },
+      {
+        "username": "imogen-lees-profile",
+        "comments": 1,
+        "circle": 0
+      },
+      {
+        "username": "eangela",
+        "comments": 1,
+        "circle": 0
+      },
+      {
+        "username": "martina-redmond-17932423",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "emily-girvan",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "company-up-world",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "seanwestwood",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "andreea-stefanescu-9618763a",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "claudio-bruno",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "lottiewoolley",
+        "comments": 1,
+        "circle": 1
+      },
+      {
+        "username": "tommaso-guida-50512620a",
+        "comments": 1,
+        "circle": 2
+      },
+      {
+        "username": "davidseinker",
+        "comments": 1,
+        "circle": 2
+      },
+      {
+        "username": "pamelahsieh",
+        "comments": 1,
+        "circle": 2
+      },
+      {
+        "username": "stephanie-pryor-840075151",
+        "comments": 1,
+        "circle": 2
+      },
+      {
+        "username": "anastasiia-adeeva",
+        "comments": 1,
+        "circle": 2
+      },
+      {
+        "username": "nurimaninabintimohdfaidzal",
+        "comments": 1,
+        "circle": 2
+      },
+      {
+        "username": "sophie-callery-42b176188",
+        "comments": 1,
+        "circle": 2
+      }
+    ],
+    "recentCommentators": [
+      {
+        "username": "ievabarauskaite",
+        "comments": 1,
+        "circle": 0,
+        "latestCommentWhen": "49 weeks ago",
+        "latestCommentTime": 1753969638555
+      },
+      {
+        "username": "camilla-guida-32597813b",
+        "comments": 3,
+        "circle": 0,
+        "latestCommentWhen": "50 weeks ago",
+        "latestCommentTime": 1753959892921
+      },
+      {
+        "username": "clazar",
+        "comments": 3,
+        "circle": 0,
+        "latestCommentWhen": "50 weeks ago",
+        "latestCommentTime": 1753861598717
+      },
+      {
+        "username": "sophie-aspden-95011965",
+        "comments": 1,
+        "circle": 0,
+        "latestCommentWhen": "50 weeks ago",
+        "latestCommentTime": 1753801139104
+      },
+      {
+        "username": "imogen-lees-profile",
+        "comments": 1,
+        "circle": 0,
+        "latestCommentWhen": "50 weeks ago",
+        "latestCommentTime": 1753799227530
+      },
+      {
+        "username": "eangela",
+        "comments": 1,
+        "circle": 0,
+        "latestCommentWhen": "50 weeks ago",
+        "latestCommentTime": 1753796874868
+      },
+      {
+        "username": "juliaodoherty",
+        "comments": 2,
+        "circle": 1,
+        "latestCommentWhen": "50 weeks ago",
+        "latestCommentTime": 1753791442100
+      },
+      {
+        "username": "martina-redmond-17932423",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "50 weeks ago",
+        "latestCommentTime": 1753395851929
+      },
+      {
+        "username": "emily-girvan",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "51 weeks ago",
+        "latestCommentTime": 1753352984892
+      },
+      {
+        "username": "company-up-world",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "52 weeks ago",
+        "latestCommentTime": 1752669409889
+      },
+      {
+        "username": "seanwestwood",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "62 weeks ago",
+        "latestCommentTime": 1746533752107
+      },
+      {
+        "username": "shashank-mishra-8a34051b5",
+        "comments": 2,
+        "circle": 1,
+        "latestCommentWhen": "62 weeks ago",
+        "latestCommentTime": 1746519638200
+      },
+      {
+        "username": "mel-chacksfield-b587383a",
+        "comments": 2,
+        "circle": 1,
+        "latestCommentWhen": "64 weeks ago",
+        "latestCommentTime": 1745473738378
+      },
+      {
+        "username": "andreea-stefanescu-9618763a",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "66 weeks ago",
+        "latestCommentTime": 1743970130178
+      },
+      {
+        "username": "claudio-bruno",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "67 weeks ago",
+        "latestCommentTime": 1743627677770
+      },
+      {
+        "username": "ssantoshc18",
+        "comments": 2,
+        "circle": 1,
+        "latestCommentWhen": "67 weeks ago",
+        "latestCommentTime": 1743178359968
+      },
+      {
+        "username": "lottiewoolley",
+        "comments": 1,
+        "circle": 1,
+        "latestCommentWhen": "67 weeks ago",
+        "latestCommentTime": 1743174917716
+      },
+      {
+        "username": "tommaso-guida-50512620a",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "67 weeks ago",
+        "latestCommentTime": 1743165454697
+      },
+      {
+        "username": "davidseinker",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "67 weeks ago",
+        "latestCommentTime": 1743148442083
+      },
+      {
+        "username": "pamelahsieh",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "67 weeks ago",
+        "latestCommentTime": 1743115398423
+      },
+      {
+        "username": "stephanie-pryor-840075151",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "67 weeks ago",
+        "latestCommentTime": 1743091842136
+      },
+      {
+        "username": "anastasiia-adeeva",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "67 weeks ago",
+        "latestCommentTime": 1743083227197
+      },
+      {
+        "username": "nurimaninabintimohdfaidzal",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "67 weeks ago",
+        "latestCommentTime": 1743082922414
+      },
+      {
+        "username": "sophie-callery-42b176188",
+        "comments": 1,
+        "circle": 2,
+        "latestCommentWhen": "67 weeks ago",
+        "latestCommentTime": 1743082082835
+      }
+    ],
+    "biggestCircle": {
+      "label": "Same-post regulars",
+      "size": 4
+    }
+  },
+  "budget": {
+    "postLimit": 10,
+    "commentsPerPost": 10,
+    "reciprocityEnabled": true,
+    "reciprocityFriends": 4,
+    "reciprocityPostsPerFriend": 3,
+    "maxComments": 220,
+    "maxReciprocityComments": 120,
+    "estimatedCostUsd": 0,
+    "withinFreeTier": true,
+    "needsPaymentPrompt": false
+  },
+  "cached": true,
+  "demo": false,
+  "pinned": true,
+  "scrapedAt": 1783900176091
+}

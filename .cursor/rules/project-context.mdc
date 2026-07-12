@@ -1,0 +1,24 @@
+---
+description: Always-on project context for social_graph / Netgraph
+alwaysApply: true
+---
+
+# Project context: social_graph (Netgraph)
+
+- Next.js 16 / React 19 / TypeScript / Tailwind / `react-force-graph-2d`.
+- Optional Vercel KV for cache, Vercel Blob for pinned snapshots.
+- Currently running in **demo/dummy-data mode** because Apify credits are insufficient.
+- Do not add new live Apify calls or assume `APIFY_TOKEN` is available.
+
+## Data sources
+
+- Live graph pages (`/graph/[handle]`) use `getNetwork` in `lib/scrape.ts`. It falls back to deterministic mock data from `lib/mock.ts` when `APIFY_TOKEN` is unset.
+- Pinned pages (`/graph/[handle]/pinned`) serve static snapshots via `lib/snapshot.ts` (disk or Blob). They do not call Apify.
+- Existing tracked snapshot: `data/snapshots/diandra.json`, imported from `data/raw/diandra_linkedin_scrape_71226.json`.
+- Deployed reference URL: `https://social-graph-nu.vercel.app/graph/diandra/pinned`.
+
+## Guardrails
+
+- If a task would require real Instagram scraping, warn the user and suggest using dummy data or importing a raw comment export instead.
+- Keep existing snapshot files in place unless the user explicitly asks to replace them.
+- If replacing a pinned snapshot, regenerate it from mock data or an imported export so the pinned page stays Apify-free.

@@ -35,8 +35,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Other scrape exports stay local; jp_jppap is committed for pinned deploy without Blob.
+# Scrape exports and snapshots stay local (or Vercel Blob in prod).
+# Commit Diandra as the pinned demo without requiring Blob.
 /data/raw/*.json
 /data/snapshots/*.json
-!data/raw/jp_jppap-comments.json
-!data/snapshots/jp_jppap.json
+!data/raw/diandra_linkedin_scrape_71226.json
+!data/snapshots/diandra.json

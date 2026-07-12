@@ -5,7 +5,7 @@ import path from "path";
  * Upload an existing local snapshot JSON to production KV via /api/snapshot.
  *
  * Usage:
- *   SNAPSHOT_PIN_SECRET=xxx npx tsx scripts/push-snapshot.ts jp_jppap https://your-app.vercel.app
+ *   SNAPSHOT_PIN_SECRET=xxx npx tsx scripts/push-snapshot.ts diandra https://your-app.vercel.app
  */
 
 const handle = process.argv[2]?.replace(/^@/, "").trim().toLowerCase();

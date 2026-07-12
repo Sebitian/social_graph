@@ -44,13 +44,14 @@ export const PROXIMITY_RINGS: readonly {
 
 export const CIRCLE_COLORS = PROXIMITY_RINGS.map((r) => r.color);
 export const SELF_COLOR = "#fccc63";
+export const UNCLUSTERED_COLOR = "#8b93a7";
 
 export const AVATAR_DIAMETER = 40;
 export const SELF_NODE_RADIUS = 22;
 export const MEMBER_NODE_RADIUS = AVATAR_DIAMETER / 2;
-export const MIN_NODE_CENTER_SPACING = AVATAR_DIAMETER + 26;
-export const MAX_CLUSTER_LOCAL_OFFSET = 58;
-export const MAX_RADIAL_ADJUSTMENT = 34;
+export const MIN_NODE_CENTER_SPACING = AVATAR_DIAMETER + 44;
+export const MAX_CLUSTER_LOCAL_OFFSET = 72;
+export const MAX_RADIAL_ADJUSTMENT = 52;
 
 const AFFINITY_PAIR_CAP = 20;
 const AFFINITY_THRESHOLD = 0.3;
@@ -90,14 +91,26 @@ export interface SocialMapLayout {
   >;
 }
 
-/** Responsive ring radii — tuned for readable spacing on dense graphs. */
-export function responsiveRingRadii(width: number, height: number): ProximityRadii {
+/**
+ * Responsive ring radii — leave clear air around the self node so spoke
+ * arrows/labels do not collapse into a blob at the center.
+ */
+export function responsiveRingRadii(
+  width: number,
+  height: number,
+  memberCount = 24,
+): ProximityRadii {
   const minDim = Math.min(width, height);
-  return {
-    mostPresent: minDim * 0.19,
-    regular: minDim * 0.38,
-    outer: minDim * 0.56,
-  };
+  // Inner ring must fit ~6–8 avatars on its circumference without stacking.
+  const innerFloor =
+    (Math.min(Math.max(memberCount, 8), 12) * MIN_NODE_CENTER_SPACING) /
+    (2 * Math.PI);
+
+  const mostPresent = Math.max(minDim * 0.28, innerFloor * 1.2, 150);
+  const regular = Math.max(minDim * 0.48, mostPresent + MIN_NODE_CENTER_SPACING * 1.6);
+  const outer = Math.max(minDim * 0.7, regular + MIN_NODE_CENTER_SPACING * 1.5);
+
+  return { mostPresent, regular, outer };
 }
 
 function clamp01(value: number): number {
@@ -356,12 +369,35 @@ class UnionFind {
   }
 }
 
+function countSharedPosts(members: GraphNode[]): number {
+  const postCounts = new Map<string, number>();
+  for (const member of members) {
+    for (const post of uniquePosts(member.history ?? [])) {
+      postCounts.set(post, (postCounts.get(post) ?? 0) + 1);
+    }
+  }
+  return [...postCounts.values()].filter((n) => n >= 2).length;
+}
+
+function dominantSignalCategory(members: GraphNode[]): string | undefined {
+  const counts = new Map<string, number>();
+  for (const member of members) {
+    for (const comment of member.history ?? []) {
+      for (const category of comment.signals?.categories ?? []) {
+        if (category === "generic_praise") continue;
+        counts.set(category, (counts.get(category) ?? 0) + 1);
+      }
+    }
+  }
+  return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+}
+
 function dominantClusterLabel(members: GraphNode[]): string {
   const counts = new Map<string, number>();
   for (const member of members) {
     for (const comment of member.history ?? []) {
       const cat = comment.captionCategory ?? comment.postType;
-      if (!cat || cat === "generic" || cat === "photo") continue;
+      if (!cat || cat === "generic" || cat === "photo" || cat === "unknown") continue;
       counts.set(cat, (counts.get(cat) ?? 0) + 1);
     }
   }
@@ -379,9 +415,42 @@ function dominantClusterLabel(members: GraphNode[]): string {
       return "Family";
     case "event":
       return "Event crew";
-    default:
-      return members.length >= 3 ? "Shared circle" : "Paired connection";
   }
+
+  const signal = dominantSignalCategory(members);
+  switch (signal) {
+    case "work_or_collaboration_reference":
+      return "Work & collab";
+    case "school_or_university_reference":
+      return "School ties";
+    case "family_reference":
+      return "Family";
+    case "travel_or_event_reference":
+      return "Events & travel";
+    case "celebration_or_congratulations":
+      return "Cheer squad";
+    case "inside_joke":
+    case "shared_memory":
+      return "Inside circle";
+  }
+
+  const sharedPosts = countSharedPosts(members);
+  if (sharedPosts >= 2) return "Same-post regulars";
+  if (sharedPosts >= 1 && members.length >= 3) return "Often on the same posts";
+  if (members.length >= 3) return "Comment together";
+  return "Paired connection";
+}
+
+function clusterSubtitle(kind: "strong" | "small", members: GraphNode[]): string {
+  const sharedPosts = countSharedPosts(members);
+  if (sharedPosts >= 1) {
+    return sharedPosts === 1
+      ? "Commented on at least one post together"
+      : `Overlapped on ${sharedPosts} of your posts`;
+  }
+  return kind === "strong"
+    ? "People who keep showing up near each other"
+    : "A visible paired connection";
 }
 
 /** Detect friend-group pods from pair affinity (top commenters only). */
@@ -442,6 +511,13 @@ export function detectFriendClusters(members: GraphNode[]): FriendClusterMeta[] 
     }
     avgAffinity = pairs > 0 ? avgAffinity / pairs : 0;
 
+    const clusterMembers = memberIds
+      .map((id) => byId.get(id)!)
+      .filter(Boolean);
+
+    // Require real co-presence on posts — affinity alone can invent vague pods.
+    if (countSharedPosts(clusterMembers) < 1) continue;
+
     const kind =
       memberIds.length >= 3
         ? "strong"
@@ -450,9 +526,6 @@ export function detectFriendClusters(members: GraphNode[]): FriendClusterMeta[] 
           : null;
     if (!kind) continue;
 
-    const clusterMembers = memberIds
-      .map((id) => byId.get(id)!)
-      .filter(Boolean);
     const label = dominantClusterLabel(clusterMembers);
 
     const id = clusterId;
@@ -463,10 +536,7 @@ export function detectFriendClusters(members: GraphNode[]): FriendClusterMeta[] 
       memberIds: memberIds.sort(),
       kind,
       label,
-      subtitle:
-        kind === "strong"
-          ? "People who often show up together"
-          : "A visible paired connection",
+      subtitle: clusterSubtitle(kind, clusterMembers),
       color: CLUSTER_COLORS[id % CLUSTER_COLORS.length],
     });
   }
@@ -579,14 +649,13 @@ export function computeSocialMapLayout(
   width: number,
   height: number,
 ): SocialMapLayout {
-  const proximityRadii = responsiveRingRadii(width, height);
+  const ranked = [...members].sort(compareByCloseness);
+  const proximityRadii = responsiveRingRadii(width, height, ranked.length);
   const ringGuides = [
     proximityRadii.mostPresent,
     proximityRadii.regular,
     proximityRadii.outer,
   ];
-
-  const ranked = [...members].sort(compareByCloseness);
 
   const preferredRadii = new Map<string, number>();
   ranked.forEach((node, index) => {
@@ -911,7 +980,7 @@ export function computeStats(
       };
     });
 
-  let biggestCircle = { label: "Shared circle", size: 0 };
+  let biggestCircle = { label: "Often on the same posts", size: 0 };
   for (const circle of graph.circles) {
     if (circle.size > biggestCircle.size) {
       biggestCircle = { label: circle.label, size: circle.size };

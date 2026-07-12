@@ -19,7 +19,7 @@ import { GraphHowToRead } from "@/components/GraphHowToRead";
 import NetworkStats from "@/components/NetworkStats";
 import ShareCard from "@/components/ShareCard";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { SELF_COLOR, PROXIMITY_RINGS } from "@/lib/graphUtils";
+import { SELF_COLOR, PROXIMITY_RINGS, UNCLUSTERED_COLOR } from "@/lib/graphUtils";
 import type { ScrapeBudget } from "@/lib/scrapeBudget";
 import {
   estimateScrapeBudget,
@@ -433,7 +433,10 @@ export default function GraphResult({
                 onSelect={setSelected}
               />
 
-              <div className="pointer-events-none absolute bottom-4 right-4 flex max-w-[240px] flex-col gap-2 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur">
+              <div className="pointer-events-none absolute bottom-4 right-4 flex max-w-[260px] flex-col gap-2 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur">
+                <div className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
+                  Node color
+                </div>
                 <span className="flex items-center gap-1.5 text-xs text-white/60">
                   <span
                     className="h-2.5 w-2.5 rounded-full"
@@ -441,22 +444,38 @@ export default function GraphResult({
                   />
                   You
                 </span>
-                {(data.graph.circles.length > 0
-                  ? data.graph.circles
-                  : [{ id: -1, label: "Independent", color: "#94a3b8", size: 0, comments: 0 }]
-                ).slice(0, 5).map((cluster) => (
+                {data.graph.circles.map((cluster) => (
                   <span
                     key={cluster.id}
-                    className="flex items-center gap-1.5 text-xs text-white/55"
+                    className="flex items-start gap-1.5 text-xs text-white/55"
                   >
                     <span
-                      className="h-2.5 w-2.5 rounded-full ring-1 ring-white/10"
+                      className="mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full ring-1 ring-white/10"
                       style={{ backgroundColor: cluster.color }}
                     />
-                    {cluster.label}
-                    {cluster.size > 0 ? ` (${cluster.size})` : ""}
+                    <span>
+                      <span className="text-white/70">{cluster.label}</span>
+                      {cluster.size > 0 ? ` (${cluster.size})` : ""}
+                      {cluster.subtitle ? (
+                        <span className="mt-0.5 block text-[10px] leading-snug text-white/35">
+                          {cluster.subtitle}
+                        </span>
+                      ) : null}
+                    </span>
                   </span>
                 ))}
+                <span className="flex items-start gap-1.5 text-xs text-white/55">
+                  <span
+                    className="mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full ring-1 ring-white/10"
+                    style={{ backgroundColor: UNCLUSTERED_COLOR }}
+                  />
+                  <span>
+                    <span className="text-white/70">Everyone else</span>
+                    <span className="mt-0.5 block text-[10px] leading-snug text-white/35">
+                      No strong overlap with other commenters yet
+                    </span>
+                  </span>
+                </span>
               </div>
             </div>
           </motion.div>
@@ -493,7 +512,7 @@ export default function GraphResult({
               <p className="mt-2 text-sm text-white/40">{data.profile.biography}</p>
             )}
             <div className="mt-3 text-xs text-white/30">
-              Top {data.stats.shown} connections · proximity + friend pods
+              Top {data.stats.shown} connections · closer = more present · color = same-post groups
             </div>
           </div>
 

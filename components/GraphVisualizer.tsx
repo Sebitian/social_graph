@@ -20,6 +20,7 @@ import {
   SELF_COLOR,
   SELF_NODE_RADIUS,
   strongestTies,
+  UNCLUSTERED_COLOR,
 } from "@/lib/graphUtils";
 
 type FGNode = GraphNode & {
@@ -105,9 +106,6 @@ function nodeRadius(node: FGNode): number {
   return MEMBER_NODE_RADIUS;
 }
 
-/** Neutral color for commenters that aren't part of any detected friend pod. */
-const UNCLUSTERED_COLOR = "#8b93a7";
-
 /** Comments they left on your posts (received). */
 const RECEIVED_COLOR = "#3b82f6";
 /** Comments you left on their posts (sent). */
@@ -191,15 +189,17 @@ function paintCommentLink(
     target.features?.outboundCommentsFromTarget;
   const sentKnown = outboundVal != null;
   const sent = sentKnown ? outboundVal : 0;
-  const sentLabel = sentKnown ? formatEdgeCount(sent) : "—";
+  const showSent = sentKnown && sent > 0;
+  const showBidirectional = sentKnown;
 
   const angleToTarget = Math.atan2(dy, dx);
   const angleToSource = angleToTarget + Math.PI;
 
-  const stubLen = Math.min((lineEnd - lineStart) * 0.22, 32 / globalScale);
-  const lineWidth = Math.max(2.2, (opts.emphasize ? 3.2 : 2.6) / globalScale);
-  const arrowSize = Math.max(9, (opts.emphasize ? 12 : 10) / globalScale);
-  const fontSize = Math.max(12, (opts.emphasize ? 15 : 13) / globalScale);
+  const usable = lineEnd - lineStart;
+  const stubLen = Math.min(usable * 0.18, 28 / globalScale);
+  const lineWidth = Math.max(1.8, (opts.emphasize ? 3 : 2.2) / globalScale);
+  const arrowSize = Math.max(8, (opts.emphasize ? 11 : 9) / globalScale);
+  const fontSize = Math.max(11, (opts.emphasize ? 14 : 12) / globalScale);
   const font = `700 ${fontSize}px ui-sans-serif, system-ui`;
 
   const sentOriginX = sx + ux * lineStart;
@@ -207,39 +207,42 @@ function paintCommentLink(
   const recvOriginX = sx + ux * lineEnd;
   const recvOriginY = sy + uy * lineEnd;
 
-  const midX = sx + ux * ((lineStart + lineEnd) / 2);
-  const midY = sy + uy * ((lineStart + lineEnd) / 2);
+  // Keep count pills away from the crowded self-node; prefer the outer third.
+  const labelT = showBidirectional ? 0.55 : 0.72;
+  const midX = sx + ux * (lineStart + usable * labelT);
+  const midY = sy + uy * (lineStart + usable * labelT);
 
   ctx.save();
   ctx.globalAlpha = opts.alpha;
 
-  // Neutral spine between the two colored stubs
-  const spineInset = stubLen + arrowSize * 0.6;
-  if (lineEnd - lineStart > spineInset * 2) {
-    ctx.beginPath();
-    ctx.moveTo(sx + ux * (lineStart + spineInset), sy + uy * (lineStart + spineInset));
-    ctx.lineTo(sx + ux * (lineEnd - spineInset), sy + uy * (lineEnd - spineInset));
-    ctx.lineWidth = Math.max(1, 1.2 / globalScale);
-    ctx.strokeStyle = "rgba(255,255,255,0.18)";
-    ctx.stroke();
-  }
-
-  // Red arrow at you → them (sent)
-  ctx.strokeStyle = SENT_COLOR;
-  ctx.fillStyle = SENT_COLOR;
-  ctx.lineWidth = lineWidth;
-  ctx.lineCap = "round";
-  const sentTipX = sentOriginX + Math.cos(angleToTarget) * stubLen;
-  const sentTipY = sentOriginY + Math.sin(angleToTarget) * stubLen;
+  // Full spoke spine — clearer when rings are spaced out
   ctx.beginPath();
   ctx.moveTo(sentOriginX, sentOriginY);
-  ctx.lineTo(sentTipX, sentTipY);
+  ctx.lineTo(recvOriginX, recvOriginY);
+  ctx.lineWidth = Math.max(1, (opts.emphasize ? 1.6 : 1.1) / globalScale);
+  ctx.strokeStyle = "rgba(255,255,255,0.16)";
   ctx.stroke();
-  drawArrowhead(ctx, sentTipX, sentTipY, angleToTarget, arrowSize);
+
+  // Red arrow at you → them (only when we know outbound comments exist)
+  if (showSent) {
+    ctx.strokeStyle = SENT_COLOR;
+    ctx.fillStyle = SENT_COLOR;
+    ctx.lineWidth = lineWidth;
+    ctx.lineCap = "round";
+    const sentTipX = sentOriginX + Math.cos(angleToTarget) * stubLen;
+    const sentTipY = sentOriginY + Math.sin(angleToTarget) * stubLen;
+    ctx.beginPath();
+    ctx.moveTo(sentOriginX, sentOriginY);
+    ctx.lineTo(sentTipX, sentTipY);
+    ctx.stroke();
+    drawArrowhead(ctx, sentTipX, sentTipY, angleToTarget, arrowSize);
+  }
 
   // Blue arrow at them → you (received)
   ctx.strokeStyle = RECEIVED_COLOR;
   ctx.fillStyle = RECEIVED_COLOR;
+  ctx.lineWidth = lineWidth;
+  ctx.lineCap = "round";
   const recvTipX = recvOriginX + Math.cos(angleToSource) * stubLen;
   const recvTipY = recvOriginY + Math.sin(angleToSource) * stubLen;
   ctx.beginPath();
@@ -248,40 +251,68 @@ function paintCommentLink(
   ctx.stroke();
   drawArrowhead(ctx, recvTipX, recvTipY, angleToSource, arrowSize);
 
-  // Center label: sent (red) · received (blue)
-  const sep = "·";
+  // Skip crowded count pills on short spokes unless hovered/selected
+  const minLenForPill = 110;
+  if (usable < minLenForPill && !opts.emphasize) {
+    ctx.restore();
+    return;
+  }
+
   ctx.font = font;
-  const sentW = ctx.measureText(sentLabel).width;
-  const sepW = ctx.measureText(sep).width;
-  const recvW = ctx.measureText(formatEdgeCount(received)).width;
-  const gap = fontSize * 0.28;
-  const pillW = sentW + gap + sepW + gap + recvW + fontSize * 1.1;
-  const pillH = fontSize * 1.45;
-  const pillX = midX - pillW / 2;
-  const pillY = midY - pillH / 2;
+  const recvText = formatEdgeCount(received);
 
-  ctx.fillStyle = "rgba(0,0,0,0.9)";
-  ctx.beginPath();
-  ctx.roundRect(pillX, pillY, pillW, pillH, pillH * 0.28);
-  ctx.fill();
-  ctx.strokeStyle = "rgba(255,255,255,0.35)";
-  ctx.lineWidth = Math.max(1.2, 1.4 / globalScale);
-  ctx.stroke();
+  if (showBidirectional) {
+    const sentLabel = formatEdgeCount(sent);
+    const sep = "·";
+    const sentW = ctx.measureText(sentLabel).width;
+    const sepW = ctx.measureText(sep).width;
+    const recvW = ctx.measureText(recvText).width;
+    const gap = fontSize * 0.28;
+    const pillW = sentW + gap + sepW + gap + recvW + fontSize * 1.1;
+    const pillH = fontSize * 1.45;
+    const pillX = midX - pillW / 2;
+    const pillY = midY - pillH / 2;
 
-  ctx.textBaseline = "middle";
-  let cursorX = pillX + fontSize * 0.55;
+    ctx.fillStyle = "rgba(0,0,0,0.9)";
+    ctx.beginPath();
+    ctx.roundRect(pillX, pillY, pillW, pillH, pillH * 0.28);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,0.35)";
+    ctx.lineWidth = Math.max(1.2, 1.4 / globalScale);
+    ctx.stroke();
 
-  ctx.textAlign = "left";
-  ctx.fillStyle = SENT_COLOR;
-  ctx.fillText(sentLabel, cursorX, midY);
-  cursorX += sentW + gap;
+    ctx.textBaseline = "middle";
+    let cursorX = pillX + fontSize * 0.55;
+    ctx.textAlign = "left";
+    ctx.fillStyle = SENT_COLOR;
+    ctx.fillText(sentLabel, cursorX, midY);
+    cursorX += sentW + gap;
+    ctx.fillStyle = "rgba(255,255,255,0.45)";
+    ctx.fillText(sep, cursorX, midY);
+    cursorX += sepW + gap;
+    ctx.fillStyle = RECEIVED_COLOR;
+    ctx.fillText(recvText, cursorX, midY);
+  } else {
+    // Inbound-only (e.g. LinkedIn): single blue count near the commenter
+    const recvW = ctx.measureText(recvText).width;
+    const pillW = recvW + fontSize * 1.05;
+    const pillH = fontSize * 1.4;
+    const pillX = midX - pillW / 2;
+    const pillY = midY - pillH / 2;
 
-  ctx.fillStyle = "rgba(255,255,255,0.45)";
-  ctx.fillText(sep, cursorX, midY);
-  cursorX += sepW + gap;
+    ctx.fillStyle = "rgba(0,0,0,0.88)";
+    ctx.beginPath();
+    ctx.roundRect(pillX, pillY, pillW, pillH, pillH * 0.28);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(56,189,248,0.45)";
+    ctx.lineWidth = Math.max(1, 1.2 / globalScale);
+    ctx.stroke();
 
-  ctx.fillStyle = RECEIVED_COLOR;
-  ctx.fillText(formatEdgeCount(received), cursorX, midY);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = RECEIVED_COLOR;
+    ctx.fillText(recvText, midX, midY);
+  }
 
   ctx.restore();
 }
@@ -705,7 +736,7 @@ export default function GraphVisualizer({
           d3AlphaDecay={1}
           minZoom={0.35}
           maxZoom={6}
-          onEngineStop={() => fgRef.current?.zoomToFit(700, 80)}
+          onEngineStop={() => fgRef.current?.zoomToFit(700, 120)}
           onRenderFramePre={renderBackground}
           nodeCanvasObject={paintNode}
           nodePointerAreaPaint={paintPointerArea}

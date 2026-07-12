@@ -1,8 +1,13 @@
 import fs from "fs";
 import path from "path";
 import { buildScrapeResultFromRawComments } from "../lib/importRawComments";
+import {
+  buildScrapeResultFromLinkedInRaw,
+  isLinkedInRawDataset,
+} from "../lib/importLinkedInRaw";
 import { blobConfigured } from "../lib/blob";
 import { pinnedGraphPath, writeSnapshot } from "../lib/snapshot";
+import type { ScrapeResult } from "../lib/types";
 
 const args = process.argv.slice(2);
 const pushFlag = args.includes("--push");
@@ -13,7 +18,10 @@ const site = filtered[2] ?? process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhos
 
 if (!handle || !jsonPath) {
   console.error(
-    "Usage: npx tsx scripts/import-raw-snapshot.ts <handle> <comments.json> [--push] [site-url]",
+    "Usage: npx tsx scripts/import-raw-snapshot.ts <handle> <raw.json> [--push] [site-url]",
+  );
+  console.error(
+    "  raw.json: Instagram comment array OR HarvestAPI LinkedIn profile-posts dataset",
   );
   process.exit(1);
 }
@@ -26,11 +34,18 @@ if (!fs.existsSync(abs)) {
 
 const raw = JSON.parse(fs.readFileSync(abs, "utf-8"));
 if (!Array.isArray(raw)) {
-  console.error("JSON must be an array of comment objects");
+  console.error("JSON must be an array");
   process.exit(1);
 }
 
-async function pushToRemote(result: Awaited<ReturnType<typeof buildScrapeResultFromRawComments>>) {
+function buildResult(handleName: string, data: unknown[]): ScrapeResult {
+  if (isLinkedInRawDataset(data)) {
+    return buildScrapeResultFromLinkedInRaw(handleName, data);
+  }
+  return buildScrapeResultFromRawComments(handleName, data);
+}
+
+async function pushToRemote(result: ScrapeResult) {
   const secret = process.env.SNAPSHOT_PIN_SECRET;
   if (!secret) {
     throw new Error("Set SNAPSHOT_PIN_SECRET to push snapshots to production.");
@@ -52,10 +67,13 @@ async function pushToRemote(result: Awaited<ReturnType<typeof buildScrapeResultF
 }
 
 async function main() {
-  const result = buildScrapeResultFromRawComments(handle, raw);
+  const result = buildResult(handle, raw);
   const saved = await writeSnapshot(handle, result);
+  const source = isLinkedInRawDataset(raw) ? "LinkedIn" : "Instagram";
 
-  console.log(`Imported ${raw.length} comments → ${result.stats.shown} people on graph`);
+  console.log(
+    `Imported ${source} raw → ${result.stats.shown} people on graph (${result.profile.postsCount} posts)`,
+  );
   console.log(`Local file (gitignored): data/snapshots/${saved}.json`);
 
   if (blobConfigured()) {
