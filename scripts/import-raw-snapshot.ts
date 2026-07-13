@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { buildScrapeResultFromRawComments } from "../lib/importRawComments";
+import { buildScrapeResultFromRawComments, type RawScrapedComment } from "../lib/importRawComments";
 import {
   buildScrapeResultFromLinkedInRaw,
   isLinkedInRawDataset,
@@ -32,15 +32,27 @@ if (!fs.existsSync(abs)) {
   process.exit(1);
 }
 
-const raw = JSON.parse(fs.readFileSync(abs, "utf-8"));
-if (!Array.isArray(raw)) {
+const parsed: unknown = JSON.parse(fs.readFileSync(abs, "utf-8"));
+if (!Array.isArray(parsed)) {
   console.error("JSON must be an array");
   process.exit(1);
+}
+const raw: unknown[] = parsed;
+
+function isInstagramCommentRow(item: unknown): item is RawScrapedComment {
+  if (!item || typeof item !== "object") return false;
+  const row = item as Record<string, unknown>;
+  return typeof row.text === "string" && typeof row.ownerUsername === "string";
 }
 
 function buildResult(handleName: string, data: unknown[]): ScrapeResult {
   if (isLinkedInRawDataset(data)) {
     return buildScrapeResultFromLinkedInRaw(handleName, data);
+  }
+  if (!data.every(isInstagramCommentRow)) {
+    throw new Error(
+      "Unrecognized raw format — expected LinkedIn HarvestAPI rows or Instagram comment objects",
+    );
   }
   return buildScrapeResultFromRawComments(handleName, data);
 }
