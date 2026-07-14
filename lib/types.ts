@@ -335,6 +335,20 @@ export interface GraphData {
   circles: Circle[];
 }
 
+export interface NetworkPersonStat {
+  username: string;
+  fullName?: string;
+  comments: number;
+  circle: number;
+  reactionsTotal?: number;
+  reactionsByType?: Record<string, number>;
+  postsReactedTo?: number;
+  postsCommentedOn?: number;
+  totalPostsScraped?: number;
+  latestCommentWhen?: string;
+  latestCommentTime?: number;
+}
+
 export interface NetworkStats {
   /** How many comments we scanned to find visible connections. */
   scanned: number;
@@ -342,18 +356,12 @@ export interface NetworkStats {
   shown: number;
   circleCount: number;
   totalComments: number;
-  topCommentators: {
-    username: string;
-    comments: number;
-    circle: number;
-  }[];
-  recentCommentators: {
-    username: string;
-    comments: number;
-    circle: number;
-    latestCommentWhen: string;
-    latestCommentTime?: number;
-  }[];
+  /** Sum of reactions across people shown in the graph. */
+  totalReactions?: number;
+  topCommentators: NetworkPersonStat[];
+  recentCommentators: NetworkPersonStat[];
+  /** Ranked by reaction volume (silent supporters included). */
+  topReactors?: NetworkPersonStat[];
   biggestCircle: { label: string; size: number };
 }
 

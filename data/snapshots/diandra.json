@@ -89,7 +89,7 @@
                 "label": "No stronger public relationship cue was visible"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.875Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.898Z",
             "needsConfirmation": true
           }
         ],
@@ -112,7 +112,7 @@
           "trajectory": "intermittent",
           "firstInteractionDate": "2025-05-06T12:15:52.107Z",
           "mostRecentInteractionDate": "2025-05-06T12:15:52.107Z",
-          "mostRecentDaysAgo": 433,
+          "mostRecentDaysAgo": 434,
           "strongestTopicsEvents": [
             "unknown"
           ],
@@ -137,7 +137,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.875Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.898Z"
         },
         "reactionsTotal": 16,
         "reactionsByType": {
@@ -276,7 +276,7 @@
                 "label": "Low-confidence assumption from public comments only"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.873Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.895Z",
             "needsConfirmation": true
           },
           {
@@ -294,7 +294,7 @@
                 "label": "Owner reply rate 33%"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.873Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.895Z",
             "needsConfirmation": true
           }
         ],
@@ -310,14 +310,14 @@
           "commentSpecificityScore": 0.55,
           "sharedMemoryScore": 0,
           "insideJokeScore": 0,
-          "supportScore": 0.2928242700796943,
-          "workCollaborationScore": 0.472354244313826,
+          "supportScore": 0.29282427007969425,
+          "workCollaborationScore": 0.47235424431382594,
           "familySchoolCommunityEvidenceScore": 0.2928242700796943,
           "reciprocityScore": 0.333,
           "trajectory": "intermittent",
           "firstInteractionDate": "2025-03-27T15:49:03.637Z",
           "mostRecentInteractionDate": "2025-07-31T11:04:52.921Z",
-          "mostRecentDaysAgo": 347,
+          "mostRecentDaysAgo": 348,
           "strongestTopicsEvents": [
             "unknown",
             "Congratulations"
@@ -345,7 +345,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.873Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.896Z"
         },
         "reactionsTotal": 7,
         "reactionsByType": {
@@ -482,7 +482,7 @@
                 "label": "Low-confidence assumption from public comments only"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.874Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.897Z",
             "needsConfirmation": true
           },
           {
@@ -500,7 +500,7 @@
                 "label": "2 comments were supportive or celebratory"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.874Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.897Z",
             "needsConfirmation": true
           },
           {
@@ -518,7 +518,7 @@
                 "label": "Owner reply rate 67%"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.874Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.897Z",
             "needsConfirmation": true
           },
           {
@@ -536,7 +536,7 @@
                 "label": "Low comment-specificity score"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.874Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.897Z",
             "needsConfirmation": true
           }
         ],
@@ -588,7 +588,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.874Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.897Z"
         },
         "reactionsTotal": 7,
         "reactionsByType": {
@@ -665,7 +665,7 @@
                 "label": "Low-confidence assumption from public comments only"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.876Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           },
           {
@@ -683,7 +683,7 @@
                 "label": "Owner reply rate 100%"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.876Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           }
         ],
@@ -734,7 +734,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.876Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.899Z"
         },
         "reactionsTotal": 12,
         "reactionsByType": {
@@ -838,7 +838,7 @@
                 "label": "No stronger public relationship cue was visible"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.875Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.898Z",
             "needsConfirmation": true
           },
           {
@@ -856,7 +856,7 @@
                 "label": "Owner reply rate 100%"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.875Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.898Z",
             "needsConfirmation": true
           }
         ],
@@ -879,7 +879,7 @@
           "trajectory": "intermittent",
           "firstInteractionDate": "2025-03-27T15:42:47.272Z",
           "mostRecentInteractionDate": "2025-07-29T12:17:22.100Z",
-          "mostRecentDaysAgo": 349,
+          "mostRecentDaysAgo": 350,
           "strongestTopicsEvents": [
             "unknown"
           ],
@@ -906,7 +906,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.875Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.898Z"
         },
         "reactionsTotal": 7,
         "reactionsByType": {
@@ -962,7 +962,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.877Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.900Z"
         },
         "reactionsTotal": 13,
         "reactionsByType": {
@@ -1039,7 +1039,7 @@
                 "label": "Low-confidence assumption from public comments only"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.877Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           },
           {
@@ -1057,7 +1057,7 @@
                 "label": "Owner reply rate 100%"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.877Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           }
         ],
@@ -1107,7 +1107,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.877Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.899Z"
         },
         "reactionsTotal": 9,
         "reactionsByType": {
@@ -1183,7 +1183,7 @@
                 "label": "Low-confidence assumption from public comments only"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.877Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.900Z",
             "needsConfirmation": true
           }
         ],
@@ -1231,7 +1231,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.877Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.900Z"
         },
         "reactionsTotal": 9,
         "reactionsByType": {
@@ -1285,7 +1285,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.878Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.900Z"
         },
         "reactionsTotal": 11,
         "reactionsByType": {
@@ -1345,7 +1345,7 @@
             "authorUsername": "bruce-crouch-41802619",
             "postId": "https://www.linkedin.com/posts/diandra-dumitru_in-2024-i-took-a-leap-of-faith-and-it-activity-7284555999594614784-AWrs",
             "text": "Nice to chat Diandra and good luck with it all",
-            "when": "73 weeks ago",
+            "when": "74 weeks ago",
             "timestamp": "2025-02-14T09:18:10.392Z",
             "post": "In 2024, I took a leap of faith — and it paid off. Six years in the sta…",
             "isReply": false,
@@ -1391,7 +1391,7 @@
                 "label": "Low-confidence assumption from public comments only"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.876Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           },
           {
@@ -1409,7 +1409,7 @@
                 "label": "Owner reply rate 100%"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.876Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           }
         ],
@@ -1432,7 +1432,7 @@
           "trajectory": "intermittent",
           "firstInteractionDate": "2025-01-29T14:35:57.295Z",
           "mostRecentInteractionDate": "2025-02-14T09:18:10.392Z",
-          "mostRecentDaysAgo": 514,
+          "mostRecentDaysAgo": 515,
           "strongestTopicsEvents": [
             "unknown"
           ],
@@ -1459,7 +1459,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.876Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.899Z"
         },
         "reactionsTotal": 4,
         "reactionsByType": {
@@ -1532,7 +1532,7 @@
                 "label": "Low-confidence assumption from public comments only"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.875Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.898Z",
             "needsConfirmation": true
           }
         ],
@@ -1555,7 +1555,7 @@
           "trajectory": "intermittent",
           "firstInteractionDate": "2025-07-24T10:29:44.892Z",
           "mostRecentInteractionDate": "2025-07-24T10:29:44.892Z",
-          "mostRecentDaysAgo": 354,
+          "mostRecentDaysAgo": 355,
           "strongestTopicsEvents": [
             "unknown"
           ],
@@ -1580,7 +1580,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.875Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.898Z"
         },
         "reactionsTotal": 6,
         "reactionsByType": {
@@ -1690,7 +1690,7 @@
                 "label": "Low-confidence assumption from public comments only"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.876Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           },
           {
@@ -1708,7 +1708,7 @@
                 "label": "3 comments were supportive or celebratory"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.876Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           },
           {
@@ -1726,7 +1726,7 @@
                 "label": "Owner reply rate 100%"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.876Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           }
         ],
@@ -1778,7 +1778,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.876Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.899Z"
         },
         "reactionsTotal": 3,
         "reactionsByType": {
@@ -1881,7 +1881,7 @@
                 "label": "No stronger public relationship cue was visible"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.877Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           },
           {
@@ -1899,7 +1899,7 @@
                 "label": "Owner reply rate 50%"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.877Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           }
         ],
@@ -1949,7 +1949,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.877Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.900Z"
         },
         "reactionsTotal": 3,
         "reactionsByType": {
@@ -2020,7 +2020,7 @@
                 "label": "No stronger public relationship cue was visible"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.877Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.900Z",
             "needsConfirmation": true
           }
         ],
@@ -2068,7 +2068,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.877Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.900Z"
         },
         "reactionsTotal": 6,
         "reactionsByType": {
@@ -2175,7 +2175,7 @@
                 "label": "Low-confidence assumption from public comments only"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.875Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.898Z",
             "needsConfirmation": true
           }
         ],
@@ -2224,7 +2224,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.875Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.898Z"
         },
         "reactionsTotal": 2,
         "reactionsByType": {
@@ -2333,7 +2333,7 @@
                 "label": "Low-confidence assumption from public comments only"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.875Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.898Z",
             "needsConfirmation": true
           },
           {
@@ -2351,7 +2351,7 @@
                 "label": "Owner reply rate 100%"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.875Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.898Z",
             "needsConfirmation": true
           }
         ],
@@ -2367,7 +2367,7 @@
           "commentSpecificityScore": 0.775,
           "sharedMemoryScore": 0,
           "insideJokeScore": 0,
-          "supportScore": 0.6362617850650119,
+          "supportScore": 0.6362617850650117,
           "workCollaborationScore": 0.36373821493498815,
           "familySchoolCommunityEvidenceScore": 0,
           "reciprocityScore": 1,
@@ -2401,7 +2401,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.875Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.898Z"
         },
         "reactionsTotal": 2,
         "reactionsByType": {
@@ -2510,7 +2510,7 @@
                 "label": "Low-confidence assumption from public comments only"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.875Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.898Z",
             "needsConfirmation": true
           },
           {
@@ -2528,7 +2528,7 @@
                 "label": "4 comments were supportive or celebratory"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.875Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.898Z",
             "needsConfirmation": true
           },
           {
@@ -2546,7 +2546,7 @@
                 "label": "Owner reply rate 100%"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.875Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.898Z",
             "needsConfirmation": true
           }
         ],
@@ -2598,7 +2598,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.875Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.898Z"
         },
         "reactionsTotal": 2,
         "reactionsByType": {
@@ -2670,7 +2670,7 @@
                 "label": "No stronger public relationship cue was visible"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.877Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.900Z",
             "needsConfirmation": true
           },
           {
@@ -2688,7 +2688,7 @@
                 "label": "Owner reply rate 100%"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.877Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.900Z",
             "needsConfirmation": true
           }
         ],
@@ -2738,7 +2738,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.877Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.900Z"
         },
         "reactionsTotal": 5,
         "reactionsByType": {
@@ -2811,7 +2811,7 @@
                 "label": "Low-confidence assumption from public comments only"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.877Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.900Z",
             "needsConfirmation": true
           }
         ],
@@ -2859,7 +2859,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.877Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.900Z"
         },
         "reactionsTotal": 5,
         "reactionsByType": {
@@ -2914,7 +2914,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.877Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.900Z"
         },
         "reactionsTotal": 8,
         "reactionsByType": {
@@ -2969,7 +2969,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.877Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.900Z"
         },
         "reactionsTotal": 8,
         "reactionsByType": {
@@ -3040,7 +3040,7 @@
                 "label": "No stronger public relationship cue was visible"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.876Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           },
           {
@@ -3058,7 +3058,7 @@
                 "label": "Owner reply rate 100%"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.876Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           },
           {
@@ -3076,7 +3076,7 @@
                 "label": "Low comment-specificity score"
               }
             ],
-            "lastUpdatedAt": "2026-07-13T20:58:45.876Z",
+            "lastUpdatedAt": "2026-07-14T00:29:44.899Z",
             "needsConfirmation": true
           }
         ],
@@ -3127,7 +3127,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.876Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.899Z"
         },
         "reactionsTotal": 4,
         "reactionsByType": {
@@ -3182,7 +3182,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.877Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.900Z"
         },
         "reactionsTotal": 7,
         "reactionsByType": {
@@ -3239,7 +3239,7 @@
           "source": "ai_inference",
           "visibility": "private",
           "needsConfirmation": true,
-          "lastUpdatedAt": "2026-07-13T20:58:45.877Z"
+          "lastUpdatedAt": "2026-07-14T00:29:44.900Z"
         },
         "reactionsTotal": 7,
         "reactionsByType": {
@@ -3438,296 +3438,1106 @@
     "shown": 24,
     "circleCount": 1,
     "totalComments": 29,
+    "totalReactions": 163,
     "topCommentators": [
       {
         "username": "camilla-guida-32597813b",
+        "fullName": "Camilla Guida",
         "comments": 3,
-        "circle": 0
+        "circle": 0,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "LIKE": 3,
+          "EMPATHY": 4
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 3,
+        "totalPostsScraped": 20
       },
       {
         "username": "clazar",
+        "fullName": "Cornel Lazar",
         "comments": 3,
-        "circle": 0
+        "circle": 0,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "PRAISE": 5,
+          "LIKE": 1,
+          "EMPATHY": 1
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 3,
+        "totalPostsScraped": 20
       },
       {
         "username": "juliaodoherty",
+        "fullName": "Julia O'Doherty",
         "comments": 2,
-        "circle": 0
-      },
-      {
-        "username": "shashank-mishra-8a34051b5",
-        "comments": 2,
-        "circle": 1
-      },
-      {
-        "username": "mel-chacksfield-b587383a",
-        "comments": 2,
-        "circle": 1
-      },
-      {
-        "username": "ssantoshc18",
-        "comments": 2,
-        "circle": 1
-      },
-      {
-        "username": "mark-gibson-50baa533",
-        "comments": 2,
-        "circle": 1
+        "circle": 0,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "EMPATHY": 3,
+          "PRAISE": 2,
+          "LIKE": 2
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
       },
       {
         "username": "bruce-crouch-41802619",
+        "fullName": "Bruce Crouch",
         "comments": 2,
-        "circle": 1
+        "circle": 1,
+        "reactionsTotal": 4,
+        "reactionsByType": {
+          "LIKE": 4
+        },
+        "postsReactedTo": 4,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "mark-gibson-50baa533",
+        "fullName": "Mark Gibson",
+        "comments": 2,
+        "circle": 1,
+        "reactionsTotal": 3,
+        "reactionsByType": {
+          "EMPATHY": 1,
+          "APPRECIATION": 1,
+          "LIKE": 1
+        },
+        "postsReactedTo": 3,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
       },
       {
         "username": "richard-south-29596214",
+        "fullName": "Richard South",
         "comments": 2,
-        "circle": 1
+        "circle": 1,
+        "reactionsTotal": 3,
+        "reactionsByType": {
+          "LIKE": 3
+        },
+        "postsReactedTo": 3,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
       },
       {
-        "username": "emily-girvan",
-        "comments": 1,
-        "circle": 1
+        "username": "shashank-mishra-8a34051b5",
+        "fullName": "Shashank Mishra",
+        "comments": 2,
+        "circle": 1,
+        "reactionsTotal": 2,
+        "reactionsByType": {
+          "EMPATHY": 1,
+          "INTEREST": 1
+        },
+        "postsReactedTo": 2,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "mel-chacksfield-b587383a",
+        "fullName": "Mel Chacksfield",
+        "comments": 2,
+        "circle": 1,
+        "reactionsTotal": 2,
+        "reactionsByType": {
+          "EMPATHY": 2
+        },
+        "postsReactedTo": 2,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "ssantoshc18",
+        "fullName": "Santosh Choudhary",
+        "comments": 2,
+        "circle": 1,
+        "reactionsTotal": 2,
+        "reactionsByType": {
+          "EMPATHY": 1,
+          "LIKE": 1
+        },
+        "postsReactedTo": 2,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
       },
       {
         "username": "seanwestwood",
+        "fullName": "Sean Westwood",
         "comments": 1,
-        "circle": 0
+        "circle": 0,
+        "reactionsTotal": 16,
+        "reactionsByType": {
+          "PRAISE": 5,
+          "LIKE": 9,
+          "EMPATHY": 1,
+          "INTEREST": 1
+        },
+        "postsReactedTo": 16,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
       },
       {
         "username": "nurimaninabintimohdfaidzal",
+        "fullName": "Nur Imanina Mohd Faidzal",
         "comments": 1,
-        "circle": 0
-      },
-      {
-        "username": "sophie-callery-42b176188",
-        "comments": 1,
-        "circle": 2
+        "circle": 0,
+        "reactionsTotal": 12,
+        "reactionsByType": {
+          "PRAISE": 5,
+          "LIKE": 2,
+          "EMPATHY": 2,
+          "APPRECIATION": 1,
+          "INTEREST": 2
+        },
+        "postsReactedTo": 12,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
       },
       {
         "username": "sofianas",
+        "fullName": "Sofia Ianas",
         "comments": 1,
-        "circle": 1
-      },
-      {
-        "username": "holly-coxell-20468511",
-        "comments": 1,
-        "circle": 2
-      },
-      {
-        "username": "ozziecb",
-        "comments": 1,
-        "circle": 1
-      },
-      {
-        "username": "romainsestier",
-        "comments": 1,
-        "circle": 2
+        "circle": 1,
+        "reactionsTotal": 9,
+        "reactionsByType": {
+          "EMPATHY": 2,
+          "LIKE": 6,
+          "APPRECIATION": 1
+        },
+        "postsReactedTo": 9,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
       },
       {
         "username": "marie-caroline-pasquier-5932b1112",
+        "fullName": "Marie-Caroline Pasquier",
         "comments": 1,
-        "circle": 1
+        "circle": 1,
+        "reactionsTotal": 9,
+        "reactionsByType": {
+          "EMPATHY": 5,
+          "LIKE": 4
+        },
+        "postsReactedTo": 9,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "emily-girvan",
+        "fullName": "Emily Girvan",
+        "comments": 1,
+        "circle": 1,
+        "reactionsTotal": 6,
+        "reactionsByType": {
+          "LIKE": 5,
+          "PRAISE": 1
+        },
+        "postsReactedTo": 6,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "ozziecb",
+        "fullName": "Ozzie Clarke-Binns",
+        "comments": 1,
+        "circle": 1,
+        "reactionsTotal": 6,
+        "reactionsByType": {
+          "EMPATHY": 2,
+          "PRAISE": 2,
+          "INTEREST": 1,
+          "LIKE": 1
+        },
+        "postsReactedTo": 6,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "holly-coxell-20468511",
+        "fullName": "Holly Coxell",
+        "comments": 1,
+        "circle": 2,
+        "reactionsTotal": 5,
+        "reactionsByType": {
+          "LIKE": 5
+        },
+        "postsReactedTo": 5,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "romainsestier",
+        "fullName": "Romain Sestier",
+        "comments": 1,
+        "circle": 2,
+        "reactionsTotal": 5,
+        "reactionsByType": {
+          "EMPATHY": 2,
+          "LIKE": 3
+        },
+        "postsReactedTo": 5,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "sophie-callery-42b176188",
+        "fullName": "Sophie Callery",
+        "comments": 1,
+        "circle": 2,
+        "reactionsTotal": 4,
+        "reactionsByType": {
+          "PRAISE": 3,
+          "EMPATHY": 1
+        },
+        "postsReactedTo": 4,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
       },
       {
         "username": "acoaachmspgb94p6iejiiqzcxlyvpbxngdeqrwi",
+        "fullName": "Ana Maria Dumitrascu",
         "comments": 0,
-        "circle": 0
+        "circle": 0,
+        "reactionsTotal": 13,
+        "reactionsByType": {
+          "PRAISE": 6,
+          "APPRECIATION": 3,
+          "EMPATHY": 1,
+          "LIKE": 2,
+          "INTEREST": 1
+        },
+        "postsReactedTo": 13,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20
       },
       {
         "username": "acoaaacenwcbtlhbt8jaqcvc4xvkmmoxiqll10m",
+        "fullName": "Grafton Robinson",
         "comments": 0,
-        "circle": 1
+        "circle": 1,
+        "reactionsTotal": 11,
+        "reactionsByType": {
+          "LIKE": 9,
+          "PRAISE": 1,
+          "EMPATHY": 1
+        },
+        "postsReactedTo": 11,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20
       },
       {
         "username": "acoaaaeanjcbullaszqiwwawmgptwjivcelaymk",
+        "fullName": "Diana Sovailescu",
         "comments": 0,
-        "circle": 2
+        "circle": 2,
+        "reactionsTotal": 8,
+        "reactionsByType": {
+          "LIKE": 5,
+          "PRAISE": 1,
+          "EMPATHY": 2
+        },
+        "postsReactedTo": 8,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20
       },
       {
         "username": "acoaablrc4sblukpg3nkzfpb9fhmwsgx0brric0",
+        "fullName": "Jessica Ramskill",
         "comments": 0,
-        "circle": 2
+        "circle": 2,
+        "reactionsTotal": 8,
+        "reactionsByType": {
+          "EMPATHY": 8
+        },
+        "postsReactedTo": 8,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20
       },
       {
         "username": "acoaacb7r-0bpfpjnluk7dqb9aw8seoozoj5uzq",
+        "fullName": "Alex Gradinaru",
         "comments": 0,
-        "circle": 2
+        "circle": 2,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "INTEREST": 1,
+          "LIKE": 2,
+          "EMPATHY": 3,
+          "PRAISE": 1
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20
       },
       {
         "username": "acoaacelowgbix3n6fwfdvy3w9sdzkj2jqr0nyy",
+        "fullName": "Horatiu Dumitru",
         "comments": 0,
-        "circle": 2
+        "circle": 2,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "LIKE": 6,
+          "PRAISE": 1
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20
       }
     ],
     "recentCommentators": [
       {
         "username": "seanwestwood",
+        "fullName": "Sean Westwood",
         "comments": 1,
         "circle": 0,
+        "reactionsTotal": 16,
+        "reactionsByType": {
+          "PRAISE": 5,
+          "LIKE": 9,
+          "EMPATHY": 1,
+          "INTEREST": 1
+        },
+        "postsReactedTo": 16,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "62 weeks ago",
         "latestCommentTime": 1746533752107
       },
       {
         "username": "camilla-guida-32597813b",
+        "fullName": "Camilla Guida",
         "comments": 3,
         "circle": 0,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "LIKE": 3,
+          "EMPATHY": 4
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 3,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "50 weeks ago",
         "latestCommentTime": 1753959892921
       },
       {
         "username": "clazar",
+        "fullName": "Cornel Lazar",
         "comments": 3,
         "circle": 0,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "PRAISE": 5,
+          "LIKE": 1,
+          "EMPATHY": 1
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 3,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "50 weeks ago",
         "latestCommentTime": 1753861598717
       },
       {
         "username": "nurimaninabintimohdfaidzal",
+        "fullName": "Nur Imanina Mohd Faidzal",
         "comments": 1,
         "circle": 0,
+        "reactionsTotal": 12,
+        "reactionsByType": {
+          "PRAISE": 5,
+          "LIKE": 2,
+          "EMPATHY": 2,
+          "APPRECIATION": 1,
+          "INTEREST": 2
+        },
+        "postsReactedTo": 12,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "68 weeks ago",
         "latestCommentTime": 1743082922414
       },
       {
         "username": "juliaodoherty",
+        "fullName": "Julia O'Doherty",
         "comments": 2,
         "circle": 0,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "EMPATHY": 3,
+          "PRAISE": 2,
+          "LIKE": 2
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "50 weeks ago",
         "latestCommentTime": 1753791442100
       },
       {
         "username": "acoaachmspgb94p6iejiiqzcxlyvpbxngdeqrwi",
+        "fullName": "Ana Maria Dumitrascu",
         "comments": 0,
         "circle": 0,
+        "reactionsTotal": 13,
+        "reactionsByType": {
+          "PRAISE": 6,
+          "APPRECIATION": 3,
+          "EMPATHY": 1,
+          "LIKE": 2,
+          "INTEREST": 1
+        },
+        "postsReactedTo": 13,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "unknown",
         "latestCommentTime": 0
       },
       {
         "username": "sofianas",
+        "fullName": "Sofia Ianas",
         "comments": 1,
         "circle": 1,
+        "reactionsTotal": 9,
+        "reactionsByType": {
+          "EMPATHY": 2,
+          "LIKE": 6,
+          "APPRECIATION": 1
+        },
+        "postsReactedTo": 9,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "78 weeks ago",
         "latestCommentTime": 1736773619921
       },
       {
         "username": "marie-caroline-pasquier-5932b1112",
+        "fullName": "Marie-Caroline Pasquier",
         "comments": 1,
         "circle": 1,
+        "reactionsTotal": 9,
+        "reactionsByType": {
+          "EMPATHY": 5,
+          "LIKE": 4
+        },
+        "postsReactedTo": 9,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "2 years ago",
         "latestCommentTime": 1718811095229
       },
       {
         "username": "acoaaacenwcbtlhbt8jaqcvc4xvkmmoxiqll10m",
+        "fullName": "Grafton Robinson",
         "comments": 0,
         "circle": 1,
+        "reactionsTotal": 11,
+        "reactionsByType": {
+          "LIKE": 9,
+          "PRAISE": 1,
+          "EMPATHY": 1
+        },
+        "postsReactedTo": 11,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "unknown",
         "latestCommentTime": 0
       },
       {
         "username": "bruce-crouch-41802619",
+        "fullName": "Bruce Crouch",
         "comments": 2,
         "circle": 1,
-        "latestCommentWhen": "73 weeks ago",
+        "reactionsTotal": 4,
+        "reactionsByType": {
+          "LIKE": 4
+        },
+        "postsReactedTo": 4,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20,
+        "latestCommentWhen": "74 weeks ago",
         "latestCommentTime": 1739524690392
       },
       {
         "username": "emily-girvan",
+        "fullName": "Emily Girvan",
         "comments": 1,
         "circle": 1,
+        "reactionsTotal": 6,
+        "reactionsByType": {
+          "LIKE": 5,
+          "PRAISE": 1
+        },
+        "postsReactedTo": 6,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "51 weeks ago",
         "latestCommentTime": 1753352984892
       },
       {
         "username": "mark-gibson-50baa533",
+        "fullName": "Mark Gibson",
         "comments": 2,
         "circle": 1,
+        "reactionsTotal": 3,
+        "reactionsByType": {
+          "EMPATHY": 1,
+          "APPRECIATION": 1,
+          "LIKE": 1
+        },
+        "postsReactedTo": 3,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "68 weeks ago",
         "latestCommentTime": 1743082002417
       },
       {
         "username": "richard-south-29596214",
+        "fullName": "Richard South",
         "comments": 2,
         "circle": 1,
+        "reactionsTotal": 3,
+        "reactionsByType": {
+          "LIKE": 3
+        },
+        "postsReactedTo": 3,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "78 weeks ago",
         "latestCommentTime": 1736774232384
       },
       {
         "username": "ozziecb",
+        "fullName": "Ozzie Clarke-Binns",
         "comments": 1,
         "circle": 1,
+        "reactionsTotal": 6,
+        "reactionsByType": {
+          "EMPATHY": 2,
+          "PRAISE": 2,
+          "INTEREST": 1,
+          "LIKE": 1
+        },
+        "postsReactedTo": 6,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "2 years ago",
         "latestCommentTime": 1720702712968
       },
       {
         "username": "shashank-mishra-8a34051b5",
+        "fullName": "Shashank Mishra",
         "comments": 2,
         "circle": 1,
+        "reactionsTotal": 2,
+        "reactionsByType": {
+          "EMPATHY": 1,
+          "INTEREST": 1
+        },
+        "postsReactedTo": 2,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "62 weeks ago",
         "latestCommentTime": 1746519638200
       },
       {
         "username": "mel-chacksfield-b587383a",
+        "fullName": "Mel Chacksfield",
         "comments": 2,
         "circle": 1,
+        "reactionsTotal": 2,
+        "reactionsByType": {
+          "EMPATHY": 2
+        },
+        "postsReactedTo": 2,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "64 weeks ago",
         "latestCommentTime": 1745473738378
       },
       {
         "username": "ssantoshc18",
+        "fullName": "Santosh Choudhary",
         "comments": 2,
         "circle": 1,
+        "reactionsTotal": 2,
+        "reactionsByType": {
+          "EMPATHY": 1,
+          "LIKE": 1
+        },
+        "postsReactedTo": 2,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "67 weeks ago",
         "latestCommentTime": 1743178359968
       },
       {
         "username": "holly-coxell-20468511",
+        "fullName": "Holly Coxell",
         "comments": 1,
         "circle": 2,
+        "reactionsTotal": 5,
+        "reactionsByType": {
+          "LIKE": 5
+        },
+        "postsReactedTo": 5,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "91 weeks ago",
         "latestCommentTime": 1729090558894
       },
       {
         "username": "romainsestier",
+        "fullName": "Romain Sestier",
         "comments": 1,
         "circle": 2,
+        "reactionsTotal": 5,
+        "reactionsByType": {
+          "EMPATHY": 2,
+          "LIKE": 3
+        },
+        "postsReactedTo": 5,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "2 years ago",
         "latestCommentTime": 1718821109076
       },
       {
         "username": "acoaaaeanjcbullaszqiwwawmgptwjivcelaymk",
+        "fullName": "Diana Sovailescu",
         "comments": 0,
         "circle": 2,
+        "reactionsTotal": 8,
+        "reactionsByType": {
+          "LIKE": 5,
+          "PRAISE": 1,
+          "EMPATHY": 2
+        },
+        "postsReactedTo": 8,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "unknown",
         "latestCommentTime": 0
       },
       {
         "username": "acoaablrc4sblukpg3nkzfpb9fhmwsgx0brric0",
+        "fullName": "Jessica Ramskill",
         "comments": 0,
         "circle": 2,
+        "reactionsTotal": 8,
+        "reactionsByType": {
+          "EMPATHY": 8
+        },
+        "postsReactedTo": 8,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "unknown",
         "latestCommentTime": 0
       },
       {
         "username": "sophie-callery-42b176188",
+        "fullName": "Sophie Callery",
         "comments": 1,
         "circle": 2,
+        "reactionsTotal": 4,
+        "reactionsByType": {
+          "PRAISE": 3,
+          "EMPATHY": 1
+        },
+        "postsReactedTo": 4,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "68 weeks ago",
         "latestCommentTime": 1743082082835
       },
       {
         "username": "acoaacb7r-0bpfpjnluk7dqb9aw8seoozoj5uzq",
+        "fullName": "Alex Gradinaru",
         "comments": 0,
         "circle": 2,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "INTEREST": 1,
+          "LIKE": 2,
+          "EMPATHY": 3,
+          "PRAISE": 1
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "unknown",
         "latestCommentTime": 0
       },
       {
         "username": "acoaacelowgbix3n6fwfdvy3w9sdzkj2jqr0nyy",
+        "fullName": "Horatiu Dumitru",
         "comments": 0,
         "circle": 2,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "LIKE": 6,
+          "PRAISE": 1
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20,
         "latestCommentWhen": "unknown",
         "latestCommentTime": 0
+      }
+    ],
+    "topReactors": [
+      {
+        "username": "seanwestwood",
+        "fullName": "Sean Westwood",
+        "comments": 1,
+        "circle": 0,
+        "reactionsTotal": 16,
+        "reactionsByType": {
+          "PRAISE": 5,
+          "LIKE": 9,
+          "EMPATHY": 1,
+          "INTEREST": 1
+        },
+        "postsReactedTo": 16,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "acoaachmspgb94p6iejiiqzcxlyvpbxngdeqrwi",
+        "fullName": "Ana Maria Dumitrascu",
+        "comments": 0,
+        "circle": 0,
+        "reactionsTotal": 13,
+        "reactionsByType": {
+          "PRAISE": 6,
+          "APPRECIATION": 3,
+          "EMPATHY": 1,
+          "LIKE": 2,
+          "INTEREST": 1
+        },
+        "postsReactedTo": 13,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "nurimaninabintimohdfaidzal",
+        "fullName": "Nur Imanina Mohd Faidzal",
+        "comments": 1,
+        "circle": 0,
+        "reactionsTotal": 12,
+        "reactionsByType": {
+          "PRAISE": 5,
+          "LIKE": 2,
+          "EMPATHY": 2,
+          "APPRECIATION": 1,
+          "INTEREST": 2
+        },
+        "postsReactedTo": 12,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "acoaaacenwcbtlhbt8jaqcvc4xvkmmoxiqll10m",
+        "fullName": "Grafton Robinson",
+        "comments": 0,
+        "circle": 1,
+        "reactionsTotal": 11,
+        "reactionsByType": {
+          "LIKE": 9,
+          "PRAISE": 1,
+          "EMPATHY": 1
+        },
+        "postsReactedTo": 11,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "sofianas",
+        "fullName": "Sofia Ianas",
+        "comments": 1,
+        "circle": 1,
+        "reactionsTotal": 9,
+        "reactionsByType": {
+          "EMPATHY": 2,
+          "LIKE": 6,
+          "APPRECIATION": 1
+        },
+        "postsReactedTo": 9,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "marie-caroline-pasquier-5932b1112",
+        "fullName": "Marie-Caroline Pasquier",
+        "comments": 1,
+        "circle": 1,
+        "reactionsTotal": 9,
+        "reactionsByType": {
+          "EMPATHY": 5,
+          "LIKE": 4
+        },
+        "postsReactedTo": 9,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "acoaaaeanjcbullaszqiwwawmgptwjivcelaymk",
+        "fullName": "Diana Sovailescu",
+        "comments": 0,
+        "circle": 2,
+        "reactionsTotal": 8,
+        "reactionsByType": {
+          "LIKE": 5,
+          "PRAISE": 1,
+          "EMPATHY": 2
+        },
+        "postsReactedTo": 8,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "acoaablrc4sblukpg3nkzfpb9fhmwsgx0brric0",
+        "fullName": "Jessica Ramskill",
+        "comments": 0,
+        "circle": 2,
+        "reactionsTotal": 8,
+        "reactionsByType": {
+          "EMPATHY": 8
+        },
+        "postsReactedTo": 8,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "camilla-guida-32597813b",
+        "fullName": "Camilla Guida",
+        "comments": 3,
+        "circle": 0,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "LIKE": 3,
+          "EMPATHY": 4
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 3,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "clazar",
+        "fullName": "Cornel Lazar",
+        "comments": 3,
+        "circle": 0,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "PRAISE": 5,
+          "LIKE": 1,
+          "EMPATHY": 1
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 3,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "juliaodoherty",
+        "fullName": "Julia O'Doherty",
+        "comments": 2,
+        "circle": 0,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "EMPATHY": 3,
+          "PRAISE": 2,
+          "LIKE": 2
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "acoaacb7r-0bpfpjnluk7dqb9aw8seoozoj5uzq",
+        "fullName": "Alex Gradinaru",
+        "comments": 0,
+        "circle": 2,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "INTEREST": 1,
+          "LIKE": 2,
+          "EMPATHY": 3,
+          "PRAISE": 1
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "acoaacelowgbix3n6fwfdvy3w9sdzkj2jqr0nyy",
+        "fullName": "Horatiu Dumitru",
+        "comments": 0,
+        "circle": 2,
+        "reactionsTotal": 7,
+        "reactionsByType": {
+          "LIKE": 6,
+          "PRAISE": 1
+        },
+        "postsReactedTo": 7,
+        "postsCommentedOn": 0,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "emily-girvan",
+        "fullName": "Emily Girvan",
+        "comments": 1,
+        "circle": 1,
+        "reactionsTotal": 6,
+        "reactionsByType": {
+          "LIKE": 5,
+          "PRAISE": 1
+        },
+        "postsReactedTo": 6,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "ozziecb",
+        "fullName": "Ozzie Clarke-Binns",
+        "comments": 1,
+        "circle": 1,
+        "reactionsTotal": 6,
+        "reactionsByType": {
+          "EMPATHY": 2,
+          "PRAISE": 2,
+          "INTEREST": 1,
+          "LIKE": 1
+        },
+        "postsReactedTo": 6,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "holly-coxell-20468511",
+        "fullName": "Holly Coxell",
+        "comments": 1,
+        "circle": 2,
+        "reactionsTotal": 5,
+        "reactionsByType": {
+          "LIKE": 5
+        },
+        "postsReactedTo": 5,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "romainsestier",
+        "fullName": "Romain Sestier",
+        "comments": 1,
+        "circle": 2,
+        "reactionsTotal": 5,
+        "reactionsByType": {
+          "EMPATHY": 2,
+          "LIKE": 3
+        },
+        "postsReactedTo": 5,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "bruce-crouch-41802619",
+        "fullName": "Bruce Crouch",
+        "comments": 2,
+        "circle": 1,
+        "reactionsTotal": 4,
+        "reactionsByType": {
+          "LIKE": 4
+        },
+        "postsReactedTo": 4,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "sophie-callery-42b176188",
+        "fullName": "Sophie Callery",
+        "comments": 1,
+        "circle": 2,
+        "reactionsTotal": 4,
+        "reactionsByType": {
+          "PRAISE": 3,
+          "EMPATHY": 1
+        },
+        "postsReactedTo": 4,
+        "postsCommentedOn": 1,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "mark-gibson-50baa533",
+        "fullName": "Mark Gibson",
+        "comments": 2,
+        "circle": 1,
+        "reactionsTotal": 3,
+        "reactionsByType": {
+          "EMPATHY": 1,
+          "APPRECIATION": 1,
+          "LIKE": 1
+        },
+        "postsReactedTo": 3,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "richard-south-29596214",
+        "fullName": "Richard South",
+        "comments": 2,
+        "circle": 1,
+        "reactionsTotal": 3,
+        "reactionsByType": {
+          "LIKE": 3
+        },
+        "postsReactedTo": 3,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "shashank-mishra-8a34051b5",
+        "fullName": "Shashank Mishra",
+        "comments": 2,
+        "circle": 1,
+        "reactionsTotal": 2,
+        "reactionsByType": {
+          "EMPATHY": 1,
+          "INTEREST": 1
+        },
+        "postsReactedTo": 2,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "mel-chacksfield-b587383a",
+        "fullName": "Mel Chacksfield",
+        "comments": 2,
+        "circle": 1,
+        "reactionsTotal": 2,
+        "reactionsByType": {
+          "EMPATHY": 2
+        },
+        "postsReactedTo": 2,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
+      },
+      {
+        "username": "ssantoshc18",
+        "fullName": "Santosh Choudhary",
+        "comments": 2,
+        "circle": 1,
+        "reactionsTotal": 2,
+        "reactionsByType": {
+          "EMPATHY": 1,
+          "LIKE": 1
+        },
+        "postsReactedTo": 2,
+        "postsCommentedOn": 2,
+        "totalPostsScraped": 20
       }
     ],
     "biggestCircle": {
@@ -3750,5 +4560,5 @@
   "cached": true,
   "demo": false,
   "pinned": true,
-  "scrapedAt": 1783976325883
+  "scrapedAt": 1783988984907
 }

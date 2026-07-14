@@ -4,6 +4,7 @@ import type {
   GraphData,
   GraphLink,
   GraphNode,
+  NetworkPersonStat,
   NetworkStats,
   PostComment,
   ProfileData,
@@ -978,37 +979,57 @@ export function computeStats(
 ): NetworkStats {
   const graph = buildGraph(profile, commentators);
   const totalComments = commentators.reduce((sum, c) => sum + c.comments, 0);
+  const totalReactions = commentators.reduce(
+    (sum, c) => sum + (c.reactionsTotal ?? 0),
+    0,
+  );
+
+  function toPersonStat(c: Commentator): NetworkPersonStat {
+    const node = graph.nodes.find((n) => n.id === c.username.toLowerCase());
+    return {
+      username: c.username,
+      fullName: c.fullName,
+      comments: c.comments,
+      circle: node?.circle ?? 2,
+      reactionsTotal: c.reactionsTotal ?? 0,
+      reactionsByType: c.reactionsByType,
+      postsReactedTo: c.postsReactedTo,
+      postsCommentedOn: c.postsCommentedOn,
+      totalPostsScraped: c.totalPostsScraped,
+    };
+  }
 
   const topCommentators = [...commentators]
     .sort(
       (a, b) =>
         b.comments - a.comments ||
+        (b.reactionsTotal ?? 0) - (a.reactionsTotal ?? 0) ||
         latestComment(b).time - latestComment(a).time,
     )
     .slice(0, MAX_NODES)
-    .map((c) => {
-      const node = graph.nodes.find((n) => n.id === c.username.toLowerCase());
-      return {
-        username: c.username,
-        comments: c.comments,
-        circle: node?.circle ?? 2,
-      };
-    });
+    .map(toPersonStat);
 
   const recentCommentators = [...commentators]
     .sort(compareByCloseness)
     .slice(0, MAX_NODES)
     .map((commentator) => {
-      const node = graph.nodes.find((n) => n.id === commentator.username.toLowerCase());
       const latest = latestComment(commentator);
       return {
-        username: commentator.username,
-        comments: commentator.comments,
-        circle: node?.circle ?? 2,
+        ...toPersonStat(commentator),
         latestCommentWhen: latest.when,
         latestCommentTime: latest.time,
       };
     });
+
+  const topReactors = [...commentators]
+    .filter((c) => (c.reactionsTotal ?? 0) > 0)
+    .sort(
+      (a, b) =>
+        (b.reactionsTotal ?? 0) - (a.reactionsTotal ?? 0) ||
+        b.comments - a.comments,
+    )
+    .slice(0, MAX_NODES)
+    .map(toPersonStat);
 
   let biggestCircle = { label: "Often on the same posts", size: 0 };
   for (const circle of graph.circles) {
@@ -1022,8 +1043,10 @@ export function computeStats(
     shown: commentators.length,
     circleCount: graph.circles.length,
     totalComments,
+    totalReactions,
     topCommentators,
     recentCommentators,
+    topReactors,
     biggestCircle,
   };
 }
