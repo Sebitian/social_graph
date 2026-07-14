@@ -477,10 +477,23 @@ export default function GraphVisualizer({
     if (!selectedId || !fgRef.current || !mapLayout) return;
     const pos = mapLayout.positions.get(selectedId);
     if (!pos) return;
-    fgRef.current.centerAt(pos.x, pos.y, 500);
-    fgRef.current.zoom(2.2, 500);
     setShowHint(false);
-  }, [selectedId, mapLayout]);
+
+    const mobile = size.width > 0 && size.width < 640;
+    if (mobile) {
+      // Frame ego + selected together so you can see where they sit on the map.
+      // A fixed hard zoom (desktop) feels lost on a phone.
+      fgRef.current.zoomToFit(
+        450,
+        64,
+        (node) => node.group === "self" || node.id === selectedId,
+      );
+      return;
+    }
+
+    fgRef.current.centerAt(pos.x, pos.y, 500);
+    fgRef.current.zoom(1.85, 500);
+  }, [selectedId, mapLayout, size.width]);
 
   useEffect(() => {
     const fg = fgRef.current;

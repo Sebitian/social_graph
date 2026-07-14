@@ -17,10 +17,27 @@ body {
   color: var(--foreground);
   background: var(--background);
   -webkit-font-smoothing: antialiased;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* Safe-area helpers for notched phones (additive via max with existing padding) */
+.pt-safe {
+  padding-top: max(0px, env(safe-area-inset-top));
+}
+
+.pb-safe {
+  padding-bottom: max(0px, env(safe-area-inset-bottom));
+}
+
+@supports (padding: max(0px)) {
+  .pb-safe-lg {
+    padding-bottom: max(5rem, env(safe-area-inset-bottom));
+  }
 }
 
 /* Instagram-style gradient text */

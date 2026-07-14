@@ -44,32 +44,34 @@ export default function HeroInput({ size = "lg" }: Props) {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className={`group flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-2 backdrop-blur transition focus-within:border-white/30 focus-within:bg-white/10 ${
-          big ? "" : "scale-95"
+        className={`group flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-2 backdrop-blur transition focus-within:border-white/30 focus-within:bg-white/10 sm:flex-row sm:items-center ${
+          big ? "" : "sm:scale-95"
         }`}
       >
-        <span className="pl-3 text-white/40">
-          <AtSign className={big ? "h-6 w-6" : "h-5 w-5"} />
-        </span>
-        <input
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
-            if (error) setError(null);
-          }}
-          placeholder="instagram_handle"
-          autoCapitalize="none"
-          autoCorrect="off"
-          spellCheck={false}
-          className={`w-full bg-transparent text-white placeholder-white/30 outline-none ${
-            big ? "text-xl" : "text-lg"
-          }`}
-        />
+        <div className="flex min-h-[44px] flex-1 items-center gap-2">
+          <span className="pl-3 text-white/40">
+            <AtSign className={big ? "h-5 w-5 sm:h-6 sm:w-6" : "h-5 w-5"} />
+          </span>
+          <input
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value);
+              if (error) setError(null);
+            }}
+            placeholder="instagram_handle"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            className={`w-full bg-transparent text-white placeholder-white/30 outline-none ${
+              big ? "text-lg sm:text-xl" : "text-base sm:text-lg"
+            }`}
+          />
+        </div>
         <button
           type="submit"
           disabled={loading}
-          className={`flex items-center gap-2 rounded-xl bg-ig-gradient animate-gradient-pan font-semibold text-white transition hover:opacity-90 disabled:opacity-60 ${
-            big ? "px-6 py-3 text-base" : "px-5 py-2.5 text-sm"
+          className={`flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-ig-gradient animate-gradient-pan font-semibold text-white transition hover:opacity-90 disabled:opacity-60 sm:w-auto ${
+            big ? "px-5 py-3 text-sm sm:px-6 sm:text-base" : "px-5 py-2.5 text-sm"
           }`}
         >
           {loading ? (

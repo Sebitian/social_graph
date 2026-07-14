@@ -246,7 +246,7 @@ export default function PersonPanel({ node, proximityRing, friendCluster, onClos
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-black/65 sm:bg-black/40"
+            className="fixed inset-0 z-40 bg-black/45 sm:bg-black/40"
             onClick={onClose}
             aria-label="Close profile"
           />
@@ -265,10 +265,10 @@ export default function PersonPanel({ node, proximityRing, friendCluster, onClos
             <div className="relative shrink-0 border-b border-white/10 px-4 pb-3 pt-4">
               <button
                 onClick={onClose}
-                className="absolute right-3 top-3 rounded-full p-1 text-white/40 transition hover:bg-white/10 hover:text-white"
+                className="absolute right-2 top-2 flex h-11 w-11 items-center justify-center rounded-full text-white/40 transition hover:bg-white/10 hover:text-white sm:right-3 sm:top-3 sm:h-8 sm:w-8"
                 aria-label="Close"
               >
-                <X className="h-4 w-4" />
+                <X className="h-5 w-5 sm:h-4 sm:w-4" />
               </button>
 
               <div className="flex items-center gap-3 pr-8">
@@ -327,21 +327,21 @@ export default function PersonPanel({ node, proximityRing, friendCluster, onClos
 
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain touch-pan-y px-4 py-3">
               <div className="grid grid-cols-2 gap-2 text-sm">
-                <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                <div className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 sm:px-3">
                   <div className="text-[11px] text-white/35">Their comments</div>
                   <div className="mt-0.5 flex items-center gap-1 font-semibold text-white">
                     <MessageCircle className="h-3.5 w-3.5" style={{ color }} />
                     {node.comments}
                   </div>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                <div className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 sm:px-3">
                   <div className="text-[11px] text-white/35">Their reactions</div>
                   <div className="mt-0.5 flex items-center gap-1 font-semibold text-white">
                     <Heart className="h-3.5 w-3.5" style={{ color }} />
                     {node.reactionsTotal ?? 0}
                   </div>
                   {reactionParts.length > 0 && (
-                    <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    <div className="mt-1.5 flex flex-wrap gap-1">
                       {reactionParts.map(({ type, emoji, title, count }) => (
                         <span
                           key={type}

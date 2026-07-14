@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import GraphResult from "@/components/GraphResult";
+import { readSnapshot } from "@/lib/snapshot";
 
 interface PageProps {
   params: Promise<{ handle: string }>;
@@ -19,5 +20,14 @@ export async function generateMetadata({
 export default async function PinnedGraphPage({ params }: PageProps) {
   const { handle } = await params;
   const clean = decodeURIComponent(handle).replace(/^@/, "").toLowerCase();
-  return <GraphResult key={`pinned-${clean}`} handle={clean} pinned />;
+  const snapshot = await readSnapshot(clean);
+
+  return (
+    <GraphResult
+      key={`pinned-${clean}`}
+      handle={clean}
+      pinned
+      initialData={snapshot}
+    />
+  );
 }

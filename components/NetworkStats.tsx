@@ -245,7 +245,7 @@ export default function NetworkStats({
               <button
                 type="button"
                 onClick={() => setView("all-time")}
-                className={`rounded-md px-2 py-1 text-[11px] transition ${
+                className={`min-h-[36px] rounded-md px-2.5 py-1.5 text-[11px] transition sm:min-h-0 sm:px-2 sm:py-1 ${
                   view === "all-time"
                     ? "bg-white/15 text-white"
                     : "text-white/45 hover:bg-white/10 hover:text-white/70"
@@ -256,7 +256,7 @@ export default function NetworkStats({
               <button
                 type="button"
                 onClick={() => setView("present")}
-                className={`rounded-md px-2 py-1 text-[11px] transition ${
+                className={`min-h-[36px] rounded-md px-2.5 py-1.5 text-[11px] transition sm:min-h-0 sm:px-2 sm:py-1 ${
                   view === "present"
                     ? "bg-white/15 text-white"
                     : "text-white/45 hover:bg-white/10 hover:text-white/70"
@@ -268,7 +268,7 @@ export default function NetworkStats({
                 <button
                   type="button"
                   onClick={() => setView("reactions")}
-                  className={`rounded-md px-2 py-1 text-[11px] transition ${
+                  className={`min-h-[36px] rounded-md px-2.5 py-1.5 text-[11px] transition sm:min-h-0 sm:px-2 sm:py-1 ${
                     view === "reactions"
                       ? "bg-white/15 text-white"
                       : "text-white/45 hover:bg-white/10 hover:text-white/70"
@@ -297,17 +297,24 @@ export default function NetworkStats({
                   selectedUsername?.toLowerCase() === u.username.toLowerCase();
                 const row = (
                   <>
-                    <span className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden">
-                      <span className="w-5 shrink-0 tabular-nums text-white/30">
+                    <span className="flex min-w-0 flex-1 items-start gap-2 overflow-hidden sm:items-center">
+                      <span className="mt-0.5 w-5 shrink-0 tabular-nums text-white/30 sm:mt-0">
                         {i + 1}
                       </span>
                       <PersonAvatar person={u} />
-                      <span className="max-w-[45%] shrink-0 truncate text-white/85">
-                        {displayName(u)}
+                      <span className="min-w-0 flex-1">
+                        <span className="flex min-w-0 flex-col gap-0.5 sm:flex-row sm:items-center sm:gap-2">
+                          <span className="truncate text-white/85 sm:max-w-[45%] sm:shrink-0">
+                            {displayName(u)}
+                          </span>
+                          <PersonRole position={u.position} />
+                        </span>
+                        <span className="mt-1 block font-mono text-[11px] leading-snug text-white/50 sm:hidden">
+                          {engagementLabel(u, view)}
+                        </span>
                       </span>
-                      <PersonRole position={u.position} />
                     </span>
-                    <span className="max-w-[42%] shrink-0 text-right font-mono text-[11px] leading-snug text-white/50">
+                    <span className="hidden max-w-[42%] shrink-0 text-right font-mono text-[11px] leading-snug text-white/50 sm:block">
                       {engagementLabel(u, view)}
                     </span>
                   </>
@@ -329,7 +336,7 @@ export default function NetworkStats({
                     <button
                       type="button"
                       onClick={() => onSelectUsername(u.username)}
-                      className={`flex w-full items-center justify-between gap-2 rounded-xl px-2 py-1.5 text-left text-sm transition ${
+                      className={`flex w-full min-h-[44px] items-center justify-between gap-2 rounded-xl px-2 py-2 text-left text-sm transition sm:min-h-0 sm:py-1.5 ${
                         isSelected
                           ? "bg-white/10 text-white"
                           : "text-white/80 hover:bg-white/5"

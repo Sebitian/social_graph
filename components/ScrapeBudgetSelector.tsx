@@ -54,19 +54,19 @@ export default function ScrapeBudgetSelector({
   }
 
   return (
-    <div className="w-full rounded-2xl border border-white/10 bg-black/20 p-4 text-left backdrop-blur">
-      <div className="flex items-start justify-between gap-4">
-        <div>
+    <div className="w-full rounded-2xl border border-white/10 bg-black/20 p-3 text-left backdrop-blur sm:p-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+        <div className="min-w-0">
           <div className="flex items-center gap-2 text-sm font-semibold text-white/85">
-            <MessageCircle className="h-4 w-4 text-ig-pink" />
+            <MessageCircle className="h-4 w-4 shrink-0 text-ig-pink" />
             Scrape depth
           </div>
           <p className="mt-1 text-xs text-white/45">
             More comments can improve the graph, but increases Apify usage.
           </p>
         </div>
-        <div className="shrink-0 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-right">
-          <div className="text-xs uppercase tracking-wide text-white/35">
+        <div className="flex shrink-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2 sm:block sm:text-right">
+          <div className="text-[10px] uppercase tracking-wide text-white/35 sm:text-xs">
             Max estimate
           </div>
           <div className="font-mono text-sm font-semibold text-white">
@@ -78,7 +78,7 @@ export default function ScrapeBudgetSelector({
       </div>
 
       {!compact && (
-        <div className="mt-4 grid grid-cols-3 gap-2">
+        <div className="mt-3 grid grid-cols-3 gap-1.5 sm:mt-4 sm:gap-2">
           {PRESETS.map((preset) => {
             const active =
               value.postLimit === preset.posts &&
@@ -96,15 +96,18 @@ export default function ScrapeBudgetSelector({
                     reciprocityPostsPerFriend: value.reciprocityPostsPerFriend,
                   })
                 }
-                className={`rounded-xl border px-3 py-2 text-left transition ${
+                className={`min-h-[44px] rounded-xl border px-2 py-2 text-left transition sm:px-3 ${
                   active
                     ? "border-ig-pink/60 bg-ig-pink/15 text-white"
                     : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10"
                 }`}
               >
-                <div className="text-sm font-semibold">{preset.label}</div>
-                <div className="text-[11px] text-white/35">
+                <div className="text-xs font-semibold sm:text-sm">{preset.label}</div>
+                <div className="hidden text-[11px] text-white/35 sm:block">
                   {preset.description}
+                </div>
+                <div className="text-[10px] text-white/35 sm:hidden">
+                  {preset.posts}×{preset.comments}
                 </div>
               </button>
             );
@@ -112,7 +115,7 @@ export default function ScrapeBudgetSelector({
         </div>
       )}
 
-      <div className="mt-4 flex flex-col gap-4">
+      <div className="mt-3 flex flex-col gap-3 sm:mt-4 sm:gap-4">
         <label className="block">
           <div className="mb-2 flex items-center justify-between text-xs">
             <span className="font-medium text-white/65">Recent posts/reels</span>
@@ -146,12 +149,12 @@ export default function ScrapeBudgetSelector({
         </label>
 
         <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-          <label className="flex cursor-pointer items-start gap-3">
+          <label className="flex min-h-[44px] cursor-pointer items-start gap-3">
             <input
               type="checkbox"
               checked={value.reciprocityEnabled}
               onChange={(e) => update({ reciprocityEnabled: e.target.checked })}
-              className="mt-0.5 accent-[#cd486b]"
+              className="mt-1 h-4 w-4 accent-[#cd486b]"
             />
             <div>
               <div className="text-xs font-medium text-white/75">
@@ -205,7 +208,7 @@ export default function ScrapeBudgetSelector({
         </div>
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/50">
+      <div className="mt-3 flex flex-col gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/50 sm:mt-4 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
         <span>
           Up to{" "}
           <span className="font-mono text-white/75">

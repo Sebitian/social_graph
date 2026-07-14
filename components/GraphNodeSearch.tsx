@@ -65,16 +65,16 @@ export default function GraphNodeSearch({
     <div className={`relative ${className}`}>
       <label className="relative block">
         <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-white/40" />
-        <input
-          value={query}
-          onChange={(event) => {
-            setQuery(event.target.value);
-            setOpen(true);
-          }}
-          onFocus={() => setOpen(true)}
-          placeholder="Search people on the map…"
-          className="w-full rounded-xl border border-white/15 bg-black/70 py-2 pl-8 pr-8 text-xs text-white outline-none backdrop-blur transition placeholder:text-white/35 focus:border-white/30 focus:bg-black/80"
-        />
+                <input
+                  value={query}
+                  onChange={(event) => {
+                    setQuery(event.target.value);
+                    setOpen(true);
+                  }}
+                  onFocus={() => setOpen(true)}
+                  placeholder="Search people on the map…"
+                  className="w-full min-h-[40px] rounded-xl border border-white/15 bg-black/70 py-2.5 pl-8 pr-8 text-xs text-white outline-none backdrop-blur transition placeholder:text-white/35 focus:border-white/30 focus:bg-black/80 sm:min-h-0 sm:py-2"
+                />
         {query ? (
           <button
             type="button"

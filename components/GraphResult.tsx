@@ -105,6 +105,8 @@ function rememberScrapeResult(
 interface Props {
   handle: string;
   initialBudget?: Partial<ScrapeBudget>;
+  /** Server-loaded snapshot — skips the client scrape fetch when present. */
+  initialData?: ScrapeResult | null;
   /** Load a frozen snapshot from data/snapshots — never calls Apify. */
   pinned?: boolean;
 }
@@ -112,9 +114,10 @@ interface Props {
 export default function GraphResult({
   handle,
   initialBudget = {},
+  initialData = null,
   pinned = false,
 }: Props) {
-  const [data, setData] = useState<ScrapeResult | null>(null);
+  const [data, setData] = useState<ScrapeResult | null>(initialData);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<GraphNode | null>(null);
   const [confirmationState, setConfirmationState] = useState<
@@ -412,42 +415,49 @@ export default function GraphResult({
   return (
     <main className="relative min-h-screen bg-background bg-grid">
       {/* Top bar */}
-      <header className="absolute left-0 right-0 top-0 z-20 flex items-center justify-between px-5 py-4">
+      <header className="absolute left-0 right-0 top-0 z-20 flex items-center justify-between gap-2 px-3 pt-[max(0.75rem,env(safe-area-inset-top))] sm:px-5 sm:pt-4">
         <Link
           href="/"
-          className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/70 backdrop-blur transition hover:bg-white/10"
+          className="flex min-h-[40px] items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/70 backdrop-blur transition hover:bg-white/10"
         >
-          <ArrowLeft className="h-4 w-4" /> New search
+          <ArrowLeft className="h-4 w-4" />
+          <span className="sm:hidden">Back</span>
+          <span className="hidden sm:inline">New search</span>
         </Link>
-        {data.pinned && (
-          <span className="flex items-center gap-1.5 rounded-full border border-ig-blue/30 bg-ig-blue/10 px-3 py-1.5 text-xs text-ig-blue backdrop-blur">
-            <Pin className="h-3.5 w-3.5" /> Pinned snapshot
-          </span>
-        )}
-        {data.demo && (
-          <span className="flex items-center gap-1.5 rounded-full border border-ig-orange/30 bg-ig-orange/10 px-3 py-1.5 text-xs text-ig-orange backdrop-blur">
-            <FlaskConical className="h-3.5 w-3.5" /> Demo data
-          </span>
-        )}
-        {data.cached && !data.demo && !data.pinned && (
-          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/50 backdrop-blur">
-            Cached result
-          </span>
-        )}
+        <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5">
+          {data.pinned && (
+            <span className="flex items-center gap-1.5 rounded-full border border-ig-blue/30 bg-ig-blue/10 px-2.5 py-1.5 text-[11px] text-ig-blue backdrop-blur sm:px-3 sm:text-xs">
+              <Pin className="h-3.5 w-3.5" />
+              <span className="sm:hidden">Pinned</span>
+              <span className="hidden sm:inline">Pinned snapshot</span>
+            </span>
+          )}
+          {data.demo && (
+            <span className="flex items-center gap-1.5 rounded-full border border-ig-orange/30 bg-ig-orange/10 px-2.5 py-1.5 text-[11px] text-ig-orange backdrop-blur sm:px-3 sm:text-xs">
+              <FlaskConical className="h-3.5 w-3.5" /> Demo
+            </span>
+          )}
+          {data.cached && !data.demo && !data.pinned && (
+            <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] text-white/50 backdrop-blur sm:px-3 sm:text-xs">
+              Cached
+            </span>
+          )}
+        </div>
       </header>
 
-      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-3 pb-6 pt-16 sm:gap-4 sm:px-4 sm:pt-20">
+      <div className="mx-auto flex max-w-7xl flex-col gap-2.5 px-2.5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[calc(3.25rem+env(safe-area-inset-top))] sm:gap-4 sm:px-4 sm:pt-20">
         <GraphHowToRead />
 
-        <div className="grid min-h-0 grid-cols-1 gap-4 lg:grid-cols-[1fr_340px]">
-        {/* Graph */}
-        <div className="relative min-h-[72dvh] sm:min-h-[560px] lg:min-h-[640px]">
+        <div className="grid min-h-0 grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-[1fr_340px]">
+        {/* Graph + top engagers */}
+        <div className="flex min-h-0 flex-col gap-3 sm:gap-4">
+        <div className="relative min-h-[48dvh] sm:min-h-[480px] lg:min-h-[560px]">
           <motion.div
             ref={graphWrapRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="relative flex h-full min-h-[72dvh] flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 sm:min-h-[560px] sm:rounded-3xl lg:min-h-[640px]"
+            className="relative flex h-full min-h-[48dvh] flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 sm:min-h-[480px] sm:rounded-3xl lg:min-h-[560px]"
           >
             {Boolean(data.posts?.length) && (
               <div className="flex shrink-0 items-center justify-between gap-2 border-b border-white/10 px-3 py-2">
@@ -458,7 +468,7 @@ export default function GraphResult({
                   <button
                     type="button"
                     onClick={() => setView("map")}
-                    className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[11px] transition ${
+                    className={`inline-flex min-h-[40px] items-center gap-1.5 rounded-md px-3 py-2 text-xs transition sm:min-h-0 sm:px-2.5 sm:py-1 sm:text-[11px] ${
                       view === "map"
                         ? "bg-white/15 text-white"
                         : "text-white/45 hover:bg-white/10 hover:text-white/70"
@@ -470,7 +480,7 @@ export default function GraphResult({
                   <button
                     type="button"
                     onClick={() => setView("grid")}
-                    className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[11px] transition ${
+                    className={`inline-flex min-h-[40px] items-center gap-1.5 rounded-md px-3 py-2 text-xs transition sm:min-h-0 sm:px-2.5 sm:py-1 sm:text-[11px] ${
                       view === "grid"
                         ? "bg-white/15 text-white"
                         : "text-white/45 hover:bg-white/10 hover:text-white/70"
@@ -501,7 +511,7 @@ export default function GraphResult({
                     onSelect={setSelected}
                   />
 
-                  <div className="absolute left-3 right-3 top-3 z-20 sm:left-4 sm:right-auto sm:w-[280px]">
+                  <div className="absolute left-2 right-2 top-2 z-20 sm:left-4 sm:right-auto sm:top-3 sm:w-[280px]">
                     <GraphNodeSearch
                       nodes={data.graph.nodes}
                       selectedId={selected?.id ?? null}
@@ -509,7 +519,40 @@ export default function GraphResult({
                     />
                   </div>
 
-                  <div className="pointer-events-none absolute bottom-4 right-4 flex max-w-[220px] flex-col gap-1.5 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur">
+                  {/* Mobile: compact horizontal groups strip */}
+                  <div className="pointer-events-none absolute inset-x-2 bottom-2 z-10 flex gap-1.5 overflow-x-auto rounded-lg border border-white/10 bg-black/55 px-2 py-1.5 backdrop-blur sm:hidden">
+                    <span className="flex shrink-0 items-center gap-1 text-[10px] text-white/60">
+                      <span
+                        className="h-2 w-2 rounded-full"
+                        style={{ backgroundColor: SELF_COLOR }}
+                      />
+                      You
+                    </span>
+                    {data.graph.circles.map((cluster) => (
+                      <span
+                        key={cluster.id}
+                        className="flex shrink-0 items-center gap-1 text-[10px] text-white/55"
+                      >
+                        <span
+                          className="h-2 w-2 rounded-full ring-1 ring-white/10"
+                          style={{ backgroundColor: cluster.color }}
+                        />
+                        <span className="max-w-[7rem] truncate text-white/70">
+                          {cluster.label}
+                        </span>
+                      </span>
+                    ))}
+                    <span className="flex shrink-0 items-center gap-1 text-[10px] text-white/55">
+                      <span
+                        className="h-2 w-2 rounded-full ring-1 ring-white/10"
+                        style={{ backgroundColor: UNCLUSTERED_COLOR }}
+                      />
+                      Else
+                    </span>
+                  </div>
+
+                  {/* Desktop: stacked groups legend */}
+                  <div className="pointer-events-none absolute bottom-4 right-4 hidden max-w-[220px] flex-col gap-1.5 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur sm:flex">
                     <div className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
                       Groups
                     </div>
@@ -564,20 +607,31 @@ export default function GraphResult({
           />
         </div>
 
+        <NetworkStats
+          stats={data.stats}
+          onSelectUsername={selectMemberByUsername}
+          selectedUsername={selected?.id ?? selected?.label ?? null}
+        />
+        </div>
+
         {/* Sidebar */}
-        <aside className="flex flex-col gap-4">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+        <aside className="flex flex-col gap-3 sm:gap-4">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold text-white">@{data.profile.username}</h1>
+              <h1 className="truncate text-lg font-bold text-white sm:text-xl">
+                @{data.profile.username}
+              </h1>
               {data.profile.isVerified && (
-                <BadgeCheck className="h-5 w-5 text-ig-blue" />
+                <BadgeCheck className="h-5 w-5 shrink-0 text-ig-blue" />
               )}
             </div>
             {data.profile.fullName && (
               <div className="text-sm text-white/60">{data.profile.fullName}</div>
             )}
             {data.profile.biography && (
-              <p className="mt-2 text-sm text-white/40">{data.profile.biography}</p>
+              <p className="mt-2 line-clamp-3 text-sm text-white/40 sm:line-clamp-none">
+                {data.profile.biography}
+              </p>
             )}
             <div className="mt-3 text-xs text-white/30">
               {data.engagers && data.engagers.length > 0
@@ -586,54 +640,52 @@ export default function GraphResult({
             </div>
           </div>
 
-          <NetworkStats
-            stats={data.stats}
-            onSelectUsername={selectMemberByUsername}
-            selectedUsername={selected?.id ?? selected?.label ?? null}
-          />
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-            <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-white/80">
-              <ShieldAlert className="h-4 w-4 text-ig-orange" /> Scrape budget
+          {/* Hide scrape budget on pinned demos (noise on phone); keep on live runs */}
+          {!data.pinned && (
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
+              <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-white/80">
+                <ShieldAlert className="h-4 w-4 text-ig-orange" /> Scrape budget
+              </div>
+              <div className="grid grid-cols-2 gap-2 text-sm sm:gap-3">
+                <div className="rounded-xl bg-black/25 p-3">
+                  <div className="text-xs text-white/35">Your posts</div>
+                  <div className="mt-1 font-mono text-white">
+                    {data.budget.postLimit} x {data.budget.commentsPerPost}
+                  </div>
+                </div>
+                <div className="rounded-xl bg-black/25 p-3">
+                  <div className="text-xs text-white/35">Reciprocity</div>
+                  <div className="mt-1 font-mono text-white">
+                    {data.budget.reciprocityEnabled
+                      ? `${data.budget.reciprocityFriends} x ${data.budget.reciprocityPostsPerFriend}`
+                      : "Off"}
+                  </div>
+                </div>
+                <div className="rounded-xl bg-black/25 p-3">
+                  <div className="text-xs text-white/35">Max estimate</div>
+                  <div className="mt-1 font-mono text-white">
+                    {data.budget.withinFreeTier
+                      ? "Free"
+                      : formatUsd(data.budget.estimatedCostUsd)}
+                  </div>
+                </div>
+                <div className="rounded-xl bg-black/25 p-3">
+                  <div className="text-xs text-white/35">Comment cap</div>
+                  <div className="mt-1 font-mono text-white">{data.budget.maxComments}</div>
+                </div>
+              </div>
+              <p className="mt-3 text-xs text-white/40">
+                Server cap: up to {data.budget.maxComments} comments scanned
+                {data.budget.reciprocityEnabled
+                  ? ` (your posts + friends' posts for two-way signals).`
+                  : "."}{" "}
+                Actual Apify cost may be lower when fewer comments are returned.
+              </p>
             </div>
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div className="rounded-xl bg-black/25 p-3">
-                <div className="text-xs text-white/35">Your posts</div>
-                <div className="mt-1 font-mono text-white">
-                  {data.budget.postLimit} x {data.budget.commentsPerPost}
-                </div>
-              </div>
-              <div className="rounded-xl bg-black/25 p-3">
-                <div className="text-xs text-white/35">Reciprocity</div>
-                <div className="mt-1 font-mono text-white">
-                  {data.budget.reciprocityEnabled
-                    ? `${data.budget.reciprocityFriends} x ${data.budget.reciprocityPostsPerFriend}`
-                    : "Off"}
-                </div>
-              </div>
-              <div className="rounded-xl bg-black/25 p-3">
-                <div className="text-xs text-white/35">Max estimate</div>
-                <div className="mt-1 font-mono text-white">
-                  {data.budget.withinFreeTier
-                    ? "Free"
-                    : formatUsd(data.budget.estimatedCostUsd)}
-                </div>
-              </div>
-              <div className="rounded-xl bg-black/25 p-3">
-                <div className="text-xs text-white/35">Comment cap</div>
-                <div className="mt-1 font-mono text-white">{data.budget.maxComments}</div>
-              </div>
-            </div>
-            <p className="mt-3 text-xs text-white/40">
-              Server cap: up to {data.budget.maxComments} comments scanned
-              {data.budget.reciprocityEnabled
-                ? ` (your posts + friends' posts for two-way signals).`
-                : "."}{" "}
-              Actual Apify cost may be lower when fewer comments are returned.
-            </p>
-          </div>
+          )}
 
           {!pinned && !data.demo && (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
               <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-white/80">
                 <Pin className="h-4 w-4 text-ig-blue" /> Save this run
               </div>
@@ -646,14 +698,14 @@ export default function GraphResult({
                   type="button"
                   onClick={pinCurrentRun}
                   disabled={pinning}
-                  className="rounded-xl bg-ig-gradient px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
+                  className="min-h-[44px] rounded-xl bg-ig-gradient px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
                 >
                   {pinning ? "Saving…" : "Pin for share link"}
                 </button>
                 <button
                   type="button"
                   onClick={downloadSnapshotJson}
-                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 transition hover:bg-white/10"
+                  className="min-h-[44px] rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 transition hover:bg-white/10"
                 >
                   Download JSON backup
                 </button>

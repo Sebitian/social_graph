@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { MessageCircle, Search } from "lucide-react";
+import { useMemo, useState, type ReactNode } from "react";
+import { ArrowDown, ArrowUp, MessageCircle, Search } from "lucide-react";
 import type { GraphNode, ProfilePost } from "@/lib/types";
 import { compareByCloseness } from "@/lib/graphUtils";
 import { REACTION_EMOJI, REACTION_TITLE } from "@/lib/reactions";
@@ -13,6 +13,9 @@ interface Props {
   onSelect: (node: GraphNode) => void;
   className?: string;
 }
+
+type SortKey = "engagement" | "comments" | "reactions" | `reaction:${string}`;
+type SortDir = "desc" | "asc";
 
 function normalizeSearch(value: string): string {
   return value
@@ -38,6 +41,39 @@ function formatPostDate(postedAt?: string): string {
     month: "short",
     day: "numeric",
   });
+}
+
+function commentCount(node: GraphNode): number {
+  return node.comments ?? node.history?.length ?? 0;
+}
+
+function reactionCount(node: GraphNode): number {
+  return node.reactionsTotal ?? 0;
+}
+
+function reactionTypeCount(node: GraphNode, type: string): number {
+  return node.reactionsByType?.[type] ?? 0;
+}
+
+function sortValue(node: GraphNode, key: SortKey): number {
+  if (key === "engagement") return commentCount(node) * 3 + reactionCount(node);
+  if (key === "comments") return commentCount(node);
+  if (key === "reactions") return reactionCount(node);
+  return reactionTypeCount(node, key.slice("reaction:".length));
+}
+
+function compareMembers(
+  a: GraphNode,
+  b: GraphNode,
+  key: SortKey,
+  dir: SortDir,
+): number {
+  if (key === "engagement" && dir === "desc") {
+    return compareByCloseness(a, b);
+  }
+  const diff = sortValue(a, key) - sortValue(b, key);
+  if (diff !== 0) return dir === "desc" ? -diff : diff;
+  return compareByCloseness(a, b);
 }
 
 function cellTooltip(
@@ -66,6 +102,44 @@ function cellTooltip(
   return parts.join("\n");
 }
 
+function SortChip({
+  active,
+  dir,
+  label,
+  title,
+  onClick,
+}: {
+  active: boolean;
+  dir: SortDir;
+  label: ReactNode;
+  title: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      title={title}
+      onClick={onClick}
+      className={`inline-flex shrink-0 items-center gap-0.5 rounded-md border px-1.5 py-1 text-[10px] transition sm:py-0.5 ${
+        active
+          ? "border-white/30 bg-white/15 text-white"
+          : "border-white/10 bg-transparent text-white/45 hover:border-white/20 hover:text-white/70"
+      }`}
+    >
+      <span>{label}</span>
+      {active ? (
+        dir === "desc" ? (
+          <ArrowDown className="h-2.5 w-2.5" aria-hidden />
+        ) : (
+          <ArrowUp className="h-2.5 w-2.5" aria-hidden />
+        )
+      ) : (
+        <ArrowDown className="h-2.5 w-2.5 opacity-30" aria-hidden />
+      )}
+    </button>
+  );
+}
+
 export default function EngagementGrid({
   posts,
   nodes,
@@ -75,6 +149,8 @@ export default function EngagementGrid({
 }: Props) {
   const [hoverKey, setHoverKey] = useState<string | null>(null);
   const [personQuery, setPersonQuery] = useState("");
+  const [sortKey, setSortKey] = useState<SortKey>("engagement");
+  const [sortDir, setSortDir] = useState<SortDir>("desc");
 
   const orderedPosts = useMemo(() => {
     return [...posts].sort((a, b) => {
@@ -88,12 +164,25 @@ export default function EngagementGrid({
     });
   }, [posts]);
 
+  const reactionTypes = useMemo(() => {
+    const totals = new Map<string, number>();
+    for (const node of nodes) {
+      if (node.group !== "member") continue;
+      for (const [type, count] of Object.entries(node.reactionsByType ?? {})) {
+        if (count > 0) totals.set(type, (totals.get(type) ?? 0) + count);
+      }
+    }
+    return [...totals.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([type]) => type);
+  }, [nodes]);
+
   const members = useMemo(
     () =>
       [...nodes.filter((n) => n.group === "member")]
         .filter((n) => personMatches(n, personQuery))
-        .sort(compareByCloseness),
-    [nodes, personQuery],
+        .sort((a, b) => compareMembers(a, b, sortKey, sortDir)),
+    [nodes, personQuery, sortKey, sortDir],
   );
 
   const totalMembers = useMemo(
@@ -101,33 +190,87 @@ export default function EngagementGrid({
     [nodes],
   );
 
+  function toggleSort(next: SortKey) {
+    if (sortKey === next) {
+      setSortDir((d) => (d === "desc" ? "asc" : "desc"));
+      return;
+    }
+    setSortKey(next);
+    setSortDir("desc");
+  }
+
   return (
     <div className={`flex h-full min-h-0 flex-col ${className}`}>
-      <div className="flex flex-wrap items-center gap-3 border-b border-white/10 px-3 py-2 text-[11px] text-white/45">
-        <span className="font-semibold uppercase tracking-wide text-white/35">
-          Legend
-        </span>
-        <span className="inline-flex items-center gap-1">
-          <MessageCircle className="h-3 w-3 text-white/70" /> Comment
-        </span>
-        <span className="inline-flex items-center gap-1">👍 Reaction</span>
-        <span className="inline-flex items-center gap-1">
-          <span className="inline-flex items-center gap-0.5">
-            👏
-            <MessageCircle className="h-2.5 w-2.5 text-white/70" />
+      <div className="flex flex-col gap-1.5 border-b border-white/10 px-2 py-2 text-[11px] text-white/45 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3 sm:px-3">
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+          <span className="font-semibold uppercase tracking-wide text-white/35">
+            Legend
           </span>
-          Both
-        </span>
-        <span className="text-white/30">
-          Columns: latest post left → earliest right
-        </span>
+          <span className="inline-flex items-center gap-1">
+            <MessageCircle className="h-3 w-3 text-white/70" /> Comment
+          </span>
+          <span className="inline-flex items-center gap-1">👍 Reaction</span>
+          <span className="inline-flex items-center gap-1">
+            <span className="inline-flex items-center gap-0.5">
+              👏
+              <MessageCircle className="h-2.5 w-2.5 text-white/70" />
+            </span>
+            Both
+          </span>
+          <span className="hidden text-white/30 sm:inline">
+            Columns: latest → earliest
+          </span>
+        </div>
+        <div className="flex min-w-0 items-center gap-1.5">
+          <span className="shrink-0 font-semibold uppercase tracking-wide text-white/35">
+            Sort
+          </span>
+          <div className="-mx-0.5 flex min-w-0 flex-1 items-center gap-1 overflow-x-auto px-0.5 pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <SortChip
+              active={sortKey === "engagement"}
+              dir={sortDir}
+              label="Rank"
+              title="Sort by overall engagement"
+              onClick={() => toggleSort("engagement")}
+            />
+            <SortChip
+              active={sortKey === "comments"}
+              dir={sortDir}
+              label={
+                <span className="inline-flex items-center gap-0.5">
+                  <MessageCircle className="h-2.5 w-2.5" />
+                  Comments
+                </span>
+              }
+              title="Sort by comment count"
+              onClick={() => toggleSort("comments")}
+            />
+            <SortChip
+              active={sortKey === "reactions"}
+              dir={sortDir}
+              label="Reactions"
+              title="Sort by total reactions"
+              onClick={() => toggleSort("reactions")}
+            />
+            {reactionTypes.map((type) => (
+              <SortChip
+                key={type}
+                active={sortKey === `reaction:${type}`}
+                dir={sortDir}
+                label={REACTION_EMOJI[type] ?? type}
+                title={`Sort by ${REACTION_TITLE[type] ?? type}`}
+                onClick={() => toggleSort(`reaction:${type}`)}
+              />
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-auto">
+      <div className="min-h-0 flex-1 overflow-auto overscroll-contain">
         <table className="min-w-full border-separate border-spacing-0 text-left">
           <thead>
             <tr>
-              <th className="sticky left-0 top-0 z-30 min-w-[160px] border-b border-r border-white/10 bg-[#0c0b12] px-3 py-2 backdrop-blur">
+              <th className="sticky left-0 top-0 z-30 min-w-[168px] border-b border-r border-white/10 bg-[#0c0b12] px-2 py-2 backdrop-blur sm:min-w-[220px] sm:px-3">
                 <div className="text-[11px] font-semibold uppercase tracking-wide text-white/40">
                   Person
                   <span className="ml-1 font-normal normal-case tracking-normal text-white/30">
@@ -141,7 +284,7 @@ export default function EngagementGrid({
                     value={personQuery}
                     onChange={(event) => setPersonQuery(event.target.value)}
                     placeholder="Filter..."
-                    className="block w-full rounded-md border border-white/10 bg-black/40 py-1 pl-7 pr-2 text-[11px] font-normal normal-case tracking-normal text-white outline-none transition placeholder:text-white/35 focus:border-white/25 focus:bg-black/60"
+                    className="block w-full rounded-md border border-white/10 bg-black/40 py-1.5 pl-7 pr-2 text-[11px] font-normal normal-case tracking-normal text-white outline-none transition placeholder:text-white/35 focus:border-white/25 focus:bg-black/60 sm:py-1"
                   />
                 </label>
                 {personQuery.trim() ? (
@@ -192,8 +335,10 @@ export default function EngagementGrid({
                 </td>
               </tr>
             ) : (
-              members.map((node) => {
+              members.map((node, i) => {
               const isSelected = selectedId === node.id;
+              const comments = commentCount(node);
+              const reactions = reactionCount(node);
               return (
                 <tr
                   key={node.id}
@@ -206,12 +351,15 @@ export default function EngagementGrid({
                     <button
                       type="button"
                       onClick={() => onSelect(node)}
-                      className={`flex w-full min-w-[160px] max-w-[200px] items-center gap-2 px-3 py-2 text-left text-xs transition ${
+                      className={`flex w-full min-w-[168px] max-w-[220px] items-center gap-1.5 px-2 py-2.5 text-left text-xs transition sm:min-w-[220px] sm:max-w-[280px] sm:gap-2 sm:px-3 sm:py-2 ${
                         isSelected
                           ? "text-white"
                           : "text-white/75 hover:text-white"
                       }`}
                     >
+                      <span className="w-4 shrink-0 tabular-nums text-[10px] text-white/30 sm:w-5 sm:text-inherit">
+                        {i + 1}
+                      </span>
                       {node.profilePicUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
@@ -224,8 +372,21 @@ export default function EngagementGrid({
                           {(node.fullName || node.label).charAt(0).toUpperCase()}
                         </span>
                       )}
-                      <span className="truncate font-medium">
+                      <span className="min-w-0 flex-1 truncate font-medium">
                         {node.fullName || node.label}
+                      </span>
+                      <span
+                        className="flex shrink-0 items-center gap-1 tabular-nums text-[10px] text-white/45 sm:gap-1.5"
+                        title={`${comments} comments · ${reactions} reactions`}
+                      >
+                        <span className="inline-flex items-center gap-0.5">
+                          <MessageCircle className="h-2.5 w-2.5" />
+                          {comments}
+                        </span>
+                        <span className="inline-flex items-center gap-0.5">
+                          <span aria-hidden>👍</span>
+                          {reactions}
+                        </span>
                       </span>
                     </button>
                   </th>

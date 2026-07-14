@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Copy, Download, Share2, Twitter } from "lucide-react";
 import type { NetworkStats } from "@/lib/types";
@@ -13,11 +13,11 @@ interface Props {
 
 export default function ShareCard({ handle, stats, onDownload }: Props) {
   const [copied, setCopied] = useState(false);
+  const [url, setUrl] = useState(`https://social-graph-nu.vercel.app/graph/${handle}/pinned`);
 
-  const url =
-    typeof window !== "undefined"
-      ? window.location.href
-      : `https://your-app.vercel.app/graph/${handle}`;
+  useEffect(() => {
+    setUrl(window.location.href);
+  }, []);
 
   const shareText = `I just mapped @${handle}'s visible Instagram interaction clusters - ${stats.circleCount} clusters across the top ${stats.shown} connections. See yours:`;
 
