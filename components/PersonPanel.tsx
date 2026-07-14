@@ -3,9 +3,49 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { BadgeCheck, MessageCircle, Search, X } from "lucide-react";
+import { BadgeCheck, Heart, MessageCircle, Search, X } from "lucide-react";
 import type { Circle, GraphNode, PostComment } from "@/lib/types";
 import { deriveSimpleTags, explainRingPlacement } from "@/lib/graphUtils";
+
+/** LinkedIn reaction types → the emoji LinkedIn uses in the reaction picker. */
+const REACTION_EMOJI: Record<string, string> = {
+  LIKE: "👍",
+  PRAISE: "👏", // Celebrate
+  EMPATHY: "🫶", // Support (hand + heart)
+  APPRECIATION: "❤️", // Love
+  INTEREST: "💡", // Insightful
+  ENTERTAINMENT: "😂", // Funny
+};
+
+const REACTION_TITLE: Record<string, string> = {
+  LIKE: "Like",
+  PRAISE: "Celebrate",
+  EMPATHY: "Support",
+  APPRECIATION: "Love",
+  INTEREST: "Insightful",
+  ENTERTAINMENT: "Funny",
+};
+
+function reactionEntries(
+  byType?: Record<string, number>,
+): { type: string; emoji: string; title: string; count: number }[] {
+  if (!byType) return [];
+  return Object.entries(byType)
+    .filter(([, count]) => count > 0)
+    .sort((a, b) => b[1] - a[1])
+    .map(([type, count]) => ({
+      type,
+      emoji: REACTION_EMOJI[type] ?? "👍",
+      title: REACTION_TITLE[type] ?? type,
+      count,
+    }));
+}
+
+function formatReactionBreakdown(byType?: Record<string, number>): string {
+  return reactionEntries(byType)
+    .map(({ emoji, count }) => `${emoji}${count}`)
+    .join(" ");
+}
 
 function formatRecentDays(days?: number): string {
   if (days == null) return "unknown";
@@ -231,6 +271,8 @@ export default function PersonPanel({ node, proximityRing, friendCluster, onClos
     [node, proximityRing],
   );
   const features = node?.features;
+  const reactionParts = reactionEntries(node?.reactionsByType);
+  const reactionBreakdown = formatReactionBreakdown(node?.reactionsByType);
 
   const panel = (
     <AnimatePresence>
@@ -330,11 +372,49 @@ export default function PersonPanel({ node, proximityRing, friendCluster, onClos
                 </div>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                <div className="text-[11px] text-white/35">Their reactions</div>
+                <div className="mt-0.5 flex items-center gap-1 font-semibold text-white">
+                  <Heart className="h-3.5 w-3.5" style={{ color }} />
+                  {node.reactionsTotal ?? 0}
+                </div>
+                {reactionParts.length > 0 && (
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    {reactionParts.map(({ type, emoji, title, count }) => (
+                      <span
+                        key={type}
+                        title={title}
+                        className="inline-flex items-center gap-0.5 rounded-full border border-white/10 bg-black/30 px-1.5 py-0.5 text-[11px] text-white/80"
+                      >
+                        <span aria-hidden>{emoji}</span>
+                        <span className="tabular-nums">{count}</span>
+                        <span className="sr-only">{title}</span>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
                 <div className="text-[11px] text-white/35">Last interaction</div>
                 <div className="mt-0.5 font-semibold text-white">
-                  {formatRecentDays(features?.mostRecentDaysAgo)}
+                  {history.length > 0
+                    ? formatRecentDays(features?.mostRecentDaysAgo)
+                    : (node.reactionsTotal ?? 0) > 0
+                      ? "Reactions only"
+                      : "unknown"}
                 </div>
               </div>
+              {typeof node.totalPostsScraped === "number" &&
+                node.totalPostsScraped > 0 && (
+                  <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-[11px] text-white/35">Post coverage</div>
+                    <div className="mt-0.5 text-xs font-semibold leading-snug text-white">
+                      {node.postsCommentedOn ?? 0}/{node.totalPostsScraped} commented
+                    </div>
+                    <div className="mt-0.5 text-xs font-semibold leading-snug text-white">
+                      {node.postsReactedTo ?? 0}/{node.totalPostsScraped} reacted
+                    </div>
+                  </div>
+                )}
               {features?.reciprocityObserved && (
                 <div className="col-span-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
                   <div className="text-[11px] text-white/35">You on their posts</div>
@@ -375,6 +455,18 @@ export default function PersonPanel({ node, proximityRing, friendCluster, onClos
                 <h3 className="mb-2 text-xs font-semibold text-white/70">What they wrote</h3>
                 <CommentReceiptList key={node.id} history={history} />
               </>
+            ) : (node.reactionsTotal ?? 0) > 0 ? (
+              <p className="text-xs leading-relaxed text-white/50">
+                No comments — but they reacted to{" "}
+                <span className="font-semibold text-white/80">
+                  {node.postsReactedTo ?? node.reactionsTotal}
+                  {typeof node.totalPostsScraped === "number"
+                    ? ` of your ${node.totalPostsScraped}`
+                    : ""}{" "}
+                  posts
+                </span>
+                {reactionBreakdown ? ` (${reactionBreakdown})` : ""}.
+              </p>
             ) : (
               <p className="text-xs leading-relaxed text-white/40">
                 No comments from this person were returned by the scrape.

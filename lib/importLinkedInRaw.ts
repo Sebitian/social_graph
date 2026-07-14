@@ -65,9 +65,18 @@ interface LinkedInCommentItem {
   replies?: LinkedInReplyItem[];
 }
 
+interface LinkedInReactionItem {
+  type: "reaction";
+  id?: string;
+  reactionType?: string;
+  actor?: LinkedInActor;
+  postId?: string;
+}
+
 export type LinkedInRawItem =
   | LinkedInPostItem
   | LinkedInCommentItem
+  | LinkedInReactionItem
   | { type?: string };
 
 function isPost(item: LinkedInRawItem): item is LinkedInPostItem {
@@ -76,6 +85,10 @@ function isPost(item: LinkedInRawItem): item is LinkedInPostItem {
 
 function isComment(item: LinkedInRawItem): item is LinkedInCommentItem {
   return item.type === "comment";
+}
+
+function isReaction(item: LinkedInRawItem): item is LinkedInReactionItem {
+  return item.type === "reaction";
 }
 
 /** True when the array looks like HarvestAPI LinkedIn profile-posts output. */
@@ -194,13 +207,75 @@ function buildProfile(
   };
 }
 
-function commentatorsFromLinkedIn(
+type PersonAccumulator = {
+  username: string;
+  fullName?: string;
+  profilePicUrl?: string;
+  history: PostComment[];
+  reactionsByType: Record<string, number>;
+  reactedPostIds: Set<string>;
+  commentedPostIds: Set<string>;
+};
+
+/** True when the slug is a LinkedIn member URN/id rather than a vanity handle. */
+function isOpaqueLinkedInId(slug: string): boolean {
+  return /^aco[a-z0-9_-]+$/i.test(slug) || slug.startsWith("urn:li:");
+}
+
+function preferredUsername(current: string | undefined, candidate: string): string {
+  if (!current) return candidate;
+  if (isOpaqueLinkedInId(current) && !isOpaqueLinkedInId(candidate)) return candidate;
+  return current;
+}
+
+/**
+ * Stable merge key: prefer LinkedIn actor id so comments + reactions for the
+ * same person join even when one side only has an id-based URL.
+ */
+function actorMergeKey(actor?: LinkedInActor): string | undefined {
+  if (!actor) return undefined;
+  if (actor.id) return `id:${actor.id}`;
+  const username = actorUsername(actor);
+  return username ? `user:${username}` : undefined;
+}
+
+function ensurePerson(
+  byKey: Map<string, PersonAccumulator>,
+  actor?: LinkedInActor,
+): PersonAccumulator | null {
+  const key = actorMergeKey(actor);
+  const username = actorUsername(actor);
+  if (!key || !username) return null;
+
+  const existing = byKey.get(key);
+  if (existing) {
+    existing.username = preferredUsername(existing.username, username);
+    existing.fullName ??= actor?.name;
+    existing.profilePicUrl ??= pictureUrlFromActor(actor);
+    return existing;
+  }
+  const created: PersonAccumulator = {
+    username,
+    fullName: actor?.name,
+    profilePicUrl: pictureUrlFromActor(actor),
+    history: [],
+    reactionsByType: {},
+    reactedPostIds: new Set(),
+    commentedPostIds: new Set(),
+  };
+  byKey.set(key, created);
+  return created;
+}
+
+function peopleFromLinkedIn(
   handle: string,
   posts: LinkedInPostItem[],
   comments: LinkedInCommentItem[],
+  reactions: LinkedInReactionItem[],
 ): Commentator[] {
   const selfSlugs = new Set<string>([handle.toLowerCase()]);
   const selfIds = new Set<string>();
+  const totalPostsScraped = posts.length;
 
   for (const post of posts) {
     const author = post.author;
@@ -223,22 +298,14 @@ function commentatorsFromLinkedIn(
     });
   }
 
-  const byUsername = new Map<
-    string,
-    {
-      username: string;
-      fullName?: string;
-      profilePicUrl?: string;
-      history: PostComment[];
-    }
-  >();
+  const byKey = new Map<string, PersonAccumulator>();
 
   for (const raw of comments) {
     const actor = raw.actor;
     if (isSelfActor(actor, selfIds, selfSlugs)) continue;
 
-    const username = actorUsername(actor);
-    if (!username) continue;
+    const existing = ensurePerson(byKey, actor);
+    if (!existing) continue;
 
     const text = (raw.commentary ?? "").trim();
     if (!text) continue;
@@ -249,18 +316,12 @@ function commentatorsFromLinkedIn(
       isSelfActor(reply.actor, selfIds, selfSlugs),
     );
 
-    const existing = byUsername.get(username) ?? {
-      username,
-      fullName: actor?.name,
-      profilePicUrl: pictureUrlFromActor(actor),
-      history: [],
-    };
+    const postKey = raw.postId ?? meta?.url ?? raw.linkedinUrl;
+    if (postKey) existing.commentedPostIds.add(postKey);
 
-    existing.fullName ??= actor?.name;
-    existing.profilePicUrl ??= pictureUrlFromActor(actor);
     existing.history.push({
       authorId: actor?.id ?? undefined,
-      authorUsername: username,
+      authorUsername: existing.username,
       postId: meta?.url ?? raw.postId ?? raw.linkedinUrl,
       text,
       when: relativeWhen(timestamp),
@@ -273,10 +334,22 @@ function commentatorsFromLinkedIn(
       postType: "unknown",
       captionCategory: "unknown",
     });
-    byUsername.set(username, existing);
   }
 
-  return [...byUsername.values()]
+  for (const raw of reactions) {
+    const actor = raw.actor;
+    if (isSelfActor(actor, selfIds, selfSlugs)) continue;
+
+    const existing = ensurePerson(byKey, actor);
+    if (!existing) continue;
+
+    const reactionType = (raw.reactionType ?? "LIKE").toUpperCase();
+    existing.reactionsByType[reactionType] =
+      (existing.reactionsByType[reactionType] ?? 0) + 1;
+    if (raw.postId) existing.reactedPostIds.add(raw.postId);
+  }
+
+  return [...byKey.values()]
     .map((person) => {
       const enriched = person.history.map((comment) => ({
         ...comment,
@@ -284,6 +357,10 @@ function commentatorsFromLinkedIn(
       }));
       const labels = deriveLabels(enriched);
       const features = deriveFeatures(enriched);
+      const reactionsTotal = Object.values(person.reactionsByType).reduce(
+        (sum, n) => sum + n,
+        0,
+      );
       return {
         username: person.username,
         fullName: person.fullName,
@@ -299,6 +376,12 @@ function commentatorsFromLinkedIn(
           labels,
           features,
         ),
+        reactionsTotal,
+        reactionsByType:
+          reactionsTotal > 0 ? { ...person.reactionsByType } : undefined,
+        postsReactedTo: person.reactedPostIds.size,
+        postsCommentedOn: person.commentedPostIds.size,
+        totalPostsScraped,
       } satisfies Commentator;
     })
     .sort(compareByCloseness)
@@ -312,13 +395,14 @@ export function buildScrapeResultFromLinkedInRaw(
   const clean = handle.replace(/^@/, "").trim().toLowerCase();
   const posts = raw.filter(isPost);
   const comments = raw.filter(isComment);
+  const reactions = raw.filter(isReaction);
 
   if (posts.length === 0) {
     throw new Error("LinkedIn dataset has no posts — cannot build profile snapshot");
   }
 
   const profile = buildProfile(clean, posts);
-  const commentators = commentatorsFromLinkedIn(clean, posts, comments);
+  const commentators = peopleFromLinkedIn(clean, posts, comments, reactions);
   const budget = estimateScrapeBudget({});
   const graph = buildGraph(profile, commentators);
   const selfNode = graph.nodes.find((node) => node.group === "self");

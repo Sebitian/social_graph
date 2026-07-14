@@ -246,6 +246,16 @@ export interface Commentator {
   labels: PersonLabel[];
   features?: RelationshipFeatures;
   relationshipEdge?: RelationshipEdge;
+  /** Reactions this person left on your posts. */
+  reactionsTotal?: number;
+  /** e.g. { LIKE: 12, PRAISE: 3 } */
+  reactionsByType?: Record<string, number>;
+  /** Distinct posts they reacted to. */
+  postsReactedTo?: number;
+  /** Distinct posts they commented on. */
+  postsCommentedOn?: number;
+  /** Denominator for coverage (scraped post count). */
+  totalPostsScraped?: number;
 }
 
 export interface GraphNode {
@@ -277,6 +287,16 @@ export interface GraphNode {
   labels?: PersonLabel[];
   features?: RelationshipFeatures;
   relationshipEdge?: RelationshipEdge;
+  /** Reactions this person left on your posts. */
+  reactionsTotal?: number;
+  /** e.g. { LIKE: 12, PRAISE: 3 } */
+  reactionsByType?: Record<string, number>;
+  /** Distinct posts they reacted to. */
+  postsReactedTo?: number;
+  /** Distinct posts they commented on. */
+  postsCommentedOn?: number;
+  /** Denominator for coverage (scraped post count). */
+  totalPostsScraped?: number;
 }
 
 export interface GraphLink {

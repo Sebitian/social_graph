@@ -174,13 +174,25 @@ type ClosenessRankable = {
   history?: PostComment[];
   presenceScore?: number;
   comments?: number;
+  reactionsTotal?: number;
 };
+
+/** Comments weigh more than reactions for engagement ranking. */
+export function engagementVolume(c: ClosenessRankable): number {
+  const comments = c.comments ?? c.history?.length ?? 0;
+  const reactions = c.reactionsTotal ?? 0;
+  return comments * 3 + reactions;
+}
 
 /**
  * Single ranking for graph distance and the "Most present" sidebar list.
- * Most recent comment wins; then presence score; then total volume.
+ * Engagement volume (comments × 3 + reactions) first, then recency, then presence.
  */
 export function compareByCloseness(a: ClosenessRankable, b: ClosenessRankable): number {
+  const engA = engagementVolume(a);
+  const engB = engagementVolume(b);
+  if (engB !== engA) return engB - engA;
+
   const daysA = daysSinceLatestComment(a.history ?? []);
   const daysB = daysSinceLatestComment(b.history ?? []);
   if (daysA !== daysB) return daysA - daysB;
@@ -272,6 +284,16 @@ export function computePresenceScore(history: PostComment[]): number {
       0.04 * clamp01(history.length / 14) +
       0.03 * computePersonalCommentScore(history),
   );
+}
+
+/** Presence for layout/sizing — reactions give silent supporters a visible node. */
+export function computeEngagementPresence(
+  history: PostComment[],
+  reactionsTotal = 0,
+): number {
+  const fromComments = computePresenceScore(history);
+  const fromReactions = clamp01(reactionsTotal / 16) * 0.6;
+  return Math.max(fromComments, fromReactions);
 }
 
 function postKey(comment: PostComment): string {
@@ -830,7 +852,10 @@ export function buildGraph(
 
   const memberNodes: GraphNode[] = members.map((c) => {
     const id = c.username.toLowerCase();
-    const presenceScore = computePresenceScore(c.history);
+    const presenceScore = computeEngagementPresence(
+      c.history,
+      c.reactionsTotal ?? 0,
+    );
     const features =
       c.features ?? deriveFeatures(c.history, { circle: -1 });
     const labels = c.labels;
@@ -856,6 +881,11 @@ export function buildGraph(
       labels,
       features,
       relationshipEdge,
+      reactionsTotal: c.reactionsTotal,
+      reactionsByType: c.reactionsByType,
+      postsReactedTo: c.postsReactedTo,
+      postsCommentedOn: c.postsCommentedOn,
+      totalPostsScraped: c.totalPostsScraped,
     };
   });
 
