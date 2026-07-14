@@ -294,8 +294,7 @@ export default function NetworkStats({
             <ul className="flex max-h-[28rem] flex-col gap-2 overflow-y-auto overscroll-y-contain pr-1">
               {visiblePeople.map((u, i) => {
                 const isSelected =
-                  Boolean(selectedUsername) &&
-                  selectedUsername.toLowerCase() === u.username.toLowerCase();
+                  selectedUsername?.toLowerCase() === u.username.toLowerCase();
                 const row = (
                   <>
                     <span className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden">
