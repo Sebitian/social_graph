@@ -83,8 +83,13 @@ async function main() {
   const saved = await writeSnapshot(handle, result);
   const source = isLinkedInRawDataset(raw) ? "LinkedIn" : "Instagram";
 
+  const engagerCount = result.engagers?.length ?? result.stats.shown;
   console.log(
-    `Imported ${source} raw → ${result.stats.shown} people on graph (${result.profile.postsCount} posts)`,
+    `Imported ${source} raw → ${result.stats.shown} on map` +
+      (engagerCount > result.stats.shown
+        ? `, ${engagerCount} engagers in grid`
+        : ` people on graph`) +
+      ` (${result.profile.postsCount} posts)`,
   );
   console.log(`Local file (gitignored): data/snapshots/${saved}.json`);
 

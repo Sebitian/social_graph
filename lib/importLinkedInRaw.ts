@@ -1,5 +1,6 @@
 import {
   buildGraph,
+  buildMemberNodes,
   compareByCloseness,
   computeStats,
   MAX_NODES,
@@ -11,7 +12,14 @@ import {
   extractInteractionSignals,
 } from "./labels";
 import { estimateScrapeBudget } from "./scrapeBudget";
-import type { Commentator, PostComment, ProfileData, ScrapeResult } from "./types";
+import type {
+  Commentator,
+  PostComment,
+  PostEngagement,
+  ProfileData,
+  ProfilePost,
+  ScrapeResult,
+} from "./types";
 
 interface LinkedInPicture {
   url?: string;
@@ -39,6 +47,23 @@ interface LinkedInPostedAt {
   postedAgoText?: string;
 }
 
+interface LinkedInPostImage {
+  url?: string;
+  width?: number;
+  height?: number;
+}
+
+interface LinkedInDocumentCover {
+  width?: number;
+  height?: number;
+  imageUrls?: string[];
+}
+
+interface LinkedInDocument {
+  title?: string;
+  coverPages?: LinkedInDocumentCover[];
+}
+
 interface LinkedInPostItem {
   type: "post";
   id?: string;
@@ -47,6 +72,11 @@ interface LinkedInPostItem {
   commentary?: string;
   author?: LinkedInActor;
   postedAt?: LinkedInPostedAt;
+  postImages?: LinkedInPostImage[];
+  document?: LinkedInDocument;
+  repost?: {
+    postImages?: LinkedInPostImage[];
+  };
 }
 
 interface LinkedInReplyItem {
@@ -211,11 +241,65 @@ type PersonAccumulator = {
   username: string;
   fullName?: string;
   profilePicUrl?: string;
+  position?: string;
   history: PostComment[];
   reactionsByType: Record<string, number>;
   reactedPostIds: Set<string>;
   commentedPostIds: Set<string>;
+  postEngagement: Record<string, PostEngagement>;
 };
+
+/** Prefer expressive reactions over plain LIKE when multiple exist on one post. */
+function preferReactionType(current: string | undefined, next: string): string {
+  if (!current) return next;
+  if (current === "LIKE" && next !== "LIKE") return next;
+  return current;
+}
+
+function ensurePostEngagement(
+  person: PersonAccumulator,
+  postId: string,
+): PostEngagement {
+  const existing = person.postEngagement[postId];
+  if (existing) return existing;
+  const created: PostEngagement = { commented: false };
+  person.postEngagement[postId] = created;
+  return created;
+}
+
+function postImageUrl(post: LinkedInPostItem): string | undefined {
+  const fromImages = post.postImages?.find((img) => img.url)?.url;
+  if (fromImages) return fromImages;
+  const fromDoc = post.document?.coverPages
+    ?.flatMap((page) => page.imageUrls ?? [])
+    .find((url) => Boolean(url));
+  if (fromDoc) return fromDoc;
+  return post.repost?.postImages?.find((img) => img.url)?.url;
+}
+
+function buildProfilePosts(posts: LinkedInPostItem[]): ProfilePost[] {
+  const built: ProfilePost[] = [];
+  for (const post of posts) {
+    if (!post.id) continue;
+    const postedAt =
+      typeof post.postedAt?.timestamp === "number"
+        ? new Date(post.postedAt.timestamp).toISOString()
+        : post.postedAt?.date;
+    built.push({
+      id: post.id,
+      url: post.linkedinUrl,
+      label: postSnippet(post.content ?? post.commentary),
+      postedAt,
+      imageUrl: postImageUrl(post),
+    });
+  }
+  // Newest first for the grid (recent activity on the left).
+  return built.sort((a, b) => {
+    const ta = a.postedAt ? Date.parse(a.postedAt) : 0;
+    const tb = b.postedAt ? Date.parse(b.postedAt) : 0;
+    return tb - ta;
+  });
+}
 
 /** True when the slug is a LinkedIn member URN/id rather than a vanity handle. */
 function isOpaqueLinkedInId(slug: string): boolean {
@@ -252,16 +336,21 @@ function ensurePerson(
     existing.username = preferredUsername(existing.username, username);
     existing.fullName ??= actor?.name;
     existing.profilePicUrl ??= pictureUrlFromActor(actor);
+    if (actor?.position && (!existing.position || actor.position.length > existing.position.length)) {
+      existing.position = actor.position;
+    }
     return existing;
   }
   const created: PersonAccumulator = {
     username,
     fullName: actor?.name,
     profilePicUrl: pictureUrlFromActor(actor),
+    position: actor?.position,
     history: [],
     reactionsByType: {},
     reactedPostIds: new Set(),
     commentedPostIds: new Set(),
+    postEngagement: {},
   };
   byKey.set(key, created);
   return created;
@@ -311,18 +400,22 @@ function peopleFromLinkedIn(
     if (!text) continue;
 
     const timestamp = isoTimestamp(raw.createdAt, raw.createdAtTimestamp);
-    const meta = raw.postId ? postMeta.get(raw.postId) : undefined;
+    const canonicalPostId = raw.postId && postMeta.has(raw.postId) ? raw.postId : undefined;
+    const meta = canonicalPostId ? postMeta.get(canonicalPostId) : undefined;
     const ownerReplied = (raw.replies ?? []).some((reply) =>
       isSelfActor(reply.actor, selfIds, selfSlugs),
     );
 
-    const postKey = raw.postId ?? meta?.url ?? raw.linkedinUrl;
-    if (postKey) existing.commentedPostIds.add(postKey);
+    if (canonicalPostId) {
+      existing.commentedPostIds.add(canonicalPostId);
+      const engagement = ensurePostEngagement(existing, canonicalPostId);
+      engagement.commented = true;
+    }
 
     existing.history.push({
       authorId: actor?.id ?? undefined,
       authorUsername: existing.username,
-      postId: meta?.url ?? raw.postId ?? raw.linkedinUrl,
+      postId: canonicalPostId ?? meta?.url ?? raw.postId ?? raw.linkedinUrl,
       text,
       when: relativeWhen(timestamp),
       timestamp,
@@ -346,7 +439,16 @@ function peopleFromLinkedIn(
     const reactionType = (raw.reactionType ?? "LIKE").toUpperCase();
     existing.reactionsByType[reactionType] =
       (existing.reactionsByType[reactionType] ?? 0) + 1;
-    if (raw.postId) existing.reactedPostIds.add(raw.postId);
+
+    const canonicalPostId = raw.postId && postMeta.has(raw.postId) ? raw.postId : undefined;
+    if (canonicalPostId) {
+      existing.reactedPostIds.add(canonicalPostId);
+      const engagement = ensurePostEngagement(existing, canonicalPostId);
+      engagement.reactionType = preferReactionType(
+        engagement.reactionType,
+        reactionType,
+      );
+    }
   }
 
   return [...byKey.values()]
@@ -365,6 +467,7 @@ function peopleFromLinkedIn(
         username: person.username,
         fullName: person.fullName,
         profilePicUrl: person.profilePicUrl,
+        position: person.position,
         comments: enriched.length,
         circle: -1,
         history: enriched,
@@ -382,10 +485,13 @@ function peopleFromLinkedIn(
         postsReactedTo: person.reactedPostIds.size,
         postsCommentedOn: person.commentedPostIds.size,
         totalPostsScraped,
+        postEngagement:
+          Object.keys(person.postEngagement).length > 0
+            ? { ...person.postEngagement }
+            : undefined,
       } satisfies Commentator;
     })
-    .sort(compareByCloseness)
-    .slice(0, MAX_NODES);
+    .sort(compareByCloseness);
 }
 
 export function buildScrapeResultFromLinkedInRaw(
@@ -402,9 +508,12 @@ export function buildScrapeResultFromLinkedInRaw(
   }
 
   const profile = buildProfile(clean, posts);
-  const commentators = peopleFromLinkedIn(clean, posts, comments, reactions);
+  const profilePosts = buildProfilePosts(posts);
+  const allEngagers = peopleFromLinkedIn(clean, posts, comments, reactions);
+  const graphPeople = allEngagers.slice(0, MAX_NODES);
   const budget = estimateScrapeBudget({});
-  const graph = buildGraph(profile, commentators);
+  const graph = buildGraph(profile, graphPeople);
+  const engagers = buildMemberNodes(profile, allEngagers);
   const selfNode = graph.nodes.find((node) => node.group === "self");
   if (selfNode && profile.fullName) {
     selfNode.fullName = profile.fullName;
@@ -413,11 +522,17 @@ export function buildScrapeResultFromLinkedInRaw(
   return {
     profile,
     graph,
-    stats: computeStats(profile, commentators, comments.length),
+    stats: {
+      ...computeStats(profile, allEngagers, comments.length),
+      // Map still caps visible nodes; grid uses `engagers` for the full set.
+      shown: graphPeople.length,
+    },
     budget,
     cached: false,
     demo: false,
     pinned: true,
     scrapedAt: Date.now(),
+    posts: profilePosts,
+    engagers,
   };
 }

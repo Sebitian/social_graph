@@ -1,11 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Clock, Heart, MessageCircle, Users, Layers, Star } from "lucide-react";
+import {
+  Clock,
+  Heart,
+  MessageCircle,
+  Users,
+  Layers,
+  Star,
+  Search,
+} from "lucide-react";
 import type { NetworkPersonStat, NetworkStats as Stats } from "@/lib/types";
-import { compactNumber, CIRCLE_COLORS } from "@/lib/graphUtils";
-import { formatReactionBreakdown } from "@/lib/reactions";
+import { compactNumber } from "@/lib/graphUtils";
+import { parsePosition } from "@/lib/position";
+import {
+  formatReactionBreakdown,
+  REACTION_TITLE,
+  reactionEntries,
+} from "@/lib/reactions";
 
 interface Props {
   stats: Stats;
@@ -17,6 +30,57 @@ type PeopleView = "all-time" | "present" | "reactions";
 
 function displayName(person: NetworkPersonStat): string {
   return person.fullName || `@${person.username}`;
+}
+
+function normalizeSearch(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+function personSearchHaystack(person: NetworkPersonStat): string {
+  const { title, company } = parsePosition(person.position);
+  const reactionBits = reactionEntries(person.reactionsByType).flatMap(
+    ({ type, title: reactionTitle, emoji, count }) => [
+      type,
+      reactionTitle,
+      emoji,
+      String(count),
+      REACTION_TITLE[type] ?? "",
+    ],
+  );
+
+  return normalizeSearch(
+    [
+      person.fullName,
+      person.username,
+      person.position,
+      title,
+      company,
+      String(person.comments),
+      `${person.comments} comments`,
+      person.comments === 1 ? "1 comment" : "",
+      String(person.reactionsTotal ?? 0),
+      `${person.reactionsTotal ?? 0} reactions`,
+      (person.reactionsTotal ?? 0) === 1 ? "1 reaction" : "",
+      formatReactionBreakdown(person.reactionsByType),
+      ...reactionBits,
+      person.postsCommentedOn != null
+        ? `${person.postsCommentedOn} commented`
+        : "",
+      person.postsReactedTo != null ? `${person.postsReactedTo} reacted` : "",
+    ]
+      .filter(Boolean)
+      .join(" "),
+  );
+}
+
+function personMatches(person: NetworkPersonStat, query: string): boolean {
+  const needle = normalizeSearch(query.trim());
+  if (!needle) return true;
+  const haystack = personSearchHaystack(person);
+  return needle.split(/\s+/).every((token) => haystack.includes(token));
 }
 
 function engagementLabel(person: NetworkPersonStat, view: PeopleView): string {
@@ -53,13 +117,47 @@ function engagementLabel(person: NetworkPersonStat, view: PeopleView): string {
   return parts.join(" · ");
 }
 
+function PersonAvatar({ person }: { person: NetworkPersonStat }) {
+  const name = displayName(person);
+  if (person.profilePicUrl) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={person.profilePicUrl}
+        alt=""
+        className="h-6 w-6 shrink-0 rounded-full object-cover ring-1 ring-white/15"
+      />
+    );
+  }
+  return (
+    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-semibold text-white/70 ring-1 ring-white/10">
+      {name.charAt(0).toUpperCase()}
+    </span>
+  );
+}
+
+function PersonRole({ position }: { position?: string }) {
+  const { title, company } = parsePosition(position);
+  if (!title && !company) return null;
+  return (
+    <span className="min-w-0 flex-1 truncate text-[11px] text-white/55">
+      <span className="text-white/30">- </span>
+      {title ? <span className="font-semibold text-white/70">{title}</span> : null}
+      {title && company ? <span className="text-white/30"> </span> : null}
+      {company ? <span className="italic text-white/45">{company}</span> : null}
+    </span>
+  );
+}
+
 export default function NetworkStats({
   stats,
   onSelectUsername,
   selectedUsername,
 }: Props) {
   const [view, setView] = useState<PeopleView>("all-time");
-  const hasReactions = (stats.totalReactions ?? 0) > 0 || (stats.topReactors?.length ?? 0) > 0;
+  const [query, setQuery] = useState("");
+  const hasReactions =
+    (stats.totalReactions ?? 0) > 0 || (stats.topReactors?.length ?? 0) > 0;
 
   const cards = [
     { label: "Clusters", value: String(stats.circleCount), icon: Layers, color: "text-ig-pink" },
@@ -80,12 +178,17 @@ export default function NetworkStats({
         },
   ];
 
-  const visiblePeople: NetworkPersonStat[] =
+  const basePeople: NetworkPersonStat[] =
     view === "all-time"
       ? stats.topCommentators
       : view === "present"
         ? stats.recentCommentators
         : (stats.topReactors ?? []);
+
+  const visiblePeople = useMemo(
+    () => basePeople.filter((person) => personMatches(person, query)),
+    [basePeople, query],
+  );
 
   const title =
     view === "reactions"
@@ -127,12 +230,16 @@ export default function NetworkStats({
         })}
       </div>
 
-      {(visiblePeople.length > 0 || hasReactions) && (
+      {(basePeople.length > 0 || hasReactions) && (
         <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
           <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2 text-sm font-semibold text-white/80">
               <TitleIcon className="h-4 w-4 text-ig-yellow" />
               {title}
+              <span className="font-normal text-white/35">
+                ({query.trim() ? `${visiblePeople.length}/` : ""}
+                {basePeople.length})
+              </span>
             </div>
             <div className="inline-flex flex-wrap rounded-lg border border-white/10 bg-black/30 p-0.5">
               <button
@@ -172,24 +279,36 @@ export default function NetworkStats({
               )}
             </div>
           </div>
+
+          <label className="relative mb-3 block">
+            <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-white/35" />
+            <input
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Filter by name, role, company, reactions…"
+              className="w-full rounded-lg border border-white/10 bg-black/40 py-2 pl-8 pr-3 text-xs text-white outline-none transition placeholder:text-white/35 focus:border-white/25 focus:bg-black/60"
+            />
+          </label>
+
           {visiblePeople.length > 0 ? (
-            <ul className="flex flex-col gap-2">
-              {visiblePeople.slice(0, 8).map((u, i) => {
-                const isSelected = selectedUsername === u.username;
+            <ul className="flex max-h-[28rem] flex-col gap-2 overflow-y-auto overscroll-y-contain pr-1">
+              {visiblePeople.map((u, i) => {
+                const isSelected =
+                  Boolean(selectedUsername) &&
+                  selectedUsername.toLowerCase() === u.username.toLowerCase();
                 const row = (
                   <>
-                    <span className="flex min-w-0 items-center gap-2 text-white/80">
-                      <span className="w-4 shrink-0 text-white/30">{i + 1}</span>
-                      <span
-                        className="h-2 w-2 shrink-0 rounded-full"
-                        style={{
-                          backgroundColor:
-                            CIRCLE_COLORS[u.circle] ?? CIRCLE_COLORS[CIRCLE_COLORS.length - 1],
-                        }}
-                      />
-                      <span className="truncate">{displayName(u)}</span>
+                    <span className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden">
+                      <span className="w-5 shrink-0 tabular-nums text-white/30">
+                        {i + 1}
+                      </span>
+                      <PersonAvatar person={u} />
+                      <span className="max-w-[45%] shrink-0 truncate text-white/85">
+                        {displayName(u)}
+                      </span>
+                      <PersonRole position={u.position} />
                     </span>
-                    <span className="max-w-[55%] shrink-0 text-right font-mono text-[11px] leading-snug text-white/50">
+                    <span className="max-w-[42%] shrink-0 text-right font-mono text-[11px] leading-snug text-white/50">
                       {engagementLabel(u, view)}
                     </span>
                   </>
@@ -224,7 +343,11 @@ export default function NetworkStats({
               })}
             </ul>
           ) : (
-            <p className="text-xs text-white/40">No people in this view yet.</p>
+            <p className="text-xs text-white/40">
+              {query.trim()
+                ? `No people match “${query.trim()}”.`
+                : "No people in this view yet."}
+            </p>
           )}
           <p className="mt-2 border-t border-white/10 pt-2 text-[10px] leading-relaxed text-white/40">
             {onSelectUsername ? "Tap a name to open their profile. " : ""}

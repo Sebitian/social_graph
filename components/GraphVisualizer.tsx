@@ -474,6 +474,15 @@ export default function GraphVisualizer({
   }, [data.nodes, data.links, mapLayout]);
 
   useEffect(() => {
+    if (!selectedId || !fgRef.current || !mapLayout) return;
+    const pos = mapLayout.positions.get(selectedId);
+    if (!pos) return;
+    fgRef.current.centerAt(pos.x, pos.y, 500);
+    fgRef.current.zoom(2.2, 500);
+    setShowHint(false);
+  }, [selectedId, mapLayout]);
+
+  useEffect(() => {
     const fg = fgRef.current;
     if (!fg || !size.width) return;
     fg.d3Force("charge", null);
@@ -629,7 +638,10 @@ export default function GraphVisualizer({
         defaultLabelIds.has(node.id);
 
       if (showLabel) {
-        const label = `@${node.label}`;
+        const label =
+          node.group === "self"
+            ? node.fullName || `@${node.label}`
+            : node.fullName || node.label;
         const fontSize = Math.max(3.5, 10 / scale);
         ctx.font = `${node.group === "self" ? "700" : "500"} ${fontSize}px ui-sans-serif, system-ui`;
         ctx.textAlign = "center";
@@ -757,8 +769,6 @@ export default function GraphVisualizer({
                     return;
                   }
                   onSelect?.(node);
-                  fgRef.current?.centerAt(node.x ?? 0, node.y ?? 0, 500);
-                  fgRef.current?.zoom(2, 500);
                 }
               : undefined
           }

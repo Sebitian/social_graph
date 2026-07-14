@@ -12,7 +12,7 @@ import type {
 import { deriveFeatures, deriveRelationshipEdge, extractInteractionSignals } from "./labels";
 
 /** How many top connections we surface in the graph. */
-export const MAX_NODES = 24;
+export const MAX_NODES = 60;
 
 const DECAY_DAYS = 120;
 
@@ -844,10 +844,10 @@ export function strongestTies(
     .slice(0, limit);
 }
 
-export function buildGraph(
+export function buildMemberNodes(
   profile: ProfileData,
   commentators: Commentator[],
-): GraphData {
+): GraphNode[] {
   const self = profile.username.toLowerCase();
   const members = commentators.filter((c) => c.username.toLowerCase() !== self);
 
@@ -877,6 +877,7 @@ export function buildGraph(
       peerComments: c.peerComments,
       outboundFromTarget: c.outboundFromTarget,
       profilePicUrl: c.profilePicUrl,
+      position: c.position,
       isVerified: c.isVerified,
       history: c.history,
       labels,
@@ -887,15 +888,24 @@ export function buildGraph(
       postsReactedTo: c.postsReactedTo,
       postsCommentedOn: c.postsCommentedOn,
       totalPostsScraped: c.totalPostsScraped,
+      postEngagement: c.postEngagement,
     };
   });
 
   const ranked = [...memberNodes].sort(compareByCloseness);
-
   ranked.forEach((node, index) => {
     node.circle = proximityTierForRank(index, ranked.length);
-    node.layoutRadius = undefined;
   });
+  return ranked;
+}
+
+export function buildGraph(
+  profile: ProfileData,
+  commentators: Commentator[],
+): GraphData {
+  const self = profile.username.toLowerCase();
+  const members = commentators.filter((c) => c.username.toLowerCase() !== self);
+  const memberNodes = buildMemberNodes(profile, commentators);
 
   const friendClusters = detectFriendClusters(memberNodes);
   const clusterMemberCounts = new Map<number, number>();
@@ -989,6 +999,8 @@ export function computeStats(
     return {
       username: c.username,
       fullName: c.fullName,
+      profilePicUrl: c.profilePicUrl,
+      position: c.position,
       comments: c.comments,
       circle: node?.circle ?? 2,
       reactionsTotal: c.reactionsTotal ?? 0,
@@ -1006,12 +1018,10 @@ export function computeStats(
         (b.reactionsTotal ?? 0) - (a.reactionsTotal ?? 0) ||
         latestComment(b).time - latestComment(a).time,
     )
-    .slice(0, MAX_NODES)
     .map(toPersonStat);
 
   const recentCommentators = [...commentators]
     .sort(compareByCloseness)
-    .slice(0, MAX_NODES)
     .map((commentator) => {
       const latest = latestComment(commentator);
       return {
@@ -1028,7 +1038,6 @@ export function computeStats(
         (b.reactionsTotal ?? 0) - (a.reactionsTotal ?? 0) ||
         b.comments - a.comments,
     )
-    .slice(0, MAX_NODES)
     .map(toPersonStat);
 
   let biggestCircle = { label: "Often on the same posts", size: 0 };

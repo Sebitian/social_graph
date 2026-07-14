@@ -224,6 +224,22 @@ export interface UserRelationshipEdit {
   updatedAt: string;
 }
 
+/** A scraped post used as a column in the person × post engagement grid. */
+export interface ProfilePost {
+  id: string;
+  url?: string;
+  label: string;
+  postedAt?: string;
+  /** First post image / document cover / repost image, when available. */
+  imageUrl?: string;
+}
+
+/** Per-post engagement for one person on one of your posts. */
+export interface PostEngagement {
+  commented: boolean;
+  reactionType?: string;
+}
+
 /**
  * A visible connection attached to an interaction cluster.
  * `comments` is lifetime public volume; features carry current-strength signals.
@@ -232,6 +248,8 @@ export interface Commentator {
   username: string;
   fullName?: string;
   profilePicUrl?: string;
+  /** LinkedIn headline / current role string (e.g. "PM at Acme"). */
+  position?: string;
   followersCount?: number;
   isVerified?: boolean;
   comments: number;
@@ -256,6 +274,8 @@ export interface Commentator {
   postsCommentedOn?: number;
   /** Denominator for coverage (scraped post count). */
   totalPostsScraped?: number;
+  /** Per-post comment/reaction map keyed by ProfilePost.id. */
+  postEngagement?: Record<string, PostEngagement>;
 }
 
 export interface GraphNode {
@@ -272,6 +292,8 @@ export interface GraphNode {
   comments: number;
   val: number;
   profilePicUrl?: string;
+  /** LinkedIn headline / current role string (e.g. "PM at Acme"). */
+  position?: string;
   isVerified?: boolean;
   /** Recency-weighted presence score for ring ranking (0–1). */
   presenceScore?: number;
@@ -297,6 +319,8 @@ export interface GraphNode {
   postsCommentedOn?: number;
   /** Denominator for coverage (scraped post count). */
   totalPostsScraped?: number;
+  /** Per-post comment/reaction map keyed by ProfilePost.id. */
+  postEngagement?: Record<string, PostEngagement>;
 }
 
 export interface GraphLink {
@@ -338,6 +362,9 @@ export interface GraphData {
 export interface NetworkPersonStat {
   username: string;
   fullName?: string;
+  profilePicUrl?: string;
+  /** LinkedIn headline / current role string (e.g. "PM at Acme"). */
+  position?: string;
   comments: number;
   circle: number;
   reactionsTotal?: number;
@@ -374,4 +401,11 @@ export interface ScrapeResult {
   demo: boolean;
   pinned?: boolean;
   scrapedAt: number;
+  /** Scraped posts for the person × post engagement grid (LinkedIn). */
+  posts?: ProfilePost[];
+  /**
+   * All unique engagers (commenters + reactors) for the grid.
+   * The force map still uses `graph.nodes` (top connections only).
+   */
+  engagers?: GraphNode[];
 }

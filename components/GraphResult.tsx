@@ -9,12 +9,16 @@ import {
   BadgeCheck,
   CreditCard,
   FlaskConical,
+  Grid3X3,
+  Network,
   Pin,
   ShieldAlert,
 } from "lucide-react";
 import type { Circle, GraphNode, ScrapeResult } from "@/lib/types";
 import PersonPanel from "@/components/PersonPanel";
 import GraphVisualizer from "@/components/GraphVisualizer";
+import EngagementGrid from "@/components/EngagementGrid";
+import GraphNodeSearch from "@/components/GraphNodeSearch";
 import { GraphHowToRead } from "@/components/GraphHowToRead";
 import NetworkStats from "@/components/NetworkStats";
 import ShareCard from "@/components/ShareCard";
@@ -120,6 +124,7 @@ export default function GraphResult({
   const [searchedCount, setSearchedCount] = useState(0);
   const [pinStatus, setPinStatus] = useState<string | null>(null);
   const [pinning, setPinning] = useState(false);
+  const [view, setView] = useState<"map" | "grid">("map");
   const graphWrapRef = useRef<HTMLDivElement>(null);
   const requestedBudget = useMemo(
     () => estimateScrapeBudget(initialBudget),
@@ -134,19 +139,37 @@ export default function GraphResult({
 
   const nodeByUsername = useMemo(() => {
     const m = new Map<string, GraphNode>();
-    for (const node of data?.graph.nodes ?? []) {
-      if (node.group === "member") m.set(node.label.toLowerCase(), node);
+    const pool = [
+      ...(data?.engagers ?? []),
+      ...(data?.graph.nodes ?? []),
+    ];
+    for (const node of pool) {
+      if (node.group !== "member") continue;
+      m.set(node.id.toLowerCase(), node);
+      m.set(node.label.toLowerCase(), node);
     }
     return m;
   }, [data]);
 
+  const gridNodes = useMemo(() => {
+    if (data?.engagers && data.engagers.length > 0) return data.engagers;
+    return data?.graph.nodes ?? [];
+  }, [data]);
+
   const selectMemberByUsername = useCallback(
     (username: string) => {
-      const node = nodeByUsername.get(username.toLowerCase());
+      const key = username.trim().toLowerCase();
+      const node = nodeByUsername.get(key);
       if (node) setSelected(node);
     },
     [nodeByUsername],
   );
+
+  const hasPostGrid = Boolean(data?.posts?.length);
+
+  useEffect(() => {
+    if (!hasPostGrid && view === "grid") setView("map");
+  }, [hasPostGrid, view]);
 
   useEffect(() => {
     if (pinned) return;
@@ -413,70 +436,115 @@ export default function GraphResult({
         )}
       </header>
 
-      <div className="mx-auto grid min-h-screen max-w-7xl grid-cols-1 gap-4 px-4 pb-6 pt-20 lg:grid-cols-[1fr_340px]">
+      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-3 pb-6 pt-16 sm:gap-4 sm:px-4 sm:pt-20">
+        <GraphHowToRead />
+
+        <div className="grid min-h-0 grid-cols-1 gap-4 lg:grid-cols-[1fr_340px]">
         {/* Graph */}
-        <div className="relative min-h-[420px]">
+        <div className="relative min-h-[72dvh] sm:min-h-[560px] lg:min-h-[640px]">
           <motion.div
             ref={graphWrapRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="relative flex min-h-[420px] flex-col overflow-hidden rounded-3xl border border-white/10 bg-black/20"
+            className="relative flex h-full min-h-[72dvh] flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 sm:min-h-[560px] sm:rounded-3xl lg:min-h-[640px]"
           >
-            <GraphHowToRead className="shrink-0" />
-
-            <div className="relative min-h-[320px] flex-1">
-              <GraphVisualizer
-                data={data.graph}
-                className="absolute inset-0"
-                selectedId={selected?.id ?? null}
-                onSelect={setSelected}
-              />
-
-              <div className="pointer-events-none absolute bottom-4 right-4 flex max-w-[260px] flex-col gap-2 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur">
-                <div className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
-                  Node color
+            {Boolean(data.posts?.length) && (
+              <div className="flex shrink-0 items-center justify-between gap-2 border-b border-white/10 px-3 py-2">
+                <div className="text-[11px] font-semibold uppercase tracking-wide text-white/35">
+                  View
                 </div>
-                <span className="flex items-center gap-1.5 text-xs text-white/60">
-                  <span
-                    className="h-2.5 w-2.5 rounded-full"
-                    style={{ backgroundColor: SELF_COLOR }}
-                  />
-                  You
-                </span>
-                {data.graph.circles.map((cluster) => (
-                  <span
-                    key={cluster.id}
-                    className="flex items-start gap-1.5 text-xs text-white/55"
+                <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
+                  <button
+                    type="button"
+                    onClick={() => setView("map")}
+                    className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[11px] transition ${
+                      view === "map"
+                        ? "bg-white/15 text-white"
+                        : "text-white/45 hover:bg-white/10 hover:text-white/70"
+                    }`}
                   >
-                    <span
-                      className="mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full ring-1 ring-white/10"
-                      style={{ backgroundColor: cluster.color }}
-                    />
-                    <span>
-                      <span className="text-white/70">{cluster.label}</span>
-                      {cluster.size > 0 ? ` (${cluster.size})` : ""}
-                      {cluster.subtitle ? (
-                        <span className="mt-0.5 block text-[10px] leading-snug text-white/35">
-                          {cluster.subtitle}
-                        </span>
-                      ) : null}
-                    </span>
-                  </span>
-                ))}
-                <span className="flex items-start gap-1.5 text-xs text-white/55">
-                  <span
-                    className="mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full ring-1 ring-white/10"
-                    style={{ backgroundColor: UNCLUSTERED_COLOR }}
-                  />
-                  <span>
-                    <span className="text-white/70">Everyone else</span>
-                    <span className="mt-0.5 block text-[10px] leading-snug text-white/35">
-                      No strong overlap with other commenters yet
-                    </span>
-                  </span>
-                </span>
+                    <Network className="h-3.5 w-3.5" />
+                    Map
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setView("grid")}
+                    className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[11px] transition ${
+                      view === "grid"
+                        ? "bg-white/15 text-white"
+                        : "text-white/45 hover:bg-white/10 hover:text-white/70"
+                    }`}
+                  >
+                    <Grid3X3 className="h-3.5 w-3.5" />
+                    Grid
+                  </button>
+                </div>
               </div>
+            )}
+
+            <div className="relative min-h-0 flex-1">
+              {view === "grid" && data.posts && data.posts.length > 0 ? (
+                <EngagementGrid
+                  posts={data.posts}
+                  nodes={gridNodes}
+                  selectedId={selected?.id ?? null}
+                  onSelect={setSelected}
+                  className="absolute inset-0"
+                />
+              ) : (
+                <>
+                  <GraphVisualizer
+                    data={data.graph}
+                    className="absolute inset-0"
+                    selectedId={selected?.id ?? null}
+                    onSelect={setSelected}
+                  />
+
+                  <div className="absolute left-3 right-3 top-3 z-20 sm:left-4 sm:right-auto sm:w-[280px]">
+                    <GraphNodeSearch
+                      nodes={data.graph.nodes}
+                      selectedId={selected?.id ?? null}
+                      onSelect={setSelected}
+                    />
+                  </div>
+
+                  <div className="pointer-events-none absolute bottom-4 right-4 flex max-w-[220px] flex-col gap-1.5 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur">
+                    <div className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
+                      Groups
+                    </div>
+                    <span className="flex items-center gap-1.5 text-xs text-white/60">
+                      <span
+                        className="h-2.5 w-2.5 rounded-full"
+                        style={{ backgroundColor: SELF_COLOR }}
+                      />
+                      You
+                    </span>
+                    {data.graph.circles.map((cluster) => (
+                      <span
+                        key={cluster.id}
+                        className="flex items-center gap-1.5 text-xs text-white/55"
+                      >
+                        <span
+                          className="h-2.5 w-2.5 shrink-0 rounded-full ring-1 ring-white/10"
+                          style={{ backgroundColor: cluster.color }}
+                        />
+                        <span className="truncate text-white/70">
+                          {cluster.label}
+                          {cluster.size > 0 ? ` (${cluster.size})` : ""}
+                        </span>
+                      </span>
+                    ))}
+                    <span className="flex items-center gap-1.5 text-xs text-white/55">
+                      <span
+                        className="h-2.5 w-2.5 shrink-0 rounded-full ring-1 ring-white/10"
+                        style={{ backgroundColor: UNCLUSTERED_COLOR }}
+                      />
+                      <span className="text-white/70">Everyone else</span>
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
           </motion.div>
 
@@ -512,14 +580,16 @@ export default function GraphResult({
               <p className="mt-2 text-sm text-white/40">{data.profile.biography}</p>
             )}
             <div className="mt-3 text-xs text-white/30">
-              Top {data.stats.shown} connections · closer = more present · color = same-post groups
+              {data.engagers && data.engagers.length > 0
+                ? `${data.engagers.length} unique engagers · map shows top ${data.stats.shown}`
+                : `Top ${data.stats.shown} connections`}
             </div>
           </div>
 
           <NetworkStats
             stats={data.stats}
             onSelectUsername={selectMemberByUsername}
-            selectedUsername={selected?.label ?? null}
+            selectedUsername={selected?.id ?? selected?.label ?? null}
           />
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
             <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-white/80">
@@ -617,6 +687,7 @@ export default function GraphResult({
 
           <ShareCard handle={handle} stats={data.stats} onDownload={downloadPng} />
         </aside>
+        </div>
       </div>
     </main>
   );
