@@ -531,13 +531,21 @@ export default function GraphResult({
         <div className="grid min-h-0 grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-[1fr_340px]">
         {/* Graph + top engagers */}
         <div className="flex min-h-0 flex-col gap-3 sm:gap-4">
-        <div className="relative min-h-[48dvh] sm:min-h-[480px] lg:min-h-[560px]">
+        <div
+          className={`relative sm:min-h-[480px] lg:min-h-[560px] ${
+            view === "grid"
+              ? "min-h-[min(78dvh,720px)]"
+              : "min-h-[48dvh]"
+          }`}
+        >
           <motion.div
             ref={graphWrapRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="relative flex h-full min-h-[48dvh] flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 sm:min-h-[480px] sm:rounded-3xl lg:min-h-[560px]"
+            className={`relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 sm:min-h-[480px] sm:rounded-3xl lg:min-h-[560px] ${
+              view === "grid" ? "min-h-[min(78dvh,720px)]" : "min-h-[48dvh]"
+            }`}
           >
             <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-white/10 px-3 py-2">
               <div className="flex min-w-0 flex-wrap items-center gap-2">
