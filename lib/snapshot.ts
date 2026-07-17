@@ -2,6 +2,10 @@ import fs from "fs";
 import path from "path";
 import { head, put } from "@vercel/blob";
 import type { ScrapeResult } from "./types";
+import {
+  isSpotifyTasteResult,
+  type SpotifyTasteResult,
+} from "./spotifyTypes";
 import { blobConfigured } from "./blob";
 
 const SNAPSHOT_DIR = path.join(process.cwd(), "data", "snapshots");
@@ -134,6 +138,51 @@ export async function writeSnapshot(
 
 export function pinnedGraphPath(handle: string): string {
   return `/graph/${cleanHandle(handle)}/pinned`;
+}
+
+/**
+ * Read a Spotify taste snapshot from disk (and Blob when configured).
+ * Separate from social ScrapeResult snapshots.
+ */
+export async function readSpotifySnapshot(
+  handle: string,
+): Promise<SpotifyTasteResult | null> {
+  const clean = cleanHandle(handle);
+
+  if (blobConfigured()) {
+    try {
+      const meta = await head(snapshotBlobPathname(clean));
+      const response = await fetch(meta.downloadUrl);
+      if (response.ok) {
+        const parsed: unknown = await response.json();
+        if (isSpotifyTasteResult(parsed)) {
+          return {
+            ...parsed,
+            friends: parsed.friends ?? [],
+            pinned: true,
+            cached: true,
+          };
+        }
+      }
+    } catch {
+      // fall through to disk
+    }
+  }
+
+  const file = snapshotPath(clean);
+  if (!fs.existsSync(file)) return null;
+  try {
+    const parsed: unknown = JSON.parse(fs.readFileSync(file, "utf-8"));
+    if (!isSpotifyTasteResult(parsed)) return null;
+    return {
+      ...parsed,
+      friends: parsed.friends ?? [],
+      pinned: true,
+      cached: true,
+    };
+  } catch {
+    return null;
+  }
 }
 
 export type SnapshotStorage = "blob" | "disk" | "none";

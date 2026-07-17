@@ -1,0 +1,771 @@
+[
+    {
+      "playlistId": "1mAeUTxNnAGlyB1po0jSmn",
+      "playlistName": "Schmok",
+      "description": "",
+      "ownerName": "Sebastian Sovailescu",
+      "ownerId": "21dohegqk5v2uv5e75wy3phoy",
+      "ownerImage": "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1824745027599958&height=300&width=300&ext=1786824502&hash=Afu0edBt9np07fb8nX0Dn4ME",
+      "images": [
+        "https://mosaic.scdn.co/60/ab67616d00001e0206484a4d7a0ac1c2d14bfb9fab67616d00001e025c6b754927c271bb8cfedbc6ab67616d00001e02bb089cab860e09b5092a797bab67616d00001e02edbdf62135e9112a98bffa0c"
+      ],
+      "timestamp": "2026-07-17T01:11:42.717190",
+      "totalTracks": 37,
+      "tracks": [
+        {
+          "trackName": "Funeral",
+          "trackId": "782CIMTujSmNFrRuAVhsqd",
+          "artists": [
+            {
+              "artistName": "Miguel",
+              "artistId": "360IAlyVv4PCEVjgyMZrxK"
+            }
+          ],
+          "plays": "18090140",
+          "trackDuration": 135120,
+          "albumName": "Funeral",
+          "albumId": "4hOMIVFD0c1xFxwyEp5Nxe",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2735c6b754927c271bb8cfedbc6",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2019-11-02T01:48:00+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Habits (Stay High) - Hippie Sabotage Remix",
+          "trackId": "62N2JSA0jHmSH7Va9t7hIf",
+          "artists": [
+            {
+              "artistName": "Tove Lo",
+              "artistId": "4NHQUGzhtTLFvgF5SZesLK"
+            },
+            {
+              "artistName": "Hippie Sabotage",
+              "artistId": "4dM6NDYSfLcspt8GLoT5aE"
+            }
+          ],
+          "plays": "728859652",
+          "trackDuration": 258933,
+          "albumName": "Queen Of The Clouds",
+          "albumId": "47C7w4o1resDhr7jvYEpxE",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273edbdf62135e9112a98bffa0c",
+          "contentRating": "NONE",
+          "addedAt": "2019-11-03T06:45:27+00:00",
+          "trackNumber": 16
+        },
+        {
+          "trackName": "20 Years Later",
+          "trackId": "5fPZ5rlUHzHfNY0Eda4T8o",
+          "artists": [
+            {
+              "artistName": "Yung Pinch",
+              "artistId": "61qMnYXa1GxSBoV3IiYKjZ"
+            }
+          ],
+          "plays": "66372780",
+          "trackDuration": 215188,
+          "albumName": "4EVERFRIDAY SZN TWO",
+          "albumId": "4fDrhVsvTh88FGfUYHWDls",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b27306484a4d7a0ac1c2d14bfb9f",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2019-11-03T06:45:37+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Wicked Games",
+          "trackId": "1xILPbUvMogfmB3uizNPLz",
+          "artists": [
+            {
+              "artistName": "RAIGN",
+              "artistId": "25IZcQsNwnvgeBiTEjBNI4"
+            }
+          ],
+          "plays": "12649543",
+          "trackDuration": 215036,
+          "albumName": "Wicked Games - Single",
+          "albumId": "7rC1oYpU5xFhZC3PjmkttH",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273bb089cab860e09b5092a797b",
+          "contentRating": "NONE",
+          "addedAt": "2019-11-11T02:07:00+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Take What You Want (feat. Ozzy Osbourne & Travis Scott)",
+          "trackId": "44pxxRrhiDGuHYP5HjadGF",
+          "artists": [
+            {
+              "artistName": "Post Malone",
+              "artistId": "246dkjvS1zLTtiykXe5h60"
+            },
+            {
+              "artistName": "Ozzy Osbourne",
+              "artistId": "6ZLTlhejhndI4Rh53vYhrY"
+            },
+            {
+              "artistName": "Travis Scott",
+              "artistId": "0Y5tJX1MQlPlqiwlOH1tJY"
+            }
+          ],
+          "plays": "844253734",
+          "trackDuration": 229586,
+          "albumName": "Hollywood's Bleeding",
+          "albumId": "3hcYCR2lbgpayA1Tjz7Q0c",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2733fcf0f028c32f03e13398269",
+          "contentRating": "NONE",
+          "addedAt": "2019-11-11T02:48:24+00:00",
+          "trackNumber": 9
+        },
+        {
+          "trackName": "Falling",
+          "trackId": "4TnjEaWOeW0eKTKIEvJyCa",
+          "artists": [
+            {
+              "artistName": "Trevor Daniel",
+              "artistId": "7uaIm6Pw7xplS8Dy06V6pT"
+            }
+          ],
+          "plays": "1895516247",
+          "trackDuration": 159381,
+          "albumName": "Falling",
+          "albumId": "1Czfd5tEby3DbdYNdqzrCa",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2730e4bd9ce99988f3182bf771a",
+          "contentRating": "NONE",
+          "addedAt": "2019-11-15T04:54:19+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "The Hills",
+          "trackId": "25khomWgBVamSdKw7hzm3l",
+          "artists": [
+            {
+              "artistName": "The Weeknd",
+              "artistId": "1Xyo4u8uXC1ZmMpatF05PJ"
+            }
+          ],
+          "plays": "3096151646",
+          "trackDuration": 242253,
+          "albumName": "Beauty Behind The Madness",
+          "albumId": "28ZKQMoNBB0etKXZ97G2SN",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273aac98daa18e4edf54d7a0a70",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2019-11-21T00:28:23+00:00",
+          "trackNumber": 5
+        },
+        {
+          "trackName": "Dance Monkey",
+          "trackId": "2XU0oxnq2qxCpomAAuJY8K",
+          "artists": [
+            {
+              "artistName": "Tones And I",
+              "artistId": "2NjfBq1NflQcKSeiDooVjY"
+            }
+          ],
+          "plays": "3476304069",
+          "trackDuration": 209438,
+          "albumName": "Dance Monkey (Stripped Back) / Dance Monkey",
+          "albumId": "0UywfDKYlyiu1b38DRrzYD",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2734825aaa2ef0d72461644f113",
+          "contentRating": "NONE",
+          "addedAt": "2019-11-22T05:20:18+00:00",
+          "trackNumber": 2
+        },
+        {
+          "trackName": "Eternal Youth",
+          "trackId": "0ytvsZOerGzUWfHXVT2Sgy",
+          "artists": [
+            {
+              "artistName": "RŮDE",
+              "artistId": "4CWpoyuE7e9NvBkUSTmJfq"
+            }
+          ],
+          "plays": "285121215",
+          "trackDuration": 205766,
+          "albumName": "Eternal Youth",
+          "albumId": "6STwjBCu3CTEViSxJChKlV",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273097f3d06dd8726a91f526e21",
+          "contentRating": "NONE",
+          "addedAt": "2020-01-13T05:25:34+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Titanium (feat. Sia)",
+          "trackId": "0lHAMNU8RGiIObScrsRgmP",
+          "artists": [
+            {
+              "artistName": "David Guetta",
+              "artistId": "1Cs0zKBU1kc0i8ypK3B9ai"
+            },
+            {
+              "artistName": "Sia",
+              "artistId": "5WUlDfRSoLAfcVSX1WnrxN"
+            }
+          ],
+          "plays": "2348992140",
+          "trackDuration": 245040,
+          "albumName": "Nothing but the Beat 2.0",
+          "albumId": "5aprcHwM1KJhaY9Kbxkfkn",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b27387e2f8346625bb6fd20d52be",
+          "contentRating": "NONE",
+          "addedAt": "2020-01-24T00:05:31+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Pour Some Sugar On Me - Remastered 2017",
+          "trackId": "0PdM2a6oIjqepoEfcJo0RO",
+          "artists": [
+            {
+              "artistName": "Def Leppard",
+              "artistId": "6H1RjVyNruCmrBEWRbD0VZ"
+            }
+          ],
+          "plays": "654740800",
+          "trackDuration": 267306,
+          "albumName": "Hysteria (Super Deluxe)",
+          "albumId": "31oeDyCOLhgeZyktfxo0pE",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273222cb38afc3b3b47d9df26aa",
+          "contentRating": "NONE",
+          "addedAt": "2020-02-08T00:10:52+00:00",
+          "trackNumber": 5
+        },
+        {
+          "trackName": "High",
+          "trackId": "17aDyX39gb1iV1ZWvD1ffE",
+          "artists": [
+            {
+              "artistName": "Sir Sly",
+              "artistId": "3DFoVPonoAAt4EZ1FEI8ue"
+            }
+          ],
+          "plays": "94820840",
+          "trackDuration": 231896,
+          "albumName": "Don't You Worry, Honey",
+          "albumId": "5VvCD7gVffRgdPfExxLfF4",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273afffc8aea37762b4daa91e8b",
+          "contentRating": "NONE",
+          "addedAt": "2020-02-08T12:59:36+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Beach Ballin' (feat. blackbear)",
+          "trackId": "0W9E3s2G4szLUwXsE17x5E",
+          "artists": [
+            {
+              "artistName": "Yung Pinch",
+              "artistId": "61qMnYXa1GxSBoV3IiYKjZ"
+            },
+            {
+              "artistName": "blackbear",
+              "artistId": "2cFrymmkijnjDg9SS92EPM"
+            }
+          ],
+          "plays": "49984976",
+          "trackDuration": 204275,
+          "albumName": "Beach Ballin' (feat. blackbear)",
+          "albumId": "1P6UQ3wWvVyFH7Y7cuDu7M",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273b7512032845777746f475a9c",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2020-02-16T06:59:43+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Oblivion",
+          "trackId": "2zhPy8zbBf53XgTtkEbnbO",
+          "artists": [
+            {
+              "artistName": "Rufi-O",
+              "artistId": "5GKakcgOxfujEnTZOffcRn"
+            },
+            {
+              "artistName": "Lily Potter",
+              "artistId": "2ICXkeX9vhcboodu8Auv8p"
+            }
+          ],
+          "plays": "105699692",
+          "trackDuration": 152920,
+          "albumName": "Oblivion",
+          "albumId": "0Oa8rgpPA3gskDwdjpQBHp",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2734bbaf105b986e1b04330c393",
+          "contentRating": "NONE",
+          "addedAt": "2020-03-25T13:46:08+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "High Right Now (feat. Wiz Khalifa) - Remix",
+          "trackId": "5DPASDOoVakOcD8EIhb46T",
+          "artists": [
+            {
+              "artistName": "Tyla Yaweh",
+              "artistId": "1MXZ0hsGic96dWRDKwAwdr"
+            },
+            {
+              "artistName": "Wiz Khalifa",
+              "artistId": "137W8MRPWKqSmrBGDBFSop"
+            }
+          ],
+          "plays": "144101462",
+          "trackDuration": 175759,
+          "albumName": "High Right Now (feat. Wiz Khalifa) [Remix]",
+          "albumId": "0imwCieoxougGmptrN1WAx",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2732dea10a6e67a8c1ab8b8566e",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2020-07-28T13:38:25+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Don't Wanna Breathe",
+          "trackId": "567CrVjCl2p3qmZqMKfOD9",
+          "artists": [
+            {
+              "artistName": "Kodak Black",
+              "artistId": "46SHBwWsqBkxI7EeeBEQG7"
+            }
+          ],
+          "plays": "159471861",
+          "trackDuration": 196672,
+          "albumName": "Project Baby 2: All Grown Up",
+          "albumId": "51wp3EOOp2mBIjhZjR7W0i",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273583ce93dc89d84218f233ea7",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2020-07-29T01:31:34+00:00",
+          "trackNumber": 5
+        },
+        {
+          "trackName": "Roses Remix (feat. Future)",
+          "trackId": "1KyZ4rUiW2lkqGNLQYKpcC",
+          "artists": [
+            {
+              "artistName": "SAINt JHN",
+              "artistId": "0H39MdGGX6dbnnQPt6NQkZ"
+            },
+            {
+              "artistName": "Future",
+              "artistId": "1RyvyyTE3xzB2ZywiAwp0i"
+            }
+          ],
+          "plays": "91439046",
+          "trackDuration": 187897,
+          "albumName": "Roses Remix (feat. Future)",
+          "albumId": "1yhDNVAm4gq1TuYdSbpEar",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2731dec94e7819198e1d013f137",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2020-08-04T18:38:45+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Gold (feat. Lil Wayne) - Remix",
+          "trackId": "1aopm2A6hoIFS1nv6PexoM",
+          "artists": [
+            {
+              "artistName": "Kiiara",
+              "artistId": "4u5smJBskI6Adzv08PuiUP"
+            },
+            {
+              "artistName": "Lil Wayne",
+              "artistId": "55Aa2cqylxrFIXC767Z865"
+            }
+          ],
+          "plays": "16428346",
+          "trackDuration": 207952,
+          "albumName": "Gold (feat. Lil Wayne) [Remix]",
+          "albumId": "67nRj3QjQQLNInuX0kweJN",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2738ed4cbedfa69ebc9a7db3fd2",
+          "contentRating": "NONE",
+          "addedAt": "2020-10-19T04:01:54+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Waiting All Night (feat. Ella Eyre)",
+          "trackId": "0g4qRoQ3Bh6puFzBA7fH3S",
+          "artists": [
+            {
+              "artistName": "Rudimental",
+              "artistId": "4WN5naL3ofxrVBgFpguzKo"
+            },
+            {
+              "artistName": "Ella Eyre",
+              "artistId": "66TrUkUZ3RM29dqeDQRgyA"
+            }
+          ],
+          "plays": "302463099",
+          "trackDuration": 292586,
+          "albumName": "Home (Deluxe Edition)",
+          "albumId": "6RM05aDNmbqF7AV1xwubac",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2738d879f108f3ef1b2086c67e8",
+          "contentRating": "NONE",
+          "addedAt": "2020-11-07T22:34:07+00:00",
+          "trackNumber": 11
+        },
+        {
+          "trackName": "ALIEN PARTY",
+          "trackId": "08KH0aATukXCmhQNPAp5ZB",
+          "artists": [
+            {
+              "artistName": "Party Favor",
+              "artistId": "7yPPzu5UdAK7yagQqjEZQm"
+            },
+            {
+              "artistName": "Yung Pinch",
+              "artistId": "61qMnYXa1GxSBoV3IiYKjZ"
+            }
+          ],
+          "plays": "5113156",
+          "trackDuration": 248023,
+          "albumName": "ALIEN PARTY",
+          "albumId": "2rAr8xzyHKZGCq3vbZToDK",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2731cb381e2bc3be2d9a995d0f8",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2020-11-08T05:14:39+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Unchained Melody",
+          "trackId": "4Fook83HYnB77YeERLExXB",
+          "artists": [
+            {
+              "artistName": "Norah Jones",
+              "artistId": "2Kx7MNY7cI1ENniW7vT30N"
+            }
+          ],
+          "plays": "68311203",
+          "trackDuration": 172773,
+          "albumName": "Resistance Radio: The Man in the High Castle Album",
+          "albumId": "6wp5uATZ1wfcngYTJ7QBOm",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273415fc9765f91b67773e3a81a",
+          "contentRating": "NONE",
+          "addedAt": "2020-11-08T17:22:32+00:00",
+          "trackNumber": 14
+        },
+        {
+          "trackName": "Overthinker",
+          "trackId": "4K9xid96G3YmIvQZXN9SXg",
+          "artists": [
+            {
+              "artistName": "INZO",
+              "artistId": "18Eu7uJEMPWwwt1QUdCglQ"
+            }
+          ],
+          "plays": "103911717",
+          "trackDuration": 268000,
+          "albumName": "Overthinker",
+          "albumId": "04jog2osd7pTEQc49jEIem",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2733f1c8242d392001f31536e8b",
+          "contentRating": "NONE",
+          "addedAt": "2020-11-09T22:23:40+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "I Must Be High",
+          "trackId": "1Yc1mFmJrICDHQNzePG9wP",
+          "artists": [
+            {
+              "artistName": "South Park Mexican",
+              "artistId": "4kKaAWGdu6WW0W415RWaQA"
+            }
+          ],
+          "plays": "112098910",
+          "trackDuration": 284400,
+          "albumName": "Never Change",
+          "albumId": "09Xf2KxWvXS88dd5OdTcu9",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273d9fad756a57fa43002c5d860",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2021-01-21T02:57:20+00:00",
+          "trackNumber": 4
+        },
+        {
+          "trackName": "DRUGS",
+          "trackId": "0ooz46SAYMJsdOPnwW4nKK",
+          "artists": [
+            {
+              "artistName": "Tai Verdes",
+              "artistId": "2kCO8LXN1usaOPL3iEE28I"
+            }
+          ],
+          "plays": "134210721",
+          "trackDuration": 159546,
+          "albumName": "DRUGS",
+          "albumId": "7zPKeqaMfkP34adJfqpnQm",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2731cff71511bdd45d517cb271a",
+          "contentRating": "NONE",
+          "addedAt": "2021-02-25T17:27:02+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Tadow",
+          "trackId": "1DoS5ql0TW3ejjJGHbsAmz",
+          "artists": [
+            {
+              "artistName": "Masego",
+              "artistId": "3ycxRkcZ67ALN3GQJ57Vig"
+            },
+            {
+              "artistName": "FKJ",
+              "artistId": "2FwDTncULUnmANIh7qKa5z"
+            }
+          ],
+          "plays": "649614971",
+          "trackDuration": 301639,
+          "albumName": "Tadow",
+          "albumId": "66q4QLWTKxEZnADbRRTnSd",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273383ee7319d30024145173544",
+          "contentRating": "NONE",
+          "addedAt": "2021-03-21T18:30:50+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Pursuit Of Happiness (Nightmare)",
+          "trackId": "5iSEsR6NKjlC9SrIJkyL3k",
+          "artists": [
+            {
+              "artistName": "Kid Cudi",
+              "artistId": "0fA0VVWsXO9YnASrzqfmYu"
+            },
+            {
+              "artistName": "MGMT",
+              "artistId": "0SwO7SWeDHJijQ3XNS7xEE"
+            },
+            {
+              "artistName": "Ratatat",
+              "artistId": "57dN52uHvrHOxijzpIgu3E"
+            }
+          ],
+          "plays": "1065235924",
+          "trackDuration": 295293,
+          "albumName": "Man On The Moon: The End Of Day",
+          "albumId": "47y3PbX8oIDCkYAFylCJz0",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273aab2c3c3f1f3207137d915c9",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2021-05-04T15:13:13+00:00",
+          "trackNumber": 13
+        },
+        {
+          "trackName": "Running Miles",
+          "trackId": "4U9kJBr61UhO5srPib7zyz",
+          "artists": [
+            {
+              "artistName": "Hippie Sabotage",
+              "artistId": "4dM6NDYSfLcspt8GLoT5aE"
+            }
+          ],
+          "plays": "67905900",
+          "trackDuration": 255529,
+          "albumName": "Running Miles",
+          "albumId": "3xdTckJjSyCfWePM4DrTOc",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b27319170911c1505110bb1a600c",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2021-05-07T16:34:00+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Friends",
+          "trackId": "2jQiSYrwJehQAcuaaQrXnS",
+          "artists": [
+            {
+              "artistName": "Chase Atlantic",
+              "artistId": "7cYEt1pqMgXJdq00hAwVpT"
+            }
+          ],
+          "plays": "1244202684",
+          "trackDuration": 230010,
+          "albumName": "Nostalgia",
+          "albumId": "4FdPaL1MvZtioq0Uf74Jau",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273c6853bb1af2bed82d15918f4",
+          "contentRating": "NONE",
+          "addedAt": "2021-05-21T02:01:15+00:00",
+          "trackNumber": 5
+        },
+        {
+          "trackName": "Everyday (feat. Rod Stewart, Miguel & Mark Ronson)",
+          "trackId": "2N3U8uTYhjX2KwGT0pf5x0",
+          "artists": [
+            {
+              "artistName": "A$AP Rocky",
+              "artistId": "13ubrt8QOOCPljQ2FL1Kca"
+            },
+            {
+              "artistName": "Rod Stewart",
+              "artistId": "2y8Jo9CKhJvtfeKOsYzRdT"
+            },
+            {
+              "artistName": "Miguel",
+              "artistId": "360IAlyVv4PCEVjgyMZrxK"
+            },
+            {
+              "artistName": "Mark Ronson",
+              "artistId": "3hv9jJF3adDNsBSIQDqcjp"
+            }
+          ],
+          "plays": "1040933143",
+          "trackDuration": 260990,
+          "albumName": "AT.LONG.LAST.A$AP",
+          "albumId": "3arNdjotCvtiiLFfjKngMc",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b27349efdc44d0733042f8b99d57",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2021-05-21T03:00:36+00:00",
+          "trackNumber": 17
+        },
+        {
+          "trackName": "ily (i love you baby) (feat. Emilee)",
+          "trackId": "62aP9fBQKYKxi7PDXwcUAS",
+          "artists": [
+            {
+              "artistName": "Surf Mesa",
+              "artistId": "1lmU3giNF3CSbkVSQmLpHQ"
+            },
+            {
+              "artistName": "Emilee",
+              "artistId": "4ArPQ1Opcksbbf3CPwEjWE"
+            }
+          ],
+          "plays": "1068144855",
+          "trackDuration": 176546,
+          "albumName": "ily (i love you baby) (feat. Emilee)",
+          "albumId": "4MHHajvRTUHItDsvfdIC8B",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273b3de5764cc02f94714487c86",
+          "contentRating": "NONE",
+          "addedAt": "2021-06-05T00:02:44+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Sweetly",
+          "trackId": "32TW5KGM1UqTzkTOkcNITt",
+          "artists": [
+            {
+              "artistName": "Lord Kael",
+              "artistId": "0RLNRNxmEHZN7EStjBf0O4"
+            }
+          ],
+          "plays": "31984830",
+          "trackDuration": 135515,
+          "albumName": "Sweetly",
+          "albumId": "103uB4hb8Yc0bEdl35lUDa",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273fa24c36f98042c323d099877",
+          "contentRating": "NONE",
+          "addedAt": "2021-08-04T05:39:25+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Tongue",
+          "trackId": "78iVPIyFgGjQ0g0TmDWYtQ",
+          "artists": [
+            {
+              "artistName": "Maribou State",
+              "artistId": "7zrkALJ9ayRjzysp4QYoEg"
+            },
+            {
+              "artistName": "Holly Walker",
+              "artistId": "5vssQp6TyMHsx4mihKVAsC"
+            }
+          ],
+          "plays": "82459280",
+          "trackDuration": 304825,
+          "albumName": "Tongue EP",
+          "albumId": "4dKPxlyACwA9N3BBYTDjm2",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b27395aedad3eb49f65d6f7c1a86",
+          "contentRating": "NONE",
+          "addedAt": "2021-10-21T00:01:36+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Sex n' Drugs",
+          "trackId": "0G2wimhVoDYXbQ6csDxtSf",
+          "artists": [
+            {
+              "artistName": "Abhi The Nomad",
+              "artistId": "1gUi2utSbJLNPddYENJAp4"
+            },
+            {
+              "artistName": "Harrison Sands",
+              "artistId": "5lwE4ASworJdeRDXu5g9en"
+            },
+            {
+              "artistName": "Copper King",
+              "artistId": "0UcRuQorbZibK50cFtsJh3"
+            }
+          ],
+          "plays": "71444812",
+          "trackDuration": 217777,
+          "albumName": "Marbled",
+          "albumId": "4UdZHRBCIoe7XCPr8KdVg7",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b273667f26bb699ad24801321608",
+          "contentRating": "NONE",
+          "addedAt": "2021-11-01T00:01:34+00:00",
+          "trackNumber": 4
+        },
+        {
+          "trackName": "TROJAN HORSE",
+          "trackId": "1cQCdozRmaErXowT6iDQML",
+          "artists": [
+            {
+              "artistName": "SEBASTIAN PAUL",
+              "artistId": "1tQu5TjcAK68fx8qrc8ZgF"
+            }
+          ],
+          "plays": "75178663",
+          "trackDuration": 266393,
+          "albumName": "TROJAN HORSE",
+          "albumId": "4ywqwcXHknbizHO6MkJCQB",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b27309a8b1003c549b4a53f60852",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2021-11-01T00:09:15+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "The High Way",
+          "trackId": "3a1jDMHy0W7598Mu3jkLBh",
+          "artists": [
+            {
+              "artistName": "Fliptrix",
+              "artistId": "5Dm525w7dCfRzudUS4EeQE"
+            }
+          ],
+          "plays": "8994116",
+          "trackDuration": 233760,
+          "albumName": "The Road to the Interdimensional Piff Highway",
+          "albumId": "5AlWZPGffPr5IJZFBF0pzW",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2731f2380c7f7fa72152677c789",
+          "contentRating": "EXPLICIT",
+          "addedAt": "2021-11-07T19:16:18+00:00",
+          "trackNumber": 14
+        },
+        {
+          "trackName": "Morning Glory",
+          "trackId": "2F9aUvwtYgrMbHm2TlVYzd",
+          "artists": [
+            {
+              "artistName": "Poldoore",
+              "artistId": "3ph6BKBPsjP7Vhtd1IXhkc"
+            }
+          ],
+          "plays": "4910918",
+          "trackDuration": 218253,
+          "albumName": "The Day Off",
+          "albumId": "5BO2nIoEBzNLx0GJvADHRk",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b2732c7f4d057c6c69cbef95c313",
+          "contentRating": "NONE",
+          "addedAt": "2021-11-07T19:19:27+00:00",
+          "trackNumber": 1
+        },
+        {
+          "trackName": "Sugar (feat. Francesco Yates)",
+          "trackId": "5tf1VVWniHgryyumXyJM7w",
+          "artists": [
+            {
+              "artistName": "Robin Schulz",
+              "artistId": "3t5xRXzsuZmMDkQzgOX35S"
+            },
+            {
+              "artistName": "Francesco Yates",
+              "artistId": "5X1JzPIIonP3u9lA580pPT"
+            }
+          ],
+          "plays": "1574228679",
+          "trackDuration": 219043,
+          "albumName": "Sugar",
+          "albumId": "5XyJzEROSmup2TcWmVjTIt",
+          "albumArt": "https://i.scdn.co/image/ab67616d0000b27370dd2ebd8a41b3cab44f0c7b",
+          "contentRating": "NONE",
+          "addedAt": "2021-11-21T18:09:37+00:00",
+          "trackNumber": 2
+        }
+      ]
+    }
+  ]

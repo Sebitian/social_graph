@@ -15,14 +15,26 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import type { Circle, GraphNode, ScrapeResult } from "@/lib/types";
+import type {
+  SpotifyGraphNode,
+  SpotifyTasteResult,
+} from "@/lib/spotifyTypes";
 import PersonPanel from "@/components/PersonPanel";
 import GraphVisualizer from "@/components/GraphVisualizer";
+import SpotifyGraphVisualizer from "@/components/SpotifyGraphVisualizer";
+import SpotifyPlaylistPanel from "@/components/SpotifyPlaylistPanel";
+import SpotifyNetworkStats from "@/components/SpotifyNetworkStats";
 import EngagementGrid from "@/components/EngagementGrid";
 import GraphNodeSearch from "@/components/GraphNodeSearch";
 import { GraphHowToRead } from "@/components/GraphHowToRead";
 import NetworkStats from "@/components/NetworkStats";
 import ShareCard from "@/components/ShareCard";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import {
+  InstagramIcon,
+  LinkedInIcon,
+  SpotifyIcon,
+} from "@/components/PlatformIcons";
 import { SELF_COLOR, PROXIMITY_RINGS, UNCLUSTERED_COLOR } from "@/lib/graphUtils";
 import type { ScrapeBudget } from "@/lib/scrapeBudget";
 import {
@@ -31,6 +43,16 @@ import {
   budgetCacheSuffix,
   SCRAPE_BUDGET_LIMITS,
 } from "@/lib/scrapeBudget";
+
+type GraphPlatform = "linkedin" | "instagram" | "spotify";
+type GraphView = "map" | "grid";
+type SocialPlatform = "linkedin" | "instagram";
+
+const PLATFORM_LABEL: Record<GraphPlatform, string> = {
+  linkedin: "LinkedIn",
+  instagram: "Instagram",
+  spotify: "Spotify",
+};
 
 const SEARCHED_HANDLES_KEY = "netgraph.searchedHandles";
 const SCRAPE_RESULT_CACHE_PREFIX = "netgraph.scrapeResult.v2";
@@ -107,19 +129,31 @@ interface Props {
   initialBudget?: Partial<ScrapeBudget>;
   /** Server-loaded snapshot — skips the client scrape fetch when present. */
   initialData?: ScrapeResult | null;
+  /** Extra platform snapshots for the LinkedIn / Instagram switcher. */
+  initialPlatformData?: Partial<Record<SocialPlatform, ScrapeResult>>;
+  /** Spotify taste snapshot (profile → playlists → genres). */
+  spotifyData?: SpotifyTasteResult | null;
   /** Load a frozen snapshot from data/snapshots — never calls Apify. */
   pinned?: boolean;
+}
+
+function platformOfResult(result: ScrapeResult): SocialPlatform {
+  return result.posts?.length ? "linkedin" : "instagram";
 }
 
 export default function GraphResult({
   handle,
   initialBudget = {},
   initialData = null,
+  initialPlatformData = {},
+  spotifyData = null,
   pinned = false,
 }: Props) {
   const [data, setData] = useState<ScrapeResult | null>(initialData);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<GraphNode | null>(null);
+  const [spotifySelected, setSpotifySelected] =
+    useState<SpotifyGraphNode | null>(null);
   const [confirmationState, setConfirmationState] = useState<
     "checking" | "required" | "confirmed"
   >(pinned ? "confirmed" : "checking");
@@ -127,24 +161,54 @@ export default function GraphResult({
   const [searchedCount, setSearchedCount] = useState(0);
   const [pinStatus, setPinStatus] = useState<string | null>(null);
   const [pinning, setPinning] = useState(false);
-  const [view, setView] = useState<"map" | "grid">("map");
+  const [view, setView] = useState<GraphView>("map");
+  const [platform, setPlatform] = useState<GraphPlatform>(() => {
+    if (initialPlatformData.linkedin || initialData?.posts?.length) {
+      return "linkedin";
+    }
+    if (initialPlatformData.instagram || initialData) return "instagram";
+    if (spotifyData) return "spotify";
+    return "linkedin";
+  });
   const graphWrapRef = useRef<HTMLDivElement>(null);
   const requestedBudget = useMemo(
     () => estimateScrapeBudget(initialBudget),
     [initialBudget],
   );
 
+  const platformResults = useMemo(() => {
+    const map: Partial<Record<SocialPlatform, ScrapeResult>> = {
+      ...initialPlatformData,
+    };
+    if (data) {
+      const key = platformOfResult(data);
+      map[key] ??= data;
+    }
+    return map;
+  }, [data, initialPlatformData]);
+
+  const activeData =
+    platform === "spotify" ? null : (platformResults[platform] ?? null);
+  const hasSpotify = Boolean(spotifyData);
+  const platformHasData =
+    platform === "spotify" ? hasSpotify : Boolean(activeData);
+  const showSocialViews =
+    platformHasData && (platform === "linkedin" || platform === "instagram");
+  const showGridToggle = Boolean(
+    showSocialViews && activeData?.posts && activeData.posts.length > 0,
+  );
+
   const circleById = useMemo(() => {
     const m = new Map<number, Circle>();
-    for (const c of data?.graph.circles ?? []) m.set(c.id, c);
+    for (const c of activeData?.graph.circles ?? []) m.set(c.id, c);
     return m;
-  }, [data]);
+  }, [activeData]);
 
   const nodeByUsername = useMemo(() => {
     const m = new Map<string, GraphNode>();
     const pool = [
-      ...(data?.engagers ?? []),
-      ...(data?.graph.nodes ?? []),
+      ...(activeData?.engagers ?? []),
+      ...(activeData?.graph.nodes ?? []),
     ];
     for (const node of pool) {
       if (node.group !== "member") continue;
@@ -152,12 +216,14 @@ export default function GraphResult({
       m.set(node.label.toLowerCase(), node);
     }
     return m;
-  }, [data]);
+  }, [activeData]);
 
   const gridNodes = useMemo(() => {
-    if (data?.engagers && data.engagers.length > 0) return data.engagers;
-    return data?.graph.nodes ?? [];
-  }, [data]);
+    if (activeData?.engagers && activeData.engagers.length > 0) {
+      return activeData.engagers;
+    }
+    return activeData?.graph.nodes ?? [];
+  }, [activeData]);
 
   const selectMemberByUsername = useCallback(
     (username: string) => {
@@ -168,11 +234,9 @@ export default function GraphResult({
     [nodeByUsername],
   );
 
-  const hasPostGrid = Boolean(data?.posts?.length);
-
   useEffect(() => {
-    if (!hasPostGrid && view === "grid") setView("map");
-  }, [hasPostGrid, view]);
+    if (!showGridToggle && view === "grid") setView("map");
+  }, [showGridToggle, view]);
 
   useEffect(() => {
     if (pinned) return;
@@ -404,13 +468,29 @@ export default function GraphResult({
     );
   }
 
-  if (!data) {
+  if (!data && Object.keys(platformResults).length === 0) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <LoadingSpinner handle={handle} />
       </div>
     );
   }
+
+  const displayData = activeData ?? data;
+  const showPinnedBadge =
+    Boolean(displayData?.pinned) ||
+    (platform === "spotify" && Boolean(spotifyData?.pinned));
+  const showDemoBadge =
+    Boolean(displayData?.demo) ||
+    (platform === "spotify" && Boolean(spotifyData?.demo));
+  const showCachedBadge =
+    (Boolean(displayData?.cached) &&
+      !displayData?.demo &&
+      !displayData?.pinned) ||
+    (platform === "spotify" &&
+      Boolean(spotifyData?.cached) &&
+      !spotifyData?.demo &&
+      !spotifyData?.pinned);
 
   return (
     <main className="relative min-h-screen bg-background bg-grid">
@@ -425,19 +505,19 @@ export default function GraphResult({
           <span className="hidden sm:inline">New search</span>
         </Link>
         <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5">
-          {data.pinned && (
+          {showPinnedBadge && (
             <span className="flex items-center gap-1.5 rounded-full border border-ig-blue/30 bg-ig-blue/10 px-2.5 py-1.5 text-[11px] text-ig-blue backdrop-blur sm:px-3 sm:text-xs">
               <Pin className="h-3.5 w-3.5" />
               <span className="sm:hidden">Pinned</span>
               <span className="hidden sm:inline">Pinned snapshot</span>
             </span>
           )}
-          {data.demo && (
+          {showDemoBadge && (
             <span className="flex items-center gap-1.5 rounded-full border border-ig-orange/30 bg-ig-orange/10 px-2.5 py-1.5 text-[11px] text-ig-orange backdrop-blur sm:px-3 sm:text-xs">
               <FlaskConical className="h-3.5 w-3.5" /> Demo
             </span>
           )}
-          {data.cached && !data.demo && !data.pinned && (
+          {showCachedBadge && (
             <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] text-white/50 backdrop-blur sm:px-3 sm:text-xs">
               Cached
             </span>
@@ -446,7 +526,7 @@ export default function GraphResult({
       </header>
 
       <div className="mx-auto flex max-w-7xl flex-col gap-2.5 px-2.5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[calc(3.25rem+env(safe-area-inset-top))] sm:gap-4 sm:px-4 sm:pt-20">
-        <GraphHowToRead />
+        {platform !== "spotify" && <GraphHowToRead />}
 
         <div className="grid min-h-0 grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-[1fr_340px]">
         {/* Graph + top engagers */}
@@ -459,11 +539,68 @@ export default function GraphResult({
             transition={{ duration: 0.6 }}
             className="relative flex h-full min-h-[48dvh] flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/20 sm:min-h-[480px] sm:rounded-3xl lg:min-h-[560px]"
           >
-            {Boolean(data.posts?.length) && (
-              <div className="flex shrink-0 items-center justify-between gap-2 border-b border-white/10 px-3 py-2">
+            <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-white/10 px-3 py-2">
+              <div className="flex min-w-0 flex-wrap items-center gap-2">
                 <div className="text-[11px] font-semibold uppercase tracking-wide text-white/35">
-                  View
+                  Platform
                 </div>
+                <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
+                  {(
+                    [
+                      {
+                        id: "linkedin" as const,
+                        label: "LinkedIn",
+                        Icon: LinkedInIcon,
+                      },
+                      {
+                        id: "instagram" as const,
+                        label: "Instagram",
+                        Icon: InstagramIcon,
+                      },
+                      {
+                        id: "spotify" as const,
+                        label: "Spotify",
+                        Icon: SpotifyIcon,
+                      },
+                    ] as const
+                  ).map(({ id, label, Icon }) => {
+                    const available =
+                      id === "spotify"
+                        ? hasSpotify
+                        : Boolean(platformResults[id]);
+                    const active = platform === id;
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        title={
+                          available
+                            ? label
+                            : `${label} snapshot not loaded yet`
+                        }
+                        onClick={() => {
+                          setPlatform(id);
+                          setSelected(null);
+                          setSpotifySelected(null);
+                          setView("map");
+                        }}
+                        className={`inline-flex min-h-[40px] items-center gap-1.5 rounded-md px-2.5 py-2 text-xs transition sm:min-h-0 sm:px-2 sm:py-1 sm:text-[11px] ${
+                          active
+                            ? "bg-white/15 text-white"
+                            : available
+                              ? "text-white/55 hover:bg-white/10 hover:text-white/80"
+                              : "text-white/30 hover:bg-white/5 hover:text-white/45"
+                        }`}
+                      >
+                        <Icon className="h-3.5 w-3.5 shrink-0" />
+                        <span className="hidden sm:inline">{label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {showSocialViews && (
                 <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
                   <button
                     type="button"
@@ -477,26 +614,76 @@ export default function GraphResult({
                     <Network className="h-3.5 w-3.5" />
                     Map
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => setView("grid")}
-                    className={`inline-flex min-h-[40px] items-center gap-1.5 rounded-md px-3 py-2 text-xs transition sm:min-h-0 sm:px-2.5 sm:py-1 sm:text-[11px] ${
-                      view === "grid"
-                        ? "bg-white/15 text-white"
-                        : "text-white/45 hover:bg-white/10 hover:text-white/70"
-                    }`}
-                  >
-                    <Grid3X3 className="h-3.5 w-3.5" />
-                    Grid
-                  </button>
+                  {showGridToggle && (
+                    <button
+                      type="button"
+                      onClick={() => setView("grid")}
+                      className={`inline-flex min-h-[40px] items-center gap-1.5 rounded-md px-3 py-2 text-xs transition sm:min-h-0 sm:px-2.5 sm:py-1 sm:text-[11px] ${
+                        view === "grid"
+                          ? "bg-white/15 text-white"
+                          : "text-white/45 hover:bg-white/10 hover:text-white/70"
+                      }`}
+                    >
+                      <Grid3X3 className="h-3.5 w-3.5" />
+                      Grid
+                    </button>
+                  )}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
 
             <div className="relative min-h-0 flex-1">
-              {view === "grid" && data.posts && data.posts.length > 0 ? (
+              {platform === "spotify" ? (
+                spotifyData ? (
+                  <>
+                    <SpotifyGraphVisualizer
+                      key={`spotify-${spotifyData.profile.userId}`}
+                      data={spotifyData.graph}
+                      className="absolute inset-0"
+                      selectedId={spotifySelected?.id ?? null}
+                      onSelect={setSpotifySelected}
+                    />
+                    <div className="pointer-events-none absolute bottom-4 right-4 hidden max-w-[200px] flex-col gap-1.5 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur sm:flex">
+                      <div className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
+                        Flow
+                      </div>
+                      <span className="text-[10px] leading-relaxed text-white/50">
+                        You → playlists → genres ← playlists ← friend
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
+                    <SpotifyIcon className="h-8 w-8 text-[#1DB954]" />
+                    <div className="text-sm font-medium text-white/80">
+                      No Spotify snapshot yet
+                    </div>
+                    <p className="max-w-sm text-xs leading-relaxed text-white/40">
+                      Import a Spotify profile + playlist scrape to unlock taste
+                      views here.
+                    </p>
+                  </div>
+                )
+              ) : !activeData ? (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
+                  {platform === "linkedin" ? (
+                    <LinkedInIcon className="h-8 w-8 text-[#0A66C2]" />
+                  ) : (
+                    <InstagramIcon className="h-8 w-8 text-white/70" />
+                  )}
+                  <div className="text-sm font-medium text-white/80">
+                    No {PLATFORM_LABEL[platform]} snapshot yet
+                  </div>
+                  <p className="max-w-sm text-xs leading-relaxed text-white/40">
+                    Switch to a platform tab that has a loaded snapshot to explore
+                    the graph.
+                  </p>
+                </div>
+              ) : view === "grid" &&
+                activeData.posts &&
+                activeData.posts.length > 0 ? (
                 <EngagementGrid
-                  posts={data.posts}
+                  posts={activeData.posts}
                   nodes={gridNodes}
                   selectedId={selected?.id ?? null}
                   onSelect={setSelected}
@@ -505,17 +692,20 @@ export default function GraphResult({
               ) : (
                 <>
                   <GraphVisualizer
-                    data={data.graph}
+                    key={`graph-${platform}-${activeData.profile.username}`}
+                    data={activeData.graph}
                     className="absolute inset-0"
                     selectedId={selected?.id ?? null}
                     onSelect={setSelected}
+                    labelStyle={platform === "instagram" ? "handles" : "auto"}
                   />
 
                   <div className="absolute left-2 right-2 top-2 z-20 sm:left-4 sm:right-auto sm:top-3 sm:w-[280px]">
                     <GraphNodeSearch
-                      nodes={data.graph.nodes}
+                      nodes={activeData.graph.nodes}
                       selectedId={selected?.id ?? null}
                       onSelect={setSelected}
+                      platform={platform}
                     />
                   </div>
 
@@ -528,7 +718,7 @@ export default function GraphResult({
                       />
                       You
                     </span>
-                    {data.graph.circles.map((cluster) => (
+                    {activeData.graph.circles.map((cluster) => (
                       <span
                         key={cluster.id}
                         className="flex shrink-0 items-center gap-1 text-[10px] text-white/55"
@@ -563,7 +753,7 @@ export default function GraphResult({
                       />
                       You
                     </span>
-                    {data.graph.circles.map((cluster) => (
+                    {activeData.graph.circles.map((cluster) => (
                       <span
                         key={cluster.id}
                         className="flex items-center gap-1.5 text-xs text-white/55"
@@ -591,57 +781,145 @@ export default function GraphResult({
             </div>
           </motion.div>
 
-          <PersonPanel
-            node={selected}
-            proximityRing={
-              selected && selected.circle >= 0
-                ? PROXIMITY_RINGS[selected.circle]
-                : undefined
-            }
-            friendCluster={
-              selected && selected.clusterId != null && selected.clusterId >= 0
-                ? circleById.get(selected.clusterId)
-                : undefined
-            }
-            onClose={() => setSelected(null)}
-          />
+          {platform === "spotify" && spotifyData ? (
+            <SpotifyPlaylistPanel
+              node={spotifySelected}
+              playlists={spotifyData.playlists}
+              genres={spotifyData.genres}
+              friends={spotifyData.friends}
+              onClose={() => setSpotifySelected(null)}
+              onSelectPlaylist={(playlistId) => {
+                const node = spotifyData.graph.nodes.find(
+                  (n) => n.kind === "playlist" && n.refId === playlistId,
+                );
+                if (node) setSpotifySelected(node);
+              }}
+            />
+          ) : (
+            <PersonPanel
+              node={selected}
+              proximityRing={
+                selected && selected.circle >= 0
+                  ? PROXIMITY_RINGS[selected.circle]
+                  : undefined
+              }
+              friendCluster={
+                selected && selected.clusterId != null && selected.clusterId >= 0
+                  ? circleById.get(selected.clusterId)
+                  : undefined
+              }
+              onClose={() => setSelected(null)}
+              platform={platform === "spotify" ? null : platform}
+            />
+          )}
         </div>
 
-        <NetworkStats
-          stats={data.stats}
-          onSelectUsername={selectMemberByUsername}
-          selectedUsername={selected?.id ?? selected?.label ?? null}
-        />
+        {platform === "spotify" && spotifyData ? (
+          <SpotifyNetworkStats
+            stats={spotifyData.stats}
+            topGenres={spotifyData.genres.map((g) => ({
+              label: g.label,
+              weight: g.weight,
+              color: g.color,
+            }))}
+            onSelectGenre={(label) => {
+              const node = spotifyData.graph.nodes.find(
+                (n) => n.kind === "genre" && n.label === label,
+              );
+              if (node) setSpotifySelected(node);
+            }}
+          />
+        ) : activeData ? (
+          <NetworkStats
+            stats={activeData.stats}
+            onSelectUsername={selectMemberByUsername}
+            selectedUsername={selected?.id ?? selected?.label ?? null}
+            platform={platform === "spotify" ? null : platform}
+          />
+        ) : null}
         </div>
 
         {/* Sidebar */}
         <aside className="flex flex-col gap-3 sm:gap-4">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
-            <div className="flex items-center gap-2">
-              <h1 className="truncate text-lg font-bold text-white sm:text-xl">
-                @{data.profile.username}
-              </h1>
-              {data.profile.isVerified && (
-                <BadgeCheck className="h-5 w-5 shrink-0 text-ig-blue" />
+          {platform === "spotify" && spotifyData ? (
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
+              <div className="flex items-center gap-3">
+                {spotifyData.profile.profileImage ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={spotifyData.profile.profileImage}
+                    alt=""
+                    className="h-12 w-12 rounded-full object-cover ring-1 ring-white/15"
+                  />
+                ) : (
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1DB954]/20 text-lg font-bold text-[#1DB954]">
+                    {spotifyData.profile.displayName.charAt(0)}
+                  </div>
+                )}
+                <div className="min-w-0">
+                  <h1 className="truncate text-lg font-bold text-white sm:text-xl">
+                    {spotifyData.profile.displayName}
+                  </h1>
+                  <div className="text-sm text-white/50">Spotify taste map</div>
+                </div>
+              </div>
+              <div className="mt-3 text-xs text-white/35">
+                {spotifyData.stats.friendCount} friend
+                {spotifyData.stats.friendCount === 1 ? "" : "s"} ·{" "}
+                {spotifyData.stats.playlistCount} playlists ·{" "}
+                {spotifyData.stats.trackCount} tracks ·{" "}
+                {spotifyData.stats.genreCount} genres
+              </div>
+              {spotifyData.profile.sourceUrl && (
+                <a
+                  href={spotifyData.profile.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-block text-xs text-[#1DB954] hover:underline"
+                >
+                  Open profile
+                </a>
               )}
             </div>
-            {data.profile.fullName && (
-              <div className="text-sm text-white/60">{data.profile.fullName}</div>
-            )}
-            {data.profile.biography && (
-              <p className="mt-2 line-clamp-3 text-sm text-white/40 sm:line-clamp-none">
-                {data.profile.biography}
-              </p>
-            )}
-            <div className="mt-3 text-xs text-white/30">
-              {data.engagers && data.engagers.length > 0
-                ? `${data.engagers.length} unique engagers · map shows top ${data.stats.shown}`
-                : `Top ${data.stats.shown} connections`}
+          ) : activeData ? (
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
+              <div className="flex items-center gap-2">
+                <h1 className="truncate text-lg font-bold text-white sm:text-xl">
+                  @{activeData.profile.username}
+                </h1>
+                {activeData.profile.isVerified && (
+                  <BadgeCheck className="h-5 w-5 shrink-0 text-ig-blue" />
+                )}
+              </div>
+              {activeData.profile.fullName && (
+                <div className="text-sm text-white/60">
+                  {activeData.profile.fullName}
+                </div>
+              )}
+              {activeData.profile.biography && (
+                <p className="mt-2 line-clamp-3 text-sm text-white/40 sm:line-clamp-none">
+                  {activeData.profile.biography}
+                </p>
+              )}
+              <div className="mt-3 text-xs text-white/30">
+                {activeData.engagers && activeData.engagers.length > 0
+                  ? `${activeData.engagers.length} unique engagers · map shows top ${activeData.stats.shown}`
+                  : `Top ${activeData.stats.shown} connections`}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
+              <div className="text-sm font-semibold text-white/70">
+                {PLATFORM_LABEL[platform]}
+              </div>
+              <p className="mt-2 text-xs text-white/40">
+                No snapshot loaded for this platform yet.
+              </p>
+            </div>
+          )}
 
           {/* Hide scrape budget on pinned demos (noise on phone); keep on live runs */}
-          {!data.pinned && (
+          {data && !data.pinned && (
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
               <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-white/80">
                 <ShieldAlert className="h-4 w-4 text-ig-orange" /> Scrape budget
@@ -684,7 +962,7 @@ export default function GraphResult({
             </div>
           )}
 
-          {!pinned && !data.demo && (
+          {data && !pinned && !data.demo && (
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
               <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-white/80">
                 <Pin className="h-4 w-4 text-ig-blue" /> Save this run
@@ -730,14 +1008,27 @@ export default function GraphResult({
             </div>
           )}
 
-          {pinned && data.scrapedAt > 0 && (
+          {pinned &&
+            ((platform === "spotify" && spotifyData && spotifyData.scrapedAt > 0) ||
+              (displayData && displayData.scrapedAt > 0)) && (
             <p className="rounded-2xl border border-ig-blue/20 bg-ig-blue/5 px-4 py-3 text-xs text-white/55">
               Frozen snapshot from{" "}
-              {new Date(data.scrapedAt).toLocaleString()}. No live scrape runs on this page.
+              {new Date(
+                platform === "spotify" && spotifyData
+                  ? spotifyData.scrapedAt
+                  : displayData!.scrapedAt,
+              ).toLocaleString()}
+              . No live scrape runs on this page.
             </p>
           )}
 
-          <ShareCard handle={handle} stats={data.stats} onDownload={downloadPng} />
+          {activeData && platform !== "spotify" && (
+            <ShareCard
+              handle={activeData.profile.username}
+              stats={activeData.stats}
+              onDownload={downloadPng}
+            />
+          )}
         </aside>
         </div>
       </div>

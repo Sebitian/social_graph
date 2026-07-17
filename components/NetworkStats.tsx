@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { NetworkPersonStat, NetworkStats as Stats } from "@/lib/types";
 import { compactNumber } from "@/lib/graphUtils";
+import { resolveProfilePicUrl } from "@/lib/avatarUrl";
 import { parsePosition } from "@/lib/position";
 import {
   formatReactionBreakdown,
@@ -24,6 +25,8 @@ interface Props {
   stats: Stats;
   onSelectUsername?: (username: string) => void;
   selectedUsername?: string | null;
+  /** When "instagram", avatars load via the live proxy (scraped CDN URLs expire). */
+  platform?: "instagram" | "linkedin" | "spotify" | null;
 }
 
 type PeopleView = "all-time" | "present" | "reactions";
@@ -117,21 +120,32 @@ function engagementLabel(person: NetworkPersonStat, view: PeopleView): string {
   return parts.join(" · ");
 }
 
-function PersonAvatar({ person }: { person: NetworkPersonStat }) {
+function PersonAvatar({
+  person,
+  platform,
+}: {
+  person: NetworkPersonStat;
+  platform?: Props["platform"];
+}) {
   const name = displayName(person);
-  if (person.profilePicUrl) {
+  const [failed, setFailed] = useState(false);
+  const src = resolveProfilePicUrl(person.username, person.profilePicUrl, platform);
+
+  if (src && !failed) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={person.profilePicUrl}
+        src={src}
         alt=""
+        referrerPolicy="no-referrer"
+        onError={() => setFailed(true)}
         className="h-6 w-6 shrink-0 rounded-full object-cover ring-1 ring-white/15"
       />
     );
   }
   return (
     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-semibold text-white/70 ring-1 ring-white/10">
-      {name.charAt(0).toUpperCase()}
+      {(person.username || name).charAt(0).toUpperCase()}
     </span>
   );
 }
@@ -153,6 +167,7 @@ export default function NetworkStats({
   stats,
   onSelectUsername,
   selectedUsername,
+  platform = null,
 }: Props) {
   const [view, setView] = useState<PeopleView>("all-time");
   const [query, setQuery] = useState("");
@@ -301,7 +316,7 @@ export default function NetworkStats({
                       <span className="mt-0.5 w-5 shrink-0 tabular-nums text-white/30 sm:mt-0">
                         {i + 1}
                       </span>
-                      <PersonAvatar person={u} />
+                      <PersonAvatar person={u} platform={platform} />
                       <span className="min-w-0 flex-1">
                         <span className="flex min-w-0 flex-col gap-0.5 sm:flex-row sm:items-center sm:gap-2">
                           <span className="truncate text-white/85 sm:max-w-[45%] sm:shrink-0">

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Search, X } from "lucide-react";
 import type { GraphNode } from "@/lib/types";
+import { resolveProfilePicUrl } from "@/lib/avatarUrl";
 import { parsePosition } from "@/lib/position";
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
   selectedId?: string | null;
   onSelect: (node: GraphNode) => void;
   className?: string;
+  platform?: "instagram" | "linkedin" | "spotify" | null;
 }
 
 function normalizeSearch(value: string): string {
@@ -36,6 +38,7 @@ export default function GraphNodeSearch({
   selectedId,
   onSelect,
   className = "",
+  platform = null,
 }: Props) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -105,18 +108,26 @@ export default function GraphNodeSearch({
                       isSelected ? "bg-white/15" : "hover:bg-white/10"
                     }`}
                   >
-                    {node.profilePicUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={node.profilePicUrl}
-                        alt=""
-                        className="h-7 w-7 shrink-0 rounded-full object-cover ring-1 ring-white/15"
-                      />
-                    ) : (
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-semibold text-white/70">
-                        {(node.fullName || node.label).charAt(0).toUpperCase()}
-                      </span>
-                    )}
+                    {(() => {
+                      const src = resolveProfilePicUrl(
+                        node.label,
+                        node.profilePicUrl,
+                        platform,
+                      );
+                      return src ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={src}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          className="h-7 w-7 shrink-0 rounded-full object-cover ring-1 ring-white/15"
+                        />
+                      ) : (
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-semibold text-white/70">
+                          {(node.fullName || node.label).charAt(0).toUpperCase()}
+                        </span>
+                      );
+                    })()}
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-xs font-medium text-white">
                         {node.fullName || node.label}

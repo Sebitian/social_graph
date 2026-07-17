@@ -88,6 +88,9 @@ interface ForceGraphInstance {
   centerAt: (x?: number, y?: number, ms?: number) => void;
   zoom: (k?: number, ms?: number) => void;
   d3Force: (name: string, force?: unknown) => unknown;
+  /** Redraw canvas after async assets (avatars) load. */
+  refresh?: () => void;
+  d3ReheatSimulation?: () => void;
 }
 
 const ForceGraph2D = dynamic(
@@ -323,6 +326,11 @@ interface Props {
   interactive?: boolean;
   selectedId?: string | null;
   onSelect?: (node: GraphNode | null) => void;
+  /**
+   * auto — label self + top engagers (hover/select reveals more)
+   * handles — always show @handle under every node (Instagram)
+   */
+  labelStyle?: "auto" | "handles";
 }
 
 export default function GraphVisualizer({
@@ -331,10 +339,13 @@ export default function GraphVisualizer({
   interactive = true,
   selectedId = null,
   onSelect,
+  labelStyle = "auto",
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const fgRef = useRef<ForceGraphInstance | null>(null);
   const avatarCacheRef = useRef(new Map<string, AvatarCacheEntry>());
+  /** Best avatar URL per node id (primary CDN or Unavatar fallback). */
+  const avatarUrlByNodeRef = useRef(new Map<string, string>());
   const appearStartRef = useRef<number>(0);
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [hovered, setHovered] = useState<string | null>(null);
@@ -352,25 +363,118 @@ export default function GraphVisualizer({
     return () => ro.disconnect();
   }, []);
 
-  useEffect(() => {
-    for (const node of data.nodes) {
-      const url = node.profilePicUrl;
-      if (!url || avatarCacheRef.current.has(url)) continue;
+  const prevLabelStyleRef = useRef(labelStyle);
 
-      const image = new Image();
-      const entry: AvatarCacheEntry = { image, state: "loading" };
-      avatarCacheRef.current.set(url, entry);
-      image.onload = () => {
-        entry.state = "loaded";
-        setAvatarRevision((revision) => revision + 1);
-      };
-      image.onerror = () => {
-        entry.state = "error";
-        setAvatarRevision((revision) => revision + 1);
-      };
-      image.src = url;
+  useEffect(() => {
+    let cancelled = false;
+    const queue: Array<() => void> = [];
+    let active = 0;
+    const MAX_CONCURRENT = 4;
+
+    // When entering Instagram handle mode, drop expired CDN cache entries.
+    if (
+      labelStyle === "handles" &&
+      prevLabelStyleRef.current !== "handles"
+    ) {
+      avatarCacheRef.current.clear();
+      avatarUrlByNodeRef.current.clear();
     }
-  }, [data.nodes]);
+    prevLabelStyleRef.current = labelStyle;
+
+    const pump = () => {
+      while (!cancelled && active < MAX_CONCURRENT && queue.length > 0) {
+        const next = queue.shift();
+        if (next) next();
+      }
+    };
+
+    const bump = () => {
+      if (cancelled) return;
+      setAvatarRevision((revision) => revision + 1);
+    };
+
+    for (const node of data.nodes) {
+      const handle = node.label.replace(/^@/, "").trim().toLowerCase();
+      const scraped = node.profilePicUrl?.trim() || undefined;
+      // Instagram CDN links in old scrapes expire; resolve live avatars via our proxy.
+      const liveAvatar =
+        labelStyle === "handles" && handle
+          ? `/api/avatar/instagram/${encodeURIComponent(handle)}`
+          : undefined;
+      const preferred = liveAvatar ?? scraped;
+      if (!preferred) continue;
+
+      avatarUrlByNodeRef.current.set(node.id, preferred);
+
+      const ensureLoad = (url: string, onFail?: () => void) => {
+        const existing = avatarCacheRef.current.get(url);
+        if (existing) {
+          if (existing.state === "loaded") {
+            avatarUrlByNodeRef.current.set(node.id, url);
+            bump();
+          } else if (existing.state === "error" && onFail) {
+            onFail();
+          }
+          // If still loading, the in-flight request will bump when done.
+          return;
+        }
+
+        const start = () => {
+          if (cancelled) return;
+          active += 1;
+          const image = new Image();
+          image.decoding = "async";
+          image.referrerPolicy = "no-referrer";
+          const entry: AvatarCacheEntry = { image, state: "loading" };
+          avatarCacheRef.current.set(url, entry);
+          const finish = () => {
+            active -= 1;
+            pump();
+          };
+          image.onload = () => {
+            entry.state = "loaded";
+            avatarUrlByNodeRef.current.set(node.id, url);
+            // Always bump — Strict Mode may have cancelled the effect that started
+            // this request, but the image is still valid for the remounted effect.
+            setAvatarRevision((revision) => revision + 1);
+            finish();
+          };
+          image.onerror = () => {
+            entry.state = "error";
+            finish();
+            if (onFail) onFail();
+            else setAvatarRevision((revision) => revision + 1);
+          };
+          image.src = url;
+        };
+
+        queue.push(start);
+        pump();
+      };
+
+      ensureLoad(preferred, () => {
+        if (cancelled) return;
+        // If the live proxy fails, try the scraped URL (may still work when fresh).
+        if (!scraped || scraped === preferred) {
+          bump();
+          return;
+        }
+        avatarUrlByNodeRef.current.set(node.id, scraped);
+        ensureLoad(scraped);
+      });
+    }
+
+    return () => {
+      cancelled = true;
+      queue.length = 0;
+    };
+  }, [data.nodes, labelStyle]);
+
+  // Force-graph stops painting after cooldown; refresh canvas when avatars arrive.
+  useEffect(() => {
+    if (avatarRevision === 0) return;
+    fgRef.current?.refresh?.();
+  }, [avatarRevision]);
 
   const members = useMemo(
     () => data.nodes.filter((n) => n.group === "member"),
@@ -471,7 +575,12 @@ export default function GraphVisualizer({
     }
 
     return { nodes, links };
-  }, [data.nodes, data.links, mapLayout]);
+  }, [data.nodes, data.links, mapLayout, avatarRevision]);
+
+  const didFitRef = useRef(false);
+  useEffect(() => {
+    didFitRef.current = false;
+  }, [data.nodes, mapLayout]);
 
   useEffect(() => {
     if (!selectedId || !fgRef.current || !mapLayout) return;
@@ -585,8 +694,9 @@ export default function GraphVisualizer({
         node.group === "self"
           ? SELF_COLOR
           : clusterColorByMember.get(node.id) ?? UNCLUSTERED_COLOR;
-      const avatar = node.profilePicUrl
-        ? avatarCacheRef.current.get(node.profilePicUrl)
+      const avatarUrl = avatarUrlByNodeRef.current.get(node.id) ?? node.profilePicUrl;
+      const avatar = avatarUrl
+        ? avatarCacheRef.current.get(avatarUrl)
         : undefined;
 
       const isSelected = node.id === selectedId;
@@ -645,16 +755,20 @@ export default function GraphVisualizer({
       }
 
       const showLabel =
+        labelStyle === "handles" ||
         node.group === "self" ||
         isHovered ||
         isSelected ||
         defaultLabelIds.has(node.id);
 
       if (showLabel) {
+        const handle = node.label.replace(/^@/, "");
         const label =
-          node.group === "self"
-            ? node.fullName || `@${node.label}`
-            : node.fullName || node.label;
+          labelStyle === "handles"
+            ? `@${handle}`
+            : node.group === "self"
+              ? node.fullName || `@${handle}`
+              : node.fullName || node.label;
         const fontSize = Math.max(3.5, 10 / scale);
         ctx.font = `${node.group === "self" ? "700" : "500"} ${fontSize}px ui-sans-serif, system-ui`;
         ctx.textAlign = "center";
@@ -665,7 +779,15 @@ export default function GraphVisualizer({
 
       ctx.restore();
     },
-    [avatarRevision, hovered, selectedId, defaultLabelIds, isDim, clusterColorByMember],
+    [
+      avatarRevision,
+      hovered,
+      selectedId,
+      defaultLabelIds,
+      isDim,
+      clusterColorByMember,
+      labelStyle,
+    ],
   );
 
   const paintPointerArea = useCallback(
@@ -761,7 +883,14 @@ export default function GraphVisualizer({
           d3AlphaDecay={1}
           minZoom={0.35}
           maxZoom={6}
-          onEngineStop={() => fgRef.current?.zoomToFit(700, 120)}
+          onEngineStop={() => {
+            if (didFitRef.current) {
+              fgRef.current?.refresh?.();
+              return;
+            }
+            didFitRef.current = true;
+            fgRef.current?.zoomToFit(700, 120);
+          }}
           onRenderFramePre={renderBackground}
           nodeCanvasObject={paintNode}
           nodePointerAreaPaint={paintPointerArea}

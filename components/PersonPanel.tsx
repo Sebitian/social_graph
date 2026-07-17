@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { BadgeCheck, Heart, MessageCircle, Search, X } from "lucide-react";
 import type { Circle, GraphNode, PostComment } from "@/lib/types";
+import { resolveProfilePicUrl } from "@/lib/avatarUrl";
 import { deriveSimpleTags, explainRingPlacement } from "@/lib/graphUtils";
 import { formatReactionBreakdown, reactionEntries } from "@/lib/reactions";
 
@@ -199,13 +200,28 @@ interface Props {
   proximityRing?: { id: number; label: string; subtitle?: string; color: string };
   friendCluster?: Circle;
   onClose: () => void;
+  platform?: "instagram" | "linkedin" | "spotify" | null;
 }
 
-export default function PersonPanel({ node, proximityRing, friendCluster, onClose }: Props) {
+export default function PersonPanel({
+  node,
+  proximityRing,
+  friendCluster,
+  onClose,
+  platform = null,
+}: Props) {
   const color = proximityRing?.color ?? friendCluster?.color ?? "#94a3b8";
   const initial = (node?.label ?? "?").charAt(0).toUpperCase();
   const history = useMemo(() => node?.history ?? [], [node?.history]);
   const [isMobile, setIsMobile] = useState(false);
+  const [avatarFailed, setAvatarFailed] = useState(false);
+  const avatarSrc = node
+    ? resolveProfilePicUrl(node.label, node.profilePicUrl, platform)
+    : undefined;
+
+  useEffect(() => {
+    setAvatarFailed(false);
+  }, [node?.id, platform]);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 639px)");
@@ -272,11 +288,13 @@ export default function PersonPanel({ node, proximityRing, friendCluster, onClos
               </button>
 
               <div className="flex items-center gap-3 pr-8">
-                {node.profilePicUrl ? (
+                {avatarSrc && !avatarFailed ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={node.profilePicUrl}
+                    src={avatarSrc}
                     alt={node.label}
+                    referrerPolicy="no-referrer"
+                    onError={() => setAvatarFailed(true)}
                     className="h-12 w-12 rounded-full object-cover ring-2"
                     style={{ boxShadow: `0 0 0 2px ${color}` }}
                   />
