@@ -41,3 +41,4 @@ next-env.d.ts
 !data/snapshots/diandra.json
 !data/snapshots/jppap.json
 !data/snapshots/sebastian-spotify.json
+!data/snapshots/nousresearch.json

@@ -1,0 +1,823 @@
+{
+  "kind": "company",
+  "scrapedAt": 1785907634382,
+  "pinned": true,
+  "company": {
+    "id": "69229985",
+    "name": "Nous Research",
+    "logoUrl": "https://media.licdn.com/dms/image/v2/D4E0BAQGybT6VqR2W6w/company-logo_400_400/company-logo_400_400/0/1725298571363/nousresearch_logo?e=1787788800&v=beta&t=19T7SQ_k9ZQGmFX_vX2LBgqidaQgutvZLMCKcR3-xdk",
+    "linkedinUrl": "https://www.linkedin.com/company/nousresearch/",
+    "employeeCount": 15,
+    "totalReported": 55
+  },
+  "employees": [
+    {
+      "id": "ACoAAB9mCIEBsKb1yYKMzyed1kDd62T2B8IvDM8",
+      "publicIdentifier": "dillon-rolnick-a29501128",
+      "fullName": "Dillon Rolnick",
+      "headline": "ceo @ nous research",
+      "title": "ceo @ nous research",
+      "location": "New York City, New York",
+      "tenure": "3 yrs 8 mos",
+      "connectionsCount": 358,
+      "followerCount": 565,
+      "linkedinUrl": "https://www.linkedin.com/in/dillon-rolnick-a29501128",
+      "education": [
+        {
+          "school": "Vanderbilt University",
+          "degree": "Bachelor’s Degree",
+          "fieldOfStudy": "Computer Science, History"
+        }
+      ],
+      "topSkills": [
+        "Java",
+        "Python",
+        "Entrepreneurship",
+        "Ruby",
+        "Microsoft Excel",
+        "SQL",
+        "Python (Programming Language)",
+        "Spanish"
+      ]
+    },
+    {
+      "id": "ACoAAABQwaIBwSR6FrgoerIN27kAL2O77n4EGXQ",
+      "publicIdentifier": "hervebizira",
+      "fullName": "Hervé Bizira",
+      "headline": "AI Product & Engineering Leader",
+      "title": "Chief Product Officer",
+      "location": "Los Angeles, California",
+      "tenure": "6 mos",
+      "connectionsCount": 1991,
+      "followerCount": 2073,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C5103AQGijRm-PRSxlQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516339878479?e=1787788800&v=beta&t=PjsqvBEsxFid3LF9qesIROaGvsQxYYp-s-5EzlGAbbc",
+      "linkedinUrl": "https://www.linkedin.com/in/hervebizira",
+      "education": [
+        {
+          "school": "University of Waterloo",
+          "degree": "Bachelor's degree",
+          "fieldOfStudy": "Computer Science"
+        }
+      ],
+      "topSkills": [
+        "OpenAI Products",
+        "Generative AI",
+        "Kubernetes",
+        "Large Language Models (LLM)",
+        "Mobile Applications",
+        "Cryptocurrency",
+        "Project Management",
+        "iOS development",
+        "Web Design",
+        "Computer Graphics",
+        "Rendering",
+        "Android Development"
+      ]
+    },
+    {
+      "id": "ACoAAB0w5j0BnzsLAAplV-FeczyXIQLzrP1jWU0",
+      "publicIdentifier": "ropar",
+      "fullName": "Rohan P.",
+      "headline": "Applied AI Researcher @ Nous Research | MBA @ UChicago Booth",
+      "title": "Applied AI Research Engineer",
+      "location": "Chicago, Illinois",
+      "tenure": "1 yr 7 mos",
+      "connectionsCount": 1551,
+      "followerCount": 1579,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQF1PhdG4wzIHg/profile-displayphoto-shrink_800_800/B4EZUgLsBkGgAc-/0/1740001690013?e=1787788800&v=beta&t=5vDYa2ziLmcUcFNVVcP3GToSRwIjEkWDHCtWpcIWIPo",
+      "linkedinUrl": "https://www.linkedin.com/in/ropar",
+      "education": [
+        {
+          "school": "The University of Chicago Booth School of Business",
+          "degree": "Master in Business Administration - MBA",
+          "fieldOfStudy": "Strategic Management, Entrepreneurship, Behavioral Science, Finance"
+        }
+      ],
+      "topSkills": [
+        "PyTorch",
+        "Large Language Models (LLM)",
+        "Amazon Web Services (AWS)",
+        "Distributed Systems",
+        "Business Strategy",
+        "Program Management",
+        "Behavioral Finance",
+        "Entrepreneurship",
+        "Quantitative Finance",
+        "Kubernetes",
+        "Redis",
+        "Web Development"
+      ]
+    },
+    {
+      "id": "ACoAACbq7NsBYSnvBsSmyFQkbmPdGxPexw_EHA4",
+      "publicIdentifier": "gradywells",
+      "fullName": "Grady Wells",
+      "headline": "Strategy and Ops @ Nous Research",
+      "title": "Strategy and Ops",
+      "location": "Austin, Texas",
+      "tenure": "7 mos",
+      "connectionsCount": 1380,
+      "followerCount": 1397,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D5603AQH_9aoCRvUe5w/profile-displayphoto-crop_800_800/B56ZyhRb9VKkAI-/0/1772232231318?e=1787788800&v=beta&t=qk403O1Wb7jySUM9c1KcpujAxL3vKsFk-sxBxhd-B9M",
+      "linkedinUrl": "https://www.linkedin.com/in/gradywells",
+      "education": [
+        {
+          "school": "University of Oklahoma",
+          "degree": "Bachelor's degree",
+          "fieldOfStudy": "Accounting, Entrepreneurship, and Finance"
+        }
+      ],
+      "topSkills": [
+        "Microsoft Excel",
+        "Microsoft PowerPoint",
+        "Microsoft Word",
+        "Shopify",
+        "Microsoft Office",
+        "Databases",
+        "Tableau",
+        "Leadership",
+        "Team Management",
+        "Teamwork",
+        "Organization Skills",
+        "Communication"
+      ]
+    },
+    {
+      "id": "ACoAACKa9hkBGGeyDMh-1kAlIc_Vliy5Lt3xsmk",
+      "publicIdentifier": "karan-s-malhotra",
+      "fullName": "Karan Malhotra",
+      "headline": "Research",
+      "title": "Head of Behavior, Co-Founder",
+      "location": "New York City, New York",
+      "tenure": "4 yrs 1 mo",
+      "connectionsCount": 728,
+      "followerCount": 850,
+      "linkedinUrl": "https://www.linkedin.com/in/karan-s-malhotra",
+      "education": [
+        {
+          "school": "Emory University",
+          "degree": "Religion and Philosophy",
+          "fieldOfStudy": "PHILOSOPHY AND RELIGIOUS STUDIES"
+        }
+      ],
+      "topSkills": [
+        "Natural Language Processing (NLP)",
+        "Computer Vision",
+        "Machine Transcription",
+        "Machine Reading",
+        "Academic Writing",
+        "English Literature",
+        "Public Discourse",
+        "Social Science Research",
+        "Creative Writing",
+        "Writing",
+        "Machine Learning",
+        "Microsoft Office"
+      ]
+    },
+    {
+      "id": "ACoAAAoXxdgBlhnjBETKOJoqqQuCmr__0cMPbmw",
+      "publicIdentifier": "max-shapiro-cfa-b8885b48",
+      "fullName": "Max Shapiro, CFA",
+      "headline": "Co-Founder | Managing Partner at Cadenza",
+      "title": "Co-Founder | Managing Partner",
+      "location": "New York City, New York",
+      "tenure": "8 yrs 8 mos",
+      "connectionsCount": 13336,
+      "followerCount": 13229,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQEAb7p3JOqKXw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1674488826979?e=1787788800&v=beta&t=Td_QT_p0riwiFF67v0WyyrtztEPTu0QeCPt-HElH630",
+      "linkedinUrl": "https://www.linkedin.com/in/max-shapiro-cfa-b8885b48",
+      "education": [
+        {
+          "school": "Binghamton University School of Management",
+          "degree": "Master of Science",
+          "fieldOfStudy": "Finance and Accounting"
+        }
+      ],
+      "topSkills": [
+        "Private Equity",
+        "Venture Capital",
+        "Management Consulting",
+        "Mergers & Acquisitions",
+        "Investment Banking",
+        "Financial Modeling",
+        "Microsoft Excel",
+        "Windows",
+        "Team Management",
+        "Leadership Development",
+        "Management"
+      ]
+    },
+    {
+      "id": "ACoAAAT_DRkBhEX9ZKDQMxpDuYbVgtiaNf3w1rQ",
+      "publicIdentifier": "jeffrey-quesnelle-2490a524",
+      "fullName": "Jeffrey Quesnelle",
+      "headline": "co-founder/cto, nous research",
+      "title": "Co-Founder / CTO",
+      "location": "Detroit, Michigan",
+      "tenure": "3 yrs 2 mos",
+      "connectionsCount": 181,
+      "followerCount": 836,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D5603AQEUZktX11n1vg/profile-displayphoto-crop_800_800/B56ZsO2VbIHYAM-/0/1765480686244?e=1787788800&v=beta&t=Ib30UdCT5QiTOc157CVo8XzMFpV15O4U5-Ib3rC5mZo",
+      "linkedinUrl": "https://www.linkedin.com/in/jeffrey-quesnelle-2490a524",
+      "education": [
+        {
+          "school": "University of Michigan",
+          "degree": "Master’s Degree",
+          "fieldOfStudy": "Computer Science"
+        }
+      ],
+      "topSkills": [
+        "Computer Science",
+        "Automotive",
+        "Software Development",
+        "Programming",
+        "Automotive Engineering",
+        "Electronics",
+        "Testing",
+        "Information Security",
+        "LIN",
+        "GMLAN",
+        "Data Acquisition",
+        "Borland C++ Builder"
+      ]
+    },
+    {
+      "id": "ACoAACXnbwcB2N5WQUVh3TC9gq-kC7JSmyPj46k",
+      "publicIdentifier": "barankavusturucu",
+      "fullName": "Baran Kavusturucu",
+      "headline": "Field Engineering Leader @ Databricks",
+      "title": "Field Engineering Manager - Digital Natives",
+      "location": "New York City, New York",
+      "tenure": "1 yr 1 mo",
+      "connectionsCount": 1365,
+      "followerCount": 1499,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C5603AQEf8YAK8C-aAg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1603393887203?e=1787788800&v=beta&t=KXPkvGpHAxwCni1YZDBIOsCng_jMU4rAeDqHq0c1d4g",
+      "linkedinUrl": "https://www.linkedin.com/in/barankavusturucu",
+      "education": [
+        {
+          "school": "Emory University - Goizueta Business School",
+          "degree": "Master of Science - MS",
+          "fieldOfStudy": "Data Science"
+        }
+      ],
+      "topSkills": [
+        "Machine Learning",
+        "Agile Project Management",
+        "Jira",
+        "Problem Solving",
+        "Recruiting",
+        "Product Testing",
+        "Data Analytics",
+        "Product Development",
+        "Product Launch",
+        "Go-to-Market Strategy",
+        "Business Transformation",
+        "Partner Relationship Management"
+      ]
+    },
+    {
+      "id": "ACoAABRDeQMBcYA_HOnrpgKDLZyiri8TrPppJaY",
+      "publicIdentifier": "dakota-mahan-857a2b95",
+      "fullName": "Dakota Mahan",
+      "headline": "Post Training Lead",
+      "title": "Post Training Lead",
+      "location": "Carrollton, Texas",
+      "tenure": "5 mos",
+      "connectionsCount": 246,
+      "followerCount": 272,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4E03AQFLt2jFzPyymA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516804797705?e=1787788800&v=beta&t=_o0qppl7OTOvbs4H_dzf-MYNwLGttNW7XT9huEJEHmQ",
+      "linkedinUrl": "https://www.linkedin.com/in/dakota-mahan-857a2b95",
+      "education": [
+        {
+          "school": "Bradley University",
+          "degree": "Bachelor's Degree",
+          "fieldOfStudy": "Electrical Engineering"
+        }
+      ],
+      "topSkills": [
+        "Robotics",
+        "Cloud Computing",
+        "Python",
+        "Embedded Software",
+        "C++",
+        "Test Automation",
+        "Data Analysis",
+        "Control Systems Design",
+        "Computer Vision",
+        "Unit Testing",
+        "Engineering",
+        "Integration"
+      ]
+    },
+    {
+      "id": "ACoAAAA8dMMB4YnE6Gj4moGomAlg9tmI1QaDCKE",
+      "publicIdentifier": "robinfernandes",
+      "fullName": "Robin Fernandes",
+      "headline": "Eng @ Nous Research ❚ Co-Founder/CTO @ Deforum Studio ❚ ex-Atlassian, ex-IBM",
+      "title": "Engineer",
+      "location": "Sydney, New South Wales",
+      "tenure": "2 yrs 1 mo",
+      "connectionsCount": 528,
+      "followerCount": 639,
+      "linkedinUrl": "https://www.linkedin.com/in/robinfernandes",
+      "education": [
+        {
+          "school": "Imperial College London",
+          "degree": "MEng",
+          "fieldOfStudy": "Computing"
+        }
+      ],
+      "topSkills": [
+        "DevOps",
+        "Large Language Models (LLM)",
+        "Artificial Intelligence (AI)",
+        "TypeScript",
+        "Cloud Infrastructure",
+        "Software Architecture",
+        "Performance Management",
+        "Platform as a Service (PAAS)",
+        "Technology Evangelism",
+        "CouchDB",
+        "Scalability",
+        "Programming"
+      ]
+    },
+    {
+      "id": "ACoAAAeDKNkBf0avtBH5ZPSNOx2DoqNWvJ6r7Nc",
+      "publicIdentifier": "shannon-sands-73526136",
+      "fullName": "Shannon Sands",
+      "headline": "Software Developer @ Nous Research",
+      "title": "Founding engineer/ Researcher",
+      "location": "Brisbane, Queensland",
+      "tenure": "2 yrs 9 mos",
+      "connectionsCount": 142,
+      "followerCount": 159,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C5603AQFveEEuOIcgNA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1516622883426?e=1787788800&v=beta&t=ir663Zvg3EA-5vAtxbSqMuniy5NEr8S7v7B6ZWYdFx4",
+      "linkedinUrl": "https://www.linkedin.com/in/shannon-sands-73526136",
+      "education": [
+        {
+          "school": "RMIT University",
+          "degree": "Bachelor of Information (Computing Studies)",
+          "fieldOfStudy": "Software Engineering"
+        }
+      ],
+      "topSkills": [
+        "Kotlin",
+        "Next.js",
+        "React.js",
+        "Spring Boot",
+        "PostgreSQL",
+        "Troubleshooting",
+        "Active Directory",
+        "Telecommunications",
+        "Service Delivery",
+        "DNS",
+        "Cloud Computing",
+        "Vendor Management"
+      ]
+    },
+    {
+      "id": "ACoAAAiIAlIB4nop1ZpzTCIWPg3LitMRbt9rSRI",
+      "publicIdentifier": "bbbrooklyn",
+      "fullName": "Brooklyn Nicholson",
+      "headline": "Architect, Design-centric Engineer, Top <​0.1% token user",
+      "title": "Staff Engineer",
+      "location": "Chicago, Illinois",
+      "tenure": "1 yr 2 mos",
+      "connectionsCount": 1482,
+      "followerCount": 1512,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D5603AQH5uqhcuxf8Zw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1675187260279?e=1787788800&v=beta&t=1EWArCwyg7VaqhTE4luxOhm4Q_3bdtrml8_uMMcr4gQ",
+      "linkedinUrl": "https://www.linkedin.com/in/bbbrooklyn",
+      "topSkills": [
+        "Rust",
+        "React.js",
+        "GraphQL",
+        "JavaScript",
+        "Node.js",
+        "PHP",
+        "CSS",
+        "WordPress",
+        "HTML",
+        "CMS",
+        "jQuery",
+        "REST"
+      ]
+    },
+    {
+      "id": "ACoAAB8dTAQBIRnUXD-S_DsF9Z2krKZHpLQDwUE",
+      "publicIdentifier": "shivani-mitra",
+      "fullName": "Shivani Mitra",
+      "headline": "Researcher & Investor | Co-Founder, Nous Research",
+      "title": "Managing Partner",
+      "location": "United States",
+      "tenure": "1 yr 3 mos",
+      "connectionsCount": 255,
+      "followerCount": 452,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D5603AQGc4U_HuxbwRQ/profile-displayphoto-crop_800_800/B56Z3TssTnJ4AM-/0/1777373205873?e=1787788800&v=beta&t=Jp-cHVUAfOFDJt2RRUBffVHgtPBqvObdCRg7hCNN2mg",
+      "linkedinUrl": "https://www.linkedin.com/in/shivani-mitra",
+      "education": [
+        {
+          "school": "Washington University in St. Louis",
+          "degree": "BA",
+          "fieldOfStudy": "Art History, Biochemistry"
+        }
+      ]
+    },
+    {
+      "id": "ACoAAADgTGgBg8y_OFT1W2qIxJ-YdBl5WgnUeo4",
+      "publicIdentifier": "krd415",
+      "fullName": "Kumar Dandapani",
+      "headline": "Co-Founder, Managing Partner at Cadenza",
+      "title": "Co-Founder | Managing Partner",
+      "location": "San Francisco, California",
+      "tenure": "8 yrs 8 mos",
+      "connectionsCount": 1817,
+      "followerCount": 2168,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4E03AQGuZtPbgMuzvg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517718453639?e=1787788800&v=beta&t=Q7A9FqEkRMJUddyEI7tmI5PtpEZxo1yZVYfkr9DUtPM",
+      "linkedinUrl": "https://www.linkedin.com/in/krd415",
+      "education": [
+        {
+          "school": "Carnegie Mellon University",
+          "degree": "B.S.",
+          "fieldOfStudy": "Electrical & Computer Engineering"
+        }
+      ],
+      "topSkills": [
+        "Python",
+        "R",
+        "MySQL",
+        "MATLAB",
+        "Node.js",
+        "bash",
+        "SQL",
+        "Java",
+        "PostgreSQL",
+        "Hadoop",
+        "C++",
+        "C"
+      ]
+    },
+    {
+      "id": "ACoAADVvOXIBts52VkRZ0vO1NEOz7ge_6VHymx4",
+      "publicIdentifier": "tommy-eastman-302291210",
+      "fullName": "Tommy Eastman",
+      "headline": "Nous Research",
+      "title": ".",
+      "location": "Boston, Massachusetts",
+      "tenure": "8 mos",
+      "connectionsCount": 870,
+      "followerCount": 1246,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHBvb2268FcWA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1722779630888?e=1787788800&v=beta&t=ssqN7Pv8jJqwcMDIcoMUcwRUqTSHjXqvg5LzrmNH4H8",
+      "linkedinUrl": "https://www.linkedin.com/in/tommy-eastman-302291210",
+      "education": [
+        {
+          "school": "Middlebury College",
+          "degree": "Bachelor of Arts - BA",
+          "fieldOfStudy": "Physics"
+        }
+      ],
+      "topSkills": [
+        "Go (Programming Language)",
+        "Image Processing",
+        "Mathematica",
+        "Leadership",
+        "Communication",
+        "Problem Solving",
+        "Python (Programming Language)",
+        "Java",
+        "Imaging Science",
+        "Teamwork",
+        "TensorFlow",
+        "Machine Learning"
+      ]
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "69229985",
+        "label": "Nous Research",
+        "kind": "company",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E0BAQGybT6VqR2W6w/company-logo_400_400/company-logo_400_400/0/1725298571363/nousresearch_logo?e=1787788800&v=beta&t=19T7SQ_k9ZQGmFX_vX2LBgqidaQgutvZLMCKcR3-xdk",
+        "refId": "69229985",
+        "weight": 1,
+        "color": "#0A66C2"
+      },
+      {
+        "id": "ACoAAB9mCIEBsKb1yYKMzyed1kDd62T2B8IvDM8",
+        "label": "Dillon Rolnick",
+        "kind": "employee",
+        "refId": "dillon-rolnick-a29501128",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "ceo @ nous research",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAAABQwaIBwSR6FrgoerIN27kAL2O77n4EGXQ",
+        "label": "Hervé Bizira",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C5103AQGijRm-PRSxlQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516339878479?e=1787788800&v=beta&t=PjsqvBEsxFid3LF9qesIROaGvsQxYYp-s-5EzlGAbbc",
+        "refId": "hervebizira",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Chief Product Officer",
+        "location": "Los Angeles, California"
+      },
+      {
+        "id": "ACoAAB0w5j0BnzsLAAplV-FeczyXIQLzrP1jWU0",
+        "label": "Rohan P.",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQF1PhdG4wzIHg/profile-displayphoto-shrink_800_800/B4EZUgLsBkGgAc-/0/1740001690013?e=1787788800&v=beta&t=5vDYa2ziLmcUcFNVVcP3GToSRwIjEkWDHCtWpcIWIPo",
+        "refId": "ropar",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Applied AI Research Engineer",
+        "location": "Chicago, Illinois"
+      },
+      {
+        "id": "ACoAACbq7NsBYSnvBsSmyFQkbmPdGxPexw_EHA4",
+        "label": "Grady Wells",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D5603AQH_9aoCRvUe5w/profile-displayphoto-crop_800_800/B56ZyhRb9VKkAI-/0/1772232231318?e=1787788800&v=beta&t=qk403O1Wb7jySUM9c1KcpujAxL3vKsFk-sxBxhd-B9M",
+        "refId": "gradywells",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Strategy and Ops",
+        "location": "Austin, Texas"
+      },
+      {
+        "id": "ACoAACKa9hkBGGeyDMh-1kAlIc_Vliy5Lt3xsmk",
+        "label": "Karan Malhotra",
+        "kind": "employee",
+        "refId": "karan-s-malhotra",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Head of Behavior, Co-Founder",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAAAoXxdgBlhnjBETKOJoqqQuCmr__0cMPbmw",
+        "label": "Max Shapiro, CFA",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQEAb7p3JOqKXw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1674488826979?e=1787788800&v=beta&t=Td_QT_p0riwiFF67v0WyyrtztEPTu0QeCPt-HElH630",
+        "refId": "max-shapiro-cfa-b8885b48",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Co-Founder | Managing Partner",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAAAT_DRkBhEX9ZKDQMxpDuYbVgtiaNf3w1rQ",
+        "label": "Jeffrey Quesnelle",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D5603AQEUZktX11n1vg/profile-displayphoto-crop_800_800/B56ZsO2VbIHYAM-/0/1765480686244?e=1787788800&v=beta&t=Ib30UdCT5QiTOc157CVo8XzMFpV15O4U5-Ib3rC5mZo",
+        "refId": "jeffrey-quesnelle-2490a524",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Co-Founder / CTO",
+        "location": "Detroit, Michigan"
+      },
+      {
+        "id": "ACoAACXnbwcB2N5WQUVh3TC9gq-kC7JSmyPj46k",
+        "label": "Baran Kavusturucu",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C5603AQEf8YAK8C-aAg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1603393887203?e=1787788800&v=beta&t=KXPkvGpHAxwCni1YZDBIOsCng_jMU4rAeDqHq0c1d4g",
+        "refId": "barankavusturucu",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Field Engineering Manager - Digital Natives",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAABRDeQMBcYA_HOnrpgKDLZyiri8TrPppJaY",
+        "label": "Dakota Mahan",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C4E03AQFLt2jFzPyymA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516804797705?e=1787788800&v=beta&t=_o0qppl7OTOvbs4H_dzf-MYNwLGttNW7XT9huEJEHmQ",
+        "refId": "dakota-mahan-857a2b95",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Post Training Lead",
+        "location": "Carrollton, Texas"
+      },
+      {
+        "id": "ACoAAAA8dMMB4YnE6Gj4moGomAlg9tmI1QaDCKE",
+        "label": "Robin Fernandes",
+        "kind": "employee",
+        "refId": "robinfernandes",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Engineer",
+        "location": "Sydney, New South Wales"
+      },
+      {
+        "id": "ACoAAAeDKNkBf0avtBH5ZPSNOx2DoqNWvJ6r7Nc",
+        "label": "Shannon Sands",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C5603AQFveEEuOIcgNA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1516622883426?e=1787788800&v=beta&t=ir663Zvg3EA-5vAtxbSqMuniy5NEr8S7v7B6ZWYdFx4",
+        "refId": "shannon-sands-73526136",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Founding engineer/ Researcher",
+        "location": "Brisbane, Queensland"
+      },
+      {
+        "id": "ACoAAAiIAlIB4nop1ZpzTCIWPg3LitMRbt9rSRI",
+        "label": "Brooklyn Nicholson",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D5603AQH5uqhcuxf8Zw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1675187260279?e=1787788800&v=beta&t=1EWArCwyg7VaqhTE4luxOhm4Q_3bdtrml8_uMMcr4gQ",
+        "refId": "bbbrooklyn",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Staff Engineer",
+        "location": "Chicago, Illinois"
+      },
+      {
+        "id": "ACoAAB8dTAQBIRnUXD-S_DsF9Z2krKZHpLQDwUE",
+        "label": "Shivani Mitra",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D5603AQGc4U_HuxbwRQ/profile-displayphoto-crop_800_800/B56Z3TssTnJ4AM-/0/1777373205873?e=1787788800&v=beta&t=Jp-cHVUAfOFDJt2RRUBffVHgtPBqvObdCRg7hCNN2mg",
+        "refId": "shivani-mitra",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Managing Partner",
+        "location": "United States"
+      },
+      {
+        "id": "ACoAAADgTGgBg8y_OFT1W2qIxJ-YdBl5WgnUeo4",
+        "label": "Kumar Dandapani",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C4E03AQGuZtPbgMuzvg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517718453639?e=1787788800&v=beta&t=Q7A9FqEkRMJUddyEI7tmI5PtpEZxo1yZVYfkr9DUtPM",
+        "refId": "krd415",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Co-Founder | Managing Partner",
+        "location": "San Francisco, California"
+      },
+      {
+        "id": "ACoAADVvOXIBts52VkRZ0vO1NEOz7ge_6VHymx4",
+        "label": "Tommy Eastman",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHBvb2268FcWA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1722779630888?e=1787788800&v=beta&t=ssqN7Pv8jJqwcMDIcoMUcwRUqTSHjXqvg5LzrmNH4H8",
+        "refId": "tommy-eastman-302291210",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": ".",
+        "location": "Boston, Massachusetts"
+      }
+    ],
+    "links": [
+      {
+        "source": "69229985",
+        "target": "ACoAAB9mCIEBsKb1yYKMzyed1kDd62T2B8IvDM8",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAAABQwaIBwSR6FrgoerIN27kAL2O77n4EGXQ",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAAB0w5j0BnzsLAAplV-FeczyXIQLzrP1jWU0",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAACbq7NsBYSnvBsSmyFQkbmPdGxPexw_EHA4",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAACKa9hkBGGeyDMh-1kAlIc_Vliy5Lt3xsmk",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAAAoXxdgBlhnjBETKOJoqqQuCmr__0cMPbmw",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAAAT_DRkBhEX9ZKDQMxpDuYbVgtiaNf3w1rQ",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAACXnbwcB2N5WQUVh3TC9gq-kC7JSmyPj46k",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAABRDeQMBcYA_HOnrpgKDLZyiri8TrPppJaY",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAAAA8dMMB4YnE6Gj4moGomAlg9tmI1QaDCKE",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAAAeDKNkBf0avtBH5ZPSNOx2DoqNWvJ6r7Nc",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAAAiIAlIB4nop1ZpzTCIWPg3LitMRbt9rSRI",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAAB8dTAQBIRnUXD-S_DsF9Z2krKZHpLQDwUE",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAAADgTGgBg8y_OFT1W2qIxJ-YdBl5WgnUeo4",
+        "kind": "company-employee"
+      },
+      {
+        "source": "69229985",
+        "target": "ACoAADVvOXIBts52VkRZ0vO1NEOz7ge_6VHymx4",
+        "kind": "company-employee"
+      }
+    ]
+  },
+  "stats": {
+    "employeeCount": 15,
+    "totalReported": 55,
+    "locationCount": 11,
+    "schoolCount": 14,
+    "avgConnections": 1749,
+    "topLocations": [
+      {
+        "label": "New York City, New York",
+        "count": 4
+      },
+      {
+        "label": "Chicago, Illinois",
+        "count": 2
+      },
+      {
+        "label": "Los Angeles, California",
+        "count": 1
+      },
+      {
+        "label": "Austin, Texas",
+        "count": 1
+      },
+      {
+        "label": "Detroit, Michigan",
+        "count": 1
+      },
+      {
+        "label": "Carrollton, Texas",
+        "count": 1
+      },
+      {
+        "label": "Sydney, New South Wales",
+        "count": 1
+      },
+      {
+        "label": "Brisbane, Queensland",
+        "count": 1
+      }
+    ],
+    "topSchools": [
+      {
+        "label": "Vanderbilt University",
+        "count": 1
+      },
+      {
+        "label": "University of Waterloo",
+        "count": 1
+      },
+      {
+        "label": "The University of Chicago Booth School of Business",
+        "count": 1
+      },
+      {
+        "label": "University of Oklahoma",
+        "count": 1
+      },
+      {
+        "label": "Emory University",
+        "count": 1
+      },
+      {
+        "label": "Binghamton University School of Management",
+        "count": 1
+      },
+      {
+        "label": "University of Michigan",
+        "count": 1
+      },
+      {
+        "label": "Emory University - Goizueta Business School",
+        "count": 1
+      }
+    ]
+  }
+}
