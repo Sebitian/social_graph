@@ -7,7 +7,6 @@ import {
   Heart,
   MessageCircle,
   Users,
-  Layers,
   Star,
   Search,
 } from "lucide-react";
@@ -23,6 +22,8 @@ import {
 
 interface Props {
   stats: Stats;
+  /** Total unique engagers when known (falls back to stats.shown). */
+  uniqueCount?: number;
   onSelectUsername?: (username: string) => void;
   selectedUsername?: string | null;
   /** When "instagram", avatars load via the live proxy (scraped CDN URLs expire). */
@@ -165,6 +166,7 @@ function PersonRole({ position }: { position?: string }) {
 
 export default function NetworkStats({
   stats,
+  uniqueCount,
   onSelectUsername,
   selectedUsername,
   platform = null,
@@ -175,8 +177,12 @@ export default function NetworkStats({
     (stats.totalReactions ?? 0) > 0 || (stats.topReactors?.length ?? 0) > 0;
 
   const cards = [
-    { label: "Clusters", value: String(stats.circleCount), icon: Layers, color: "text-ig-pink" },
-    { label: "Shown", value: String(stats.shown), icon: Users, color: "text-ig-blue" },
+    {
+      label: "Unique",
+      value: String(uniqueCount ?? stats.shown),
+      icon: Users,
+      color: "text-ig-blue",
+    },
     { label: "Comments", value: compactNumber(stats.totalComments), icon: MessageCircle, color: "text-ig-purple" },
     hasReactions
       ? {

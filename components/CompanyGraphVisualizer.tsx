@@ -11,13 +11,13 @@ import {
 } from "react";
 import dynamic from "next/dynamic";
 import type {
-  SpotifyGraphData,
-  SpotifyGraphLink,
-  SpotifyGraphNode,
-  SpotifyNodeKind,
-} from "@/lib/spotifyTypes";
+  CompanyGraphData,
+  CompanyGraphLink,
+  CompanyGraphNode,
+  CompanyNodeKind,
+} from "@/lib/companyTypes";
 
-type FGNode = SpotifyGraphNode & {
+type FGNode = CompanyGraphNode & {
   x?: number;
   y?: number;
   fx?: number;
@@ -27,8 +27,7 @@ type FGNode = SpotifyGraphNode & {
 type FGLink = {
   source: string | FGNode;
   target: string | FGNode;
-  kind: SpotifyGraphLink["kind"];
-  weight?: number;
+  kind: CompanyGraphLink["kind"];
 };
 
 interface ForceGraphProps {
@@ -71,114 +70,56 @@ const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ForceGraphProps & RefAttributes<ForceGraphInstance>
 >;
 
-const KIND_RADIUS: Record<SpotifyNodeKind, number> = {
-  self: 26,
-  friend: 22,
-  playlist: 16,
-  genre: 11,
+const KIND_RADIUS: Record<CompanyNodeKind, number> = {
+  company: 32,
+  employee: 18,
 };
 
 function nodeRadius(node: FGNode): number {
-  if (node.kind === "genre") {
-    const w = node.weight ?? 1;
-    return KIND_RADIUS.genre + Math.min(6, Math.log2(w + 1));
-  }
-  return KIND_RADIUS[node.kind];
+  if (node.kind === "company") return KIND_RADIUS.company;
+  const w = node.weight ?? 10;
+  return KIND_RADIUS.employee + Math.min(8, (w - 8) * 0.4);
 }
 
-/**
- * Horizontal pipeline:
- *   You → your playlists → genres ← friend playlists ← friend
- */
-function layoutClusters(
-  nodes: SpotifyGraphNode[],
-  links: SpotifyGraphLink[],
-): FGNode[] {
-  const self = nodes.find((n) => n.kind === "self");
-  const friends = nodes.filter((n) => n.kind === "friend");
-  const playlists = nodes.filter((n) => n.kind === "playlist");
-  const genres = nodes.filter((n) => n.kind === "genre");
-
-  const playlistOwnerNode = new Map<string, string>();
-  for (const link of links) {
-    if (link.kind !== "profile-playlist") continue;
-    playlistOwnerNode.set(link.target, link.source);
-  }
-
-  const selfId = self?.id;
-  const friendId = friends[0]?.id;
-
-  const selfPlaylists = playlists.filter(
-    (p) => playlistOwnerNode.get(p.id) === selfId,
-  );
-  const friendPlaylists = playlists.filter(
-    (p) => playlistOwnerNode.get(p.id) === friendId,
-  );
-
-  // Column x positions (left → right)
-  const X_SELF = -520;
-  const X_SELF_PLAYLISTS = -280;
-  const X_GENRES = 0;
-  const X_FRIEND_PLAYLISTS = 280;
-  const X_FRIEND = 520;
-
+/** Hub-and-spoke: company pinned at center, employees on a ring. */
+function layoutHubSpoke(nodes: CompanyGraphNode[]): FGNode[] {
+  const company = nodes.find((n) => n.kind === "company");
+  const employees = nodes.filter((n) => n.kind === "employee");
   const positions = new Map<string, { x: number; y: number }>();
 
-  const stackColumn = (
-    items: SpotifyGraphNode[],
-    x: number,
-    gap = 56,
-  ) => {
-    const n = items.length;
-    if (n === 0) return;
-    const span = (n - 1) * gap;
-    items.forEach((item, i) => {
-      const y = n === 1 ? 0 : -span / 2 + i * gap;
-      positions.set(item.id, { x, y });
+  if (company) positions.set(company.id, { x: 0, y: 0 });
+
+  const n = employees.length;
+  const radius = Math.max(180, 60 + n * 14);
+  employees.forEach((emp, i) => {
+    const angle = (2 * Math.PI * i) / n - Math.PI / 2;
+    positions.set(emp.id, {
+      x: Math.cos(angle) * radius,
+      y: Math.sin(angle) * radius,
     });
-  };
+  });
 
-  if (self) positions.set(self.id, { x: X_SELF, y: 0 });
-  if (friends[0]) positions.set(friends[0].id, { x: X_FRIEND, y: 0 });
-
-  // Keep playlists with tracks closer to genres (middle of each stack).
-  const sortPlaylists = (list: SpotifyGraphNode[]) =>
-    [...list].sort((a, b) => {
-      const at = a.hasTracks ? 0 : 1;
-      const bt = b.hasTracks ? 0 : 1;
-      if (at !== bt) return at - bt;
-      return a.label.localeCompare(b.label);
-    });
-
-  stackColumn(sortPlaylists(selfPlaylists), X_SELF_PLAYLISTS, 58);
-  stackColumn(sortPlaylists(friendPlaylists), X_FRIEND_PLAYLISTS, 72);
-
-  const sortGenres = [...genres].sort(
-    (a, b) => (b.weight ?? 0) - (a.weight ?? 0),
-  );
-  stackColumn(sortGenres, X_GENRES, 52);
-
-  let orphan = 0;
-  for (const n of nodes) {
-    if (positions.has(n.id)) continue;
-    positions.set(n.id, { x: 0, y: 320 + orphan * 40 });
-    orphan += 1;
-  }
-
-  return nodes.map((n) => {
-    const pos = positions.get(n.id)!;
-    return { ...n, x: pos.x, y: pos.y, fx: pos.x, fy: pos.y };
+  return nodes.map((node) => {
+    const pos = positions.get(node.id) ?? { x: 0, y: 320 };
+    const pinned = node.kind === "company";
+    return {
+      ...node,
+      x: pos.x,
+      y: pos.y,
+      fx: pinned ? pos.x : pos.x,
+      fy: pinned ? pos.y : pos.y,
+    };
   });
 }
 
 interface Props {
-  data: SpotifyGraphData;
+  data: CompanyGraphData;
   className?: string;
   selectedId?: string | null;
-  onSelect?: (node: SpotifyGraphNode | null) => void;
+  onSelect?: (node: CompanyGraphNode | null) => void;
 }
 
-export default function SpotifyGraphVisualizer({
+export default function CompanyGraphVisualizer({
   data,
   className,
   selectedId = null,
@@ -255,11 +196,8 @@ export default function SpotifyGraphVisualizer({
   const graphData = useMemo(() => {
     void imageRevision;
     return {
-      nodes: layoutClusters(data.nodes, data.links),
-      // Hide direct self↔friend edge so the eye follows the column pipeline.
-      links: data.links
-        .filter((l) => l.kind !== "self-friend")
-        .map((l) => ({ ...l })),
+      nodes: layoutHubSpoke(data.nodes),
+      links: data.links.map((l) => ({ ...l })),
     };
   }, [data, imageRevision]);
 
@@ -293,13 +231,18 @@ export default function SpotifyGraphVisualizer({
       const y = node.y ?? 0;
       const selected = selectedId === node.id;
       const hovered = hoveredId === node.id;
-      const color = node.color ?? "#1DB954";
+      const color = node.color ?? "#0A66C2";
+      const isCompany = node.kind === "company";
 
       if (selected || hovered) {
         ctx.beginPath();
-        ctx.arc(x, y, r + 5, 0, Math.PI * 2);
+        if (isCompany) {
+          ctx.rect(x - r - 5, y - r - 5, (r + 5) * 2, (r + 5) * 2);
+        } else {
+          ctx.arc(x, y, r + 5, 0, Math.PI * 2);
+        }
         ctx.fillStyle =
-          selected ? "rgba(29,185,84,0.35)" : "rgba(255,255,255,0.12)";
+          selected ? "rgba(10,102,194,0.35)" : "rgba(255,255,255,0.12)";
         ctx.fill();
       }
 
@@ -309,60 +252,57 @@ export default function SpotifyGraphVisualizer({
 
       ctx.save();
       ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
+      if (isCompany) {
+        ctx.rect(x - r, y - r, r * 2, r * 2);
+      } else {
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+      }
       ctx.closePath();
       ctx.clip();
 
       if (img && img.complete && img.naturalWidth > 0) {
-        ctx.drawImage(img, x - r, y - r, r * 2, r * 2);
+        if (isCompany) {
+          ctx.drawImage(img, x - r, y - r, r * 2, r * 2);
+        } else {
+          ctx.drawImage(img, x - r, y - r, r * 2, r * 2);
+        }
       } else {
         ctx.fillStyle = color;
-        ctx.fillRect(x - r, y - r, r * 2, r * 2);
-        if (node.kind === "genre") {
-          ctx.fillStyle = "rgba(0,0,0,0.22)";
+        if (isCompany) {
           ctx.fillRect(x - r, y - r, r * 2, r * 2);
+        } else {
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fill();
         }
       }
       ctx.restore();
 
       ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.strokeStyle =
-        node.kind === "self"
-          ? "#1DB954"
-          : node.kind === "friend"
-            ? "#509BF5"
-            : node.kind === "playlist"
-              ? "rgba(255,255,255,0.4)"
-              : color;
-      ctx.lineWidth =
-        node.kind === "self" || node.kind === "friend" ? 2.5 : 1.25;
+      if (isCompany) {
+        ctx.rect(x - r, y - r, r * 2, r * 2);
+      } else {
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+      }
+      ctx.strokeStyle = isCompany ? "#0A66C2" : "rgba(255,255,255,0.4)";
+      ctx.lineWidth = isCompany ? 2.5 : 1.25;
       ctx.stroke();
 
       const showLabel =
-        node.kind === "self" ||
-        node.kind === "friend" ||
-        node.kind === "playlist" ||
-        selected ||
-        hovered ||
-        globalScale >= 0.7;
+        isCompany || selected || hovered || globalScale >= 0.55;
       if (!showLabel) return;
 
       const label = node.label;
       if (!label) return;
       const fontSize = Math.max(
         10,
-        (node.kind === "genre" ? 11 : 12) /
-          Math.sqrt(Math.max(globalScale, 0.55)),
+        (isCompany ? 13 : 11) / Math.sqrt(Math.max(globalScale, 0.55)),
       );
-      ctx.font = `${
-        node.kind === "self" || node.kind === "friend" ? 600 : 500
-      } ${fontSize}px ui-sans-serif, system-ui, sans-serif`;
+      ctx.font = `${isCompany ? 600 : 500} ${fontSize}px ui-sans-serif, system-ui, sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "top";
 
-      const maxChars =
-        node.kind === "genre" ? 14 : node.kind === "playlist" ? 16 : 22;
+      const maxChars = isCompany ? 24 : 18;
       const text =
         label.length > maxChars ? `${label.slice(0, maxChars - 1)}…` : label;
 
@@ -377,10 +317,7 @@ export default function SpotifyGraphVisualizer({
         metrics.width + padX * 2,
         fontSize + padY * 2,
       );
-      ctx.fillStyle =
-        node.kind === "genre"
-          ? "rgba(255,255,255,0.75)"
-          : "rgba(255,255,255,0.95)";
+      ctx.fillStyle = "rgba(255,255,255,0.95)";
       ctx.fillText(text, x, ty + padY);
     },
     [hoveredId, selectedId],
@@ -390,7 +327,16 @@ export default function SpotifyGraphVisualizer({
     (node: FGNode, color: string, ctx: CanvasRenderingContext2D) => {
       const r = nodeRadius(node) + 6;
       ctx.beginPath();
-      ctx.arc(node.x ?? 0, node.y ?? 0, r, 0, Math.PI * 2);
+      if (node.kind === "company") {
+        ctx.rect(
+          (node.x ?? 0) - r,
+          (node.y ?? 0) - r,
+          r * 2,
+          r * 2,
+        );
+      } else {
+        ctx.arc(node.x ?? 0, node.y ?? 0, r, 0, Math.PI * 2);
+      }
       ctx.fillStyle = color;
       ctx.fill();
     },
@@ -417,20 +363,8 @@ export default function SpotifyGraphVisualizer({
           onNodeHover={(node) => setHoveredId(node?.id ?? null)}
           onNodeClick={(node) => onSelect?.(node)}
           onBackgroundClick={() => onSelect?.(null)}
-          linkColor={(link) =>
-            link.kind === "self-friend"
-              ? "rgba(80,155,245,0.35)"
-              : link.kind === "playlist-genre"
-                ? "rgba(29,185,84,0.28)"
-                : "rgba(255,255,255,0.28)"
-          }
-          linkWidth={(link) =>
-            link.kind === "self-friend"
-              ? 1.5
-              : link.kind === "playlist-genre"
-                ? 1.1
-                : 1.6
-          }
+          linkColor={() => "rgba(10,102,194,0.35)"}
+          linkWidth={() => 1.4}
         />
       )}
     </div>

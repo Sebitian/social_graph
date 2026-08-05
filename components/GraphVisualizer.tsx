@@ -99,6 +99,17 @@ const ForceGraph2D = dynamic(
 ) as unknown as ComponentType<ForceGraphProps & RefAttributes<ForceGraphInstance>>;
 
 const DEFAULT_LABEL_COUNT = 4;
+const DEFAULT_LABEL_COUNT_MOBILE = 7;
+
+function isMobileWidth(width: number): boolean {
+  return width > 0 && width < 640;
+}
+
+function visualNodeRadius(node: FGNode, mobile: boolean): number {
+  const scale = mobile ? 1.14 : 1;
+  if (node.group === "self") return SELF_NODE_RADIUS * scale;
+  return MEMBER_NODE_RADIUS * scale;
+}
 
 function endpointId(end: string | FGNode): string {
   return typeof end === "string" ? end : (end.id as string);
@@ -397,8 +408,9 @@ export default function GraphVisualizer({
       const handle = node.label.replace(/^@/, "").trim().toLowerCase();
       const scraped = node.profilePicUrl?.trim() || undefined;
       // Instagram CDN links in old scrapes expire; resolve live avatars via our proxy.
+      // Only use the proxy when we have a scraped URL to refresh — demo data stays offline.
       const liveAvatar =
-        labelStyle === "handles" && handle
+        labelStyle === "handles" && handle && scraped
           ? `/api/avatar/instagram/${encodeURIComponent(handle)}`
           : undefined;
       const preferred = liveAvatar ?? scraped;
@@ -507,6 +519,9 @@ export default function GraphVisualizer({
   }, [friendClusters]);
 
   const defaultLabelIds = useMemo(() => {
+    const count = isMobileWidth(size.width)
+      ? DEFAULT_LABEL_COUNT_MOBILE
+      : DEFAULT_LABEL_COUNT;
     return new Set(
       [...members]
         .sort(
@@ -514,10 +529,10 @@ export default function GraphVisualizer({
             (b.presenceScore ?? 0) - (a.presenceScore ?? 0) ||
             b.comments - a.comments,
         )
-        .slice(0, DEFAULT_LABEL_COUNT)
+        .slice(0, count)
         .map((n) => n.id),
     );
-  }, [members]);
+  }, [members, size.width]);
 
   useEffect(() => {
     if (mapLayout && appearStartRef.current === 0) {
@@ -578,9 +593,23 @@ export default function GraphVisualizer({
   }, [data.nodes, data.links, mapLayout, avatarRevision]);
 
   const didFitRef = useRef(false);
+  const prevSizeRef = useRef({ width: 0, height: 0 });
   useEffect(() => {
     didFitRef.current = false;
   }, [data.nodes, mapLayout]);
+
+  useEffect(() => {
+    if (!size.width || !size.height || !fgRef.current) return;
+    const prev = prevSizeRef.current;
+    const dw = Math.abs(size.width - prev.width);
+    const dh = Math.abs(size.height - prev.height);
+    if (prev.width > 0 && (dw > 72 || dh > 72)) {
+      didFitRef.current = false;
+      const mobile = isMobileWidth(size.width);
+      fgRef.current.zoomToFit(700, mobile ? 28 : 96);
+    }
+    prevSizeRef.current = { width: size.width, height: size.height };
+  }, [size.width, size.height]);
 
   useEffect(() => {
     if (!selectedId || !fgRef.current || !mapLayout) return;
@@ -588,13 +617,11 @@ export default function GraphVisualizer({
     if (!pos) return;
     setShowHint(false);
 
-    const mobile = size.width > 0 && size.width < 640;
+    const mobile = isMobileWidth(size.width);
     if (mobile) {
-      // Frame ego + selected together so you can see where they sit on the map.
-      // A fixed hard zoom (desktop) feels lost on a phone.
       fgRef.current.zoomToFit(
         450,
-        64,
+        28,
         (node) => node.group === "self" || node.id === selectedId,
       );
       return;
@@ -630,20 +657,32 @@ export default function GraphVisualizer({
     (ctx: CanvasRenderingContext2D, scale: number) => {
       if (!mapLayout) return;
 
+      const mobile = isMobileWidth(size.width);
+      const w = size.width / scale;
+      const h = size.height / scale;
+
+      // Soft vignette so nodes pop against the canvas
+      const vignette = ctx.createRadialGradient(0, 0, 0, 0, 0, Math.max(w, h) * 0.72);
+      vignette.addColorStop(0, "rgba(255,255,255,0.03)");
+      vignette.addColorStop(0.55, "rgba(0,0,0,0)");
+      vignette.addColorStop(1, "rgba(0,0,0,0.45)");
+      ctx.fillStyle = vignette;
+      ctx.fillRect(-w / 2, -h / 2, w, h);
+
       mapLayout.ringGuides.forEach((radius, index) => {
         ctx.beginPath();
         ctx.arc(0, 0, radius, 0, Math.PI * 2);
-        ctx.lineWidth = 1 / Math.sqrt(scale);
-        ctx.strokeStyle = "rgba(255,255,255,0.06)";
+        ctx.lineWidth = (mobile ? 1.2 : 1) / Math.sqrt(scale);
+        ctx.strokeStyle = mobile ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.06)";
         ctx.stroke();
 
         const ring = PROXIMITY_RINGS[index];
         if (!ring) return;
-        const fontSize = Math.max(7, 9 / Math.sqrt(scale));
+        const fontSize = Math.max(mobile ? 8 : 7, (mobile ? 10 : 9) / Math.sqrt(scale));
         ctx.font = `600 ${fontSize}px ui-sans-serif, system-ui`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillStyle = "rgba(255,255,255,0.32)";
+        ctx.fillStyle = mobile ? "rgba(255,255,255,0.48)" : "rgba(255,255,255,0.32)";
         ctx.fillText(ring.label.toUpperCase(), 0, -radius + fontSize * 0.9);
       });
 
@@ -680,16 +719,17 @@ export default function GraphVisualizer({
         }
       }
     },
-    [mapLayout, highlightClusterId],
+    [mapLayout, highlightClusterId, size.width, size.height],
   );
 
   const paintNode = useCallback(
     (node: FGNode, ctx: CanvasRenderingContext2D, scale: number) => {
       if (avatarRevision < 0) return;
+      const mobile = isMobileWidth(size.width);
       const dim = isDim(node);
       const x = node.x ?? 0;
       const y = node.y ?? 0;
-      const r = nodeRadius(node);
+      const r = visualNodeRadius(node, mobile);
       const color =
         node.group === "self"
           ? SELF_COLOR
@@ -710,11 +750,11 @@ export default function GraphVisualizer({
       }
 
       ctx.save();
-      ctx.globalAlpha = (dim ? 0.22 : 1) * appear;
+      ctx.globalAlpha = (dim ? (mobile ? 0.4 : 0.22) : 1) * appear;
 
       if (node.group === "self" || isHovered || isSelected) {
         ctx.shadowColor = color;
-        ctx.shadowBlur = isSelected ? 22 : 14;
+        ctx.shadowBlur = isSelected ? (mobile ? 26 : 22) : mobile ? 18 : 14;
       }
 
       ctx.beginPath();
@@ -769,12 +809,20 @@ export default function GraphVisualizer({
             : node.group === "self"
               ? node.fullName || `@${handle}`
               : node.fullName || node.label;
-        const fontSize = Math.max(3.5, 10 / scale);
+        const fontSize = Math.max(
+          mobile ? 4.5 : 3.5,
+          (mobile ? 12 : 10) / scale,
+        );
         ctx.font = `${node.group === "self" ? "700" : "500"} ${fontSize}px ui-sans-serif, system-ui`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillStyle = "rgba(255,255,255,0.9)";
+        ctx.fillStyle = "rgba(255,255,255,0.95)";
+        if (mobile || scale > 0.85) {
+          ctx.shadowColor = "rgba(0,0,0,0.85)";
+          ctx.shadowBlur = 3 / scale;
+        }
         ctx.fillText(label, x, y + r + fontSize + 2);
+        ctx.shadowBlur = 0;
       }
 
       ctx.restore();
@@ -787,18 +835,20 @@ export default function GraphVisualizer({
       isDim,
       clusterColorByMember,
       labelStyle,
+      size.width,
     ],
   );
 
   const paintPointerArea = useCallback(
     (node: FGNode, color: string, ctx: CanvasRenderingContext2D) => {
-      const r = nodeRadius(node) + 5;
+      const mobile = isMobileWidth(size.width);
+      const r = visualNodeRadius(node, mobile) + (mobile ? 8 : 5);
       ctx.beginPath();
       ctx.arc(node.x ?? 0, node.y ?? 0, r, 0, 2 * Math.PI);
       ctx.fillStyle = color;
       ctx.fill();
     },
-    [],
+    [size.width],
   );
 
   const linkTouchesSelection = useCallback(
@@ -865,10 +915,10 @@ export default function GraphVisualizer({
   );
 
   return (
-    <div ref={wrapRef} className={className}>
+    <div ref={wrapRef} className={`max-sm:touch-pan-y sm:touch-none ${className}`}>
       {interactive && showHint && members.length > 0 && (
-        <div className="pointer-events-none absolute bottom-6 left-1/2 z-10 -translate-x-1/2 animate-pulse rounded-full border border-white/15 bg-black/60 px-4 py-1.5 text-[11px] font-medium text-white/70 backdrop-blur">
-          Click anyone to explore their connections
+        <div className="pointer-events-none absolute bottom-4 left-1/2 z-10 max-w-[90%] -translate-x-1/2 animate-pulse rounded-full border border-white/15 bg-black/70 px-3.5 py-1.5 text-center text-[11px] font-medium text-white/75 backdrop-blur sm:bottom-6 sm:max-w-none sm:px-4">
+          Tap anyone to explore their connections
         </div>
       )}
 
@@ -881,7 +931,7 @@ export default function GraphVisualizer({
           backgroundColor="rgba(0,0,0,0)"
           cooldownTicks={0}
           d3AlphaDecay={1}
-          minZoom={0.35}
+          minZoom={isMobileWidth(size.width) ? 0.45 : 0.35}
           maxZoom={6}
           onEngineStop={() => {
             if (didFitRef.current) {
@@ -889,7 +939,8 @@ export default function GraphVisualizer({
               return;
             }
             didFitRef.current = true;
-            fgRef.current?.zoomToFit(700, 120);
+            const mobile = isMobileWidth(size.width);
+            fgRef.current?.zoomToFit(700, mobile ? 28 : 96);
           }}
           onRenderFramePre={renderBackground}
           nodeCanvasObject={paintNode}

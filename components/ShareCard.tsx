@@ -5,13 +5,21 @@ import { motion } from "framer-motion";
 import { Check, Copy, Download, Share2, Twitter } from "lucide-react";
 import type { NetworkStats } from "@/lib/types";
 
+type SharePlatform = "instagram" | "linkedin";
+
+const PLATFORM_LABEL: Record<SharePlatform, string> = {
+  instagram: "Instagram",
+  linkedin: "LinkedIn",
+};
+
 interface Props {
   handle: string;
   stats: NetworkStats;
+  platform: SharePlatform;
   onDownload?: () => void;
 }
 
-export default function ShareCard({ handle, stats, onDownload }: Props) {
+export default function ShareCard({ handle, stats, platform, onDownload }: Props) {
   const [copied, setCopied] = useState(false);
   const [url, setUrl] = useState(`https://social-graph-nu.vercel.app/graph/${handle}/pinned`);
 
@@ -19,7 +27,8 @@ export default function ShareCard({ handle, stats, onDownload }: Props) {
     setUrl(window.location.href);
   }, []);
 
-  const shareText = `I just mapped @${handle}'s visible Instagram interaction clusters - ${stats.circleCount} clusters across the top ${stats.shown} connections. See yours:`;
+  const label = PLATFORM_LABEL[platform];
+  const shareText = `I just mapped @${handle}'s visible ${label} interaction clusters - ${stats.circleCount} clusters across the top ${stats.shown} connections. See yours:`;
 
   async function copy() {
     try {
@@ -34,7 +43,7 @@ export default function ShareCard({ handle, stats, onDownload }: Props) {
   async function nativeShare() {
     if (navigator.share) {
       try {
-        await navigator.share({ title: "Instagram Network Graph", text: shareText, url });
+        await navigator.share({ title: `${label} Network Graph`, text: shareText, url });
       } catch {
         /* user cancelled */
       }

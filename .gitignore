@@ -37,9 +37,7 @@ next-env.d.ts
 
 # Scrape exports and snapshots stay local (or Vercel Blob in prod).
 # Commit Diandra (LinkedIn) + jppap (Instagram) as pinned demos without requiring Blob.
-/data/raw/*.json
 /data/snapshots/*.json
-!data/raw/diandra_linkedin_scrape_71226.json
 !data/snapshots/diandra.json
 !data/snapshots/jppap.json
 !data/snapshots/sebastian-spotify.json

@@ -6,6 +6,7 @@ import {
   isSpotifyTasteResult,
   type SpotifyTasteResult,
 } from "./spotifyTypes";
+import { isCompanyResult, type CompanyResult } from "./companyTypes";
 import { blobConfigured } from "./blob";
 
 const SNAPSHOT_DIR = path.join(process.cwd(), "data", "snapshots");
@@ -177,6 +178,49 @@ export async function readSpotifySnapshot(
     return {
       ...parsed,
       friends: parsed.friends ?? [],
+      pinned: true,
+      cached: true,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Read a company employee snapshot from disk (and Blob when configured).
+ * Separate from social ScrapeResult snapshots.
+ */
+export async function readCompanySnapshot(
+  handle: string,
+): Promise<CompanyResult | null> {
+  const clean = cleanHandle(handle);
+
+  if (blobConfigured()) {
+    try {
+      const meta = await head(snapshotBlobPathname(clean));
+      const response = await fetch(meta.downloadUrl);
+      if (response.ok) {
+        const parsed: unknown = await response.json();
+        if (isCompanyResult(parsed)) {
+          return {
+            ...parsed,
+            pinned: true,
+            cached: true,
+          };
+        }
+      }
+    } catch {
+      // fall through to disk
+    }
+  }
+
+  const file = snapshotPath(clean);
+  if (!fs.existsSync(file)) return null;
+  try {
+    const parsed: unknown = JSON.parse(fs.readFileSync(file, "utf-8"));
+    if (!isCompanyResult(parsed)) return null;
+    return {
+      ...parsed,
       pinned: true,
       cached: true,
     };

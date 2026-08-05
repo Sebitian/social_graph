@@ -75,8 +75,8 @@ export default function GraphNodeSearch({
                     setOpen(true);
                   }}
                   onFocus={() => setOpen(true)}
-                  placeholder="Search people on the map…"
-                  className="w-full min-h-[40px] rounded-xl border border-white/15 bg-black/70 py-2.5 pl-8 pr-8 text-xs text-white outline-none backdrop-blur transition placeholder:text-white/35 focus:border-white/30 focus:bg-black/80 sm:min-h-0 sm:py-2"
+                  placeholder="Search people…"
+                  className="w-full min-h-[36px] rounded-lg border border-white/15 bg-black/75 py-2 pl-8 pr-8 text-xs text-white outline-none backdrop-blur transition placeholder:text-white/35 focus:border-white/30 focus:bg-black/85 sm:min-h-0 sm:rounded-xl sm:py-2"
                 />
         {query ? (
           <button

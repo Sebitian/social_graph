@@ -18,10 +18,10 @@ Scraped JSON lives in **Vercel Blob** (production) or gitignored `data/snapshots
 
 ```bash
 # Import raw export → local snapshot (Instagram comments or LinkedIn HarvestAPI dataset)
-npm run import-raw-snapshot -- diandra data/raw/diandra_linkedin_scrape_71226.json
+npm run import-raw-snapshot -- diandra data/linkedin_raw/profile/diandra_linkedin_scrape_71226.json
 
 # After deploy, push to production Blob
-npm run import-raw-snapshot -- diandra data/raw/diandra_linkedin_scrape_71226.json --push https://your-app.vercel.app
+npm run import-raw-snapshot -- diandra data/linkedin_raw/profile/diandra_linkedin_scrape_71226.json --push https://your-app.vercel.app
 ```
 
 Share link: `/graph/<handle>/pinned`

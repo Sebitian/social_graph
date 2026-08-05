@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "pin-snapshot": "node scripts/pin-snapshot.mjs",
     "import-raw-snapshot": "npx tsx scripts/import-raw-snapshot.ts",
-    "import-spotify-snapshot": "npx tsx scripts/import-spotify-snapshot.ts"
+    "import-spotify-snapshot": "npx tsx scripts/import-spotify-snapshot.ts",
+    "import-company-snapshot": "npx tsx scripts/import-company-snapshot.ts"
   },
   "dependencies": {
     "@vercel/blob": "^2.5.0",

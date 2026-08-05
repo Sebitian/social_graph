@@ -28,3 +28,27 @@ export function SpotifyIcon({ title = "Spotify", ...props }: IconProps) {
     </svg>
   );
 }
+
+export function CompanyIcon({ title = "Company", ...props }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden={title ? undefined : true}
+      {...props}
+    >
+      {title ? <title>{title}</title> : null}
+      <path d="M3 21h18" />
+      <path d="M5 21V7l7-4 7 4v14" />
+      <path d="M9 21v-4h6v4" />
+      <path d="M9 9h.01" />
+      <path d="M15 9h.01" />
+      <path d="M9 13h.01" />
+      <path d="M15 13h.01" />
+    </svg>
+  );
+}

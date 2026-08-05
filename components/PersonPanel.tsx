@@ -201,6 +201,8 @@ interface Props {
   friendCluster?: Circle;
   onClose: () => void;
   platform?: "instagram" | "linkedin" | "spotify" | null;
+  /** Inline card in page flow (mobile detail slot). Default: overlay portal. */
+  variant?: "overlay" | "inline";
 }
 
 export default function PersonPanel({
@@ -209,6 +211,7 @@ export default function PersonPanel({
   friendCluster,
   onClose,
   platform = null,
+  variant = "overlay",
 }: Props) {
   const color = proximityRing?.color ?? friendCluster?.color ?? "#94a3b8";
   const initial = (node?.label ?? "?").charAt(0).toUpperCase();
@@ -234,13 +237,13 @@ export default function PersonPanel({
   const isOpen = Boolean(node && node.group !== "self");
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || variant === "inline") return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = prev;
     };
-  }, [isOpen, node?.id]);
+  }, [isOpen, node?.id, variant]);
 
   const tags = useMemo(() => (node ? deriveSimpleTags(node) : []), [node]);
   const explanation = useMemo(
@@ -251,9 +254,204 @@ export default function PersonPanel({
   const reactionParts = reactionEntries(node?.reactionsByType);
   const reactionBreakdown = formatReactionBreakdown(node?.reactionsByType);
 
+  const panelBody = isOpen && node && (
+    <>
+      <div className="relative shrink-0 border-b border-white/10 px-4 pb-3 pt-4">
+        <button
+          onClick={onClose}
+          className="absolute right-2 top-2 flex h-11 w-11 items-center justify-center rounded-full text-white/40 transition hover:bg-white/10 hover:text-white sm:right-3 sm:top-3 sm:h-8 sm:w-8"
+          aria-label="Close"
+        >
+          <X className="h-5 w-5 sm:h-4 sm:w-4" />
+        </button>
+
+        <div className="flex items-center gap-3 pr-8">
+          {avatarSrc && !avatarFailed ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={avatarSrc}
+              alt={node.label}
+              referrerPolicy="no-referrer"
+              onError={() => setAvatarFailed(true)}
+              className="h-12 w-12 rounded-full object-cover ring-2"
+              style={{ boxShadow: `0 0 0 2px ${color}` }}
+            />
+          ) : (
+            <div
+              className="flex h-12 w-12 items-center justify-center rounded-full text-lg font-bold text-white"
+              style={{ background: `linear-gradient(135deg, ${color}, #07060d)` }}
+            >
+              {initial}
+            </div>
+          )}
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5">
+              <span className="truncate font-semibold text-white">
+                {node.fullName || node.label}
+              </span>
+              {node.isVerified && (
+                <BadgeCheck className="h-4 w-4 shrink-0 text-ig-blue" />
+              )}
+            </div>
+            <div className="truncate text-sm text-white/50">@{node.label}</div>
+            {proximityRing && (
+              <span
+                className="mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px]"
+                style={{ backgroundColor: `${color}22`, color }}
+              >
+                <span
+                  className="h-1.5 w-1.5 rounded-full"
+                  style={{ backgroundColor: color }}
+                />
+                {proximityRing.label}
+              </span>
+            )}
+            {friendCluster && (
+              <span
+                className="mt-1 ml-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px]"
+                style={{
+                  backgroundColor: `${friendCluster.color}22`,
+                  color: friendCluster.color,
+                }}
+              >
+                {friendCluster.label}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain touch-pan-y px-4 py-3">
+        <div className="grid grid-cols-2 gap-2 text-sm">
+          <div className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 sm:px-3">
+            <div className="text-[11px] text-white/35">Their comments</div>
+            <div className="mt-0.5 flex items-center gap-1 font-semibold text-white">
+              <MessageCircle className="h-3.5 w-3.5" style={{ color }} />
+              {node.comments}
+            </div>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 sm:px-3">
+            <div className="text-[11px] text-white/35">Their reactions</div>
+            <div className="mt-0.5 flex items-center gap-1 font-semibold text-white">
+              <Heart className="h-3.5 w-3.5" style={{ color }} />
+              {node.reactionsTotal ?? 0}
+            </div>
+            {reactionParts.length > 0 && (
+              <div className="mt-1.5 flex flex-wrap gap-1">
+                {reactionParts.map(({ type, emoji, title, count }) => (
+                  <span
+                    key={type}
+                    title={title}
+                    className="inline-flex items-center gap-0.5 rounded-full border border-white/10 bg-black/30 px-1.5 py-0.5 text-[11px] text-white/80"
+                  >
+                    <span aria-hidden>{emoji}</span>
+                    <span className="tabular-nums">{count}</span>
+                    <span className="sr-only">{title}</span>
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+            <div className="text-[11px] text-white/35">Last interaction</div>
+            <div className="mt-0.5 font-semibold text-white">
+              {history.length > 0
+                ? formatRecentDays(features?.mostRecentDaysAgo)
+                : (node.reactionsTotal ?? 0) > 0
+                  ? "Reactions only"
+                  : "unknown"}
+            </div>
+          </div>
+          {typeof node.totalPostsScraped === "number" &&
+            node.totalPostsScraped > 0 && (
+              <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                <div className="text-[11px] text-white/35">Post coverage</div>
+                <div className="mt-0.5 text-xs font-semibold leading-snug text-white">
+                  {node.postsCommentedOn ?? 0}/{node.totalPostsScraped} commented
+                </div>
+                <div className="mt-0.5 text-xs font-semibold leading-snug text-white">
+                  {node.postsReactedTo ?? 0}/{node.totalPostsScraped} reacted
+                </div>
+              </div>
+            )}
+          {features?.reciprocityObserved && (
+            <div className="col-span-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+              <div className="text-[11px] text-white/35">You on their posts</div>
+              <div className="mt-0.5 font-semibold text-white">
+                {(features.outboundCommentsFromTarget ?? 0) > 0
+                  ? `${features.outboundCommentsFromTarget} visible comment${
+                      features.outboundCommentsFromTarget === 1 ? "" : "s"
+                    }`
+                  : "None observed (public posts only)"}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {tags.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-white/75"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {explanation && (
+          <p className="mt-3 rounded-xl border border-white/10 bg-black/25 px-3 py-2.5 text-xs leading-relaxed text-white/60">
+            {explanation}
+          </p>
+        )}
+
+        <div className="mt-4 border-t border-white/10 pt-3">
+          {history.length > 0 ? (
+            <>
+              <h3 className="mb-2 text-xs font-semibold text-white/70">
+                What they wrote
+              </h3>
+              <CommentReceiptList key={node.id} history={history} />
+            </>
+          ) : (node.reactionsTotal ?? 0) > 0 ? (
+            <p className="text-xs leading-relaxed text-white/50">
+              No comments — but they reacted to{" "}
+              <span className="font-semibold text-white/80">
+                {node.postsReactedTo ?? node.reactionsTotal}
+                {typeof node.totalPostsScraped === "number"
+                  ? ` of your ${node.totalPostsScraped}`
+                  : ""}{" "}
+                posts
+              </span>
+              {reactionBreakdown ? ` (${reactionBreakdown})` : ""}.
+            </p>
+          ) : (
+            <p className="text-xs leading-relaxed text-white/40">
+              No comments from this person were returned by the scrape.
+            </p>
+          )}
+        </div>
+      </div>
+    </>
+  );
+
   const panel = (
     <AnimatePresence>
-      {isOpen && node && (
+      {isOpen && node && variant === "inline" && (
+        <motion.div
+          key={node.id}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 8 }}
+          transition={{ duration: 0.2 }}
+          className="flex max-h-[min(52dvh,480px)] flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/85 backdrop-blur-xl"
+        >
+          {panelBody}
+        </motion.div>
+      )}
+      {isOpen && node && variant === "overlay" && (
         <>
           <motion.button
             type="button"
@@ -277,190 +475,16 @@ export default function PersonPanel({
             onWheel={(event) => event.stopPropagation()}
           >
             <div className="mx-auto mt-2 h-1 w-10 shrink-0 rounded-full bg-white/20 sm:hidden" />
-
-            <div className="relative shrink-0 border-b border-white/10 px-4 pb-3 pt-4">
-              <button
-                onClick={onClose}
-                className="absolute right-2 top-2 flex h-11 w-11 items-center justify-center rounded-full text-white/40 transition hover:bg-white/10 hover:text-white sm:right-3 sm:top-3 sm:h-8 sm:w-8"
-                aria-label="Close"
-              >
-                <X className="h-5 w-5 sm:h-4 sm:w-4" />
-              </button>
-
-              <div className="flex items-center gap-3 pr-8">
-                {avatarSrc && !avatarFailed ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={avatarSrc}
-                    alt={node.label}
-                    referrerPolicy="no-referrer"
-                    onError={() => setAvatarFailed(true)}
-                    className="h-12 w-12 rounded-full object-cover ring-2"
-                    style={{ boxShadow: `0 0 0 2px ${color}` }}
-                  />
-                ) : (
-                  <div
-                    className="flex h-12 w-12 items-center justify-center rounded-full text-lg font-bold text-white"
-                    style={{ background: `linear-gradient(135deg, ${color}, #07060d)` }}
-                  >
-                    {initial}
-                  </div>
-                )}
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <span className="truncate font-semibold text-white">
-                      {node.fullName || node.label}
-                    </span>
-                    {node.isVerified && (
-                      <BadgeCheck className="h-4 w-4 shrink-0 text-ig-blue" />
-                    )}
-                  </div>
-                  <div className="truncate text-sm text-white/50">@{node.label}</div>
-                  {proximityRing && (
-                    <span
-                      className="mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px]"
-                      style={{ backgroundColor: `${color}22`, color }}
-                    >
-                      <span
-                        className="h-1.5 w-1.5 rounded-full"
-                        style={{ backgroundColor: color }}
-                      />
-                      {proximityRing.label}
-                    </span>
-                  )}
-                  {friendCluster && (
-                    <span
-                      className="mt-1 ml-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px]"
-                      style={{
-                        backgroundColor: `${friendCluster.color}22`,
-                        color: friendCluster.color,
-                      }}
-                    >
-                      {friendCluster.label}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain touch-pan-y px-4 py-3">
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 sm:px-3">
-                  <div className="text-[11px] text-white/35">Their comments</div>
-                  <div className="mt-0.5 flex items-center gap-1 font-semibold text-white">
-                    <MessageCircle className="h-3.5 w-3.5" style={{ color }} />
-                    {node.comments}
-                  </div>
-                </div>
-                <div className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 sm:px-3">
-                  <div className="text-[11px] text-white/35">Their reactions</div>
-                  <div className="mt-0.5 flex items-center gap-1 font-semibold text-white">
-                    <Heart className="h-3.5 w-3.5" style={{ color }} />
-                    {node.reactionsTotal ?? 0}
-                  </div>
-                  {reactionParts.length > 0 && (
-                    <div className="mt-1.5 flex flex-wrap gap-1">
-                      {reactionParts.map(({ type, emoji, title, count }) => (
-                        <span
-                          key={type}
-                          title={title}
-                          className="inline-flex items-center gap-0.5 rounded-full border border-white/10 bg-black/30 px-1.5 py-0.5 text-[11px] text-white/80"
-                        >
-                          <span aria-hidden>{emoji}</span>
-                          <span className="tabular-nums">{count}</span>
-                          <span className="sr-only">{title}</span>
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
-                  <div className="text-[11px] text-white/35">Last interaction</div>
-                  <div className="mt-0.5 font-semibold text-white">
-                    {history.length > 0
-                      ? formatRecentDays(features?.mostRecentDaysAgo)
-                      : (node.reactionsTotal ?? 0) > 0
-                        ? "Reactions only"
-                        : "unknown"}
-                  </div>
-                </div>
-                {typeof node.totalPostsScraped === "number" &&
-                  node.totalPostsScraped > 0 && (
-                    <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
-                      <div className="text-[11px] text-white/35">Post coverage</div>
-                      <div className="mt-0.5 text-xs font-semibold leading-snug text-white">
-                        {node.postsCommentedOn ?? 0}/{node.totalPostsScraped} commented
-                      </div>
-                      <div className="mt-0.5 text-xs font-semibold leading-snug text-white">
-                        {node.postsReactedTo ?? 0}/{node.totalPostsScraped} reacted
-                      </div>
-                    </div>
-                  )}
-                {features?.reciprocityObserved && (
-                  <div className="col-span-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
-                    <div className="text-[11px] text-white/35">You on their posts</div>
-                    <div className="mt-0.5 font-semibold text-white">
-                      {(features.outboundCommentsFromTarget ?? 0) > 0
-                        ? `${features.outboundCommentsFromTarget} visible comment${
-                            features.outboundCommentsFromTarget === 1 ? "" : "s"
-                          }`
-                        : "None observed (public posts only)"}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {tags.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-white/75"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              {explanation && (
-                <p className="mt-3 rounded-xl border border-white/10 bg-black/25 px-3 py-2.5 text-xs leading-relaxed text-white/60">
-                  {explanation}
-                </p>
-              )}
-
-              <div className="mt-4 border-t border-white/10 pt-3">
-                {history.length > 0 ? (
-                  <>
-                    <h3 className="mb-2 text-xs font-semibold text-white/70">
-                      What they wrote
-                    </h3>
-                    <CommentReceiptList key={node.id} history={history} />
-                  </>
-                ) : (node.reactionsTotal ?? 0) > 0 ? (
-                  <p className="text-xs leading-relaxed text-white/50">
-                    No comments — but they reacted to{" "}
-                    <span className="font-semibold text-white/80">
-                      {node.postsReactedTo ?? node.reactionsTotal}
-                      {typeof node.totalPostsScraped === "number"
-                        ? ` of your ${node.totalPostsScraped}`
-                        : ""}{" "}
-                      posts
-                    </span>
-                    {reactionBreakdown ? ` (${reactionBreakdown})` : ""}.
-                  </p>
-                ) : (
-                  <p className="text-xs leading-relaxed text-white/40">
-                    No comments from this person were returned by the scrape.
-                  </p>
-                )}
-              </div>
-            </div>
+            {panelBody}
           </motion.div>
         </>
       )}
     </AnimatePresence>
   );
+
+  if (variant === "inline") {
+    return panel;
+  }
 
   if (typeof document !== "undefined") {
     return createPortal(panel, document.body);

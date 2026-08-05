@@ -14,9 +14,11 @@ export function resolveProfilePicUrl(
   platform?: "instagram" | "linkedin" | "spotify" | null,
 ): string | undefined {
   const handle = username.replace(/^@/, "").trim();
-  if (platform === "instagram" && handle) {
+  const scraped = profilePicUrl?.trim();
+  // Only hit the live Instagram avatar proxy when we have a scraped URL to refresh.
+  // Demo data leaves profilePicUrl empty, so this stays fully offline during testing.
+  if (platform === "instagram" && handle && scraped) {
     return instagramAvatarUrl(handle);
   }
-  const scraped = profilePicUrl?.trim();
   return scraped || undefined;
 }

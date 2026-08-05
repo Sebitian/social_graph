@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import GraphResult from "@/components/GraphResult";
-import { readSnapshot, readSpotifySnapshot } from "@/lib/snapshot";
+import { readSnapshot, readSpotifySnapshot, readCompanySnapshot } from "@/lib/snapshot";
 
 interface PageProps {
   params: Promise<{ handle: string }>;
@@ -21,6 +21,7 @@ export async function generateMetadata({
 const COMPANION_SNAPSHOTS = {
   instagram: "jppap",
   spotify: "sebastian-spotify",
+  company: "nousresearch",
 } as const;
 
 export default async function PinnedGraphPage({ params }: PageProps) {
@@ -32,6 +33,7 @@ export default async function PinnedGraphPage({ params }: PageProps) {
       ? snapshot
       : await readSnapshot(COMPANION_SNAPSHOTS.instagram);
   const spotifyData = await readSpotifySnapshot(COMPANION_SNAPSHOTS.spotify);
+  const companyData = await readCompanySnapshot(COMPANION_SNAPSHOTS.company);
 
   const initialPlatformData = {
     ...(snapshot?.posts?.length
@@ -50,6 +52,7 @@ export default async function PinnedGraphPage({ params }: PageProps) {
       initialData={snapshot}
       initialPlatformData={initialPlatformData}
       spotifyData={spotifyData}
+      companyData={companyData}
     />
   );
 }

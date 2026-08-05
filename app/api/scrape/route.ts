@@ -11,6 +11,10 @@ export async function GET(req: NextRequest) {
   const handle = req.nextUrl.searchParams.get("handle");
   const force = req.nextUrl.searchParams.get("force") === "1";
   const pinned = req.nextUrl.searchParams.get("pinned") === "1";
+  const platform =
+    req.nextUrl.searchParams.get("platform") === "linkedin"
+      ? "linkedin"
+      : "instagram";
   const budget = parseScrapeBudgetParams(req.nextUrl.searchParams);
 
   if (!handle) {
@@ -34,7 +38,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const result = await getNetwork(handle, { force, budget });
+    const result = await getNetwork(handle, { platform, force, budget });
     return NextResponse.json(result, {
       headers: { "Cache-Control": "public, s-maxage=3600" },
     });
