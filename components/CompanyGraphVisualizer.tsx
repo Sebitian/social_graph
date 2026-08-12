@@ -170,14 +170,18 @@ export default function CompanyGraphVisualizer({
     let cancelled = false;
     let loaded = 0;
 
-    for (const url of urls) {
-      if (cache.has(url)) continue;
+    for (const remote of urls) {
+      const url = remote.startsWith("http")
+        ? `/api/avatar/image?url=${encodeURIComponent(remote)}`
+        : remote;
+      if (cache.has(url) || cache.has(remote)) continue;
       const img = new Image();
       img.decoding = "async";
       img.crossOrigin = "anonymous";
       img.onload = () => {
         if (cancelled) return;
         cache.set(url, img);
+        cache.set(remote, img);
         loaded += 1;
         if (loaded % 2 === 0 || loaded === urls.length) {
           setImageRevision((r) => r + 1);

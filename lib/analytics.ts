@@ -238,6 +238,10 @@ export interface AnalyticsPostRow {
   comments: number;
   reactions: number;
   value: number;
+  /** Aggregate reel/video plays when the post scraper provides them. */
+  plays?: number;
+  shares?: number;
+  postType?: string;
 }
 
 export interface AnalyticsBreakdownRow {
@@ -268,6 +272,21 @@ export interface SocialAnalyticsOverview {
   newProfiles: AnalyticsPersonRow[];
   topPosts: AnalyticsPostRow[];
   reactionMix: AnalyticsBreakdownRow[];
+  /**
+   * True when posts carry aggregate likes/plays from the scraper
+   * (Instagram post/reel exports) rather than only person-level reactions.
+   */
+  hasPostMetrics: boolean;
+  /** Sum of post likesCount in range (0 when unavailable). */
+  postLikes: number;
+  /** Sum of reel/video plays in range (0 when unavailable). */
+  postPlays: number;
+  /** Sum of reel shares in range (0 when unavailable). */
+  postShares: number;
+  postLikesDelta: AnalyticsDelta;
+  postPlaysDelta: AnalyticsDelta;
+  postLikesSeries: ChartPoint[];
+  postPlaysSeries: ChartPoint[];
 }
 
 function memberNodes(data: ScrapeResult): GraphNode[] {
@@ -289,6 +308,31 @@ function formatPersonMetric(comments: number, reactions: number): string {
   if (reactions > 0)
     parts.push(`${reactions} reaction${reactions === 1 ? "" : "s"}`);
   return parts.join(" · ") || "Active";
+}
+
+/** Soft graph-presence rows (followers/tags) — not real comment events. */
+function isSoftPresenceComment(c: {
+  post?: string;
+  text?: string;
+}): boolean {
+  const post = c.post ?? "";
+  if (
+    post === "Follower" ||
+    post === "Following" ||
+    post === "Tagged" ||
+    post === "Mentioned"
+  ) {
+    return true;
+  }
+  const text = c.text ?? "";
+  return (
+    text === "Follows this account" ||
+    text === "Account follows this profile" ||
+    text === "Follows this Page" ||
+    text === "Page follows this account" ||
+    text === "Tagged in this reel" ||
+    text === "Mentioned in this reel"
+  );
 }
 
 export function computeSocialAnalytics(
@@ -343,6 +387,8 @@ export function computeSocialAnalytics(
     const nodeId = node.id || node.label;
 
     for (const c of history) {
+      if (isSoftPresenceComment(c)) continue;
+
       const ms = commentMs(c.when, c.timestamp, now);
       if (ms != null) {
         if (firstMs == null || ms < firstMs) firstMs = ms;
@@ -430,15 +476,72 @@ export function computeSocialAnalytics(
     }
   }
 
+  let postLikes = 0;
+  let postPlays = 0;
+  let postShares = 0;
+  let postCommentsAgg = 0;
+  let prevPostLikes = 0;
+  let prevPostPlays = 0;
+  let prevPostCommentsAgg = 0;
+  const likeEvents: { t: number; weight?: number }[] = [];
+  const playEvents: { t: number; weight?: number }[] = [];
+  const postCommentEvents: { t: number; weight?: number }[] = [];
+  let hasPostMetrics = false;
+
   for (const post of posts) {
     const ms = parseEventMs(post.postedAt, now);
+    const likes = post.likesCount ?? 0;
+    const plays = post.videoPlayCount ?? 0;
+    const shares = post.sharesCount ?? 0;
+    const postComments = post.commentsCount ?? 0;
+    if (
+      post.likesCount != null ||
+      post.videoPlayCount != null ||
+      post.sharesCount != null ||
+      post.commentsCount != null
+    ) {
+      hasPostMetrics = true;
+    }
+
     if (inRange(ms, range, now)) {
       postsTouched.add(post.id);
       if (ms != null) postEvents.push({ t: ms, id: post.id });
+      postLikes += likes;
+      postPlays += plays;
+      postShares += shares;
+      postCommentsAgg += postComments;
+      if (ms != null) {
+        if (likes > 0) likeEvents.push({ t: ms, weight: likes });
+        if (plays > 0) playEvents.push({ t: ms, weight: plays });
+        if (postComments > 0) {
+          postCommentEvents.push({ t: ms, weight: postComments });
+        }
+      }
+      // Prefer aggregate post metrics for the Posts leaderboard when present.
+      if (hasPostMetrics) {
+        const cur = postStats.get(post.id) ?? { comments: 0, reactions: 0 };
+        if (postComments > cur.comments) cur.comments = postComments;
+        if (likes > cur.reactions) cur.reactions = likes;
+        postStats.set(post.id, cur);
+      }
     }
     if (prev && inWindow(ms, prev.startMs, prev.endMs)) {
       prevPosts.add(post.id);
+      prevPostLikes += likes;
+      prevPostPlays += plays;
+      prevPostCommentsAgg += postComments;
     }
+  }
+
+  // When posts expose aggregate engagement, prefer those totals over person
+  // history (follower soft-presence rows would otherwise inflate comments).
+  if (hasPostMetrics && postLikes > reactions) {
+    reactions = postLikes;
+    prevReactions = prevPostLikes;
+  }
+  if (hasPostMetrics && postCommentsAgg >= comments) {
+    comments = postCommentsAgg;
+    prevComments = prevPostCommentsAgg;
   }
 
   // Unique engagers per bucket
@@ -507,6 +610,8 @@ export function computeSocialAnalytics(
   const topPosts: AnalyticsPostRow[] = [...postStats.entries()]
     .map(([id, stats]) => {
       const post = postById.get(id);
+      const plays = post?.videoPlayCount ?? 0;
+      const shares = post?.sharesCount ?? 0;
       return {
         id,
         label: post?.label ?? id,
@@ -514,7 +619,10 @@ export function computeSocialAnalytics(
         imageUrl: post?.imageUrl,
         comments: stats.comments,
         reactions: stats.reactions,
-        value: stats.comments + stats.reactions,
+        plays: plays || undefined,
+        shares: shares || undefined,
+        postType: post?.postType,
+        value: stats.comments + stats.reactions + plays,
       };
     })
     .sort((a, b) => b.value - a.value)
@@ -529,13 +637,21 @@ export function computeSocialAnalytics(
       value,
     }));
 
-  const commentsSeries = bucketSeriesPoints(commentEvents, range, now);
-  const reactionsSeries = bucketSeriesPoints(reactionEvents, range, now);
+  const commentsSeries =
+    hasPostMetrics && postCommentEvents.length > 0
+      ? bucketSeriesPoints(postCommentEvents, range, now)
+      : bucketSeriesPoints(commentEvents, range, now);
+  const reactionsSeries =
+    hasPostMetrics && likeEvents.length > 0
+      ? bucketSeriesPoints(likeEvents, range, now)
+      : bucketSeriesPoints(reactionEvents, range, now);
   const postsSeries = bucketSeriesPoints(
     postEvents.map((e) => ({ t: e.t })),
     range,
     now,
   );
+  const postLikesSeries = bucketSeriesPoints(likeEvents, range, now);
+  const postPlaysSeries = bucketSeriesPoints(playEvents, range, now);
 
   return {
     comments,
@@ -560,6 +676,14 @@ export function computeSocialAnalytics(
     newProfiles,
     topPosts,
     reactionMix,
+    hasPostMetrics,
+    postLikes,
+    postPlays,
+    postShares,
+    postLikesDelta: { pct: percentDelta(postLikes, prevPostLikes) },
+    postPlaysDelta: { pct: percentDelta(postPlays, prevPostPlays) },
+    postLikesSeries,
+    postPlaysSeries,
   };
 }
 

@@ -93,15 +93,45 @@ export default function SocialAnalyticsBody({
       ),
     }));
 
-  return (
-    <AnalyticsDashboardShell
-      accent={ACCENT[platform]}
-      chartEmptyLabel={
-        overview.hasDatedEvents
-          ? "No activity in this range"
-          : "Few dated events in this snapshot"
-      }
-      metrics={[
+  const usePostMetrics = overview.hasPostMetrics;
+  const showPlays = usePostMetrics && overview.postPlays > 0;
+
+  const metrics = showPlays
+    ? [
+        {
+          id: "plays",
+          label: "Plays",
+          value: compactNumber(overview.postPlays),
+          delta: overview.postPlaysDelta,
+          series: overview.postPlaysSeries,
+        },
+        {
+          id: "likes",
+          label: "Likes",
+          value: compactNumber(overview.postLikes || overview.reactions),
+          delta: overview.postLikesDelta.pct != null
+            ? overview.postLikesDelta
+            : overview.reactionsDelta,
+          series: overview.postLikesSeries.length
+            ? overview.postLikesSeries
+            : overview.reactionsSeries,
+        },
+        {
+          id: "comments",
+          label: "Comments",
+          value: compactNumber(overview.comments),
+          delta: overview.commentsDelta,
+          series: overview.commentsSeries,
+        },
+        {
+          id: "posts",
+          label: "Posts",
+          value: compactNumber(overview.postsTouched),
+          delta: overview.postsDelta,
+          series: overview.postsSeries,
+        },
+      ]
+    : [
         {
           id: "comments",
           label: "Comments",
@@ -111,7 +141,7 @@ export default function SocialAnalyticsBody({
         },
         {
           id: "reactions",
-          label: "Reactions",
+          label: usePostMetrics ? "Likes" : "Reactions",
           value: compactNumber(overview.reactions),
           delta: overview.reactionsDelta,
           series: overview.reactionsSeries,
@@ -130,7 +160,17 @@ export default function SocialAnalyticsBody({
           delta: overview.postsDelta,
           series: overview.postsSeries,
         },
-      ]}
+      ];
+
+  return (
+    <AnalyticsDashboardShell
+      accent={ACCENT[platform]}
+      chartEmptyLabel={
+        overview.hasDatedEvents
+          ? "No activity in this range"
+          : "Few dated events in this snapshot"
+      }
+      metrics={metrics}
       primary={{
         tabs: [
           {
@@ -138,28 +178,44 @@ export default function SocialAnalyticsBody({
             label: "Posts",
             valueHeader: "Engagement",
             empty: "No posts touched in this range",
-            rows: overview.topPosts.map((post) => ({
-              id: post.id,
-              label: post.label,
-              subtitle:
-                post.comments || post.reactions
-                  ? `${post.comments} comments · ${post.reactions} reactions`
-                  : undefined,
-              value: post.value,
-              valueLabel: compactNumber(post.value),
-              leading: post.imageUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={post.imageUrl}
-                  alt=""
-                  className="h-7 w-7 rounded-md object-cover ring-1 ring-white/15"
-                />
-              ) : (
-                <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white/10 text-[10px] text-white/45">
-                  #
-                </span>
-              ),
-            })),
+            rows: overview.topPosts.map((post) => {
+              const parts: string[] = [];
+              if (post.plays) parts.push(`${compactNumber(post.plays)} plays`);
+              if (post.reactions) {
+                parts.push(
+                  `${compactNumber(post.reactions)} ${usePostMetrics ? "likes" : "reactions"}`,
+                );
+              }
+              if (post.comments) {
+                parts.push(
+                  `${compactNumber(post.comments)} comment${post.comments === 1 ? "" : "s"}`,
+                );
+              }
+              if (post.shares) {
+                parts.push(`${compactNumber(post.shares)} shares`);
+              }
+              return {
+                id: post.id,
+                label: post.label,
+                subtitle: parts.length
+                  ? parts.join(" · ")
+                  : post.postType || undefined,
+                value: post.value,
+                valueLabel: compactNumber(post.value),
+                leading: post.imageUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={post.imageUrl}
+                    alt=""
+                    className="h-7 w-7 rounded-md object-cover ring-1 ring-white/15"
+                  />
+                ) : (
+                  <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white/10 text-[10px] text-white/45">
+                    #
+                  </span>
+                ),
+              };
+            }),
           },
           {
             id: "new",

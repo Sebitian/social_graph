@@ -76,7 +76,7 @@ export default function GraphNodeSearch({
                   }}
                   onFocus={() => setOpen(true)}
                   placeholder="Search people…"
-                  className="w-full min-h-[36px] rounded-lg border border-white/15 bg-black/75 py-2 pl-8 pr-8 text-xs text-white outline-none backdrop-blur transition placeholder:text-white/35 focus:border-white/30 focus:bg-black/85 sm:min-h-0 sm:rounded-xl sm:py-2"
+                  className="h-9 w-full rounded-full border-0 bg-black/55 py-0 pl-8 pr-8 text-xs text-white shadow-[0_4px_20px_rgba(0,0,0,0.35)] outline-none ring-1 ring-white/10 backdrop-blur-md transition placeholder:text-white/35 focus:bg-black/70 focus:ring-white/20"
                 />
         {query ? (
           <button
@@ -91,7 +91,7 @@ export default function GraphNodeSearch({
       </label>
 
       {open && query.trim() ? (
-        <ul className="absolute left-0 right-0 top-[calc(100%+6px)] z-30 max-h-64 overflow-y-auto rounded-xl border border-white/15 bg-black/90 py-1 shadow-xl backdrop-blur">
+        <ul className="absolute left-0 right-0 top-[calc(100%+6px)] z-30 max-h-64 overflow-y-auto rounded-2xl border-0 bg-black/80 py-1 shadow-[0_12px_40px_rgba(0,0,0,0.55)] ring-1 ring-white/10 backdrop-blur-xl">
           {matches.length === 0 ? (
             <li className="px-3 py-2 text-xs text-white/40">No matches</li>
           ) : (

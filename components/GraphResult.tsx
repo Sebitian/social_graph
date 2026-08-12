@@ -1163,26 +1163,46 @@ export default function GraphResult({
             </div>
 
             <div className="relative min-h-[260px] flex-1 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04)_0%,transparent_55%)]">
-              <button
-                type="button"
-                onClick={() =>
+              {/* Top overlay controls — single row so search + exit stay aligned */}
+              <div
+                className={`pointer-events-none absolute inset-x-0 z-30 flex items-center gap-2 ${
                   graphFullscreen
-                    ? setGraphFullscreen(false)
-                    : setGraphFullscreen(true)
-                }
-                aria-label={graphFullscreen ? "Exit full screen" : "Full screen"}
-                className={`absolute z-30 flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-black/75 text-white/75 shadow-lg backdrop-blur transition hover:bg-black/90 hover:text-white active:scale-95 ${
-                  graphFullscreen
-                    ? "right-3 top-[max(0.75rem,env(safe-area-inset-top))]"
-                    : "right-2 top-2 sm:right-3 sm:top-3"
+                    ? "top-0 px-3 pt-[max(0.75rem,env(safe-area-inset-top))]"
+                    : "top-0 px-1.5 pt-1.5 sm:px-3 sm:pt-3"
                 }`}
               >
-                {graphFullscreen ? (
-                  <X className="h-4 w-4" />
+                {!isLinkedInCompany &&
+                !isAlternatePlatform &&
+                activeData &&
+                view === "map" ? (
+                  <div className="pointer-events-auto min-w-0 flex-1 sm:max-w-[280px]">
+                    <GraphNodeSearch
+                      nodes={activeData.graph.nodes}
+                      selectedId={selected?.id ?? null}
+                      onSelect={setSelected}
+                      platform={platform}
+                    />
+                  </div>
                 ) : (
-                  <Maximize2 className="h-4 w-4" />
+                  <div className="min-w-0 flex-1" />
                 )}
-              </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    graphFullscreen
+                      ? setGraphFullscreen(false)
+                      : setGraphFullscreen(true)
+                  }
+                  aria-label={graphFullscreen ? "Exit full screen" : "Full screen"}
+                  className="pointer-events-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-0 bg-black/55 text-white/75 shadow-[0_4px_20px_rgba(0,0,0,0.35)] ring-1 ring-white/10 backdrop-blur-md transition hover:bg-black/70 hover:text-white active:scale-95"
+                >
+                  {graphFullscreen ? (
+                    <X className="h-4 w-4" />
+                  ) : (
+                    <Maximize2 className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
 
               {isLinkedInCompany ? (
                 companyResult ? (
@@ -1325,16 +1345,14 @@ export default function GraphResult({
                     selectedId={selected?.id ?? null}
                     onSelect={setSelected}
                     labelStyle={platform === "instagram" ? "handles" : "auto"}
+                    platform={
+                      platform === "instagram" ||
+                      platform === "linkedin" ||
+                      platform === "facebook"
+                        ? platform
+                        : null
+                    }
                   />
-
-                  <div className="absolute left-1.5 right-12 top-1.5 z-20 sm:left-4 sm:right-auto sm:top-3 sm:w-[280px]">
-                    <GraphNodeSearch
-                      nodes={activeData.graph.nodes}
-                      selectedId={selected?.id ?? null}
-                      onSelect={setSelected}
-                      platform={platform}
-                    />
-                  </div>
 
                   {/* Mobile: compact horizontal groups strip */}
                   <div className="pointer-events-none absolute inset-x-1.5 bottom-1.5 z-10 flex gap-1 overflow-x-auto rounded-md border border-white/10 bg-black/65 px-1.5 py-1 backdrop-blur sm:hidden">

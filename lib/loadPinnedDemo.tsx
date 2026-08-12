@@ -10,7 +10,7 @@ import type { ScrapeResult, SocialSourcePlatform } from "@/lib/types";
 
 /** Extra platform demos loaded alongside the primary pinned handle. */
 export const COMPANION_SNAPSHOTS = {
-  instagram: "jppap",
+  instagram: "kossof-instagram",
   spotify: "sebastian-spotify",
   company: "formationbio",
   facebook: "kossof-facebook",

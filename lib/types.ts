@@ -234,6 +234,16 @@ export interface ProfilePost {
   postedAt?: string;
   /** First post image / document cover / repost image, when available. */
   imageUrl?: string;
+  /** Aggregate likes from the post/reel scraper (Instagram, etc.). */
+  likesCount?: number;
+  /** Aggregate comment count reported by the platform. */
+  commentsCount?: number;
+  /** Share count when the scraper provides it (reels). */
+  sharesCount?: number;
+  /** Video/reel play count when available. */
+  videoPlayCount?: number;
+  /** Platform media type: Image, Video, Sidecar, Reel, etc. */
+  postType?: string;
 }
 
 /** Per-post engagement for one person on one of your posts. */

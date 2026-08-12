@@ -22,6 +22,11 @@ import {
   strongestTies,
   UNCLUSTERED_COLOR,
 } from "@/lib/graphUtils";
+import {
+  proxiedAvatarUrl,
+  resolveProfilePicUrl,
+  type AvatarPlatform,
+} from "@/lib/avatarUrl";
 
 type FGNode = GraphNode & {
   x?: number;
@@ -342,6 +347,8 @@ interface Props {
    * handles — always show @handle under every node (Instagram)
    */
   labelStyle?: "auto" | "handles";
+  /** Drives live avatar proxies (LinkedIn / Instagram CDN links expire). */
+  platform?: AvatarPlatform;
 }
 
 export default function GraphVisualizer({
@@ -351,11 +358,12 @@ export default function GraphVisualizer({
   selectedId = null,
   onSelect,
   labelStyle = "auto",
+  platform = null,
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const fgRef = useRef<ForceGraphInstance | null>(null);
   const avatarCacheRef = useRef(new Map<string, AvatarCacheEntry>());
-  /** Best avatar URL per node id (primary CDN or Unavatar fallback). */
+  /** Best avatar URL per node id (proxy or scraped). */
   const avatarUrlByNodeRef = useRef(new Map<string, string>());
   const appearStartRef = useRef<number>(0);
   const [size, setSize] = useState({ width: 0, height: 0 });
@@ -374,23 +382,20 @@ export default function GraphVisualizer({
     return () => ro.disconnect();
   }, []);
 
-  const prevLabelStyleRef = useRef(labelStyle);
+  const prevPlatformRef = useRef(platform);
 
   useEffect(() => {
     let cancelled = false;
     const queue: Array<() => void> = [];
     let active = 0;
-    const MAX_CONCURRENT = 4;
+    const MAX_CONCURRENT = 6;
 
-    // When entering Instagram handle mode, drop expired CDN cache entries.
-    if (
-      labelStyle === "handles" &&
-      prevLabelStyleRef.current !== "handles"
-    ) {
+    // Platform switch invalidates which proxy URLs we prefer.
+    if (prevPlatformRef.current !== platform) {
       avatarCacheRef.current.clear();
       avatarUrlByNodeRef.current.clear();
     }
-    prevLabelStyleRef.current = labelStyle;
+    prevPlatformRef.current = platform;
 
     const pump = () => {
       while (!cancelled && active < MAX_CONCURRENT && queue.length > 0) {
@@ -405,15 +410,8 @@ export default function GraphVisualizer({
     };
 
     for (const node of data.nodes) {
-      const handle = node.label.replace(/^@/, "").trim().toLowerCase();
       const scraped = node.profilePicUrl?.trim() || undefined;
-      // Instagram CDN links in old scrapes expire; resolve live avatars via our proxy.
-      // Only use the proxy when we have a scraped URL to refresh — demo data stays offline.
-      const liveAvatar =
-        labelStyle === "handles" && handle && scraped
-          ? `/api/avatar/instagram/${encodeURIComponent(handle)}`
-          : undefined;
-      const preferred = liveAvatar ?? scraped;
+      const preferred = resolveProfilePicUrl(node.label, scraped, platform);
       if (!preferred) continue;
 
       avatarUrlByNodeRef.current.set(node.id, preferred);
@@ -427,7 +425,6 @@ export default function GraphVisualizer({
           } else if (existing.state === "error" && onFail) {
             onFail();
           }
-          // If still loading, the in-flight request will bump when done.
           return;
         }
 
@@ -436,7 +433,12 @@ export default function GraphVisualizer({
           active += 1;
           const image = new Image();
           image.decoding = "async";
-          image.referrerPolicy = "no-referrer";
+          // Same-origin API proxies — safe for canvas drawImage.
+          if (url.startsWith("/")) {
+            image.crossOrigin = "anonymous";
+          } else {
+            image.referrerPolicy = "no-referrer";
+          }
           const entry: AvatarCacheEntry = { image, state: "loading" };
           avatarCacheRef.current.set(url, entry);
           const finish = () => {
@@ -446,8 +448,6 @@ export default function GraphVisualizer({
           image.onload = () => {
             entry.state = "loaded";
             avatarUrlByNodeRef.current.set(node.id, url);
-            // Always bump — Strict Mode may have cancelled the effect that started
-            // this request, but the image is still valid for the remounted effect.
             setAvatarRevision((revision) => revision + 1);
             finish();
           };
@@ -465,14 +465,9 @@ export default function GraphVisualizer({
       };
 
       ensureLoad(preferred, () => {
-        if (cancelled) return;
-        // If the live proxy fails, try the scraped URL (may still work when fresh).
-        if (!scraped || scraped === preferred) {
-          bump();
-          return;
-        }
-        avatarUrlByNodeRef.current.set(node.id, scraped);
-        ensureLoad(scraped);
+        // Scraped CDN expired / blocked — leave initials. (LinkedIn public OG
+        // lookups are unreliable; Instagram already uses a live proxy above.)
+        if (!cancelled) bump();
       });
     }
 
@@ -480,7 +475,7 @@ export default function GraphVisualizer({
       cancelled = true;
       queue.length = 0;
     };
-  }, [data.nodes, labelStyle]);
+  }, [data.nodes, platform]);
 
   // Force-graph stops painting after cooldown; refresh canvas when avatars arrive.
   useEffect(() => {
