@@ -10,7 +10,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Without `APIFY_TOKEN`, demo data is used (`/graph/wanderlust`). Pinned LinkedIn demo: [`/graph/diandra/pinned`](http://localhost:3000/graph/diandra/pinned).
+Open [http://localhost:3000](http://localhost:3000). Without `APIFY_TOKEN`, demo data is used (`/graph/wanderlust`). Multi-platform demo: [`/demo`](http://localhost:3000/demo).
 
 ## Pinned snapshots (no scrape data in git by default)
 
@@ -24,7 +24,7 @@ npm run import-raw-snapshot -- diandra data/linkedin_raw/profile/diandra_linkedi
 npm run import-raw-snapshot -- diandra data/linkedin_raw/profile/diandra_linkedin_scrape_71226.json --push https://your-app.vercel.app
 ```
 
-Share link: `/graph/<handle>/pinned`
+Share link: `/demo` (Diandra) or `/graph/<handle>/pinned` (other handles)
 
 ## Deploy on Vercel
 

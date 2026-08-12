@@ -11,7 +11,7 @@ interface Props {
   selectedId?: string | null;
   onSelect: (node: GraphNode) => void;
   className?: string;
-  platform?: "instagram" | "linkedin" | "spotify" | null;
+  platform?: "instagram" | "linkedin" | "facebook" | "spotify" | null;
 }
 
 function normalizeSearch(value: string): string {

@@ -7,10 +7,8 @@ import {
   AlertTriangle,
   ArrowLeft,
   BadgeCheck,
-  BarChart3,
   CreditCard,
   FlaskConical,
-  Grid3X3,
   HelpCircle,
   List,
   Maximize2,
@@ -19,7 +17,12 @@ import {
   User,
   X,
 } from "lucide-react";
-import type { Circle, GraphNode, ScrapeResult } from "@/lib/types";
+import type {
+  Circle,
+  GraphNode,
+  ScrapeResult,
+  SocialSourcePlatform,
+} from "@/lib/types";
 import type {
   SpotifyGraphNode,
   SpotifyTasteResult,
@@ -29,22 +32,25 @@ import type {
   CompanyGraphNode,
   CompanyResult,
 } from "@/lib/companyTypes";
+import type { TikTokGraphNode, TikTokResult } from "@/lib/tiktokTypes";
 import PersonPanel from "@/components/PersonPanel";
 import GraphVisualizer from "@/components/GraphVisualizer";
 import SpotifyGraphVisualizer from "@/components/SpotifyGraphVisualizer";
 import CompanyGraphVisualizer from "@/components/CompanyGraphVisualizer";
+import TikTokGraphVisualizer from "@/components/TikTokGraphVisualizer";
 import CompanyRosterTable from "@/components/CompanyRosterTable";
 import SpotifyPlaylistPanel from "@/components/SpotifyPlaylistPanel";
+import TikTokVideoPanel from "@/components/TikTokVideoPanel";
 import CompanyEmployeePanel from "@/components/CompanyEmployeePanel";
-import SpotifyNetworkStats from "@/components/SpotifyNetworkStats";
-import CompanyNetworkStats from "@/components/CompanyNetworkStats";
 import EngagementGrid from "@/components/EngagementGrid";
 import GraphNodeSearch from "@/components/GraphNodeSearch";
 import {
   GraphHowToRead,
   reopenGraphHowToRead,
 } from "@/components/GraphHowToRead";
-import NetworkStats from "@/components/NetworkStats";
+import AnalyticsPanel, {
+  type AnalyticsPlatform,
+} from "@/components/analytics/AnalyticsPanel";
 import ShareCard from "@/components/ShareCard";
 import GraphFooterTabs, { type FooterTab } from "@/components/GraphFooterTabs";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -52,9 +58,15 @@ import {
   InstagramIcon,
   LinkedInIcon,
   SpotifyIcon,
+  FacebookIcon,
+  TikTokIcon,
   CompanyIcon,
 } from "@/components/PlatformIcons";
 import { SELF_COLOR, PROXIMITY_RINGS, UNCLUSTERED_COLOR } from "@/lib/graphUtils";
+import {
+  DEFAULT_ANALYTICS_RANGE,
+  type AnalyticsRangeId,
+} from "@/lib/analytics";
 import type { ScrapeBudget } from "@/lib/scrapeBudget";
 import {
   estimateScrapeBudget,
@@ -62,18 +74,34 @@ import {
   budgetCacheSuffix,
   SCRAPE_BUDGET_LIMITS,
 } from "@/lib/scrapeBudget";
+import { pinnedGraphPath } from "@/lib/paths";
 
-type GraphPlatform = "linkedin" | "instagram" | "spotify";
+type GraphPlatform =
+  | "linkedin"
+  | "instagram"
+  | "spotify"
+  | "facebook"
+  | "tiktok";
 type LinkedInMode = "person" | "company";
 type GraphView = "map" | "roster";
 type StatsView = "summary" | "grid";
-type SocialPlatform = "linkedin" | "instagram";
+type SocialPlatform = SocialSourcePlatform;
 
 const PLATFORM_LABEL: Record<GraphPlatform, string> = {
   linkedin: "LinkedIn",
   instagram: "Instagram",
+  facebook: "Facebook",
+  tiktok: "TikTok",
   spotify: "Spotify",
 };
+
+const PLATFORM_TABS = [
+  { id: "linkedin" as const, label: "LinkedIn", Icon: LinkedInIcon },
+  { id: "instagram" as const, label: "Instagram", Icon: InstagramIcon },
+  { id: "facebook" as const, label: "Facebook", Icon: FacebookIcon },
+  { id: "tiktok" as const, label: "TikTok", Icon: TikTokIcon },
+  { id: "spotify" as const, label: "Spotify", Icon: SpotifyIcon },
+] as const;
 
 const TOOLBAR_TAB =
   "inline-flex min-h-[40px] items-center gap-1.5 rounded-md px-2.5 py-2 text-xs font-medium transition";
@@ -163,11 +191,14 @@ interface Props {
   spotifyData?: SpotifyTasteResult | null;
   /** LinkedIn company employee snapshot. */
   companyData?: CompanyResult | null;
+  /** TikTok visibility snapshot (profile → videos → hashtags). */
+  tiktokData?: TikTokResult | null;
   /** Load a frozen snapshot from data/snapshots — never calls Apify. */
   pinned?: boolean;
 }
 
 function platformOfResult(result: ScrapeResult): SocialPlatform {
+  if (result.platform) return result.platform;
   return result.posts?.length ? "linkedin" : "instagram";
 }
 
@@ -178,6 +209,7 @@ export default function GraphResult({
   initialPlatformData = {},
   spotifyData = null,
   companyData = null,
+  tiktokData = null,
   pinned = false,
 }: Props) {
   const [data, setData] = useState<ScrapeResult | null>(initialData);
@@ -194,6 +226,10 @@ export default function GraphResult({
     useState<CompanyResult | null>(companyData);
   const [companySelected, setCompanySelected] =
     useState<CompanyEmployee | null>(null);
+  const [tiktokResult, setTiktokResult] =
+    useState<TikTokResult | null>(tiktokData);
+  const [tiktokSelected, setTiktokSelected] =
+    useState<TikTokGraphNode | null>(null);
   const [confirmationState, setConfirmationState] = useState<
     "checking" | "required" | "confirmed"
   >(pinned ? "confirmed" : "checking");
@@ -204,6 +240,19 @@ export default function GraphResult({
   const [view, setView] = useState<GraphView>("map");
   const [statsView, setStatsView] = useState<StatsView>("summary");
   const [footerTab, setFooterTab] = useState<FooterTab>("map");
+  const [analyticsPlatform, setAnalyticsPlatform] =
+    useState<AnalyticsPlatform>(() => {
+      if (initialPlatformData.linkedin || initialData?.platform === "linkedin")
+        return "linkedin";
+      if (initialPlatformData.instagram) return "instagram";
+      if (initialPlatformData.facebook) return "facebook";
+      if (tiktokData) return "tiktok";
+      if (spotifyData) return "spotify";
+      return "linkedin";
+    });
+  const [analyticsRange, setAnalyticsRange] = useState<AnalyticsRangeId>(
+    DEFAULT_ANALYTICS_RANGE,
+  );
   const [howToOpen, setHowToOpen] = useState(false);
   const [graphFullscreen, setGraphFullscreen] = useState(false);
   const [linkedinMode, setLinkedinMode] = useState<LinkedInMode>(() =>
@@ -212,19 +261,26 @@ export default function GraphResult({
   const [platform, setPlatform] = useState<GraphPlatform>(() => {
     if (pinned) {
       if (initialPlatformData.linkedin) return "linkedin";
-      if (initialData && initialData.posts?.length) return "linkedin";
+      if (initialData && platformOfResult(initialData) === "linkedin")
+        return "linkedin";
       if (initialPlatformData.instagram) return "instagram";
-      if (initialData) return "instagram";
-      if (spotifyResult) return "spotify";
-      if (companyResult) return "linkedin";
+      if (initialData && platformOfResult(initialData) === "instagram")
+        return "instagram";
+      if (initialPlatformData.facebook) return "facebook";
+      if (initialData && platformOfResult(initialData) === "facebook")
+        return "facebook";
+      if (tiktokData) return "tiktok";
+      if (spotifyData) return "spotify";
+      if (companyData) return "linkedin";
       return "linkedin";
     }
     // Search flow: the search is Instagram-handle shaped, default to Instagram.
     if (initialPlatformData.instagram) return "instagram";
-    if (initialData && initialData.posts?.length) return "linkedin";
-    if (initialData) return "instagram";
+    if (initialData) return platformOfResult(initialData);
     if (initialPlatformData.linkedin) return "linkedin";
-    if (spotifyResult) return "spotify";
+    if (initialPlatformData.facebook) return "facebook";
+    if (tiktokData) return "tiktok";
+    if (spotifyData) return "spotify";
     return "instagram";
   });
   const graphWrapRef = useRef<HTMLDivElement>(null);
@@ -247,9 +303,26 @@ export default function GraphResult({
     });
   }, []);
 
+  // Only react to selection *changes* — never re-force Map when the user
+  // navigates to Analytics/Profile/Share while a selection is still active.
+  const selectionSyncKey = [
+    selected?.id ?? "",
+    companySelected?.id ?? "",
+    spotifySelected?.id ?? "",
+    tiktokSelected?.id ?? "",
+  ].join("|");
+  const prevSelectionSyncKey = useRef(selectionSyncKey);
+
   useEffect(() => {
-    if (!selected && !companySelected && !spotifySelected) return;
-    if (footerTab === "stats" && statsView === "grid") {
+    const selectionChanged = prevSelectionSyncKey.current !== selectionSyncKey;
+    prevSelectionSyncKey.current = selectionSyncKey;
+
+    if (!selectionChanged) return;
+    if (!selected && !companySelected && !spotifySelected && !tiktokSelected)
+      return;
+
+    // Engagement grid lives inside Analytics — keep the tab and scroll to it.
+    if (footerTab === "analytics" && statsView === "grid") {
       requestAnimationFrame(() => {
         mobileTabPanelRef.current?.scrollIntoView({
           behavior: "smooth",
@@ -258,11 +331,26 @@ export default function GraphResult({
       });
       return;
     }
-    setFooterTab("map");
+
+    // Selecting a row while browsing Analytics / Profile / Share should not
+    // yank the user to Map (and must not block returning to those tabs).
+    if (footerTab !== "map") return;
+
     requestAnimationFrame(() => {
-      footerPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      footerPanelRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
     });
-  }, [selected?.id, companySelected?.id, spotifySelected?.id, footerTab, statsView]);
+  }, [
+    selectionSyncKey,
+    selected,
+    companySelected,
+    spotifySelected,
+    tiktokSelected,
+    footerTab,
+    statsView,
+  ]);
 
   useEffect(() => {
     if (!graphFullscreen) return;
@@ -296,35 +384,58 @@ export default function GraphResult({
 
   const activeData =
     platform === "spotify" ||
+    platform === "tiktok" ||
     (platform === "linkedin" && linkedinMode === "company")
       ? null
       : (platformResults[platform] ?? null);
   const hasSpotify = Boolean(spotifyData || spotifyResult);
+  const hasTikTok = Boolean(tiktokData || tiktokResult);
   const hasCompany = Boolean(companyData || companyResult);
   const hasLinkedInPerson = Boolean(platformResults.linkedin);
   const hasLinkedIn = hasLinkedInPerson || hasCompany;
+  const hasFacebook = Boolean(platformResults.facebook);
   const isLinkedInCompany =
     platform === "linkedin" && linkedinMode === "company";
+  const isAlternatePlatform =
+    platform === "spotify" || platform === "tiktok" || isLinkedInCompany;
   const platformHasData =
     platform === "spotify"
       ? hasSpotify
-      : platform === "linkedin"
-        ? isLinkedInCompany
-          ? hasCompany
-          : hasLinkedInPerson
-        : Boolean(activeData);
-  const showSocialViews =
-    platformHasData &&
-    ((platform === "linkedin" && linkedinMode === "person") ||
-      platform === "instagram");
+      : platform === "tiktok"
+        ? hasTikTok
+        : platform === "linkedin"
+          ? isLinkedInCompany
+            ? hasCompany
+            : hasLinkedInPerson
+          : Boolean(activeData);
   const showCompanyViews = platformHasData && isLinkedInCompany;
-  const showGridToggle = Boolean(
-    showSocialViews && activeData?.posts && activeData.posts.length > 0,
+  const analyticsGridData =
+    analyticsPlatform === "linkedin" ||
+    analyticsPlatform === "instagram" ||
+    analyticsPlatform === "facebook"
+      ? (platformResults[analyticsPlatform] ?? null)
+      : null;
+  const analyticsCanShowGrid = Boolean(
+    analyticsGridData?.posts && analyticsGridData.posts.length > 0,
   );
   const showGridInDesktop =
     statsView === "grid" &&
-    showGridToggle &&
-    Boolean(activeData?.posts?.length);
+    analyticsCanShowGrid &&
+    Boolean(analyticsGridData?.posts?.length);
+
+  const analyticsGridNodes = useMemo(() => {
+    if (!analyticsGridData) return [];
+    if (analyticsGridData.engagers && analyticsGridData.engagers.length > 0) {
+      return analyticsGridData.engagers;
+    }
+    return analyticsGridData.graph.nodes;
+  }, [analyticsGridData]);
+
+  const analyticsCircleById = useMemo(() => {
+    const m = new Map<number, Circle>();
+    for (const c of analyticsGridData?.graph.circles ?? []) m.set(c.id, c);
+    return m;
+  }, [analyticsGridData]);
 
   const circleById = useMemo(() => {
     const m = new Map<number, Circle>();
@@ -346,25 +457,115 @@ export default function GraphResult({
     return m;
   }, [activeData]);
 
-  const gridNodes = useMemo(() => {
-    if (activeData?.engagers && activeData.engagers.length > 0) {
-      return activeData.engagers;
-    }
-    return activeData?.graph.nodes ?? [];
-  }, [activeData]);
-
   const selectMemberByUsername = useCallback(
     (username: string) => {
       const key = username.trim().toLowerCase();
       const node = nodeByUsername.get(key);
-      if (node) setSelected(node);
+      if (node) {
+        setCompanySelected(null);
+        setSpotifySelected(null);
+        setTiktokSelected(null);
+        setSelected(node);
+        return;
+      }
+      for (const result of Object.values(platformResults)) {
+        if (!result) continue;
+        const pool = [
+          ...(result.engagers ?? []),
+          ...(result.graph.nodes ?? []),
+        ];
+        for (const candidate of pool) {
+          if (candidate.group !== "member") continue;
+          if (
+            candidate.id.toLowerCase() === key ||
+            candidate.label.toLowerCase() === key
+          ) {
+            setCompanySelected(null);
+            setSpotifySelected(null);
+            setTiktokSelected(null);
+            setSelected(candidate);
+            return;
+          }
+        }
+      }
     },
-    [nodeByUsername],
+    [nodeByUsername, platformResults],
   );
 
+  const selectAnalyticsTikTokVideo = useCallback(
+    (id: string) => {
+      const node = tiktokResult?.graph.nodes.find(
+        (n) => n.kind === "video" && n.refId === id,
+      );
+      if (!node) return;
+      setSelected(null);
+      setCompanySelected(null);
+      setSpotifySelected(null);
+      setTiktokSelected(node);
+    },
+    [tiktokResult],
+  );
+
+  const selectAnalyticsTikTokHashtag = useCallback(
+    (label: string) => {
+      const node = tiktokResult?.graph.nodes.find(
+        (n) =>
+          n.kind === "hashtag" &&
+          (n.refId === label || n.label === `#${label}`),
+      );
+      if (!node) return;
+      setSelected(null);
+      setCompanySelected(null);
+      setSpotifySelected(null);
+      setTiktokSelected(node);
+    },
+    [tiktokResult],
+  );
+
+  const selectAnalyticsSpotifyGenre = useCallback(
+    (label: string) => {
+      const node = spotifyResult?.graph.nodes.find(
+        (n) => n.kind === "genre" && n.label === label,
+      );
+      if (!node) return;
+      setSelected(null);
+      setCompanySelected(null);
+      setTiktokSelected(null);
+      setSpotifySelected(node);
+    },
+    [spotifyResult],
+  );
+
+  const selectAnalyticsCompanyLocation = useCallback(
+    (label: string) => {
+      const emp = companyResult?.employees.find((e) => e.location === label);
+      if (!emp) return;
+      setSelected(null);
+      setSpotifySelected(null);
+      setTiktokSelected(null);
+      setCompanySelected(emp);
+    },
+    [companyResult],
+  );
+
+  const selectAnalyticsCompanySchool = useCallback(
+    (label: string) => {
+      const emp = companyResult?.employees.find((e) =>
+        e.education?.some((ed) => ed.school === label),
+      );
+      if (!emp) return;
+      setSelected(null);
+      setSpotifySelected(null);
+      setTiktokSelected(null);
+      setCompanySelected(emp);
+    },
+    [companyResult],
+  );
+
+
   useEffect(() => {
-    if (!showGridToggle && statsView === "grid") setStatsView("summary");
-  }, [showGridToggle, statsView]);
+    if (!analyticsCanShowGrid && statsView === "grid") setStatsView("summary");
+  }, [analyticsCanShowGrid, statsView]);
 
   useEffect(() => {
     if (platform !== "linkedin" || linkedinMode !== "company") {
@@ -388,9 +589,11 @@ export default function GraphResult({
       setExtraSocialData({});
       setSpotifyResult(spotifyData);
       setCompanyResult(companyData);
+      setTiktokResult(tiktokData);
       setError(null);
       setSelected(null);
       setCompanySelected(null);
+      setTiktokSelected(null);
       setProfileLimitHit(overFreeProfileLimit);
       setSearchedCount(searchedHandles.length);
       setConfirmationState(
@@ -409,6 +612,7 @@ export default function GraphResult({
     pinned,
     spotifyData,
     companyData,
+    tiktokData,
   ]);
 
   useEffect(() => {
@@ -690,7 +894,8 @@ export default function GraphResult({
     !data &&
     Object.keys(platformResults).length === 0 &&
     !spotifyResult &&
-    !companyResult
+    !companyResult &&
+    !tiktokResult
   ) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -703,10 +908,12 @@ export default function GraphResult({
   const showPinnedBadge =
     Boolean(displayData?.pinned) ||
     (platform === "spotify" && Boolean(spotifyResult?.pinned)) ||
+    (platform === "tiktok" && Boolean(tiktokResult?.pinned)) ||
     (isLinkedInCompany && Boolean(companyResult?.pinned));
   const showDemoBadge =
     Boolean(displayData?.demo) ||
     (platform === "spotify" && Boolean(spotifyResult?.demo)) ||
+    (platform === "tiktok" && Boolean(tiktokResult?.demo)) ||
     (isLinkedInCompany && Boolean(companyResult?.demo));
   const showCachedBadge =
     (Boolean(displayData?.cached) &&
@@ -716,6 +923,10 @@ export default function GraphResult({
       Boolean(spotifyResult?.cached) &&
       !spotifyResult?.demo &&
       !spotifyResult?.pinned) ||
+    (platform === "tiktok" &&
+      Boolean(tiktokResult?.cached) &&
+      !tiktokResult?.demo &&
+      !tiktokResult?.pinned) ||
     (isLinkedInCompany &&
       Boolean(companyResult?.cached) &&
       !companyResult?.demo &&
@@ -734,7 +945,9 @@ export default function GraphResult({
           <span className="hidden sm:inline">New search</span>
         </Link>
         <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5">
-          {platform !== "spotify" && !isLinkedInCompany && (
+          {platform !== "spotify" &&
+            platform !== "tiktok" &&
+            !isLinkedInCompany && (
             <button
               type="button"
               onClick={() => {
@@ -768,7 +981,9 @@ export default function GraphResult({
       </header>
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-1.5 pb-[calc(5.5rem+env(safe-area-inset-bottom))] pt-[calc(3.25rem+env(safe-area-inset-top))] sm:px-4 sm:pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pt-20 lg:pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-        {platform !== "spotify" && !isLinkedInCompany && (
+        {platform !== "spotify" &&
+          platform !== "tiktok" &&
+          !isLinkedInCompany && (
           <GraphHowToRead
             forceOpen={howToOpen}
             onDismiss={() => setHowToOpen(false)}
@@ -806,20 +1021,18 @@ export default function GraphResult({
             {/* Mobile: platform toggles above graph */}
             {!graphFullscreen ? (
             <div className="flex shrink-0 flex-col gap-1.5 border-b border-white/10 px-1.5 py-1.5 sm:hidden">
-              <div className="inline-flex self-start rounded-lg border border-white/10 bg-black/30 p-0.5">
-                {(
-                  [
-                    { id: "linkedin" as const, label: "LinkedIn", Icon: LinkedInIcon },
-                    { id: "instagram" as const, label: "Instagram", Icon: InstagramIcon },
-                    { id: "spotify" as const, label: "Spotify", Icon: SpotifyIcon },
-                  ] as const
-                ).map(({ id, label, Icon }) => {
+              <div className="inline-flex max-w-full self-start overflow-x-auto rounded-lg border border-white/10 bg-black/30 p-0.5">
+                {PLATFORM_TABS.map(({ id, label, Icon }) => {
                   const available =
                     id === "spotify"
                       ? hasSpotify
-                      : id === "linkedin"
-                        ? hasLinkedIn
-                        : Boolean(platformResults[id]);
+                      : id === "tiktok"
+                        ? hasTikTok
+                        : id === "linkedin"
+                          ? hasLinkedIn
+                          : id === "facebook"
+                            ? hasFacebook
+                            : Boolean(platformResults[id]);
                   const active = platform === id;
                   return (
                     <button
@@ -831,6 +1044,7 @@ export default function GraphResult({
                         setSelected(null);
                         setSpotifySelected(null);
                         setCompanySelected(null);
+                        setTiktokSelected(null);
                         setView("map");
                         setStatsView("summary");
                         if (id === "linkedin") {
@@ -904,20 +1118,18 @@ export default function GraphResult({
                 <div className="shrink-0 text-[11px] font-semibold uppercase tracking-wide text-white/35">
                   Platform
                 </div>
-                <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
-                  {(
-                    [
-                      { id: "linkedin" as const, label: "LinkedIn", Icon: LinkedInIcon },
-                      { id: "instagram" as const, label: "Instagram", Icon: InstagramIcon },
-                      { id: "spotify" as const, label: "Spotify", Icon: SpotifyIcon },
-                    ] as const
-                  ).map(({ id, label, Icon }) => {
+                <div className="inline-flex max-w-full overflow-x-auto rounded-lg border border-white/10 bg-black/30 p-0.5">
+                  {PLATFORM_TABS.map(({ id, label, Icon }) => {
                     const available =
                       id === "spotify"
                         ? hasSpotify
-                        : id === "linkedin"
-                          ? hasLinkedIn
-                          : Boolean(platformResults[id]);
+                        : id === "tiktok"
+                          ? hasTikTok
+                          : id === "linkedin"
+                            ? hasLinkedIn
+                            : id === "facebook"
+                              ? hasFacebook
+                              : Boolean(platformResults[id]);
                     const active = platform === id;
                     return (
                       <button
@@ -929,6 +1141,7 @@ export default function GraphResult({
                           setSelected(null);
                           setSpotifySelected(null);
                           setCompanySelected(null);
+                          setTiktokSelected(null);
                           setView("map");
                           setStatsView("summary");
                           if (id === "linkedin") {
@@ -1110,10 +1323,43 @@ export default function GraphResult({
                     </p>
                   </div>
                 )
+              ) : platform === "tiktok" ? (
+                tiktokResult ? (
+                  <>
+                    <TikTokGraphVisualizer
+                      key={`tiktok-${tiktokResult.profile.username}`}
+                      data={tiktokResult.graph}
+                      className="absolute inset-0"
+                      selectedId={tiktokSelected?.id ?? null}
+                      onSelect={setTiktokSelected}
+                    />
+                    <div className="pointer-events-none absolute bottom-4 right-4 hidden max-w-[200px] flex-col gap-1.5 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur sm:flex">
+                      <div className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
+                        Flow
+                      </div>
+                      <span className="text-[10px] leading-relaxed text-white/50">
+                        You → videos → hashtags
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
+                    <TikTokIcon className="h-8 w-8 text-[#FE2C55]" />
+                    <div className="text-sm font-medium text-white/80">
+                      No TikTok snapshot yet
+                    </div>
+                    <p className="max-w-sm text-xs leading-relaxed text-white/40">
+                      Import a TikTok profile + posts scrape to unlock visibility
+                      views here.
+                    </p>
+                  </div>
+                )
               ) : !activeData ? (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
                   {platform === "linkedin" ? (
                     <LinkedInIcon className="h-8 w-8 text-[#0A66C2]" />
+                  ) : platform === "facebook" ? (
+                    <FacebookIcon className="h-8 w-8 text-[#1877F2]" />
                   ) : (
                     <InstagramIcon className="h-8 w-8 text-white/70" />
                   )}
@@ -1129,11 +1375,11 @@ export default function GraphResult({
                     the graph.
                   </p>
                 </div>
-              ) : showGridInDesktop ? (
+              ) : showGridInDesktop && analyticsGridData ? (
                 <>
                   <EngagementGrid
-                    posts={activeData.posts!}
-                    nodes={gridNodes}
+                    posts={analyticsGridData.posts!}
+                    nodes={analyticsGridNodes}
                     selectedId={selected?.id ?? null}
                     onSelect={setSelected}
                     className="absolute inset-0 hidden lg:block"
@@ -1145,7 +1391,9 @@ export default function GraphResult({
                       className="absolute inset-0 max-sm:touch-pan-y sm:touch-none"
                       selectedId={selected?.id ?? null}
                       onSelect={setSelected}
-                      labelStyle={platform === "instagram" ? "handles" : "auto"}
+                      labelStyle={
+                        platform === "instagram" ? "handles" : "auto"
+                      }
                     />
                   </div>
                 </>
@@ -1261,6 +1509,19 @@ export default function GraphResult({
                 if (node) setSpotifySelected(node);
               }}
             />
+          ) : platform === "tiktok" && tiktokResult ? (
+            <TikTokVideoPanel
+              node={tiktokSelected}
+              videos={tiktokResult.videos}
+              hashtags={tiktokResult.hashtags}
+              onClose={() => setTiktokSelected(null)}
+              onSelectVideo={(videoId) => {
+                const node = tiktokResult.graph.nodes.find(
+                  (n) => n.kind === "video" && n.refId === videoId,
+                );
+                if (node) setTiktokSelected(node);
+              }}
+            />
           ) : (
             <PersonPanel
               node={selected}
@@ -1276,7 +1537,9 @@ export default function GraphResult({
               }
               onClose={() => setSelected(null)}
               platform={
-                platform === "spotify" || isLinkedInCompany ? null : platform
+                isAlternatePlatform
+                  ? null
+                  : (platform as "linkedin" | "instagram" | "facebook")
               }
             />
           )}
@@ -1297,217 +1560,117 @@ export default function GraphResult({
                 }}
               />
             )}
+            {platform === "tiktok" && tiktokResult && (
+              <TikTokVideoPanel
+                node={tiktokSelected}
+                videos={tiktokResult.videos}
+                hashtags={tiktokResult.hashtags}
+                onClose={() => setTiktokSelected(null)}
+                onSelectVideo={(videoId) => {
+                  const node = tiktokResult.graph.nodes.find(
+                    (n) => n.kind === "video" && n.refId === videoId,
+                  );
+                  if (node) setTiktokSelected(node);
+                }}
+              />
+            )}
           </div>
         </div>
 
-        {isLinkedInCompany && companyResult ? (
-          <div className="hidden lg:block">
-          <CompanyNetworkStats
-            stats={companyResult.stats}
-            companyName={companyResult.company.name}
-            onSelectLocation={(label) => {
-              const emp = companyResult.employees.find(
-                (e) => e.location === label,
-              );
-              if (emp) setCompanySelected(emp);
-            }}
-            onSelectSchool={(label) => {
-              const emp = companyResult.employees.find((e) =>
-                e.education?.some((ed) => ed.school === label),
-              );
-              if (emp) setCompanySelected(emp);
-            }}
-          />
-          </div>
-        ) : platform === "spotify" && spotifyResult ? (
-          <div className="hidden lg:block">
-          <SpotifyNetworkStats
-            stats={spotifyResult.stats}
-            topGenres={spotifyResult.genres.map((g) => ({
-              label: g.label,
-              weight: g.weight,
-              color: g.color,
-            }))}
-            onSelectGenre={(label) => {
-              const node = spotifyResult.graph.nodes.find(
-                (n) => n.kind === "genre" && n.label === label,
-              );
-              if (node) setSpotifySelected(node);
-            }}
-          />
-          </div>
-        ) : activeData ? (
-          <div className="hidden lg:flex lg:flex-col lg:gap-3">
-            {showGridToggle && (
-              <div className="inline-flex self-start rounded-lg border border-white/10 bg-black/30 p-0.5">
-                <button
-                  type="button"
-                  onClick={() => setStatsView("summary")}
-                  className={`${TOOLBAR_TAB} ${
-                    statsView === "summary"
-                      ? TOOLBAR_TAB_ACTIVE
-                      : TOOLBAR_TAB_AVAILABLE
-                  }`}
-                >
-                  <BarChart3 className="h-3.5 w-3.5" />
-                  Stats
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setStatsView("grid")}
-                  className={`${TOOLBAR_TAB} ${
-                    statsView === "grid"
-                      ? TOOLBAR_TAB_ACTIVE
-                      : TOOLBAR_TAB_AVAILABLE
-                  }`}
-                >
-                  <Grid3X3 className="h-3.5 w-3.5" />
-                  Grid
-                </button>
-              </div>
-            )}
-            {statsView === "summary" ? (
-              <NetworkStats
-                stats={activeData.stats}
-                uniqueCount={activeData.engagers?.length}
-                onSelectUsername={selectMemberByUsername}
-                selectedUsername={selected?.id ?? selected?.label ?? null}
-                platform={
-                  platform === "spotify" || isLinkedInCompany ? null : platform
-                }
-              />
-            ) : showGridToggle ? (
+        <div className="hidden lg:flex lg:flex-col lg:gap-3">
+          <AnalyticsPanel
+            socialResults={platformResults}
+            spotifyResult={spotifyResult}
+            companyResult={companyResult}
+            tiktokResult={tiktokResult}
+            platform={analyticsPlatform}
+            onPlatformChange={setAnalyticsPlatform}
+            range={analyticsRange}
+            onRangeChange={setAnalyticsRange}
+            view={statsView}
+            onViewChange={setStatsView}
+            gridContent={
               <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-white/45">
                 Engagement grid is open in the main panel. Tap a cell to inspect
                 comments and reactions.
               </p>
-            ) : null}
-          </div>
-        ) : null}
+            }
+            onSelectUsername={selectMemberByUsername}
+            selectedUsername={selected?.id ?? selected?.label ?? null}
+            onSelectTikTokVideoId={selectAnalyticsTikTokVideo}
+            onSelectTikTokHashtag={selectAnalyticsTikTokHashtag}
+            onSelectSpotifyGenre={selectAnalyticsSpotifyGenre}
+            onSelectCompanyLocation={selectAnalyticsCompanyLocation}
+            onSelectCompanySchool={selectAnalyticsCompanySchool}
+          />
+        </div>
 
-        {/* Mobile: stats / profile / share tabs (map lives in graph section above) */}
+        {/* Mobile: analytics / profile / share tabs (map lives in graph section above) */}
         {footerTab !== "map" && (
           <div
             ref={mobileTabPanelRef}
             className="scroll-mt-3 lg:hidden"
           >
-            {footerTab === "stats" && (
-              <div className="flex flex-col gap-3">
-                {showGridToggle && (
-                  <div className="inline-flex self-start rounded-lg border border-white/10 bg-black/30 p-0.5">
-                    <button
-                      type="button"
-                      onClick={() => setStatsView("summary")}
-                      className={`${TOOLBAR_TAB} ${
-                        statsView === "summary"
-                          ? TOOLBAR_TAB_ACTIVE
-                          : TOOLBAR_TAB_AVAILABLE
-                      }`}
-                    >
-                      <BarChart3 className="h-3.5 w-3.5" />
-                      Stats
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setStatsView("grid")}
-                      className={`${TOOLBAR_TAB} ${
-                        statsView === "grid"
-                          ? TOOLBAR_TAB_ACTIVE
-                          : TOOLBAR_TAB_AVAILABLE
-                      }`}
-                    >
-                      <Grid3X3 className="h-3.5 w-3.5" />
-                      Grid
-                    </button>
-                  </div>
-                )}
-
-                {statsView === "grid" && showGridToggle && activeData ? (
-                  <div className="flex min-h-[52dvh] flex-col gap-3">
-                    <div className="relative min-h-[40dvh] flex-1 overflow-hidden rounded-xl border border-white/10 bg-black/40">
-                      <EngagementGrid
-                        posts={activeData.posts!}
-                        nodes={gridNodes}
-                        selectedId={selected?.id ?? null}
-                        onSelect={setSelected}
-                        className="absolute inset-0"
-                      />
+            {footerTab === "analytics" && (
+              <AnalyticsPanel
+                socialResults={platformResults}
+                spotifyResult={spotifyResult}
+                companyResult={companyResult}
+                tiktokResult={tiktokResult}
+                platform={analyticsPlatform}
+                onPlatformChange={setAnalyticsPlatform}
+                range={analyticsRange}
+                onRangeChange={setAnalyticsRange}
+                view={statsView}
+                onViewChange={setStatsView}
+                gridContent={
+                  analyticsGridData ? (
+                    <div className="flex min-h-[52dvh] flex-col gap-3">
+                      <div className="relative min-h-[40dvh] flex-1 overflow-hidden rounded-xl border border-white/10 bg-black/40">
+                        <EngagementGrid
+                          posts={analyticsGridData.posts!}
+                          nodes={analyticsGridNodes}
+                          selectedId={selected?.id ?? null}
+                          onSelect={setSelected}
+                          className="absolute inset-0"
+                        />
+                      </div>
+                      {selected ? (
+                        <PersonPanel
+                          variant="inline"
+                          node={selected}
+                          proximityRing={
+                            selected.circle >= 0
+                              ? PROXIMITY_RINGS[selected.circle]
+                              : undefined
+                          }
+                          friendCluster={
+                            selected.clusterId != null &&
+                            selected.clusterId >= 0
+                              ? analyticsCircleById.get(selected.clusterId)
+                              : undefined
+                          }
+                          onClose={() => setSelected(null)}
+                          platform={
+                            analyticsPlatform === "linkedin" ||
+                            analyticsPlatform === "instagram" ||
+                            analyticsPlatform === "facebook"
+                              ? analyticsPlatform
+                              : null
+                          }
+                        />
+                      ) : null}
                     </div>
-                    {selected ? (
-                      <PersonPanel
-                        variant="inline"
-                        node={selected}
-                        proximityRing={
-                          selected.circle >= 0
-                            ? PROXIMITY_RINGS[selected.circle]
-                            : undefined
-                        }
-                        friendCluster={
-                          selected.clusterId != null && selected.clusterId >= 0
-                            ? circleById.get(selected.clusterId)
-                            : undefined
-                        }
-                        onClose={() => setSelected(null)}
-                        platform={
-                          platform === "spotify" || isLinkedInCompany
-                            ? null
-                            : platform
-                        }
-                      />
-                    ) : null}
-                  </div>
-                ) : (
-                  <>
-                {isLinkedInCompany && companyResult ? (
-                  <CompanyNetworkStats
-                    stats={companyResult.stats}
-                    companyName={companyResult.company.name}
-                    onSelectLocation={(label) => {
-                      const emp = companyResult.employees.find(
-                        (e) => e.location === label,
-                      );
-                      if (emp) setCompanySelected(emp);
-                    }}
-                    onSelectSchool={(label) => {
-                      const emp = companyResult.employees.find((e) =>
-                        e.education?.some((ed) => ed.school === label),
-                      );
-                      if (emp) setCompanySelected(emp);
-                    }}
-                  />
-                ) : platform === "spotify" && spotifyResult ? (
-                  <SpotifyNetworkStats
-                    stats={spotifyResult.stats}
-                    topGenres={spotifyResult.genres.map((g) => ({
-                      label: g.label,
-                      weight: g.weight,
-                      color: g.color,
-                    }))}
-                    onSelectGenre={(label) => {
-                      const node = spotifyResult.graph.nodes.find(
-                        (n) => n.kind === "genre" && n.label === label,
-                      );
-                      if (node) setSpotifySelected(node);
-                    }}
-                  />
-                ) : activeData ? (
-                  <NetworkStats
-                    stats={activeData.stats}
-                    uniqueCount={activeData.engagers?.length}
-                    onSelectUsername={selectMemberByUsername}
-                    selectedUsername={selected?.id ?? selected?.label ?? null}
-                    platform={
-                      platform === "spotify" || isLinkedInCompany ? null : platform
-                    }
-                  />
-                ) : (
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center text-sm text-white/40">
-                    No stats available for this platform yet.
-                  </div>
-                )}
-                  </>
-                )}
-              </div>
+                  ) : null
+                }
+                onSelectUsername={selectMemberByUsername}
+                selectedUsername={selected?.id ?? selected?.label ?? null}
+                onSelectTikTokVideoId={selectAnalyticsTikTokVideo}
+                onSelectTikTokHashtag={selectAnalyticsTikTokHashtag}
+                onSelectSpotifyGenre={selectAnalyticsSpotifyGenre}
+                onSelectCompanyLocation={selectAnalyticsCompanyLocation}
+                onSelectCompanySchool={selectAnalyticsCompanySchool}
+              />
             )}
 
             {footerTab === "profile" && (
@@ -1590,6 +1753,47 @@ export default function GraphResult({
                         target="_blank"
                         rel="noopener noreferrer"
                         className="mt-2 inline-block text-xs text-[#1DB954] hover:underline"
+                      >
+                        Open profile
+                      </a>
+                    )}
+                  </div>
+                ) : platform === "tiktok" && tiktokResult ? (
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur">
+                    <div className="flex items-center gap-3">
+                      {tiktokResult.profile.avatarUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={tiktokResult.profile.avatarUrl}
+                          alt=""
+                          className="h-12 w-12 rounded-full object-cover ring-1 ring-white/15"
+                        />
+                      ) : (
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FE2C55]/20 text-lg font-bold text-[#FE2C55]">
+                          {tiktokResult.profile.displayName.charAt(0)}
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <h1 className="truncate text-lg font-bold text-white">
+                          {tiktokResult.profile.displayName}
+                        </h1>
+                        <div className="text-sm text-white/50">
+                          @{tiktokResult.profile.username} · TikTok visibility
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-3 text-xs text-white/35">
+                      {tiktokResult.stats.followers} followers ·{" "}
+                      {tiktokResult.stats.videoCount} videos ·{" "}
+                      {tiktokResult.stats.totalPlays} plays ·{" "}
+                      {tiktokResult.stats.totalDiggs} likes
+                    </div>
+                    {tiktokResult.profile.profileUrl && (
+                      <a
+                        href={tiktokResult.profile.profileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-block text-xs text-[#25F4EE] hover:underline"
                       >
                         Open profile
                       </a>
@@ -1706,10 +1910,10 @@ export default function GraphResult({
                           <>
                             Share:{" "}
                             <Link
-                              href={`/graph/${handle}/pinned`}
+                              href={pinnedGraphPath(handle)}
                               className="text-ig-blue underline"
                             >
-                              /graph/{handle}/pinned
+                              {pinnedGraphPath(handle)}
                             </Link>
                           </>
                         ) : (
@@ -1727,6 +1931,9 @@ export default function GraphResult({
                     (platform === "spotify" &&
                       spotifyResult &&
                       spotifyResult.scrapedAt > 0) ||
+                    (platform === "tiktok" &&
+                      tiktokResult &&
+                      tiktokResult.scrapedAt > 0) ||
                     (displayData && displayData.scrapedAt > 0)) && (
                     <p className="rounded-2xl border border-ig-blue/20 bg-ig-blue/5 px-4 py-3 text-xs text-white/55">
                       Frozen snapshot from{" "}
@@ -1735,17 +1942,25 @@ export default function GraphResult({
                           ? companyResult.scrapedAt
                           : platform === "spotify" && spotifyResult
                             ? spotifyResult.scrapedAt
-                            : displayData!.scrapedAt,
+                            : platform === "tiktok" && tiktokResult
+                              ? tiktokResult.scrapedAt
+                              : displayData!.scrapedAt,
                       ).toLocaleString()}
                       . No live scrape runs on this page.
                     </p>
                   )}
 
-                {activeData && platform !== "spotify" && !isLinkedInCompany ? (
+                {activeData && !isAlternatePlatform ? (
                   <ShareCard
                     handle={activeData.profile.username}
                     stats={activeData.stats}
-                    platform={platform}
+                    platform={
+                      platform === "facebook" ||
+                      platform === "linkedin" ||
+                      platform === "instagram"
+                        ? platform
+                        : "linkedin"
+                    }
                     onDownload={downloadPng}
                   />
                 ) : (
@@ -1786,7 +2001,7 @@ export default function GraphResult({
                     }
                     onClose={() => setSelected(null)}
                     platform={
-                      platform === "spotify" || isLinkedInCompany
+                      isAlternatePlatform
                         ? null
                         : platform
                     }
@@ -1877,6 +2092,47 @@ export default function GraphResult({
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 inline-block text-xs text-[#1DB954] hover:underline"
+                >
+                  Open profile
+                </a>
+              )}
+            </div>
+          ) : platform === "tiktok" && tiktokResult ? (
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
+              <div className="flex items-center gap-3">
+                {tiktokResult.profile.avatarUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={tiktokResult.profile.avatarUrl}
+                    alt=""
+                    className="h-12 w-12 rounded-full object-cover ring-1 ring-white/15"
+                  />
+                ) : (
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FE2C55]/20 text-lg font-bold text-[#FE2C55]">
+                    {tiktokResult.profile.displayName.charAt(0)}
+                  </div>
+                )}
+                <div className="min-w-0">
+                  <h1 className="truncate text-lg font-bold text-white sm:text-xl">
+                    {tiktokResult.profile.displayName}
+                  </h1>
+                  <div className="text-sm text-white/50">
+                    @{tiktokResult.profile.username} · TikTok visibility
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3 text-xs text-white/35">
+                {tiktokResult.stats.followers} followers ·{" "}
+                {tiktokResult.stats.videoCount} videos ·{" "}
+                {tiktokResult.stats.totalPlays} plays ·{" "}
+                {tiktokResult.stats.totalDiggs} likes
+              </div>
+              {tiktokResult.profile.profileUrl && (
+                <a
+                  href={tiktokResult.profile.profileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-block text-xs text-[#25F4EE] hover:underline"
                 >
                   Open profile
                 </a>
@@ -1995,10 +2251,10 @@ export default function GraphResult({
                     <>
                       Share:{" "}
                       <Link
-                        href={`/graph/${handle}/pinned`}
+                        href={pinnedGraphPath(handle)}
                         className="text-ig-blue underline"
                       >
-                        /graph/{handle}/pinned
+                        {pinnedGraphPath(handle)}
                       </Link>
                     </>
                   ) : (
@@ -2014,6 +2270,7 @@ export default function GraphResult({
               companyResult &&
               companyResult.scrapedAt > 0) ||
               (platform === "spotify" && spotifyResult && spotifyResult.scrapedAt > 0) ||
+              (platform === "tiktok" && tiktokResult && tiktokResult.scrapedAt > 0) ||
               (displayData && displayData.scrapedAt > 0)) && (
             <p className="rounded-2xl border border-ig-blue/20 bg-ig-blue/5 px-4 py-3 text-xs text-white/55">
               Frozen snapshot from{" "}
@@ -2022,17 +2279,25 @@ export default function GraphResult({
                   ? companyResult.scrapedAt
                   : platform === "spotify" && spotifyResult
                     ? spotifyResult.scrapedAt
-                    : displayData!.scrapedAt,
+                    : platform === "tiktok" && tiktokResult
+                      ? tiktokResult.scrapedAt
+                      : displayData!.scrapedAt,
               ).toLocaleString()}
               . No live scrape runs on this page.
             </p>
           )}
 
-          {activeData && platform !== "spotify" && !isLinkedInCompany && (
+          {activeData && !isAlternatePlatform && (
             <ShareCard
               handle={activeData.profile.username}
               stats={activeData.stats}
-              platform={platform}
+              platform={
+                platform === "facebook" ||
+                platform === "linkedin" ||
+                platform === "instagram"
+                  ? platform
+                  : "linkedin"
+              }
               onDownload={downloadPng}
             />
           )}

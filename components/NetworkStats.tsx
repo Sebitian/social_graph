@@ -27,7 +27,7 @@ interface Props {
   onSelectUsername?: (username: string) => void;
   selectedUsername?: string | null;
   /** When "instagram", avatars load via the live proxy (scraped CDN URLs expire). */
-  platform?: "instagram" | "linkedin" | "spotify" | null;
+  platform?: "instagram" | "linkedin" | "facebook" | "spotify" | null;
 }
 
 type PeopleView = "all-time" | "present" | "reactions";

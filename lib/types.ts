@@ -12,6 +12,8 @@ export interface ProfileData {
   isPrivate: boolean;
   isVerified: boolean;
   highlightReelCount: number;
+  /** Canonical public profile URL when known. */
+  profileUrl?: string;
 }
 
 export interface ConnectionUser {
@@ -392,6 +394,9 @@ export interface NetworkStats {
   biggestCircle: { label: string; size: number };
 }
 
+/** Which social network a ScrapeResult came from (pinned companions). */
+export type SocialSourcePlatform = "linkedin" | "instagram" | "facebook";
+
 export interface ScrapeResult {
   profile: ProfileData;
   graph: GraphData;
@@ -401,7 +406,12 @@ export interface ScrapeResult {
   demo: boolean;
   pinned?: boolean;
   scrapedAt: number;
-  /** Scraped posts for the person × post engagement grid (LinkedIn). */
+  /**
+   * Explicit source platform. When omitted, inferred from `posts`
+   * (LinkedIn has posts; Instagram comment exports do not).
+   */
+  platform?: SocialSourcePlatform;
+  /** Scraped posts for the person × post engagement grid (LinkedIn / Facebook). */
   posts?: ProfilePost[];
   /**
    * All unique engagers (commenters + reactors) for the grid.

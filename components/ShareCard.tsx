@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Copy, Download, Share2, Twitter } from "lucide-react";
 import type { NetworkStats } from "@/lib/types";
+import { pinnedGraphPath } from "@/lib/paths";
 
-type SharePlatform = "instagram" | "linkedin";
+type SharePlatform = "instagram" | "linkedin" | "facebook";
 
 const PLATFORM_LABEL: Record<SharePlatform, string> = {
   instagram: "Instagram",
   linkedin: "LinkedIn",
+  facebook: "Facebook",
 };
 
 interface Props {
@@ -21,7 +23,9 @@ interface Props {
 
 export default function ShareCard({ handle, stats, platform, onDownload }: Props) {
   const [copied, setCopied] = useState(false);
-  const [url, setUrl] = useState(`https://social-graph-nu.vercel.app/graph/${handle}/pinned`);
+  const [url, setUrl] = useState(
+    `https://social-graph-nu.vercel.app${pinnedGraphPath(handle)}`,
+  );
 
   useEffect(() => {
     setUrl(window.location.href);

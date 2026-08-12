@@ -13,15 +13,19 @@ alwaysApply: true
 ## Data sources
 
 - Live graph pages (`/graph/[handle]`) use `getNetwork` in `lib/scrape.ts`. It falls back to deterministic mock data from `lib/mock.ts` when `APIFY_TOKEN` is unset.
-- Pinned pages (`/graph/[handle]/pinned`) serve static snapshots via `lib/snapshot.ts` (disk or Blob). They do not call Apify.
+- Demo page (`/demo`) serves the Diandra multi-platform pinned bundle (no Apify). Old URL `/graph/diandra/pinned` redirects here.
+- Other pinned pages (`/graph/[handle]/pinned`) serve static snapshots via `lib/snapshot.ts` (disk or Blob). They do not call Apify.
 - Existing tracked snapshot: `data/snapshots/diandra.json`, imported from `data/linkedin_raw/profile/diandra_linkedin_scrape_71226.json`.
 - Instagram demo companion: `data/snapshots/jppap.json` from `data/insta_raw/jp_jppap.json` (loaded on pinned pages via the Instagram platform tab).
 - Spotify demo companion: `data/snapshots/sebastian-spotify.json` from Sebastian’s profile + Schmok playlist scrapes (loaded via the Spotify platform tab).
 - Company demo companion: `data/snapshots/nousresearch.json` from `data/linkedin_raw/company/nouse_research.json` (HarvestAPI employee search; loaded via the Company platform tab).
-- Deployed reference URL: `https://social-graph-nu.vercel.app/graph/diandra/pinned`.
+- Facebook demo companion: `data/snapshots/kossof-facebook.json` from `data/facebook_raw/` (pages + posts + followers/following; loaded via the Facebook platform tab).
+- TikTok demo companion: `data/snapshots/kossof-tiktok.json` from `data/tiktok_raw/` (profile + posts → videos/hashtags graph; loaded via the TikTok platform tab).
+- Deployed reference URL: `https://social-graph-nu.vercel.app/demo`.
 
 ## Guardrails
 
 - If a task would require real Instagram scraping, warn the user and suggest using dummy data or importing a raw comment export instead.
+- If a task would require real Facebook or TikTok scraping, warn the user and suggest importing the existing Apify exports under `data/facebook_raw` / `data/tiktok_raw` instead.
 - Keep existing snapshot files in place unless the user explicitly asks to replace them.
 - If replacing a pinned snapshot, regenerate it from mock data or an imported export so the pinned page stays Apify-free.

@@ -223,8 +223,26 @@ function buildProfile(
   posts: LinkedInPostItem[],
 ): ProfileData {
   const author = posts.find((p) => p.author)?.author;
+  let vanity: string | undefined;
+  for (const post of posts) {
+    const url = post.linkedinUrl;
+    if (!url) continue;
+    const fromPosts = url.match(
+      /linkedin\.com\/posts\/([^/?#_]+)(?:_|\/|\?|#|$)/i,
+    );
+    if (fromPosts?.[1]) {
+      vanity = fromPosts[1];
+      break;
+    }
+    const fromIn = url.match(/linkedin\.com\/in\/([^/?#]+)/i);
+    if (fromIn?.[1]) {
+      vanity = fromIn[1];
+      break;
+    }
+  }
+  const username = vanity || handle;
   return {
-    username: handle,
+    username,
     fullName: author?.name ?? handle,
     biography: author?.info ?? author?.position ?? "",
     profilePicUrl: pictureUrlFromActor(author) ?? "",
@@ -234,6 +252,7 @@ function buildProfile(
     isPrivate: false,
     isVerified: false,
     highlightReelCount: 0,
+    profileUrl: `https://www.linkedin.com/in/${encodeURIComponent(username)}`,
   };
 }
 

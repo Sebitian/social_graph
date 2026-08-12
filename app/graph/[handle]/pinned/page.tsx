@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import GraphResult from "@/components/GraphResult";
-import { readSnapshot, readSpotifySnapshot, readCompanySnapshot } from "@/lib/snapshot";
+import { redirect } from "next/navigation";
+import { loadPinnedGraph } from "@/lib/loadPinnedDemo";
+import { DEMO_HANDLE, pinnedGraphPath } from "@/lib/paths";
 
 interface PageProps {
   params: Promise<{ handle: string }>;
@@ -17,42 +18,13 @@ export async function generateMetadata({
   };
 }
 
-/** Extra platform demos loaded alongside the primary pinned handle. */
-const COMPANION_SNAPSHOTS = {
-  instagram: "jppap",
-  spotify: "sebastian-spotify",
-  company: "nousresearch",
-} as const;
-
 export default async function PinnedGraphPage({ params }: PageProps) {
   const { handle } = await params;
   const clean = decodeURIComponent(handle).replace(/^@/, "").toLowerCase();
-  const snapshot = await readSnapshot(clean);
-  const instagram =
-    clean === COMPANION_SNAPSHOTS.instagram
-      ? snapshot
-      : await readSnapshot(COMPANION_SNAPSHOTS.instagram);
-  const spotifyData = await readSpotifySnapshot(COMPANION_SNAPSHOTS.spotify);
-  const companyData = await readCompanySnapshot(COMPANION_SNAPSHOTS.company);
 
-  const initialPlatformData = {
-    ...(snapshot?.posts?.length
-      ? { linkedin: snapshot }
-      : snapshot
-        ? { instagram: snapshot }
-        : {}),
-    ...(instagram && !instagram.posts?.length ? { instagram } : {}),
-  };
+  if (clean === DEMO_HANDLE) {
+    redirect(pinnedGraphPath(DEMO_HANDLE));
+  }
 
-  return (
-    <GraphResult
-      key={`pinned-${clean}`}
-      handle={clean}
-      pinned
-      initialData={snapshot}
-      initialPlatformData={initialPlatformData}
-      spotifyData={spotifyData}
-      companyData={companyData}
-    />
-  );
+  return loadPinnedGraph(clean);
 }

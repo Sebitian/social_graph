@@ -3,11 +3,11 @@
 import type { LucideIcon } from "lucide-react";
 import { BarChart3, Network, Share2, UserCircle } from "lucide-react";
 
-export type FooterTab = "map" | "stats" | "profile" | "share";
+export type FooterTab = "map" | "analytics" | "profile" | "share";
 
 const TABS: { id: FooterTab; label: string; Icon: LucideIcon }[] = [
   { id: "map", label: "Map", Icon: Network },
-  { id: "stats", label: "Stats", Icon: BarChart3 },
+  { id: "analytics", label: "Analytics", Icon: BarChart3 },
   { id: "profile", label: "Profile", Icon: UserCircle },
   { id: "share", label: "Share", Icon: Share2 },
 ];

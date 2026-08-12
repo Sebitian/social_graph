@@ -11,7 +11,7 @@ export function instagramAvatarUrl(username: string): string {
 export function resolveProfilePicUrl(
   username: string,
   profilePicUrl: string | undefined,
-  platform?: "instagram" | "linkedin" | "spotify" | null,
+  platform?: "instagram" | "linkedin" | "facebook" | "spotify" | null,
 ): string | undefined {
   const handle = username.replace(/^@/, "").trim();
   const scraped = profilePicUrl?.trim();

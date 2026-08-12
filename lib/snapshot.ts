@@ -7,6 +7,7 @@ import {
   type SpotifyTasteResult,
 } from "./spotifyTypes";
 import { isCompanyResult, type CompanyResult } from "./companyTypes";
+import { isTikTokResult, type TikTokResult } from "./tiktokTypes";
 import { blobConfigured } from "./blob";
 
 const SNAPSHOT_DIR = path.join(process.cwd(), "data", "snapshots");
@@ -33,12 +34,21 @@ function normalizeSnapshot(parsed: ScrapeResult): ScrapeResult {
   };
 }
 
+/** Reject alternate-platform snapshots that share the same file path. */
+function asSocialSnapshot(parsed: unknown): ScrapeResult | null {
+  if (!parsed || typeof parsed !== "object") return null;
+  const kind = (parsed as { kind?: string }).kind;
+  if (kind === "spotify" || kind === "company" || kind === "tiktok") return null;
+  if (!("profile" in parsed) || !("graph" in parsed)) return null;
+  return normalizeSnapshot(parsed as ScrapeResult);
+}
+
 function readSnapshotFromDisk(handle: string): ScrapeResult | null {
   const file = snapshotPath(handle);
   if (!fs.existsSync(file)) return null;
   try {
     const raw = fs.readFileSync(file, "utf-8");
-    return normalizeSnapshot(JSON.parse(raw) as ScrapeResult);
+    return asSocialSnapshot(JSON.parse(raw));
   } catch {
     return null;
   }
@@ -56,7 +66,7 @@ async function readSnapshotFromBlob(handle: string): Promise<ScrapeResult | null
     const meta = await head(pathname);
     const response = await fetch(meta.downloadUrl);
     if (!response.ok) return null;
-    return normalizeSnapshot((await response.json()) as ScrapeResult);
+    return asSocialSnapshot(await response.json());
   } catch {
     return null;
   }
@@ -137,9 +147,7 @@ export async function writeSnapshot(
   return clean;
 }
 
-export function pinnedGraphPath(handle: string): string {
-  return `/graph/${cleanHandle(handle)}/pinned`;
-}
+export { pinnedGraphPath, DEMO_HANDLE } from "./paths";
 
 /**
  * Read a Spotify taste snapshot from disk (and Blob when configured).
@@ -219,6 +227,49 @@ export async function readCompanySnapshot(
   try {
     const parsed: unknown = JSON.parse(fs.readFileSync(file, "utf-8"));
     if (!isCompanyResult(parsed)) return null;
+    return {
+      ...parsed,
+      pinned: true,
+      cached: true,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Read a TikTok visibility snapshot from disk (and Blob when configured).
+ * Separate from social ScrapeResult snapshots.
+ */
+export async function readTikTokSnapshot(
+  handle: string,
+): Promise<TikTokResult | null> {
+  const clean = cleanHandle(handle);
+
+  if (blobConfigured()) {
+    try {
+      const meta = await head(snapshotBlobPathname(clean));
+      const response = await fetch(meta.downloadUrl);
+      if (response.ok) {
+        const parsed: unknown = await response.json();
+        if (isTikTokResult(parsed)) {
+          return {
+            ...parsed,
+            pinned: true,
+            cached: true,
+          };
+        }
+      }
+    } catch {
+      // fall through to disk
+    }
+  }
+
+  const file = snapshotPath(clean);
+  if (!fs.existsSync(file)) return null;
+  try {
+    const parsed: unknown = JSON.parse(fs.readFileSync(file, "utf-8"));
+    if (!isTikTokResult(parsed)) return null;
     return {
       ...parsed,
       pinned: true,

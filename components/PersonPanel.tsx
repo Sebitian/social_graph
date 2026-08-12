@@ -200,7 +200,7 @@ interface Props {
   proximityRing?: { id: number; label: string; subtitle?: string; color: string };
   friendCluster?: Circle;
   onClose: () => void;
-  platform?: "instagram" | "linkedin" | "spotify" | null;
+  platform?: "instagram" | "linkedin" | "facebook" | "spotify" | null;
   /** Inline card in page flow (mobile detail slot). Default: overlay portal. */
   variant?: "overlay" | "inline";
 }
