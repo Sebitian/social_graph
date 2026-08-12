@@ -11,6 +11,7 @@ import {
   deriveRelationshipEdge,
   extractInteractionSignals,
 } from "./labels";
+import { seedAudienceHistory } from "./audienceHistory";
 import { estimateScrapeBudget } from "./scrapeBudget";
 import type {
   Commentator,
@@ -841,6 +842,7 @@ export function buildScrapeResultFromInstagramRaw(
     0,
   );
 
+  const scrapedAt = Date.now();
   return {
     platform: "instagram",
     profile,
@@ -853,8 +855,13 @@ export function buildScrapeResultFromInstagramRaw(
     cached: false,
     demo: false,
     pinned: true,
-    scrapedAt: Date.now(),
+    scrapedAt,
     posts: profilePosts,
     engagers,
+    audienceHistory: seedAudienceHistory({
+      scrapedAt,
+      followersCount: profile.followersCount,
+      followingCount: profile.followingCount,
+    }),
   };
 }

@@ -84,6 +84,12 @@ export interface TikTokStats {
   hearts: number;
 }
 
+export interface TikTokAudienceSnapshot {
+  at: number;
+  followerCount: number;
+  followingCount?: number;
+}
+
 export interface TikTokResult {
   kind: "tiktok";
   scrapedAt: number;
@@ -95,6 +101,8 @@ export interface TikTokResult {
   hashtags: TikTokHashtag[];
   graph: TikTokGraphData;
   stats: TikTokStats;
+  /** Prior follower counts for range deltas (current is `profile`). */
+  audienceHistory?: TikTokAudienceSnapshot[];
 }
 
 export function isTikTokResult(value: unknown): value is TikTokResult {

@@ -6,9 +6,11 @@ import type { TikTokResult } from "@/lib/tiktokTypes";
 import { formatTikTokCount } from "@/lib/tiktokTypes";
 import {
   computeTikTokAnalytics,
+  computeTikTokAudienceStats,
   type AnalyticsRangeId,
 } from "@/lib/analytics";
 import AnalyticsDashboardShell from "@/components/analytics/AnalyticsDashboardShell";
+import AudienceStatsBar from "@/components/analytics/AudienceStatsBar";
 
 interface Props {
   data: TikTokResult;
@@ -27,29 +29,21 @@ export default function TikTokAnalyticsBody({
     () => computeTikTokAnalytics(data, range),
     [data, range],
   );
+  const audience = useMemo(
+    () => computeTikTokAudienceStats(data, range),
+    [data, range],
+  );
 
   return (
     <AnalyticsDashboardShell
       accent="#25F4EE"
+      audience={<AudienceStatsBar items={audience.items} />}
       chartEmptyLabel={
         overview.hasDatedEvents
           ? "No videos in this range"
           : "Video dates missing from snapshot"
       }
       metrics={[
-        {
-          id: "followers",
-          label: "Followers",
-          value: formatTikTokCount(data.profile.followerCount ?? 0),
-          series: [
-            {
-              t: data.scrapedAt || Date.now(),
-              label: "Total",
-              v: data.profile.followerCount ?? 0,
-            },
-          ],
-          chartMode: "bars" as const,
-        },
         {
           id: "plays",
           label: "Plays",
@@ -79,7 +73,6 @@ export default function TikTokAnalyticsBody({
           series: overview.videosSeries,
         },
       ]}
-      defaultMetricId="followers"
       primary={{
         tabs: [
           {

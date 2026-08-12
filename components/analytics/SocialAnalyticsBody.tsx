@@ -3,15 +3,16 @@
 import { useMemo, useState } from "react";
 import type { ScrapeResult, SocialSourcePlatform } from "@/lib/types";
 import {
+  computeAudienceStats,
   computeSocialAnalytics,
   type AnalyticsRangeId,
-  type ChartPoint,
 } from "@/lib/analytics";
 import { compactNumber } from "@/lib/graphUtils";
 import { resolveProfilePicUrl } from "@/lib/avatarUrl";
 import AnalyticsDashboardShell, {
   type DashboardMetric,
 } from "@/components/analytics/AnalyticsDashboardShell";
+import AudienceStatsBar from "@/components/analytics/AudienceStatsBar";
 import type { BreakdownRow } from "@/components/analytics/BreakdownCard";
 
 interface Props {
@@ -60,77 +61,6 @@ function Avatar({
   );
 }
 
-/** Point-in-time profile totals (not range-filtered). */
-function snapshotSeries(value: number, scrapedAt?: number): ChartPoint[] {
-  return [
-    {
-      t: scrapedAt && scrapedAt > 0 ? scrapedAt : Date.now(),
-      label: "Total",
-      v: Math.max(0, value),
-    },
-  ];
-}
-
-function audienceMetrics(
-  data: ScrapeResult,
-  platform: SocialSourcePlatform,
-): DashboardMetric[] {
-  const profile = data.profile;
-  const scrapedAt = data.scrapedAt;
-  const followers = profile.followersCount ?? 0;
-  const following = profile.followingCount ?? 0;
-  const connections = profile.connectionsCount ?? 0;
-
-  if (platform === "linkedin") {
-    return [
-      {
-        id: "connections",
-        label: "Connections",
-        value: compactNumber(connections || following),
-        series: snapshotSeries(connections || following, scrapedAt),
-        chartMode: "bars",
-      },
-      {
-        id: "followers",
-        label: "Followers",
-        value: compactNumber(followers),
-        series: snapshotSeries(followers, scrapedAt),
-        chartMode: "bars",
-      },
-    ];
-  }
-
-  if (platform === "instagram") {
-    return [
-      {
-        id: "followers",
-        label: "Followers",
-        value: compactNumber(followers),
-        series: snapshotSeries(followers, scrapedAt),
-        chartMode: "bars",
-      },
-      {
-        id: "following",
-        label: "Following",
-        value: compactNumber(following),
-        series: snapshotSeries(following, scrapedAt),
-        chartMode: "bars",
-      },
-    ];
-  }
-
-  // Facebook page: followers is the primary audience signal.
-  return [
-    {
-      id: "followers",
-      label: "Followers",
-      value: compactNumber(followers),
-      series: snapshotSeries(followers, scrapedAt),
-      chartMode: "bars",
-    },
-  ];
-}
-
 export default function SocialAnalyticsBody({
   data,
   range,
@@ -141,6 +71,10 @@ export default function SocialAnalyticsBody({
   const overview = useMemo(
     () => computeSocialAnalytics(data, range),
     [data, range],
+  );
+  const audience = useMemo(
+    () => computeAudienceStats(data, platform, range),
+    [data, platform, range],
   );
 
   const personRows = (
@@ -170,23 +104,21 @@ export default function SocialAnalyticsBody({
   const usePostMetrics = overview.hasPostMetrics;
   const showPlays = usePostMetrics && overview.postPlays > 0;
 
-  const engagementMetrics: DashboardMetric[] = showPlays
+  // Instagram post scrapes give lifetime likes/plays on content published in
+  // the range — not "earned this week". Period % deltas vs the prior window
+  // are misleading there, so we only show the totals + chart.
+  const metrics: DashboardMetric[] = showPlays
     ? [
         {
           id: "plays",
           label: "Plays",
           value: compactNumber(overview.postPlays),
-          delta: overview.postPlaysDelta,
           series: overview.postPlaysSeries,
         },
         {
           id: "likes",
           label: "Likes",
           value: compactNumber(overview.postLikes || overview.reactions),
-          delta:
-            overview.postLikesDelta.pct != null
-              ? overview.postLikesDelta
-              : overview.reactionsDelta,
           series: overview.postLikesSeries.length
             ? overview.postLikesSeries
             : overview.reactionsSeries,
@@ -195,14 +127,12 @@ export default function SocialAnalyticsBody({
           id: "comments",
           label: "Comments",
           value: compactNumber(overview.comments),
-          delta: overview.commentsDelta,
           series: overview.commentsSeries,
         },
         {
           id: "posts",
           label: "Posts",
           value: compactNumber(overview.postsTouched),
-          delta: overview.postsDelta,
           series: overview.postsSeries,
         },
       ]
@@ -237,17 +167,18 @@ export default function SocialAnalyticsBody({
         },
       ];
 
-  const metrics = [...audienceMetrics(data, platform), ...engagementMetrics];
-  const defaultMetricId = metrics[0]?.id;
-
   return (
     <AnalyticsDashboardShell
       accent={ACCENT[platform]}
-      defaultMetricId={defaultMetricId}
+      audience={<AudienceStatsBar items={audience.items} />}
       chartEmptyLabel={
-        overview.hasDatedEvents
-          ? "No activity in this range"
-          : "Few dated events in this snapshot"
+        showPlays
+          ? overview.hasDatedEvents
+            ? "No posts published in this range"
+            : "Few dated posts in this snapshot"
+          : overview.hasDatedEvents
+            ? "No activity in this range"
+            : "Few dated events in this snapshot"
       }
       metrics={metrics}
       primary={{

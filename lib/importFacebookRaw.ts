@@ -11,6 +11,7 @@ import {
   deriveRelationshipEdge,
   extractInteractionSignals,
 } from "./labels";
+import { seedAudienceHistory } from "./audienceHistory";
 import { estimateScrapeBudget } from "./scrapeBudget";
 import type {
   Commentator,
@@ -529,6 +530,7 @@ export function buildScrapeResultFromFacebookRaw(
     0,
   );
 
+  const scrapedAt = Date.now();
   return {
     platform: "facebook",
     profile,
@@ -541,8 +543,13 @@ export function buildScrapeResultFromFacebookRaw(
     cached: false,
     demo: false,
     pinned: true,
-    scrapedAt: Date.now(),
+    scrapedAt,
     posts: profilePosts,
     engagers,
+    audienceHistory: seedAudienceHistory({
+      scrapedAt,
+      followersCount: profile.followersCount,
+      followingCount: profile.followingCount,
+    }),
   };
 }

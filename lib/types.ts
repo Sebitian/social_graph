@@ -412,6 +412,15 @@ export interface NetworkStats {
 /** Which social network a ScrapeResult came from (pinned companions). */
 export type SocialSourcePlatform = "linkedin" | "instagram" | "facebook";
 
+/** Point-in-time audience counts for period-over-period deltas. */
+export interface AudienceSnapshot {
+  /** Unix ms when this count was observed. */
+  at: number;
+  followersCount: number;
+  followingCount?: number;
+  connectionsCount?: number;
+}
+
 export interface ScrapeResult {
   profile: ProfileData;
   graph: GraphData;
@@ -433,4 +442,10 @@ export interface ScrapeResult {
    * The force map still uses `graph.nodes` (top connections only).
    */
   engagers?: GraphNode[];
+  /**
+   * Prior audience observations (oldest → newest), used for Followers /
+   * Following / Connections deltas vs the selected analytics range.
+   * Current totals always come from `profile`.
+   */
+  audienceHistory?: AudienceSnapshot[];
 }

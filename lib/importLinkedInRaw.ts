@@ -11,6 +11,7 @@ import {
   deriveRelationshipEdge,
   extractInteractionSignals,
 } from "./labels";
+import { seedAudienceHistory } from "./audienceHistory";
 import { estimateScrapeBudget } from "./scrapeBudget";
 import type {
   Commentator,
@@ -545,6 +546,7 @@ export function buildScrapeResultFromLinkedInRaw(
     selfNode.fullName = profile.fullName;
   }
 
+  const scrapedAt = Date.now();
   return {
     platform: "linkedin",
     profile,
@@ -558,8 +560,14 @@ export function buildScrapeResultFromLinkedInRaw(
     cached: false,
     demo: false,
     pinned: true,
-    scrapedAt: Date.now(),
+    scrapedAt,
     posts: profilePosts,
     engagers,
+    audienceHistory: seedAudienceHistory({
+      scrapedAt,
+      followersCount: profile.followersCount,
+      followingCount: profile.followingCount,
+      connectionsCount: profile.connectionsCount,
+    }),
   };
 }

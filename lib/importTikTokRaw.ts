@@ -1,3 +1,4 @@
+import { seedAudienceHistory } from "./audienceHistory";
 import type {
   TikTokGraphData,
   TikTokGraphLink,
@@ -332,9 +333,15 @@ export function buildTikTokResult(
   const hashtags = buildHashtags(videos);
   const graph = buildGraph(profile, videos, hashtags);
 
+  const scrapedAt = options?.scrapedAt ?? Date.now();
+  const seeded = seedAudienceHistory({
+    scrapedAt,
+    followersCount: profile.followerCount,
+    followingCount: profile.followingCount,
+  });
   return {
     kind: "tiktok",
-    scrapedAt: options?.scrapedAt ?? Date.now(),
+    scrapedAt,
     pinned: options?.pinned ?? true,
     cached: false,
     demo: false,
@@ -343,5 +350,10 @@ export function buildTikTokResult(
     hashtags,
     graph,
     stats: buildStats(profile, videos, hashtags),
+    audienceHistory: seeded.map((p) => ({
+      at: p.at,
+      followerCount: p.followersCount,
+      followingCount: p.followingCount,
+    })),
   };
 }

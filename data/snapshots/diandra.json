@@ -55516,5 +55516,37 @@
       }
     }
   ],
-  "platform": "linkedin"
+  "platform": "linkedin",
+  "audienceHistory": [
+    {
+      "at": 1778130302127,
+      "followersCount": 1359,
+      "followingCount": 0,
+      "connectionsCount": 488
+    },
+    {
+      "at": 1783314302127,
+      "followersCount": 1381,
+      "followingCount": 0,
+      "connectionsCount": 496
+    },
+    {
+      "at": 1784696702127,
+      "followersCount": 1388,
+      "followingCount": 0,
+      "connectionsCount": 499
+    },
+    {
+      "at": 1785301502127,
+      "followersCount": 1391,
+      "followingCount": 0,
+      "connectionsCount": 500
+    },
+    {
+      "at": 1785819902127,
+      "followersCount": 1395,
+      "followingCount": 0,
+      "connectionsCount": 500
+    }
+  ]
 }

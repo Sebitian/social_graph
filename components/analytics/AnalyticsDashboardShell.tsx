@@ -24,6 +24,8 @@ interface Props {
   accent?: string;
   chartMode?: "line" | "bars";
   chartEmptyLabel?: string;
+  /** Static audience totals (followers / following) above the chart KPIs. */
+  audience?: ReactNode;
   /** Primary widget (often tabbed). */
   primary?: { tabs: BreakdownTab[] } | { rows: BreakdownRow[]; title: string; valueHeader?: string; empty?: string };
   /** Secondary widget. */
@@ -60,6 +62,7 @@ export default function AnalyticsDashboardShell({
   accent = "#60a5fa",
   chartMode = "line",
   chartEmptyLabel,
+  audience,
   primary,
   secondary,
   tertiary,
@@ -82,6 +85,8 @@ export default function AnalyticsDashboardShell({
 
   return (
     <div className={`flex flex-col gap-3 ${className}`}>
+      {audience}
+
       <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.03]">
         <KpiStrip
           items={metrics}

@@ -1,6 +1,11 @@
 /** Analytics time ranges and period aggregations for the Analytics panel. */
 
-import type { GraphNode, ScrapeResult } from "@/lib/types";
+import type {
+  AudienceSnapshot,
+  GraphNode,
+  ScrapeResult,
+  SocialSourcePlatform,
+} from "@/lib/types";
 import type { TikTokResult, TikTokVideo } from "@/lib/tiktokTypes";
 import type { SpotifyTasteResult, SpotifyTrack } from "@/lib/spotifyTypes";
 import type { CompanyResult } from "@/lib/companyTypes";
@@ -197,6 +202,168 @@ export function percentDelta(
   if (previous <= 0 && current <= 0) return 0;
   if (previous <= 0) return null;
   return Math.round(((current - previous) / previous) * 100);
+}
+
+/** Absolute count change (e.g. +6 followers), not a percent. */
+export interface AbsoluteDelta {
+  abs: number | null;
+}
+
+export interface AudienceStatItem {
+  id: string;
+  label: string;
+  value: number;
+  delta: AbsoluteDelta;
+}
+
+export interface AudienceStatsOverview {
+  items: AudienceStatItem[];
+}
+
+function baselineAudiencePoint(
+  history: AudienceSnapshot[],
+  range: AnalyticsRangeId,
+  now: number,
+): AudienceSnapshot | null {
+  if (history.length === 0) return null;
+  const sorted = [...history].sort((a, b) => a.at - b.at);
+  if (range === "all") return sorted[0] ?? null;
+
+  const { startMs } = rangeWindow(range, now);
+  if (startMs == null) return sorted[0] ?? null;
+
+  // Prefer the latest observation at or before the window start.
+  let baseline: AudienceSnapshot | null = null;
+  for (const point of sorted) {
+    if (point.at <= startMs) baseline = point;
+  }
+  if (baseline) return baseline;
+
+  // Fall back to the closest point after the window start (partial history).
+  return sorted.find((p) => p.at > startMs) ?? sorted[0] ?? null;
+}
+
+/**
+ * Current audience totals from the profile, with absolute deltas vs the
+ * selected range using `audienceHistory` prior observations.
+ */
+export function computeAudienceStats(
+  data: ScrapeResult,
+  platform: SocialSourcePlatform,
+  range: AnalyticsRangeId,
+  now = Date.now(),
+): AudienceStatsOverview {
+  // Anchor ranges to the snapshot time so pinned demos stay stable.
+  const anchor = data.scrapedAt > 0 ? data.scrapedAt : now;
+  const profile = data.profile;
+  const followers = profile.followersCount ?? 0;
+  const following = profile.followingCount ?? 0;
+  const connections = profile.connectionsCount ?? 0;
+  const baseline = baselineAudiencePoint(
+    data.audienceHistory ?? [],
+    range,
+    anchor,
+  );
+
+  const deltaFor = (current: number, previous: number | undefined): AbsoluteDelta => {
+    if (previous == null || !Number.isFinite(previous)) return { abs: null };
+    return { abs: current - previous };
+  };
+
+  if (platform === "linkedin") {
+    const conn = connections || following;
+    return {
+      items: [
+        {
+          id: "connections",
+          label: "Connections",
+          value: conn,
+          delta: deltaFor(conn, baseline?.connectionsCount ?? baseline?.followingCount),
+        },
+        {
+          id: "followers",
+          label: "Followers",
+          value: followers,
+          delta: deltaFor(followers, baseline?.followersCount),
+        },
+      ],
+    };
+  }
+
+  if (platform === "instagram") {
+    return {
+      items: [
+        {
+          id: "followers",
+          label: "Followers",
+          value: followers,
+          delta: deltaFor(followers, baseline?.followersCount),
+        },
+        {
+          id: "following",
+          label: "Following",
+          value: following,
+          delta: deltaFor(following, baseline?.followingCount),
+        },
+      ],
+    };
+  }
+
+  // Facebook: followers primary; include following when present.
+  const items: AudienceStatItem[] = [
+    {
+      id: "followers",
+      label: "Followers",
+      value: followers,
+      delta: deltaFor(followers, baseline?.followersCount),
+    },
+  ];
+  if (following > 0) {
+    items.push({
+      id: "following",
+      label: "Following",
+      value: following,
+      delta: deltaFor(following, baseline?.followingCount),
+    });
+  }
+  return { items };
+}
+
+export function computeTikTokAudienceStats(
+  data: TikTokResult,
+  range: AnalyticsRangeId,
+  now = Date.now(),
+): AudienceStatsOverview {
+  const anchor = data.scrapedAt > 0 ? data.scrapedAt : now;
+  const followers = data.profile.followerCount ?? 0;
+  const following = data.profile.followingCount ?? 0;
+  const history: AudienceSnapshot[] = (data.audienceHistory ?? []).map((p) => ({
+    at: p.at,
+    followersCount: p.followerCount,
+    followingCount: p.followingCount,
+  }));
+  const baseline = baselineAudiencePoint(history, range, anchor);
+  const deltaFor = (current: number, previous: number | undefined): AbsoluteDelta => {
+    if (previous == null || !Number.isFinite(previous)) return { abs: null };
+    return { abs: current - previous };
+  };
+
+  return {
+    items: [
+      {
+        id: "followers",
+        label: "Followers",
+        value: followers,
+        delta: deltaFor(followers, baseline?.followersCount),
+      },
+      {
+        id: "following",
+        label: "Following",
+        value: following,
+        delta: deltaFor(following, baseline?.followingCount),
+      },
+    ],
+  };
 }
 
 function previousWindow(
