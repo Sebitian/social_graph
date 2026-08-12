@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { CompanyEmploymentTimelineRow } from "@/lib/analytics";
 
 interface Props {
@@ -30,18 +30,49 @@ function Avatar({ name, src }: { name: string; src?: string }) {
   );
 }
 
-function yearTicks(minMs: number, maxMs: number): number[] {
+/** Evenly spaced year labels that never crowd (esp. near "now" on phones). */
+function yearTicks(
+  minMs: number,
+  maxMs: number,
+  trackWidthPx: number,
+): number[] {
   const startYear = new Date(minMs).getUTCFullYear();
   const endYear = new Date(maxMs).getUTCFullYear();
-  const years: number[] = [];
-  for (let y = startYear; y <= endYear; y += 1) years.push(y);
-  if (years.length === 1) return years;
-  // Thin out if dense
-  if (years.length > 8) {
-    const step = Math.ceil(years.length / 6);
-    return years.filter((y, i) => i === 0 || i === years.length - 1 || i % step === 0);
+  if (endYear <= startYear) return [startYear];
+
+  // ~34px per "2025" label with padding; leave room on narrow tracks
+  const labelW = 34;
+  const maxLabels = Math.max(
+    3,
+    Math.min(6, Math.floor(trackWidthPx / labelW) || 3),
+  );
+
+  const spanYears = endYear - startYear;
+  const step = Math.max(1, Math.ceil(spanYears / (maxLabels - 1)));
+
+  const ticks: number[] = [];
+  for (let y = startYear; y < endYear; y += step) {
+    ticks.push(y);
   }
-  return years;
+
+  // Prefer showing the current/end year; drop the previous tick if too close
+  const minGapYears = Math.max(1, Math.floor(step * 0.75));
+  const last = ticks[ticks.length - 1];
+  if (last == null) {
+    ticks.push(endYear);
+  } else if (endYear - last >= minGapYears) {
+    ticks.push(endYear);
+  } else {
+    ticks[ticks.length - 1] = endYear;
+  }
+
+  return ticks;
+}
+
+function labelAlign(leftPct: number): string {
+  if (leftPct <= 8) return "translateX(0%)";
+  if (leftPct >= 92) return "translateX(-100%)";
+  return "translateX(-50%)";
 }
 
 export default function EmploymentTimelineChart({
@@ -50,6 +81,18 @@ export default function EmploymentTimelineChart({
   className = "",
 }: Props) {
   const now = Date.now();
+  const axisRef = useRef<HTMLDivElement | null>(null);
+  const [trackWidth, setTrackWidth] = useState(280);
+
+  useEffect(() => {
+    const el = axisRef.current;
+    if (!el) return;
+    const update = () => setTrackWidth(el.clientWidth || 280);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   const { minMs, maxMs, ticks } = useMemo(() => {
     if (employees.length === 0) {
@@ -61,8 +104,8 @@ export default function EmploymentTimelineChart({
     const pad = Math.max(30 * 24 * 60 * 60 * 1000, (now - min) * 0.06);
     const minMs = min - pad;
     const maxMs = now;
-    return { minMs, maxMs, ticks: yearTicks(minMs, maxMs) };
-  }, [employees, now]);
+    return { minMs, maxMs, ticks: yearTicks(minMs, maxMs, trackWidth) };
+  }, [employees, now, trackWidth]);
 
   if (employees.length === 0) {
     return (
@@ -79,15 +122,19 @@ export default function EmploymentTimelineChart({
   return (
     <div className={`px-3 py-3 sm:px-4 ${className}`}>
       <div className="mb-2 flex items-end gap-3 pl-[9.5rem] sm:pl-[11.5rem]">
-        <div className="relative h-4 flex-1">
+        <div ref={axisRef} className="relative h-4 flex-1">
           {ticks.map((year) => {
             const left = ((Date.UTC(year, 0, 1) - minMs) / span) * 100;
-            if (left < 0 || left > 100) return null;
+            if (left < -2 || left > 102) return null;
+            const clamped = Math.min(100, Math.max(0, left));
             return (
               <span
                 key={year}
-                className="absolute -translate-x-1/2 font-mono text-[10px] text-white/30"
-                style={{ left: `${left}%` }}
+                className="absolute font-mono text-[10px] tabular-nums text-white/30"
+                style={{
+                  left: `${clamped}%`,
+                  transform: labelAlign(clamped),
+                }}
               >
                 {year}
               </span>
