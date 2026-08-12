@@ -18,7 +18,7 @@ alwaysApply: true
 - Existing tracked snapshot: `data/snapshots/diandra.json`, imported from `data/linkedin_raw/profile/diandra_linkedin_scrape_71226.json`.
 - Instagram demo companion: `data/snapshots/jppap.json` from `data/insta_raw/jp_jppap.json` (loaded on pinned pages via the Instagram platform tab).
 - Spotify demo companion: `data/snapshots/sebastian-spotify.json` from Sebastian’s profile + Schmok playlist scrapes (loaded via the Spotify platform tab).
-- Company demo companion: `data/snapshots/nousresearch.json` from `data/linkedin_raw/company/nouse_research.json` (HarvestAPI employee search; loaded via the Company platform tab).
+- Company demo companion: `data/snapshots/formationbio.json` from `data/linkedin_raw/company/dataset_linkedin-company-employees_2026-08-08_19-15-29-629.json` (HarvestAPI employee search; loaded via the Company platform tab). Older Nous Research snapshot remains at `data/snapshots/nousresearch.json`.
 - Facebook demo companion: `data/snapshots/kossof-facebook.json` from `data/facebook_raw/` (pages + posts + followers/following; loaded via the Facebook platform tab).
 - TikTok demo companion: `data/snapshots/kossof-tiktok.json` from `data/tiktok_raw/` (profile + posts → videos/hashtags graph; loaded via the TikTok platform tab).
 - Deployed reference URL: `https://social-graph-nu.vercel.app/demo`.

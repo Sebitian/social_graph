@@ -10,8 +10,8 @@ import {
  *   npx tsx scripts/import-company-snapshot.ts <handle> <company-employees.json>
  *
  * Example:
- *   npx tsx scripts/import-company-snapshot.ts nousresearch \
- *     data/linkedin_raw/company/nouse_research.json
+ *   npx tsx scripts/import-company-snapshot.ts formationbio \
+ *     data/linkedin_raw/company/dataset_linkedin-company-employees_2026-08-08_19-15-29-629.json
  */
 const args = process.argv.slice(2);
 const handleArg = args[0]?.replace(/^@/, "").trim().toLowerCase();

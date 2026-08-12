@@ -1,6 +1,6 @@
 {
   "kind": "company",
-  "scrapedAt": 1785907634382,
+  "scrapedAt": 1786509403616,
   "pinned": true,
   "company": {
     "id": "69229985",
@@ -19,6 +19,8 @@
       "title": "ceo @ nous research",
       "location": "New York City, New York",
       "tenure": "3 yrs 8 mos",
+      "startedAt": 1672531200000,
+      "startedLabel": "2023",
       "connectionsCount": 358,
       "followerCount": 565,
       "linkedinUrl": "https://www.linkedin.com/in/dillon-rolnick-a29501128",
@@ -26,7 +28,8 @@
         {
           "school": "Vanderbilt University",
           "degree": "Bachelor’s Degree",
-          "fieldOfStudy": "Computer Science, History"
+          "fieldOfStudy": "Computer Science, History",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C4D0BAQEhR74nz4kJ6g/company-logo_400_400/company-logo_400_400/0/1648406543324/vanderbilt_university_logo?e=1787788800&v=beta&t=IUSQx8JGFUquVH5iMXLEWU-Vptpb9rGpRNG48dCPX24"
         }
       ],
       "topSkills": [
@@ -48,6 +51,8 @@
       "title": "Chief Product Officer",
       "location": "Los Angeles, California",
       "tenure": "6 mos",
+      "startedAt": 1772323200000,
+      "startedLabel": "Mar 2026",
       "connectionsCount": 1991,
       "followerCount": 2073,
       "profilePicUrl": "https://media.licdn.com/dms/image/v2/C5103AQGijRm-PRSxlQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516339878479?e=1787788800&v=beta&t=PjsqvBEsxFid3LF9qesIROaGvsQxYYp-s-5EzlGAbbc",
@@ -56,7 +61,8 @@
         {
           "school": "University of Waterloo",
           "degree": "Bachelor's degree",
-          "fieldOfStudy": "Computer Science"
+          "fieldOfStudy": "Computer Science",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQHV472cn2nhMw/company-logo_400_400/B56Zb.Jn2gHwAY-/0/1748020657900/uwaterloo_logo?e=1787788800&v=beta&t=UTwe2VCQiqOO_Tv4fNVLYIJ3tgrHfqd6E92w6xvBTU4"
         }
       ],
       "topSkills": [
@@ -82,6 +88,8 @@
       "title": "Applied AI Research Engineer",
       "location": "Chicago, Illinois",
       "tenure": "1 yr 7 mos",
+      "startedAt": 1738368000000,
+      "startedLabel": "Feb 2025",
       "connectionsCount": 1551,
       "followerCount": 1579,
       "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQF1PhdG4wzIHg/profile-displayphoto-shrink_800_800/B4EZUgLsBkGgAc-/0/1740001690013?e=1787788800&v=beta&t=5vDYa2ziLmcUcFNVVcP3GToSRwIjEkWDHCtWpcIWIPo",
@@ -90,7 +98,8 @@
         {
           "school": "The University of Chicago Booth School of Business",
           "degree": "Master in Business Administration - MBA",
-          "fieldOfStudy": "Strategic Management, Entrepreneurship, Behavioral Science, Finance"
+          "fieldOfStudy": "Strategic Management, Entrepreneurship, Behavioral Science, Finance",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQFZO05jhYKSkw/company-logo_400_400/company-logo_400_400/0/1692627816910/universityofchicagoboothschoolofbusiness_logo?e=1787788800&v=beta&t=rBLdO_BcZHbvwCJvepd2Ifb0DQLt5S1iyrewsjbp3tI"
         }
       ],
       "topSkills": [
@@ -116,6 +125,8 @@
       "title": "Strategy and Ops",
       "location": "Austin, Texas",
       "tenure": "7 mos",
+      "startedAt": 1769904000000,
+      "startedLabel": "Feb 2026",
       "connectionsCount": 1380,
       "followerCount": 1397,
       "profilePicUrl": "https://media.licdn.com/dms/image/v2/D5603AQH_9aoCRvUe5w/profile-displayphoto-crop_800_800/B56ZyhRb9VKkAI-/0/1772232231318?e=1787788800&v=beta&t=qk403O1Wb7jySUM9c1KcpujAxL3vKsFk-sxBxhd-B9M",
@@ -124,7 +135,8 @@
         {
           "school": "University of Oklahoma",
           "degree": "Bachelor's degree",
-          "fieldOfStudy": "Accounting, Entrepreneurship, and Finance"
+          "fieldOfStudy": "Accounting, Entrepreneurship, and Finance",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQFR0IT3dEv29w/company-logo_400_400/company-logo_400_400/0/1721752836280/university_of_oklahoma_logo?e=1787788800&v=beta&t=J9ru0d6v8ZiAS3ScY7Kguzui3StfQqygl5EW-MuJjCE"
         }
       ],
       "topSkills": [
@@ -150,6 +162,8 @@
       "title": "Head of Behavior, Co-Founder",
       "location": "New York City, New York",
       "tenure": "4 yrs 1 mo",
+      "startedAt": 1659312000000,
+      "startedLabel": "Aug 2022",
       "connectionsCount": 728,
       "followerCount": 850,
       "linkedinUrl": "https://www.linkedin.com/in/karan-s-malhotra",
@@ -157,7 +171,8 @@
         {
           "school": "Emory University",
           "degree": "Religion and Philosophy",
-          "fieldOfStudy": "PHILOSOPHY AND RELIGIOUS STUDIES"
+          "fieldOfStudy": "PHILOSOPHY AND RELIGIOUS STUDIES",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQG6ekgvcKg3Wg/company-logo_400_400/B56ZiLHHixH0Ak-/0/1754680556019/emory_university_logo?e=1787788800&v=beta&t=nFK-6VQ2TIYeHZDxwCil0R0YvQVUlUwRvNR07qR5X5g"
         }
       ],
       "topSkills": [
@@ -183,6 +198,8 @@
       "title": "Co-Founder | Managing Partner",
       "location": "New York City, New York",
       "tenure": "8 yrs 8 mos",
+      "startedAt": 1514764800000,
+      "startedLabel": "2018",
       "connectionsCount": 13336,
       "followerCount": 13229,
       "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQEAb7p3JOqKXw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1674488826979?e=1787788800&v=beta&t=Td_QT_p0riwiFF67v0WyyrtztEPTu0QeCPt-HElH630",
@@ -191,7 +208,8 @@
         {
           "school": "Binghamton University School of Management",
           "degree": "Master of Science",
-          "fieldOfStudy": "Finance and Accounting"
+          "fieldOfStudy": "Finance and Accounting",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQGOOjcPW4yvZQ/company-logo_400_400/company-logo_400_400/0/1631349681983?e=1787788800&v=beta&t=6DaQmXUyTviafL-Is7XIdsdxp2EEmtahkX14WLRy9p0"
         }
       ],
       "topSkills": [
@@ -216,6 +234,8 @@
       "title": "Co-Founder / CTO",
       "location": "Detroit, Michigan",
       "tenure": "3 yrs 2 mos",
+      "startedAt": 1688169600000,
+      "startedLabel": "Jul 2023",
       "connectionsCount": 181,
       "followerCount": 836,
       "profilePicUrl": "https://media.licdn.com/dms/image/v2/D5603AQEUZktX11n1vg/profile-displayphoto-crop_800_800/B56ZsO2VbIHYAM-/0/1765480686244?e=1787788800&v=beta&t=Ib30UdCT5QiTOc157CVo8XzMFpV15O4U5-Ib3rC5mZo",
@@ -224,7 +244,8 @@
         {
           "school": "University of Michigan",
           "degree": "Master’s Degree",
-          "fieldOfStudy": "Computer Science"
+          "fieldOfStudy": "Computer Science",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQFGfERBPGurCg/company-logo_400_400/company-logo_400_400/0/1631307390795?e=1787788800&v=beta&t=grFlPrSs_IMMBqKsX4wedJYzZHrNgURdOEgyqd9oWDc"
         }
       ],
       "topSkills": [
@@ -250,6 +271,8 @@
       "title": "Field Engineering Manager - Digital Natives",
       "location": "New York City, New York",
       "tenure": "1 yr 1 mo",
+      "startedAt": 1754006400000,
+      "startedLabel": "Aug 2025",
       "connectionsCount": 1365,
       "followerCount": 1499,
       "profilePicUrl": "https://media.licdn.com/dms/image/v2/C5603AQEf8YAK8C-aAg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1603393887203?e=1787788800&v=beta&t=KXPkvGpHAxwCni1YZDBIOsCng_jMU4rAeDqHq0c1d4g",
@@ -258,7 +281,8 @@
         {
           "school": "Emory University - Goizueta Business School",
           "degree": "Master of Science - MS",
-          "fieldOfStudy": "Data Science"
+          "fieldOfStudy": "Data Science",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQFazoqrq_g-GQ/company-logo_400_400/company-logo_400_400/0/1657130160598/goizueta_business_school_logo?e=1787788800&v=beta&t=R09NIBbHwRQ90UD8D2SVlBb9zYgCMhltFqA1lOVw2oQ"
         }
       ],
       "topSkills": [
@@ -284,6 +308,8 @@
       "title": "Post Training Lead",
       "location": "Carrollton, Texas",
       "tenure": "5 mos",
+      "startedAt": 1775001600000,
+      "startedLabel": "Apr 2026",
       "connectionsCount": 246,
       "followerCount": 272,
       "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4E03AQFLt2jFzPyymA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516804797705?e=1787788800&v=beta&t=_o0qppl7OTOvbs4H_dzf-MYNwLGttNW7XT9huEJEHmQ",
@@ -292,7 +318,8 @@
         {
           "school": "Bradley University",
           "degree": "Bachelor's Degree",
-          "fieldOfStudy": "Electrical Engineering"
+          "fieldOfStudy": "Electrical Engineering",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQF_3b9Kn3WG0w/company-logo_400_400/company-logo_400_400/0/1683833912833/bradley_university_logo?e=1787788800&v=beta&t=isTDM033kfA0Kf6ohafKbFyCA3XsFjcYXIoFNZrD4HQ"
         }
       ],
       "topSkills": [
@@ -318,6 +345,8 @@
       "title": "Engineer",
       "location": "Sydney, New South Wales",
       "tenure": "2 yrs 1 mo",
+      "startedAt": 1722470400000,
+      "startedLabel": "Aug 2024",
       "connectionsCount": 528,
       "followerCount": 639,
       "linkedinUrl": "https://www.linkedin.com/in/robinfernandes",
@@ -325,7 +354,8 @@
         {
           "school": "Imperial College London",
           "degree": "MEng",
-          "fieldOfStudy": "Computing"
+          "fieldOfStudy": "Computing",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D4E0BAQGOM2ioD3Ym6w/company-logo_400_400/company-logo_400_400/0/1719955498213/imperial_college_london_logo?e=1787788800&v=beta&t=yMG8ecj9kFrgYYwyYJ3YruDsT1rZomKiZsrDvctgs6E"
         }
       ],
       "topSkills": [
@@ -351,6 +381,8 @@
       "title": "Founding engineer/ Researcher",
       "location": "Brisbane, Queensland",
       "tenure": "2 yrs 9 mos",
+      "startedAt": 1701388800000,
+      "startedLabel": "Dec 2023",
       "connectionsCount": 142,
       "followerCount": 159,
       "profilePicUrl": "https://media.licdn.com/dms/image/v2/C5603AQFveEEuOIcgNA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1516622883426?e=1787788800&v=beta&t=ir663Zvg3EA-5vAtxbSqMuniy5NEr8S7v7B6ZWYdFx4",
@@ -359,7 +391,8 @@
         {
           "school": "RMIT University",
           "degree": "Bachelor of Information (Computing Studies)",
-          "fieldOfStudy": "Software Engineering"
+          "fieldOfStudy": "Software Engineering",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQEGU1obJOmROQ/company-logo_400_400/company-logo_400_400/0/1688439184668/rmit_university_logo?e=1787788800&v=beta&t=3PqMyJTJ7g-2msYXZnrzCMbi6F_oW8bKPQApsLIwPdU"
         }
       ],
       "topSkills": [
@@ -385,6 +418,8 @@
       "title": "Staff Engineer",
       "location": "Chicago, Illinois",
       "tenure": "1 yr 2 mos",
+      "startedAt": 1751328000000,
+      "startedLabel": "Jul 2025",
       "connectionsCount": 1482,
       "followerCount": 1512,
       "profilePicUrl": "https://media.licdn.com/dms/image/v2/D5603AQH5uqhcuxf8Zw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1675187260279?e=1787788800&v=beta&t=1EWArCwyg7VaqhTE4luxOhm4Q_3bdtrml8_uMMcr4gQ",
@@ -412,6 +447,8 @@
       "title": "Managing Partner",
       "location": "United States",
       "tenure": "1 yr 3 mos",
+      "startedAt": 1748736000000,
+      "startedLabel": "Jun 2025",
       "connectionsCount": 255,
       "followerCount": 452,
       "profilePicUrl": "https://media.licdn.com/dms/image/v2/D5603AQGc4U_HuxbwRQ/profile-displayphoto-crop_800_800/B56Z3TssTnJ4AM-/0/1777373205873?e=1787788800&v=beta&t=Jp-cHVUAfOFDJt2RRUBffVHgtPBqvObdCRg7hCNN2mg",
@@ -420,7 +457,8 @@
         {
           "school": "Washington University in St. Louis",
           "degree": "BA",
-          "fieldOfStudy": "Art History, Biochemistry"
+          "fieldOfStudy": "Art History, Biochemistry",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQE644tz907o5g/company-logo_400_400/B56Z6iOF4aKQAU-/0/1780838063899/washington_university_in_st_louis_logo?e=1787788800&v=beta&t=dCqFm3Og5LfSeQuh_a_DrarBxU36_KM5EJmgzcGi5ec"
         }
       ]
     },
@@ -432,6 +470,8 @@
       "title": "Co-Founder | Managing Partner",
       "location": "San Francisco, California",
       "tenure": "8 yrs 8 mos",
+      "startedAt": 1514764800000,
+      "startedLabel": "2018",
       "connectionsCount": 1817,
       "followerCount": 2168,
       "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4E03AQGuZtPbgMuzvg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517718453639?e=1787788800&v=beta&t=Q7A9FqEkRMJUddyEI7tmI5PtpEZxo1yZVYfkr9DUtPM",
@@ -440,7 +480,8 @@
         {
           "school": "Carnegie Mellon University",
           "degree": "B.S.",
-          "fieldOfStudy": "Electrical & Computer Engineering"
+          "fieldOfStudy": "Electrical & Computer Engineering",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQH0rMqWuDcNzA/company-logo_400_400/company-logo_400_400/0/1656670432790/carnegie_mellon_university_logo?e=1787788800&v=beta&t=Vs-zFwWPJbkNoXXtNx1dhwPvhyYnpp-I7A6GKcsD3EE"
         }
       ],
       "topSkills": [
@@ -466,6 +507,8 @@
       "title": ".",
       "location": "Boston, Massachusetts",
       "tenure": "8 mos",
+      "startedAt": 1767225600000,
+      "startedLabel": "Jan 2026",
       "connectionsCount": 870,
       "followerCount": 1246,
       "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHBvb2268FcWA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1722779630888?e=1787788800&v=beta&t=ssqN7Pv8jJqwcMDIcoMUcwRUqTSHjXqvg5LzrmNH4H8",
@@ -474,7 +517,8 @@
         {
           "school": "Middlebury College",
           "degree": "Bachelor of Arts - BA",
-          "fieldOfStudy": "Physics"
+          "fieldOfStudy": "Physics",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D4E0BAQFTSWjitgPc_w/company-logo_400_400/company-logo_400_400/0/1688077021173/middlebury_college_logo?e=1787788800&v=beta&t=SRgymPehW0HwPdOycYAdbEakffAikDAiHEAHqKf3wsM"
         }
       ],
       "topSkills": [
@@ -788,35 +832,43 @@
     "topSchools": [
       {
         "label": "Vanderbilt University",
-        "count": 1
+        "count": 1,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/C4D0BAQEhR74nz4kJ6g/company-logo_400_400/company-logo_400_400/0/1648406543324/vanderbilt_university_logo?e=1787788800&v=beta&t=IUSQx8JGFUquVH5iMXLEWU-Vptpb9rGpRNG48dCPX24"
       },
       {
         "label": "University of Waterloo",
-        "count": 1
+        "count": 1,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQHV472cn2nhMw/company-logo_400_400/B56Zb.Jn2gHwAY-/0/1748020657900/uwaterloo_logo?e=1787788800&v=beta&t=UTwe2VCQiqOO_Tv4fNVLYIJ3tgrHfqd6E92w6xvBTU4"
       },
       {
         "label": "The University of Chicago Booth School of Business",
-        "count": 1
+        "count": 1,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQFZO05jhYKSkw/company-logo_400_400/company-logo_400_400/0/1692627816910/universityofchicagoboothschoolofbusiness_logo?e=1787788800&v=beta&t=rBLdO_BcZHbvwCJvepd2Ifb0DQLt5S1iyrewsjbp3tI"
       },
       {
         "label": "University of Oklahoma",
-        "count": 1
+        "count": 1,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQFR0IT3dEv29w/company-logo_400_400/company-logo_400_400/0/1721752836280/university_of_oklahoma_logo?e=1787788800&v=beta&t=J9ru0d6v8ZiAS3ScY7Kguzui3StfQqygl5EW-MuJjCE"
       },
       {
         "label": "Emory University",
-        "count": 1
+        "count": 1,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQG6ekgvcKg3Wg/company-logo_400_400/B56ZiLHHixH0Ak-/0/1754680556019/emory_university_logo?e=1787788800&v=beta&t=nFK-6VQ2TIYeHZDxwCil0R0YvQVUlUwRvNR07qR5X5g"
       },
       {
         "label": "Binghamton University School of Management",
-        "count": 1
+        "count": 1,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQGOOjcPW4yvZQ/company-logo_400_400/company-logo_400_400/0/1631349681983?e=1787788800&v=beta&t=6DaQmXUyTviafL-Is7XIdsdxp2EEmtahkX14WLRy9p0"
       },
       {
         "label": "University of Michigan",
-        "count": 1
+        "count": 1,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQFGfERBPGurCg/company-logo_400_400/company-logo_400_400/0/1631307390795?e=1787788800&v=beta&t=grFlPrSs_IMMBqKsX4wedJYzZHrNgURdOEgyqd9oWDc"
       },
       {
         "label": "Emory University - Goizueta Business School",
-        "count": 1
+        "count": 1,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQFazoqrq_g-GQ/company-logo_400_400/company-logo_400_400/0/1657130160598/goizueta_business_school_logo?e=1787788800&v=beta&t=R09NIBbHwRQ90UD8D2SVlBb9zYgCMhltFqA1lOVw2oQ"
       }
     ]
   }

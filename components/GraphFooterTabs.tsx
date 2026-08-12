@@ -22,9 +22,9 @@ export default function GraphFooterTabs({ active, onSelect, className = "" }: Pr
   return (
     <nav
       aria-label="Graph sections"
-      className={`pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-3 pb-[max(0.625rem,env(safe-area-inset-bottom))] lg:hidden ${className}`}
+      className={`pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-3 pb-[max(0.625rem,env(safe-area-inset-bottom))] ${className}`}
     >
-      <div className="pointer-events-auto flex w-full max-w-lg items-stretch gap-0.5 rounded-2xl border border-white/15 bg-black/75 p-1 shadow-[0_8px_32px_rgba(0,0,0,0.55),0_2px_8px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+      <div className="pointer-events-auto flex w-full max-w-lg items-stretch gap-0.5 rounded-2xl border border-white/15 bg-black/75 p-1 shadow-[0_8px_32px_rgba(0,0,0,0.55),0_2px_8px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:max-w-xl">
         {TABS.map(({ id, label, Icon }) => {
           const selected = active === id;
           return (

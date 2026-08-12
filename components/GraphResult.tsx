@@ -418,11 +418,6 @@ export default function GraphResult({
   const analyticsCanShowGrid = Boolean(
     analyticsGridData?.posts && analyticsGridData.posts.length > 0,
   );
-  const showGridInDesktop =
-    statsView === "grid" &&
-    analyticsCanShowGrid &&
-    Boolean(analyticsGridData?.posts?.length);
-
   const analyticsGridNodes = useMemo(() => {
     if (!analyticsGridData) return [];
     if (analyticsGridData.engagers && analyticsGridData.engagers.length > 0) {
@@ -710,7 +705,7 @@ export default function GraphResult({
     }
 
     if (!companyResult && !companyData) {
-      fetch(`/api/company?handle=${encodeURIComponent("nousresearch")}`)
+      fetch(`/api/company?handle=${encodeURIComponent("formationbio")}`)
         .then(async (res) => {
           const json = await res.json();
           if (!res.ok) throw new Error(json.error ?? "Company demo failed");
@@ -980,7 +975,7 @@ export default function GraphResult({
         </div>
       </header>
 
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-1.5 pb-[calc(5.5rem+env(safe-area-inset-bottom))] pt-[calc(3.25rem+env(safe-area-inset-top))] sm:px-4 sm:pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pt-20 lg:pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-1.5 pb-[calc(5.5rem+env(safe-area-inset-bottom))] pt-[calc(4.25rem+env(safe-area-inset-top))] sm:px-4 sm:pt-20">
         {platform !== "spotify" &&
           platform !== "tiktok" &&
           !isLinkedInCompany && (
@@ -990,15 +985,15 @@ export default function GraphResult({
           />
         )}
 
-        <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:min-h-0 lg:grid-cols-[1fr_340px]">
-        {/* Graph + top engagers */}
+        <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:min-h-0">
+        {/* Graph + selection panels (Map tab) */}
         <div className="flex flex-col gap-3 sm:gap-4 lg:min-h-0">
         <div
           ref={graphSectionRef}
-          className={`scroll-mt-[calc(3.25rem+env(safe-area-inset-top))] relative flex flex-col ${
-            footerTab !== "map" ? "hidden lg:flex" : ""
+          className={`scroll-mt-[calc(4.25rem+env(safe-area-inset-top))] relative flex flex-col ${
+            footerTab !== "map" ? "hidden" : ""
           } ${
-            showGridInDesktop || view === "roster"
+            view === "roster"
               ? "min-h-[min(78dvh,720px)]"
               : "h-[calc(100dvh-10rem-env(safe-area-inset-top)-env(safe-area-inset-bottom))] min-h-[320px] sm:min-h-[520px] lg:h-auto lg:min-h-[620px]"
           }`}
@@ -1012,9 +1007,7 @@ export default function GraphResult({
               graphFullscreen
                 ? "fixed inset-0 z-50 h-[100dvh] min-h-[100dvh] rounded-none border-0"
                 : `h-full rounded-xl border border-white/10 sm:min-h-[520px] sm:rounded-3xl lg:min-h-[620px] ${
-                    showGridInDesktop || view === "roster"
-                      ? "min-h-[min(78dvh,720px)]"
-                      : ""
+                    view === "roster" ? "min-h-[min(78dvh,720px)]" : ""
                   }`
             }`}
           >
@@ -1375,28 +1368,6 @@ export default function GraphResult({
                     the graph.
                   </p>
                 </div>
-              ) : showGridInDesktop && analyticsGridData ? (
-                <>
-                  <EngagementGrid
-                    posts={analyticsGridData.posts!}
-                    nodes={analyticsGridNodes}
-                    selectedId={selected?.id ?? null}
-                    onSelect={setSelected}
-                    className="absolute inset-0 hidden lg:block"
-                  />
-                  <div className="absolute inset-0 lg:hidden">
-                    <GraphVisualizer
-                      key={`graph-${platform}-${activeData.profile.username}`}
-                      data={activeData.graph}
-                      className="absolute inset-0 max-sm:touch-pan-y sm:touch-none"
-                      selectedId={selected?.id ?? null}
-                      onSelect={setSelected}
-                      labelStyle={
-                        platform === "instagram" ? "handles" : "auto"
-                      }
-                    />
-                  </div>
-                </>
               ) : (
                 <>
                   <GraphVisualizer
@@ -1489,13 +1460,7 @@ export default function GraphResult({
             </div>
           </motion.div>
 
-          <div className="hidden lg:contents">
-          {isLinkedInCompany && companyResult ? (
-            <CompanyEmployeePanel
-              employee={companySelected}
-              onClose={() => setCompanySelected(null)}
-            />
-          ) : platform === "spotify" && spotifyResult ? (
+          {platform === "spotify" && spotifyResult && (
             <SpotifyPlaylistPanel
               node={spotifySelected}
               playlists={spotifyResult.playlists}
@@ -1509,7 +1474,8 @@ export default function GraphResult({
                 if (node) setSpotifySelected(node);
               }}
             />
-          ) : platform === "tiktok" && tiktokResult ? (
+          )}
+          {platform === "tiktok" && tiktokResult && (
             <TikTokVideoPanel
               node={tiktokSelected}
               videos={tiktokResult.videos}
@@ -1522,94 +1488,14 @@ export default function GraphResult({
                 if (node) setTiktokSelected(node);
               }}
             />
-          ) : (
-            <PersonPanel
-              node={selected}
-              proximityRing={
-                selected && selected.circle >= 0
-                  ? PROXIMITY_RINGS[selected.circle]
-                  : undefined
-              }
-              friendCluster={
-                selected && selected.clusterId != null && selected.clusterId >= 0
-                  ? circleById.get(selected.clusterId)
-                  : undefined
-              }
-              onClose={() => setSelected(null)}
-              platform={
-                isAlternatePlatform
-                  ? null
-                  : (platform as "linkedin" | "instagram" | "facebook")
-              }
-            />
           )}
-          </div>
-          <div className="lg:hidden">
-            {platform === "spotify" && spotifyResult && (
-              <SpotifyPlaylistPanel
-                node={spotifySelected}
-                playlists={spotifyResult.playlists}
-                genres={spotifyResult.genres}
-                friends={spotifyResult.friends}
-                onClose={() => setSpotifySelected(null)}
-                onSelectPlaylist={(playlistId) => {
-                  const node = spotifyResult.graph.nodes.find(
-                    (n) => n.kind === "playlist" && n.refId === playlistId,
-                  );
-                  if (node) setSpotifySelected(node);
-                }}
-              />
-            )}
-            {platform === "tiktok" && tiktokResult && (
-              <TikTokVideoPanel
-                node={tiktokSelected}
-                videos={tiktokResult.videos}
-                hashtags={tiktokResult.hashtags}
-                onClose={() => setTiktokSelected(null)}
-                onSelectVideo={(videoId) => {
-                  const node = tiktokResult.graph.nodes.find(
-                    (n) => n.kind === "video" && n.refId === videoId,
-                  );
-                  if (node) setTiktokSelected(node);
-                }}
-              />
-            )}
-          </div>
         </div>
 
-        <div className="hidden lg:flex lg:flex-col lg:gap-3">
-          <AnalyticsPanel
-            socialResults={platformResults}
-            spotifyResult={spotifyResult}
-            companyResult={companyResult}
-            tiktokResult={tiktokResult}
-            platform={analyticsPlatform}
-            onPlatformChange={setAnalyticsPlatform}
-            range={analyticsRange}
-            onRangeChange={setAnalyticsRange}
-            view={statsView}
-            onViewChange={setStatsView}
-            gridContent={
-              <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-white/45">
-                Engagement grid is open in the main panel. Tap a cell to inspect
-                comments and reactions.
-              </p>
-            }
-            onSelectUsername={selectMemberByUsername}
-            selectedUsername={selected?.id ?? selected?.label ?? null}
-            onSelectTikTokVideoId={selectAnalyticsTikTokVideo}
-            onSelectTikTokHashtag={selectAnalyticsTikTokHashtag}
-            onSelectSpotifyGenre={selectAnalyticsSpotifyGenre}
-            onSelectCompanyLocation={selectAnalyticsCompanyLocation}
-            onSelectCompanySchool={selectAnalyticsCompanySchool}
-          />
-        </div>
-
-        {/* Mobile: analytics / profile / share tabs (map lives in graph section above) */}
+        {/* Analytics / Profile / Share — same tab panels on every breakpoint */}
         {footerTab !== "map" && (
           <div
             ref={mobileTabPanelRef}
-            className="scroll-mt-3 lg:hidden"
+            className="mx-auto w-full max-w-5xl scroll-mt-3"
           >
             {footerTab === "analytics" && (
               <AnalyticsPanel
@@ -1625,8 +1511,8 @@ export default function GraphResult({
                 onViewChange={setStatsView}
                 gridContent={
                   analyticsGridData ? (
-                    <div className="flex min-h-[52dvh] flex-col gap-3">
-                      <div className="relative min-h-[40dvh] flex-1 overflow-hidden rounded-xl border border-white/10 bg-black/40">
+                    <div className="flex min-h-[78dvh] flex-col gap-3 sm:min-h-[82dvh]">
+                      <div className="relative min-h-[68dvh] flex-1 overflow-hidden rounded-xl border border-white/10 bg-black/40 sm:min-h-[72dvh]">
                         <EngagementGrid
                           posts={analyticsGridData.posts!}
                           nodes={analyticsGridNodes}
@@ -1976,8 +1862,8 @@ export default function GraphResult({
           </div>
         )}
 
-        {/* Mobile: person detail below map */}
-        <div ref={footerPanelRef} className="scroll-mt-3 lg:hidden">
+        {/* Person detail below map (all breakpoints) */}
+        <div ref={footerPanelRef} className="scroll-mt-3">
           {footerTab === "map" && (companySelected || selected) && (
           <div className="mt-2.5">
                 {isLinkedInCompany && companySelected ? (
@@ -2011,297 +1897,6 @@ export default function GraphResult({
           )}
         </div>
         </div>
-
-        {/* Sidebar — desktop only */}
-        <aside className="hidden flex-col gap-3 sm:gap-4 lg:flex">
-          {isLinkedInCompany && companyResult ? (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
-              <div className="flex items-center gap-3">
-                {companyResult.company.logoUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={companyResult.company.logoUrl}
-                    alt=""
-                    className="h-12 w-12 rounded-lg object-cover ring-1 ring-white/15"
-                  />
-                ) : (
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0A66C2]/20 text-lg font-bold text-[#0A66C2]">
-                    {companyResult.company.name.charAt(0)}
-                  </div>
-                )}
-                <div className="min-w-0">
-                  <h1 className="truncate text-lg font-bold text-white sm:text-xl">
-                    {companyResult.company.name}
-                  </h1>
-                  <div className="text-sm text-white/50">LinkedIn company map</div>
-                </div>
-              </div>
-              <div className="mt-3 text-xs text-white/35">
-                {companyResult.stats.employeeCount}
-                {companyResult.stats.totalReported &&
-                companyResult.stats.totalReported >
-                  companyResult.stats.employeeCount
-                  ? ` of ${companyResult.stats.totalReported}`
-                  : ""}{" "}
-                employees · {companyResult.stats.locationCount} locations ·{" "}
-                {companyResult.stats.schoolCount} schools
-              </div>
-              {companyResult.company.linkedinUrl && (
-                <a
-                  href={companyResult.company.linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 inline-block text-xs text-[#0A66C2] hover:underline"
-                >
-                  Open company page
-                </a>
-              )}
-            </div>
-          ) : platform === "spotify" && spotifyResult ? (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
-              <div className="flex items-center gap-3">
-                {spotifyResult.profile.profileImage ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={spotifyResult.profile.profileImage}
-                    alt=""
-                    className="h-12 w-12 rounded-full object-cover ring-1 ring-white/15"
-                  />
-                ) : (
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1DB954]/20 text-lg font-bold text-[#1DB954]">
-                    {spotifyResult.profile.displayName.charAt(0)}
-                  </div>
-                )}
-                <div className="min-w-0">
-                  <h1 className="truncate text-lg font-bold text-white sm:text-xl">
-                    {spotifyResult.profile.displayName}
-                  </h1>
-                  <div className="text-sm text-white/50">Spotify taste map</div>
-                </div>
-              </div>
-              <div className="mt-3 text-xs text-white/35">
-                {spotifyResult.stats.friendCount} friend
-                {spotifyResult.stats.friendCount === 1 ? "" : "s"} ·{" "}
-                {spotifyResult.stats.playlistCount} playlists ·{" "}
-                {spotifyResult.stats.trackCount} tracks ·{" "}
-                {spotifyResult.stats.genreCount} genres
-              </div>
-              {spotifyResult.profile.sourceUrl && (
-                <a
-                  href={spotifyResult.profile.sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 inline-block text-xs text-[#1DB954] hover:underline"
-                >
-                  Open profile
-                </a>
-              )}
-            </div>
-          ) : platform === "tiktok" && tiktokResult ? (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
-              <div className="flex items-center gap-3">
-                {tiktokResult.profile.avatarUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={tiktokResult.profile.avatarUrl}
-                    alt=""
-                    className="h-12 w-12 rounded-full object-cover ring-1 ring-white/15"
-                  />
-                ) : (
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FE2C55]/20 text-lg font-bold text-[#FE2C55]">
-                    {tiktokResult.profile.displayName.charAt(0)}
-                  </div>
-                )}
-                <div className="min-w-0">
-                  <h1 className="truncate text-lg font-bold text-white sm:text-xl">
-                    {tiktokResult.profile.displayName}
-                  </h1>
-                  <div className="text-sm text-white/50">
-                    @{tiktokResult.profile.username} · TikTok visibility
-                  </div>
-                </div>
-              </div>
-              <div className="mt-3 text-xs text-white/35">
-                {tiktokResult.stats.followers} followers ·{" "}
-                {tiktokResult.stats.videoCount} videos ·{" "}
-                {tiktokResult.stats.totalPlays} plays ·{" "}
-                {tiktokResult.stats.totalDiggs} likes
-              </div>
-              {tiktokResult.profile.profileUrl && (
-                <a
-                  href={tiktokResult.profile.profileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 inline-block text-xs text-[#25F4EE] hover:underline"
-                >
-                  Open profile
-                </a>
-              )}
-            </div>
-          ) : activeData ? (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
-              <div className="flex items-center gap-2">
-                <h1 className="truncate text-lg font-bold text-white sm:text-xl">
-                  @{activeData.profile.username}
-                </h1>
-                {activeData.profile.isVerified && (
-                  <BadgeCheck className="h-5 w-5 shrink-0 text-ig-blue" />
-                )}
-              </div>
-              {activeData.profile.fullName && (
-                <div className="text-sm text-white/60">
-                  {activeData.profile.fullName}
-                </div>
-              )}
-              {activeData.profile.biography && (
-                <p className="mt-2 line-clamp-3 text-sm text-white/40 sm:line-clamp-none">
-                  {activeData.profile.biography}
-                </p>
-              )}
-              <div className="mt-3 text-xs text-white/30">
-                {activeData.engagers && activeData.engagers.length > 0
-                  ? `${activeData.engagers.length} unique engagers · map shows top ${activeData.stats.shown}`
-                  : `Top ${activeData.stats.shown} connections`}
-              </div>
-            </div>
-          ) : (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
-              <div className="text-sm font-semibold text-white/70">
-                {PLATFORM_LABEL[platform]}
-              </div>
-              <p className="mt-2 text-xs text-white/40">
-                No snapshot loaded for this platform yet.
-              </p>
-            </div>
-          )}
-
-          {/* Hide scrape budget on pinned demos (noise on phone); keep on live runs */}
-          {data && !data.pinned && (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
-              <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-white/80">
-                <ShieldAlert className="h-4 w-4 text-ig-orange" /> Scrape budget
-              </div>
-              <div className="grid grid-cols-2 gap-2 text-sm sm:gap-3">
-                <div className="rounded-xl bg-black/25 p-3">
-                  <div className="text-xs text-white/35">Your posts</div>
-                  <div className="mt-1 font-mono text-white">
-                    {data.budget.postLimit} x {data.budget.commentsPerPost}
-                  </div>
-                </div>
-                <div className="rounded-xl bg-black/25 p-3">
-                  <div className="text-xs text-white/35">Reciprocity</div>
-                  <div className="mt-1 font-mono text-white">
-                    {data.budget.reciprocityEnabled
-                      ? `${data.budget.reciprocityFriends} x ${data.budget.reciprocityPostsPerFriend}`
-                      : "Off"}
-                  </div>
-                </div>
-                <div className="rounded-xl bg-black/25 p-3">
-                  <div className="text-xs text-white/35">Max estimate</div>
-                  <div className="mt-1 font-mono text-white">
-                    {data.budget.withinFreeTier
-                      ? "Free"
-                      : formatUsd(data.budget.estimatedCostUsd)}
-                  </div>
-                </div>
-                <div className="rounded-xl bg-black/25 p-3">
-                  <div className="text-xs text-white/35">Comment cap</div>
-                  <div className="mt-1 font-mono text-white">{data.budget.maxComments}</div>
-                </div>
-              </div>
-              <p className="mt-3 text-xs text-white/40">
-                Server cap: up to {data.budget.maxComments} comments scanned
-                {data.budget.reciprocityEnabled
-                  ? ` (your posts + friends' posts for two-way signals).`
-                  : "."}{" "}
-                Actual Apify cost may be lower when fewer comments are returned.
-              </p>
-            </div>
-          )}
-
-          {data && !pinned && !data.demo && (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur sm:p-4">
-              <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-white/80">
-                <Pin className="h-4 w-4 text-ig-blue" /> Save this run
-              </div>
-              <p className="text-xs leading-relaxed text-white/45">
-                Pin the graph you&apos;re viewing so anyone can open a share link
-                without spending Apify credits again.
-              </p>
-              <div className="mt-3 flex flex-col gap-2">
-                <button
-                  type="button"
-                  onClick={pinCurrentRun}
-                  disabled={pinning}
-                  className="min-h-[44px] rounded-xl bg-ig-gradient px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
-                >
-                  {pinning ? "Saving…" : "Pin for share link"}
-                </button>
-                <button
-                  type="button"
-                  onClick={downloadSnapshotJson}
-                  className="min-h-[44px] rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 transition hover:bg-white/10"
-                >
-                  Download JSON backup
-                </button>
-              </div>
-              {pinStatus && (
-                <p className="mt-2 break-all text-xs text-white/55">
-                  {pinStatus.startsWith("http") ? (
-                    <>
-                      Share:{" "}
-                      <Link
-                        href={pinnedGraphPath(handle)}
-                        className="text-ig-blue underline"
-                      >
-                        {pinnedGraphPath(handle)}
-                      </Link>
-                    </>
-                  ) : (
-                    pinStatus
-                  )}
-                </p>
-              )}
-            </div>
-          )}
-
-          {pinned &&
-            ((isLinkedInCompany &&
-              companyResult &&
-              companyResult.scrapedAt > 0) ||
-              (platform === "spotify" && spotifyResult && spotifyResult.scrapedAt > 0) ||
-              (platform === "tiktok" && tiktokResult && tiktokResult.scrapedAt > 0) ||
-              (displayData && displayData.scrapedAt > 0)) && (
-            <p className="rounded-2xl border border-ig-blue/20 bg-ig-blue/5 px-4 py-3 text-xs text-white/55">
-              Frozen snapshot from{" "}
-              {new Date(
-                isLinkedInCompany && companyResult
-                  ? companyResult.scrapedAt
-                  : platform === "spotify" && spotifyResult
-                    ? spotifyResult.scrapedAt
-                    : platform === "tiktok" && tiktokResult
-                      ? tiktokResult.scrapedAt
-                      : displayData!.scrapedAt,
-              ).toLocaleString()}
-              . No live scrape runs on this page.
-            </p>
-          )}
-
-          {activeData && !isAlternatePlatform && (
-            <ShareCard
-              handle={activeData.profile.username}
-              stats={activeData.stats}
-              platform={
-                platform === "facebook" ||
-                platform === "linkedin" ||
-                platform === "instagram"
-                  ? platform
-                  : "linkedin"
-              }
-              onDownload={downloadPng}
-            />
-          )}
-        </aside>
         </div>
       </div>
 

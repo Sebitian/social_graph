@@ -323,81 +323,90 @@ export default function AnalyticsPanel({
           })}
         </div>
 
-        {mediaIdentity ? (
-          <a
-            href={mediaIdentity.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex max-w-full items-center gap-1 self-start rounded-full border border-white/15 bg-gradient-to-r from-white/10 via-white/5 to-white/10 px-3 py-1.5 text-sm font-medium text-white/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] transition hover:border-white/25 hover:from-white/15 hover:to-white/10 hover:text-white"
-          >
-            <span className="bg-gradient-to-b from-white to-white/55 bg-clip-text text-base font-semibold text-transparent drop-shadow-[0_0_8px_rgba(255,255,255,0.35)]">
-              @
-            </span>
-            <span className="truncate">{mediaIdentity.tag}</span>
-          </a>
-        ) : null}
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          {mediaIdentity ? (
+            <a
+              href={mediaIdentity.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex max-w-full items-center gap-1 self-start rounded-full border border-white/15 bg-gradient-to-r from-white/10 via-white/5 to-white/10 px-3 py-1.5 text-sm font-medium text-white/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] transition hover:border-white/25 hover:from-white/15 hover:to-white/10 hover:text-white"
+            >
+              <span className="bg-gradient-to-b from-white to-white/55 bg-clip-text text-base font-semibold text-transparent drop-shadow-[0_0_8px_rgba(255,255,255,0.35)]">
+                @
+              </span>
+              <span className="truncate">{mediaIdentity.tag}</span>
+            </a>
+          ) : (
+            <span />
+          )}
 
-        {showLinkedInSubnav ? (
-          <div className="inline-flex max-w-full flex-wrap self-start rounded-lg border border-white/10 bg-black/30 p-0.5">
-            {showLinkedInPerson ? (
-              <button
-                type="button"
-                onClick={selectPerson}
-                className={`${TAB} ${
-                  !showingCompany ? TAB_ACTIVE : TAB_AVAILABLE
-                }`}
-              >
-                <LinkedInIcon className="h-3.5 w-3.5" />
-                Person
-              </button>
+          {view !== "grid" ? (
+            <TimeRangeControl
+              value={range}
+              onChange={setRange}
+              disabled={rangeDisabled}
+              className="max-w-full"
+            />
+          ) : null}
+        </div>
+
+        {(showLinkedInSubnav || showPersonGridSubnav) && (
+          <div className="flex flex-wrap items-center gap-2">
+            {showLinkedInSubnav ? (
+              <div className="inline-flex max-w-full flex-wrap self-start rounded-lg border border-white/10 bg-black/30 p-0.5">
+                {showLinkedInPerson ? (
+                  <button
+                    type="button"
+                    onClick={selectPerson}
+                    className={`${TAB} ${
+                      !showingCompany ? TAB_ACTIVE : TAB_AVAILABLE
+                    }`}
+                  >
+                    <LinkedInIcon className="h-3.5 w-3.5" />
+                    Person
+                  </button>
+                ) : null}
+                {showLinkedInCompany ? (
+                  <button
+                    type="button"
+                    onClick={selectCompany}
+                    className={`${TAB} ${
+                      showingCompany ? TAB_ACTIVE : TAB_AVAILABLE
+                    }`}
+                  >
+                    <CompanyIcon className="h-3.5 w-3.5" />
+                    Company
+                  </button>
+                ) : null}
+              </div>
             ) : null}
-            {showLinkedInCompany ? (
-              <button
-                type="button"
-                onClick={selectCompany}
-                className={`${TAB} ${
-                  showingCompany ? TAB_ACTIVE : TAB_AVAILABLE
-                }`}
-              >
-                <CompanyIcon className="h-3.5 w-3.5" />
-                Company
-              </button>
+
+            {showPersonGridSubnav ? (
+              <div className="inline-flex self-start rounded-lg border border-white/10 bg-black/30 p-0.5">
+                <button
+                  type="button"
+                  onClick={() => setView("summary")}
+                  className={`${TAB} ${
+                    view !== "grid" ? TAB_ACTIVE : TAB_AVAILABLE
+                  }`}
+                >
+                  <User className="h-3.5 w-3.5" />
+                  Overview
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setView("grid")}
+                  className={`${TAB} ${
+                    view === "grid" ? TAB_ACTIVE : TAB_AVAILABLE
+                  }`}
+                >
+                  <Grid3X3 className="h-3.5 w-3.5" />
+                  Grid
+                </button>
+              </div>
             ) : null}
           </div>
-        ) : null}
-
-        {showPersonGridSubnav ? (
-          <div className="inline-flex self-start rounded-lg border border-white/10 bg-black/30 p-0.5">
-            <button
-              type="button"
-              onClick={() => setView("summary")}
-              className={`${TAB} ${
-                view !== "grid" ? TAB_ACTIVE : TAB_AVAILABLE
-              }`}
-            >
-              <User className="h-3.5 w-3.5" />
-              Overview
-            </button>
-            <button
-              type="button"
-              onClick={() => setView("grid")}
-              className={`${TAB} ${
-                view === "grid" ? TAB_ACTIVE : TAB_AVAILABLE
-              }`}
-            >
-              <Grid3X3 className="h-3.5 w-3.5" />
-              Grid
-            </button>
-          </div>
-        ) : null}
-
-        {view !== "grid" ? (
-          <TimeRangeControl
-            value={range}
-            onChange={setRange}
-            disabled={rangeDisabled}
-          />
-        ) : null}
+        )}
       </div>
 
       {body}

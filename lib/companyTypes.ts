@@ -6,6 +6,7 @@ export interface CompanyEducation {
   school: string;
   degree?: string;
   fieldOfStudy?: string;
+  logoUrl?: string;
 }
 
 export interface CompanyProfile {
@@ -25,6 +26,10 @@ export interface CompanyEmployee {
   title: string;
   location?: string;
   tenure?: string;
+  /** Unix ms for current-role start (month/year when available). */
+  startedAt?: number;
+  /** Display label like "Mar 2026" or "2023". */
+  startedLabel?: string;
   connectionsCount?: number;
   followerCount?: number;
   profilePicUrl?: string;
@@ -64,6 +69,7 @@ export interface CompanyLocationStat {
 export interface CompanySchoolStat {
   label: string;
   count: number;
+  logoUrl?: string;
 }
 
 export interface CompanyStats {

@@ -42,5 +42,6 @@ next-env.d.ts
 !data/snapshots/jppap.json
 !data/snapshots/sebastian-spotify.json
 !data/snapshots/nousresearch.json
+!data/snapshots/formationbio.json
 !data/snapshots/kossof-facebook.json
 !data/snapshots/kossof-tiktok.json

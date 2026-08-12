@@ -8,7 +8,7 @@ export const maxDuration = 60;
 export async function GET(req: NextRequest) {
   const handle =
     req.nextUrl.searchParams.get("handle")?.replace(/^@/, "").trim().toLowerCase() ??
-    "nousresearch";
+    "formationbio";
 
   try {
     const result = await readCompanySnapshot(handle);

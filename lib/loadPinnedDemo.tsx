@@ -12,7 +12,7 @@ import type { ScrapeResult, SocialSourcePlatform } from "@/lib/types";
 export const COMPANION_SNAPSHOTS = {
   instagram: "jppap",
   spotify: "sebastian-spotify",
-  company: "nousresearch",
+  company: "formationbio",
   facebook: "kossof-facebook",
   tiktok: "kossof-tiktok",
 } as const;

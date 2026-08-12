@@ -1,0 +1,1504 @@
+{
+  "kind": "company",
+  "scrapedAt": 1786509632054,
+  "pinned": true,
+  "company": {
+    "id": "11016612",
+    "name": "Formation Bio",
+    "logoUrl": "https://media.licdn.com/dms/image/v2/D4D0BAQFXlIgxlo86zQ/company-logo_400_400/company-logo_400_400/0/1701789830903/trialspark_logo?e=1787788800&v=beta&t=enOeFSJz3rIPSM2YneH5YEmP2xCKZO_kg0quTZ0n_zc",
+    "linkedinUrl": "https://www.linkedin.com/company/formationbio/",
+    "employeeCount": 28,
+    "totalReported": 198
+  },
+  "employees": [
+    {
+      "id": "ACoAAA2klpYBa4isEex3Z3_-OCguMNXnZJ-t_lA",
+      "publicIdentifier": "emmanealon",
+      "fullName": "Emma Nealon",
+      "headline": "Biotech BD/Investing",
+      "title": "Director, Investments & Business Development",
+      "location": "Austin, Texas",
+      "tenure": "3 yrs 7 mos",
+      "startedAt": 1675209600000,
+      "startedLabel": "Feb 2023",
+      "connectionsCount": 2022,
+      "followerCount": 2068,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGl5whn0swTVQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1670276981725?e=1787788800&v=beta&t=iiXgwXZ47PQBcki1sJ0senyiyCPG9uNKUzS9snj6kxY",
+      "linkedinUrl": "https://www.linkedin.com/in/emmanealon",
+      "education": [
+        {
+          "school": "Georgetown University",
+          "degree": "Bachelor of Science (BS)",
+          "fieldOfStudy": "Biology",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQEnN4XznomLJw/company-logo_400_400/company-logo_400_400/0/1631309453384?e=1787788800&v=beta&t=EEM7OZtmW9hGnSBStYOL1W7A0KLHYTHhVbSV1jKYink"
+        }
+      ],
+      "topSkills": [
+        "Mergers & Acquisitions (M&A)",
+        "Due Diligence",
+        "Pipeline Strategy",
+        "Investor Relations",
+        "Capital Markets",
+        "Licensing and Partnerships",
+        "Business Development",
+        "Bloomberg",
+        "FactSet",
+        "Financial Modeling",
+        "Microsoft Excel",
+        "Microsoft Office"
+      ]
+    },
+    {
+      "id": "ACoAABiqMmkBPkX91u3zfVRvLpDEKov56EPFHqw",
+      "publicIdentifier": "samiksha-nayak",
+      "fullName": "Samiksha Nayak, PhD",
+      "headline": "Director, Business Operations & Strategy @ Formation Bio",
+      "title": "Director, Business Operations & Strategy",
+      "location": "New York City, New York",
+      "tenure": "5 mos",
+      "startedAt": 1775001600000,
+      "startedLabel": "Apr 2026",
+      "connectionsCount": 600,
+      "followerCount": 599,
+      "linkedinUrl": "https://www.linkedin.com/in/samiksha-nayak",
+      "education": [
+        {
+          "school": "Massachusetts Institute of Technology",
+          "degree": "Bachelor's Degree",
+          "fieldOfStudy": "Chemical Engineering (Course 10B)",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQH-UXRfIDIKug/company-logo_400_400/company-logo_400_400/0/1689799729035/mit_logo?e=1787788800&v=beta&t=rqnJ5cLL6kKlUfQn3rTC2A8i_c7dCd56ab33UHFHHb8"
+        }
+      ]
+    },
+    {
+      "id": "ACoAABi0wUwBT0QgKj0G6_fOjtuRo_WT-w_VktM",
+      "publicIdentifier": "meetjackrosenberg",
+      "fullName": "Jack Rosenberg",
+      "headline": "Business Development at Formation Bio",
+      "title": "Director, Investments & Business Development",
+      "location": "New York City, New York",
+      "tenure": "1 yr",
+      "startedAt": 1756684800000,
+      "startedLabel": "Sep 2025",
+      "connectionsCount": 1441,
+      "followerCount": 1461,
+      "linkedinUrl": "https://www.linkedin.com/in/meetjackrosenberg",
+      "education": [
+        {
+          "school": "Georgetown University",
+          "degree": "Bachelor of Science (B.S.)",
+          "fieldOfStudy": "Science, Technology, and International Affairs",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQEnN4XznomLJw/company-logo_400_400/company-logo_400_400/0/1631309453384?e=1787788800&v=beta&t=EEM7OZtmW9hGnSBStYOL1W7A0KLHYTHhVbSV1jKYink"
+        }
+      ],
+      "topSkills": [
+        "Market Research",
+        "Microsoft Office",
+        "Stata Data Analytics",
+        "Microsoft Excel",
+        "Public Speaking",
+        "Public Relations"
+      ]
+    },
+    {
+      "id": "ACoAAAU2vqkBA9MI_i37pk5b0mZx2Q5qrNgiidA",
+      "publicIdentifier": "linhaozhang",
+      "fullName": "Linhao Zhang",
+      "headline": "@formationbio",
+      "title": "Co-Founder",
+      "location": "New York City, New York",
+      "tenure": "1 yr 1 mo",
+      "startedAt": 1754006400000,
+      "startedLabel": "Aug 2025",
+      "connectionsCount": 2045,
+      "followerCount": 2446,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4E03AQGbj2GK8iNMqg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1612659818748?e=1787788800&v=beta&t=bkTAuFrpWK8PUrp0kM5UhLCRjakQEAFaH0YxId4t7Gc",
+      "linkedinUrl": "https://www.linkedin.com/in/linhaozhang",
+      "education": [
+        {
+          "school": "The University of Texas at Austin",
+          "degree": "Bachelor of Science (B.S.)",
+          "fieldOfStudy": "Computer Science",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQEREeDg1PACXA/company-logo_400_400/company-logo_400_400/0/1630670868977/theuniversityoftexasataustin__logo?e=1787788800&v=beta&t=iVco5W3ByQlKdEeVjsGTrzaMwh1Hzcy8DdBFUL3Yvt8"
+        }
+      ]
+    },
+    {
+      "id": "ACoAAADFUKEBOz8cvWKVQ4K4Lbt9TiX8qHq2fok",
+      "publicIdentifier": "bob-silverman-4293b74",
+      "fullName": "Bob Silverman",
+      "headline": "Vice President, Business Transactions at Formation Bio",
+      "title": "Vice President, Business Transactions",
+      "location": "Red Bank, New Jersey",
+      "tenure": "1 yr 2 mos",
+      "startedAt": 1751328000000,
+      "startedLabel": "Jul 2025",
+      "connectionsCount": 1818,
+      "followerCount": 1898,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4E03AQGkrPo_bwoyFQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1517684943100?e=1787788800&v=beta&t=QgFLFUdX_WiE8m1dQuErKnWKOLsiwBzvf1wGQlhcYKY",
+      "linkedinUrl": "https://www.linkedin.com/in/bob-silverman-4293b74",
+      "education": [
+        {
+          "school": "Boston University School of Law",
+          "degree": "Juris Doctor",
+          "fieldOfStudy": null,
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQH4x06gXWlwFg/company-logo_400_400/company-logo_400_400/0/1630598143620/boston_university_school_of_law_logo?e=1787788800&v=beta&t=E4afHevTLbeffIwb26MCfmKPsR2iyzcHhYQK6ykvS74"
+        }
+      ],
+      "topSkills": [
+        "Pharmaceutical Industry",
+        "Biotechnology",
+        "Licensing",
+        "Oncology",
+        "Lifesciences",
+        "Regulatory Affairs",
+        "Venture Capital",
+        "R&D",
+        "Drug Development",
+        "Immunology",
+        "Patents",
+        "Biopharmaceuticals"
+      ]
+    },
+    {
+      "id": "ACoAAAnTyEsBPAhcqgBFxO00rV5Jt-MKlmsRPJI",
+      "publicIdentifier": "egarciarivera",
+      "fullName": "Enrique García-Rivera",
+      "headline": "VP, Data Science",
+      "title": "VP, Data Science",
+      "location": "Cambridge, Massachusetts",
+      "tenure": "6 mos",
+      "startedAt": 1772323200000,
+      "startedLabel": "Mar 2026",
+      "connectionsCount": 1344,
+      "followerCount": 1493,
+      "linkedinUrl": "https://www.linkedin.com/in/egarciarivera",
+      "education": [
+        {
+          "school": "Harvard Medical School",
+          "degree": "PhD",
+          "fieldOfStudy": "Biological and Biomedical Sciences",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQFpnx840JxXEA/company-logo_400_400/company-logo_400_400/0/1631308066635?e=1787788800&v=beta&t=mdxSdaWXYurWMS-rM7thj5DYN8lAgytdtPkpKuEt7KU"
+        }
+      ],
+      "topSkills": [
+        "Large Language Models (LLM)",
+        "Biochemistry",
+        "Genetics",
+        "Chemistry",
+        "Data Analysis",
+        "Drug Development",
+        "Mathematical Modeling",
+        "Statistics",
+        "Molecular Biology",
+        "Molecular Cloning",
+        "Protein Purification",
+        "Drug Discovery"
+      ]
+    },
+    {
+      "id": "ACoAAAT2aqsBmPUnHtgKXAhe0TP8e9gc-2bC778",
+      "publicIdentifier": "jenniferkang88",
+      "fullName": "Jennifer Kang",
+      "headline": "Strategic Leader | Biotechnology Innovator | Portfolio Management Expert",
+      "title": "Head of Portfolio Strategy & Management",
+      "location": "New York City, New York",
+      "tenure": "2 mos",
+      "startedAt": 1782864000000,
+      "startedLabel": "Jul 2026",
+      "connectionsCount": 1234,
+      "followerCount": 1335,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4D03AQHosjk6ZrKxoQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517052276190?e=1787788800&v=beta&t=KVXEUsxbXptVkNMpXUL9zNenldwdn-37vrBZOkkBCUI",
+      "linkedinUrl": "https://www.linkedin.com/in/jenniferkang88",
+      "education": [
+        {
+          "school": "University of Notre Dame",
+          "degree": "Bachelor of Science",
+          "fieldOfStudy": "Biological Sciences",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQFTtW9IxZTgdA/company-logo_400_400/company-logo_400_400/0/1737395581692?e=1787788800&v=beta&t=KF7n2s7E80u2u-KL6Nj-cJueVWbcd--XyF3KmaX6j1c"
+        }
+      ],
+      "topSkills": [
+        "Strategic Planning",
+        "Research and Development (R&D)",
+        "Analytical Skills",
+        "Financial Management",
+        "Agile Methodologies",
+        "Resource Management",
+        "Data Management",
+        "Drug Development",
+        "Planning Systems",
+        "Project Management",
+        "Planning Budgeting & Forecasting",
+        "Resource Planning"
+      ]
+    },
+    {
+      "id": "ACoAAAsB7ZAB3TeKq4KvtCbHhJWcsWiM9aKSBCk",
+      "publicIdentifier": "neelmadhukar",
+      "fullName": "Neel Madhukar",
+      "headline": "AI Product GM | Always the naive optimist",
+      "title": "Product General Manager: Asset Acquisition and Diligence",
+      "location": "New York City, New York",
+      "tenure": "2 mos",
+      "startedAt": 1782864000000,
+      "startedLabel": "Jul 2026",
+      "connectionsCount": 2998,
+      "followerCount": 3254,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4E03AQEnbDYussqOTg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1667864297548?e=1787788800&v=beta&t=2mLrydDUP_IK3CJ5zISkoZjXX60CyHPoQq4tVI1VxlY",
+      "linkedinUrl": "https://www.linkedin.com/in/neelmadhukar",
+      "education": [
+        {
+          "school": "Weill Cornell Graduate School of Medical Sciences",
+          "degree": "Doctor of Philosophy (Ph.D.)",
+          "fieldOfStudy": "Computational Biology and Medicine",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C4D0BAQGQOWxb1oURig/company-logo_400_400/company-logo_400_400/0/1631321773831?e=1787788800&v=beta&t=2QFGVUf6g7e1dfzIgTvjc1fOQnMQRK2JwSwgVdCMt1A"
+        }
+      ],
+      "topSkills": [
+        "Management",
+        "Leadership",
+        "Teamwork",
+        "Public Speaking",
+        "Product Strategy",
+        "Product Management",
+        "Clinical Decision Support",
+        "Clinical Research",
+        "Drug Development",
+        "Due Diligence",
+        "Qualitative Research",
+        "Data Engineering"
+      ]
+    },
+    {
+      "id": "ACoAACSfuzUBdQIred9lyQE17gKEREYmy8hWJkc",
+      "publicIdentifier": "chenjessica1",
+      "fullName": "Jessica Chen",
+      "headline": "Brand & Content @Formation Bio",
+      "title": "Senior Manager, Brand & Content",
+      "location": "United States",
+      "tenure": "1 yr",
+      "startedAt": 1756684800000,
+      "startedLabel": "Sep 2025",
+      "connectionsCount": 553,
+      "followerCount": 562,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQEaW9r9BY5Lpw/profile-displayphoto-crop_800_800/B4EZ0cDXzMHsAM-/0/1774292140302?e=1787788800&v=beta&t=MthcVcE5PLbGO_K6kIm3mMGG4YG9wy8mc2WpoKI4faA",
+      "linkedinUrl": "https://www.linkedin.com/in/chenjessica1",
+      "education": [
+        {
+          "school": "NYU Steinhardt School of Culture, Education, and Human Development",
+          "degree": "Bachelor of Science - BS",
+          "fieldOfStudy": "Applied Psychology",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C4D0BAQGSxp6VKK56eg/company-logo_400_400/company-logo_400_400/0/1630503827772/nyu_steinhardt_school_of_culture_education_and_human_development_logo?e=1787788800&v=beta&t=1WMRkXUczVH-qVfDcl1ViDVRNqRbdMK_Sn7YtzxP5uA"
+        }
+      ],
+      "topSkills": [
+        "Customer Experience Management",
+        "Social Media Marketing",
+        "Marketing Strategy",
+        "Strategic Communications",
+        "Customer Experience",
+        "Mental Health First Aid",
+        "Digital Communication Strategy",
+        "B2B Marketing",
+        "Data Visualization",
+        "Storytelling",
+        "Salesforce.com",
+        "Microsoft Office"
+      ]
+    },
+    {
+      "id": "ACoAACOnZTcB9urRT8eYI-xcXLHF567wMjPuglM",
+      "publicIdentifier": "glenicegallagher",
+      "fullName": "Glenice Gallagher",
+      "headline": "Talent Operations @ Formation Bio",
+      "title": "Senior Associate, Talent Operations",
+      "location": "Boston, Massachusetts",
+      "tenure": "10 mos",
+      "startedAt": 1761955200000,
+      "startedLabel": "Nov 2025",
+      "connectionsCount": 2032,
+      "followerCount": 2155,
+      "linkedinUrl": "https://www.linkedin.com/in/glenicegallagher",
+      "education": [
+        {
+          "school": "St. Lawrence University",
+          "degree": "Bachelor of Science and Arts - BSA",
+          "fieldOfStudy": "Psychology; Art & Art History (Double Major)",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQEdQKk16GLTnQ/company-logo_400_400/company-logo_400_400/0/1630603986467/st_lawrence_university_logo?e=1787788800&v=beta&t=Xa88ySD0ccBlb_iYlKga1DYYuCS98BGRYhTinyrVzXI"
+        }
+      ],
+      "topSkills": [
+        "Microsoft Office",
+        "Customer Service",
+        "Leadership",
+        "Visual Arts",
+        "Teamwork",
+        "Public Speaking",
+        "Interpersonal Skills",
+        "Communication",
+        "Problem Solving",
+        "Team Leadership",
+        "Sales",
+        "Analytical Skills"
+      ]
+    },
+    {
+      "id": "ACoAAAOm2Q8BGNqrGRucIx8RKFqb2zgfW0MMGHg",
+      "publicIdentifier": "melaniehullings",
+      "fullName": "Melanie Hullings",
+      "headline": "Data Management & Analytics at Formation Bio",
+      "title": "Director, Clinical Data Analytics & Programming",
+      "location": "New York City, New York",
+      "tenure": "2 yrs 6 mos",
+      "startedAt": 1709251200000,
+      "startedLabel": "Mar 2024",
+      "connectionsCount": 1001,
+      "followerCount": 1043,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4E03AQEm3-dL0Zc8UA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1620229536005?e=1787788800&v=beta&t=0R0bCNNjQytTqDyx-8fhzxH4zJZIteXa4QAcrNg589Q",
+      "linkedinUrl": "https://www.linkedin.com/in/melaniehullings",
+      "education": [
+        {
+          "school": "Rutgers University",
+          "degree": "MS",
+          "fieldOfStudy": "Biomedical Informatics",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D4E0BAQFnLVzNL8ZOYg/company-logo_400_400/company-logo_400_400/0/1692195098121/rutgersu_logo?e=1787788800&v=beta&t=HYeu8hlpbNSXPt6TIKFt4fL3ilaS-jhzn_s1AJ3sPuw"
+        }
+      ],
+      "topSkills": [
+        "Crossfit Level 1 Certified",
+        "Cell Culture",
+        "Western Blotting",
+        "PCR",
+        "Molecular Biology",
+        "Assay Development",
+        "Tissue Culture",
+        "Data Analysis",
+        "Research",
+        "Cancer Research",
+        "Clinical Trials"
+      ]
+    },
+    {
+      "id": "ACoAAAAqWmIBoRDvu5G1Ffu8J9yPKZULKS3J40A",
+      "publicIdentifier": "johntaylor0",
+      "fullName": "John Taylor",
+      "headline": "Deal-maker focused on areas with high patient need",
+      "title": "VP, Business Development",
+      "location": "Raleigh, North Carolina",
+      "tenure": "5 mos",
+      "startedAt": 1775001600000,
+      "startedLabel": "Apr 2026",
+      "connectionsCount": 1656,
+      "followerCount": 2057,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4D03AQHMNfxfg_x7Wg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1628830741449?e=1787788800&v=beta&t=NZDjRagqcp1FIiX5URlHAieefCpuw_xiLBUR7yaavFY",
+      "linkedinUrl": "https://www.linkedin.com/in/johntaylor0",
+      "education": [
+        {
+          "school": "The Wharton School",
+          "degree": "MS",
+          "fieldOfStudy": "Technology Management",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQFQu7wZniptpA/company-logo_400_400/company-logo_400_400/0/1677690194092/the_wharton_school_logo?e=1787788800&v=beta&t=FCXPPPHnYFdUN-1P81fH-ohTEYkHPrtmW_QyXWtzFcQ"
+        }
+      ],
+      "topSkills": [
+        "Analytical Skills",
+        "Strategy",
+        "Early Stage Investment",
+        "Operations Management",
+        "Portfolio Management",
+        "Investments",
+        "Technological Innovation",
+        "Product Development",
+        "Marketing Strategy",
+        "Strategic Initiatives",
+        "Team Building",
+        "Early-Stage Startups"
+      ]
+    },
+    {
+      "id": "ACoAABN1-DkBAICgPqNMwhVKdvonyVG5YwmbAYQ",
+      "publicIdentifier": "chris-bialas-98941591",
+      "fullName": "Chris Bialas",
+      "headline": "Director of Business Development at Formation Bio",
+      "title": "Director of Business Development",
+      "location": "Philadelphia, Pennsylvania",
+      "tenure": "1 yr 5 mos",
+      "startedAt": 1743465600000,
+      "startedLabel": "Apr 2025",
+      "connectionsCount": 334,
+      "followerCount": 369,
+      "linkedinUrl": "https://www.linkedin.com/in/chris-bialas-98941591",
+      "education": [
+        {
+          "school": "University of Pennsylvania School of Medicine",
+          "degree": "Doctor of Philosophy (Ph.D.)",
+          "fieldOfStudy": "Biochemistry and Biophysics",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQFRWt1I2yeINQ/company-logo_400_400/company-logo_400_400/0/1631305796275?e=1787788800&v=beta&t=CSK5sz2iK-fcSpns1LxYuKy1e3bGBzBULOW8I7X2FPc"
+        }
+      ],
+      "topSkills": [
+        "Management",
+        "Leadership",
+        "Public Speaking",
+        "Creative Problem Solving",
+        "Skilled Multi-tasker",
+        "Project Management",
+        "Molecular Biology",
+        "Biotechnology",
+        "Proposal Writing",
+        "Budgeting",
+        "Translational Research",
+        "Laser Spectroscopy"
+      ]
+    },
+    {
+      "id": "ACoAABpP7YoB9F3qjkElc6K-fsiyyrDZE_ENLnE",
+      "publicIdentifier": "anthony-walsh-376a0a103",
+      "fullName": "Anthony Walsh",
+      "headline": "Biotech Investor & Founder",
+      "title": "VP Search and Evaluation",
+      "location": "Boston, Massachusetts",
+      "tenure": "1 yr 4 mos",
+      "startedAt": 1746057600000,
+      "startedLabel": "May 2025",
+      "connectionsCount": 2964,
+      "followerCount": 3011,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQGsnfSJGCNBHA/profile-displayphoto-shrink_800_800/B4EZb5_BoEHQAc-/0/1747950770996?e=1787788800&v=beta&t=qzK98MrEgYUTqzaX_Eodeh3gHi8yBFlcteTEm-_KOEg",
+      "linkedinUrl": "https://www.linkedin.com/in/anthony-walsh-376a0a103",
+      "education": [
+        {
+          "school": "University of Oxford",
+          "degree": "Doctor of Philosophy (Ph.D.)",
+          "fieldOfStudy": "Biophysics and Molecular Biology",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D4E0BAQGnc4qXLbE8Sg/company-logo_400_400/company-logo_400_400/0/1709206435851/oxforduni_logo?e=1787788800&v=beta&t=Ablndhd1nLQmOpf07VCj51EgBIoacOBxGGSVHz8gzuk"
+        }
+      ]
+    },
+    {
+      "id": "ACoAAAB660cBrijFjN3laaW_IaRe3v336T5K8DA",
+      "publicIdentifier": "matt-stehle-99b8452",
+      "fullName": "Matt Stehle",
+      "headline": "Operations @ Formation Bio",
+      "title": "Senior Vice President, Operations",
+      "location": "New York City, New York",
+      "tenure": "6 mos",
+      "startedAt": 1772323200000,
+      "startedLabel": "Mar 2026",
+      "connectionsCount": 1592,
+      "followerCount": 1723,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHCP7udH-DJbg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1690561695894?e=1787788800&v=beta&t=s7ZhpQF69plV4x8y3s2qAjlxGbpEIcXeBkv_ddEaXRk",
+      "linkedinUrl": "https://www.linkedin.com/in/matt-stehle-99b8452",
+      "education": [
+        {
+          "school": "Harvard University",
+          "degree": "B.A.",
+          "fieldOfStudy": "Government",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQF5t62bcL0e9g/company-logo_400_400/company-logo_400_400/0/1631318058235?e=1787788800&v=beta&t=nDl6foHa_r44E77VC_TW--_p3FbMHgYhCk5-NqrdZzk"
+        }
+      ],
+      "topSkills": [
+        "Curriculum Design",
+        "Data Analysis",
+        "Educational Leadership",
+        "Teaching",
+        "Financial Modeling",
+        "Research",
+        "Nonprofits",
+        "Community Outreach",
+        "Curriculum Development",
+        "Social Media",
+        "Operations Management",
+        "Leadership"
+      ]
+    },
+    {
+      "id": "ACoAAAB1HK0BnOk2Z32dRcwcy5kTd4gvrgnTrvE",
+      "publicIdentifier": "emilygransky",
+      "fullName": "Emily Gransky",
+      "headline": "VP, Talent at Formation Bio | Biotech & Tech Talent Strategy | AI + Recruiting Systems",
+      "title": "VP, Talent",
+      "location": "Somerville, Massachusetts",
+      "tenure": "1 yr",
+      "startedAt": 1756684800000,
+      "startedLabel": "Sep 2025",
+      "connectionsCount": 7786,
+      "followerCount": 10875,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQGBMMbLgMAMxA/profile-displayphoto-crop_800_800/B4EZlSals2IwAI-/0/1758024327321?e=1787788800&v=beta&t=a4myDWC-Gv0hr-7kb27kaiW6cbLEw7x5AFX1UdsnmSM",
+      "linkedinUrl": "https://www.linkedin.com/in/emilygransky",
+      "education": [
+        {
+          "school": "Rensselaer Polytechnic Institute",
+          "degree": "BS",
+          "fieldOfStudy": "Chemical Engineering",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D4E0BAQGii6y_D-NJhQ/company-logo_400_400/B4EZlDAjIFKsAc-/0/1757765841835/rensselaer_polytechnic_institute_logo?e=1787788800&v=beta&t=dX529jA0IqfMTtPLUiy4MWM_jCViIZNeXWXKHBcz65w"
+        }
+      ],
+      "topSkills": [
+        "Recruiting",
+        "Talent Management",
+        "Strategy",
+        "Hiring",
+        "Dashboard Building",
+        "Gene Therapy",
+        "Startups",
+        "Biotechnology",
+        "Emerging Trends",
+        "Scorecard",
+        "Pre-IPO",
+        "Extending Offers"
+      ]
+    },
+    {
+      "id": "ACoAAAItS6EBStJHqlUE8_FP7lUHzXyvuuwstJc",
+      "publicIdentifier": "danielneil",
+      "fullName": "Dan Neil",
+      "headline": "Chief Technology Officer | PhD, AI, Data Analysis",
+      "title": "Chief Technology Officer",
+      "location": "United States",
+      "tenure": "1 yr",
+      "startedAt": 1756684800000,
+      "startedLabel": "Sep 2025",
+      "connectionsCount": 1186,
+      "followerCount": 1593,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHcy0c0T_hH4g/profile-displayphoto-shrink_800_800/B4EZYb2olLHcAg-/0/1744224029340?e=1787788800&v=beta&t=q-6ZhsZD2uWcy5imSQbXyYyAvyRiyht0wif8Y7YouzQ",
+      "linkedinUrl": "https://www.linkedin.com/in/danielneil",
+      "education": [
+        {
+          "school": "Stanford University",
+          "degree": "Bachelor of Science",
+          "fieldOfStudy": "Engineering - Biomedical Computation, Minor in Modern Languages Japanese and Chinese",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQHr9suxyJBXMw/company-logo_400_400/company-logo_400_400/0/1635534378870/stanford_university_logo?e=1787788800&v=beta&t=9Z7riF5hxepH22SmID02crdk9PpTI8Bledf7QDRbMAs"
+        }
+      ],
+      "topSkills": [
+        "Start-ups",
+        "Data Analysis",
+        "Project Management",
+        "Parallel Programming",
+        "Digital Designs",
+        "FPGA",
+        "Neuroscience",
+        "Machine Learning",
+        "Computer Science",
+        "Programming",
+        "Statistics",
+        "Strategy"
+      ]
+    },
+    {
+      "id": "ACoAAAFRnSUBvlVOo2BZ9SIZVw9Cg5P0gdqy6Iw",
+      "publicIdentifier": "ckakidas",
+      "fullName": "Chris Kakidas",
+      "headline": "Director of Drug Product Development at Formation Bio",
+      "title": "Director, Drug Product Development",
+      "location": "Cornelius, North Carolina",
+      "tenure": "5 mos",
+      "startedAt": 1775001600000,
+      "startedLabel": "Apr 2026",
+      "connectionsCount": 1621,
+      "followerCount": 1633,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHZ-Rdk1Dpfyw/profile-displayphoto-shrink_800_800/B4EZc8tMASGcAk-/0/1749070168477?e=1787788800&v=beta&t=gflN-1zQGDUV2dR67B_32QMLQt7MPMZx-sB0yvJaygA",
+      "linkedinUrl": "https://www.linkedin.com/in/ckakidas",
+      "education": [
+        {
+          "school": "Wake Forest University School of Business",
+          "degree": "Master of Business Administration (M.B.A.)",
+          "fieldOfStudy": "Business Administration, Management and Operations",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D4E0BAQG_iyih0k3IcQ/company-logo_400_400/B4EZzToMVJG8AY-/0/1773077055325/wake_forest_university_school_of_business_logo?e=1787788800&v=beta&t=SpiPCMPsdKilTzNvYu2qnvWMeXEfVmEl-lNdvWuuALw"
+        }
+      ],
+      "topSkills": [
+        "Formulation Development",
+        "Nanosensor Development",
+        "Granulation",
+        "Extrusion",
+        "Drug Delivery",
+        "Coatings",
+        "GMP",
+        "UV-Vis",
+        "GLP",
+        "UV/Vis",
+        "Formulation",
+        "Pharmaceutics"
+      ]
+    },
+    {
+      "id": "ACoAAAA6_kcBXbk90ZyiYdyPNBIHzIhKWiscpy8",
+      "publicIdentifier": "gavin-corcoran-md-facp-45b3651",
+      "fullName": "Gavin Corcoran, MD FACP",
+      "headline": "Chief Development Officer, Experienced drug development innovator and strategist, Board Member, Patient advocate, enthusiastic integrator of AI into drug development",
+      "title": "Chief Development Officer (CDO)",
+      "location": "New York City, New York",
+      "tenure": "4 yrs 10 mos",
+      "startedAt": 1635724800000,
+      "startedLabel": "Nov 2021",
+      "connectionsCount": 4428,
+      "followerCount": 4539,
+      "linkedinUrl": "https://www.linkedin.com/in/gavin-corcoran-md-facp-45b3651",
+      "education": [
+        {
+          "school": "University of the Witwatersrand",
+          "degree": "MBBCh",
+          "fieldOfStudy": "Medicine",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQHH1UoUF-zGMQ/company-logo_400_400/company-logo_400_400/0/1643029435804/university_of_the_witwatersrand_logo?e=1787788800&v=beta&t=tM_RYWddL3zuU6NKHg3RlZFgHNZ0IUqV5zzPRfSWV_E"
+        }
+      ],
+      "topSkills": [
+        "Clinical Development",
+        "Clinical Trials",
+        "Pharmaceutical Industry",
+        "Drug Development",
+        "Infectious Diseases",
+        "Therapeutic Areas",
+        "Medical Devices",
+        "Clinical Research",
+        "Dermatology",
+        "Medical Affairs",
+        "FDA",
+        "Sop"
+      ]
+    },
+    {
+      "id": "ACoAAAORSsMB1QxVTZV2Lij3_92D3WyWwu-kKJY",
+      "publicIdentifier": "benjamine-liu-54306518",
+      "fullName": "Benjamine Liu",
+      "headline": "CEO at Formation Bio",
+      "title": "CEO and Co-founder at Formation Bio",
+      "location": "New York City, New York",
+      "tenure": "10 yrs 8 mos",
+      "startedAt": 1451606400000,
+      "startedLabel": "2016",
+      "connectionsCount": 4479,
+      "followerCount": 7058,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4E03AQEtFhsudanOng/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1626994207650?e=1787788800&v=beta&t=lKZ7dcXUsUswCvqMqu_VSikftj__j-f8NqstFkvcX5Q",
+      "linkedinUrl": "https://www.linkedin.com/in/benjamine-liu-54306518",
+      "education": [
+        {
+          "school": "University of Oxford",
+          "degree": "Doctor of Philosophy (D.Phil.)",
+          "fieldOfStudy": "Computational Biology and Psychiatry",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D4E0BAQGnc4qXLbE8Sg/company-logo_400_400/company-logo_400_400/0/1709206435851/oxforduni_logo?e=1787788800&v=beta&t=Ablndhd1nLQmOpf07VCj51EgBIoacOBxGGSVHz8gzuk"
+        }
+      ]
+    },
+    {
+      "id": "ACoAAAQubJ8BAdzQELMOUrOxOgGYzoVdLY4uhnE",
+      "publicIdentifier": "justin-frick",
+      "fullName": "Justin Frick",
+      "headline": "Recruiting Manager at Formation Bio | Building the pharma company of the future",
+      "title": "Recruiting Manager",
+      "location": "Brooklyn, New York",
+      "tenure": "2 yrs 6 mos",
+      "startedAt": 1709251200000,
+      "startedLabel": "Mar 2024",
+      "connectionsCount": 8089,
+      "followerCount": 8175,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHIP4lWQfD1Bg/profile-displayphoto-crop_800_800/B4EZhdvoWoHoAI-/0/1753919424234?e=1787788800&v=beta&t=LXpH1ARML3QJNc86b4I2iXJ6v_6BPfCpms8k-ZIArts",
+      "linkedinUrl": "https://www.linkedin.com/in/justin-frick",
+      "education": [
+        {
+          "school": "Princeton University",
+          "degree": "Bachelor's degree",
+          "fieldOfStudy": "English",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQE4zTC5PJAKSA/company-logo_400_400/company-logo_400_400/0/1630648147093/princeton_university_logo?e=1787788800&v=beta&t=Xt4NPZzTz-CSX2UsslnPYTvD6U0fZ5dG_sg9o3wop2s"
+        }
+      ],
+      "topSkills": [
+        "Teaching",
+        "Research",
+        "Higher Education",
+        "Coaching",
+        "Community Outreach",
+        "Nonprofits",
+        "Leadership Development",
+        "Curriculum Development",
+        "Social Media",
+        "Tutoring",
+        "Curriculum Design",
+        "Editing"
+      ]
+    },
+    {
+      "id": "ACoAABKXBXYBLZocPJs8RkjJZL_rx1Ay_ps8ZE0",
+      "publicIdentifier": "lilymintz",
+      "fullName": "Lily Mintz",
+      "headline": "Formation Bio",
+      "title": "Head of Brand & Communications",
+      "location": "New York City, New York",
+      "tenure": "3 yrs 3 mos",
+      "startedAt": 1685577600000,
+      "startedLabel": "Jun 2023",
+      "connectionsCount": 1250,
+      "followerCount": 1461,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHn1RqmkKNZtA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710196627034?e=1787788800&v=beta&t=tihLVMpxCyrXxPYO042H5iUs8r84KAAFpGXsTKrz5BA",
+      "linkedinUrl": "https://www.linkedin.com/in/lilymintz",
+      "education": [
+        {
+          "school": "Barnard College",
+          "degree": "Bachelor's Degree",
+          "fieldOfStudy": "History",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQFw7PdvWg-Q6Q/company-logo_400_400/company-logo_400_400/0/1656683873595/barnard_college_logo?e=1787788800&v=beta&t=_8BzAMPohLVuBgUKfU4SWPOIDoigHdm5aVBJZ2_u1WI"
+        }
+      ]
+    },
+    {
+      "id": "ACoAAAJbrIQBrZR1queTJEg871JEPIqv1e47WhA",
+      "publicIdentifier": "nicholasaudo",
+      "fullName": "Nicholas Audo",
+      "headline": "Engineering Leader Building AI and Data Fluent Teams",
+      "title": "Director of Engineering - Platform",
+      "location": "United States",
+      "tenure": "2 yrs",
+      "startedAt": 1725148800000,
+      "startedLabel": "Sep 2024",
+      "connectionsCount": 1178,
+      "followerCount": 1898,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C5603AQGFkFLp43eD8g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1626840844543?e=1787788800&v=beta&t=F3Y_p1UXx2XgZeTnfaeKO087eYUpfQ7A6UMyQwBbMkg",
+      "linkedinUrl": "https://www.linkedin.com/in/nicholasaudo",
+      "education": [
+        {
+          "school": "Neumont University",
+          "degree": "Bachelors of Science in Computer Science",
+          "fieldOfStudy": "Computer Science",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQF_o_zoOKF69A/company-logo_400_400/company-logo_400_400/0/1695764323039?e=1787788800&v=beta&t=DgwL63psDxAYMV1h0BIhIczC15REFuE4q6xSH2EjnSs"
+        }
+      ],
+      "topSkills": [
+        "Data Integration",
+        "Data Governance",
+        "Platform as a Service (PAAS)",
+        "Extract, Transform, Load (ETL)",
+        "Software Development",
+        "Generative AI",
+        "Large Language Models (LLM)",
+        "Docker Products",
+        "Terraform",
+        "Management",
+        "Project Management",
+        "Bringing Order to Chaos"
+      ]
+    },
+    {
+      "id": "ACoAAAAnKT8BYkAvQLXDYytN4QfA3aftJSvjqxI",
+      "publicIdentifier": "jaleslie",
+      "fullName": "James Leslie",
+      "headline": "Chief Financial Officer at Formation Bio",
+      "title": "Chief Financial Officer",
+      "location": "Pittsburgh, Pennsylvania",
+      "tenure": "4 yrs 10 mos",
+      "startedAt": 1635724800000,
+      "startedLabel": "Nov 2021",
+      "connectionsCount": 1856,
+      "followerCount": 1977,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQFfJXD7Vq82aw/profile-displayphoto-crop_800_800/B4EZnYncYSIUAI-/0/1760275842989?e=1787788800&v=beta&t=76X_XeCyQaFzuuIqSIABhm5ELzmVOYwFnvZ5d4X-o60",
+      "linkedinUrl": "https://www.linkedin.com/in/jaleslie",
+      "education": [
+        {
+          "school": "Columbia Business School",
+          "degree": "Master of Business Administration - MBA",
+          "fieldOfStudy": null,
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQFuv0h5ca1E_g/company-logo_400_400/company-logo_400_400/0/1630639656847/columbia_business_school_logo?e=1787788800&v=beta&t=OeSVaGmk0H97jf6MagtGqdf3cZB_r_UsGVtl5IuaGrw"
+        }
+      ],
+      "topSkills": [
+        "Management",
+        "Strategic Planning",
+        "Strategic Leadership",
+        "Executive Management",
+        "Financial Modeling",
+        "Financial Analysis",
+        "Valuation",
+        "Investment Banking",
+        "Accounting",
+        "Corporate Finance",
+        "Mergers",
+        "Investments"
+      ]
+    },
+    {
+      "id": "ACoAAAUtFPgB1-sXVXvVa1aICkFeNNYf58elDvo",
+      "publicIdentifier": "seanmgreene",
+      "fullName": "Sean Greene, PMP",
+      "headline": "Director of Procurement at Formation Bio",
+      "title": "Director of Procurement",
+      "location": "Weston, Massachusetts",
+      "tenure": "9 mos",
+      "startedAt": 1764547200000,
+      "startedLabel": "Dec 2025",
+      "connectionsCount": 670,
+      "followerCount": 666,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/C4D03AQE7ChTsx3s52g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1603112053512?e=1787788800&v=beta&t=Z77UnebtuGIUZKdK_MUkRKL__4p3MGjDeRM6YygB5Sw",
+      "linkedinUrl": "https://www.linkedin.com/in/seanmgreene",
+      "education": [
+        {
+          "school": "Harvard University",
+          "degree": "Master of Computer Science",
+          "fieldOfStudy": "Computer Science",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQF5t62bcL0e9g/company-logo_400_400/company-logo_400_400/0/1631318058235?e=1787788800&v=beta&t=nDl6foHa_r44E77VC_TW--_p3FbMHgYhCk5-NqrdZzk"
+        }
+      ],
+      "topSkills": [
+        "Budgeting",
+        "Financial Modeling",
+        "Molecular Biology",
+        "Economics",
+        "Market Analysis",
+        "Biotechnology",
+        "Market Research",
+        "Data Analysis",
+        "Financial Forecasting",
+        "MS Excel Pivot Tables",
+        "Lifesciences",
+        "Software Development"
+      ]
+    },
+    {
+      "id": "ACoAAAbPbGgBJF5Sm6GOiMkp-5Trobu2_iHlJco",
+      "publicIdentifier": "ameya-borwankar-b4832032",
+      "fullName": "Ameya Borwankar",
+      "headline": "Senior Director, Biologics Drug Substance",
+      "title": "Senior Director, Biologics",
+      "location": "San Francisco, California",
+      "tenure": "11 mos",
+      "startedAt": 1759276800000,
+      "startedLabel": "Oct 2025",
+      "connectionsCount": 936,
+      "followerCount": 956,
+      "linkedinUrl": "https://www.linkedin.com/in/ameya-borwankar-b4832032",
+      "education": [
+        {
+          "school": "The University of Texas at Austin",
+          "degree": "Doctor of Philosophy (Ph.D.)",
+          "fieldOfStudy": "Chemical Engineering",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQEREeDg1PACXA/company-logo_400_400/company-logo_400_400/0/1630670868977/theuniversityoftexasataustin__logo?e=1787788800&v=beta&t=iVco5W3ByQlKdEeVjsGTrzaMwh1Hzcy8DdBFUL3Yvt8"
+        }
+      ],
+      "topSkills": [
+        "Matlab",
+        "Microsoft Office",
+        "Process Development",
+        "CMO management",
+        "Cross-functional Collaborations",
+        "Process Optimization (Manufacturing)",
+        "Regulatory Authoring",
+        "Product Development",
+        "Upstream Processing",
+        "Downstream Processing",
+        "Cross-functional Team Leadership",
+        "Process Validation"
+      ]
+    },
+    {
+      "id": "ACoAAANU4nIBJLdWQJx89zwnBa3iIIRQXOxrw5A",
+      "publicIdentifier": "michael-ehlers-52a87616",
+      "fullName": "Michael Ehlers",
+      "headline": "CSO and Head of R&D, Formation Bio",
+      "title": "CSO and Head of R&D",
+      "location": "Boston, Massachusetts",
+      "tenure": "5 mos",
+      "startedAt": 1775001600000,
+      "startedLabel": "Apr 2026",
+      "connectionsCount": 1690,
+      "followerCount": 2170,
+      "linkedinUrl": "https://www.linkedin.com/in/michael-ehlers-52a87616",
+      "education": [
+        {
+          "school": "The Johns Hopkins University School of Medicine",
+          "degree": "MD",
+          "fieldOfStudy": "PhD, Medicine, Neuroscience",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQHmuoE7TW7XbQ/company-logo_400_400/company-logo_400_400/0/1630569536815/johns_hopkins_school_of_medicine_logo?e=1787788800&v=beta&t=cm3wzhWRRGM36jVGwBEItnwiq7VrWPKQDjd5997IcA8"
+        }
+      ],
+      "topSkills": [
+        "Molecular Biology",
+        "Medicine",
+        "Pharmacology",
+        "Neuroscience",
+        "Biomarkers",
+        "Biochemistry",
+        "Lifesciences",
+        "Clinical Development",
+        "Biotechnology",
+        "Drug Development",
+        "Drug Discovery",
+        "Pharmaceutical Industry"
+      ]
+    },
+    {
+      "id": "ACoAAABkuKkBgy-WtOMiCdp9nGgTuGGk06Keag4",
+      "publicIdentifier": "david-steinberg-b492632",
+      "fullName": "David Steinberg",
+      "headline": "Biotech Investor and BD Executive",
+      "title": "Chief Business Officer",
+      "location": "Milton, Massachusetts",
+      "tenure": "1 yr 11 mos",
+      "startedAt": 1727740800000,
+      "startedLabel": "Oct 2024",
+      "connectionsCount": 2298,
+      "followerCount": 2745,
+      "profilePicUrl": "https://media.licdn.com/dms/image/v2/D4E03AQEDt6OrNNVO6w/profile-displayphoto-crop_800_800/B4EZhhnE4_GoAI-/0/1753984290714?e=1787788800&v=beta&t=n1LC-9ZZpb1-fm4eykewljC4-_EJMc8Ccp18sXRH_PA",
+      "linkedinUrl": "https://www.linkedin.com/in/david-steinberg-b492632",
+      "education": [
+        {
+          "school": "The University of Chicago Booth School of Business",
+          "degree": "MBA",
+          "fieldOfStudy": "Strategy, Finance",
+          "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQFZO05jhYKSkw/company-logo_400_400/company-logo_400_400/0/1692627816910/universityofchicagoboothschoolofbusiness_logo?e=1787788800&v=beta&t=rBLdO_BcZHbvwCJvepd2Ifb0DQLt5S1iyrewsjbp3tI"
+        }
+      ],
+      "topSkills": [
+        "Venture Capital",
+        "Start-ups",
+        "Life Sciences",
+        "Management Consulting",
+        "Entrepreneur",
+        "Entrepreneurship",
+        "Biotechnology",
+        "Business Strategy",
+        "Lifesciences",
+        "Healthcare",
+        "Business Development",
+        "Product Launch"
+      ]
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "11016612",
+        "label": "Formation Bio",
+        "kind": "company",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4D0BAQFXlIgxlo86zQ/company-logo_400_400/company-logo_400_400/0/1701789830903/trialspark_logo?e=1787788800&v=beta&t=enOeFSJz3rIPSM2YneH5YEmP2xCKZO_kg0quTZ0n_zc",
+        "refId": "11016612",
+        "weight": 1,
+        "color": "#0A66C2"
+      },
+      {
+        "id": "ACoAAA2klpYBa4isEex3Z3_-OCguMNXnZJ-t_lA",
+        "label": "Emma Nealon",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGl5whn0swTVQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1670276981725?e=1787788800&v=beta&t=iiXgwXZ47PQBcki1sJ0senyiyCPG9uNKUzS9snj6kxY",
+        "refId": "emmanealon",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Director, Investments & Business Development",
+        "location": "Austin, Texas"
+      },
+      {
+        "id": "ACoAABiqMmkBPkX91u3zfVRvLpDEKov56EPFHqw",
+        "label": "Samiksha Nayak, PhD",
+        "kind": "employee",
+        "refId": "samiksha-nayak",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Director, Business Operations & Strategy",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAABi0wUwBT0QgKj0G6_fOjtuRo_WT-w_VktM",
+        "label": "Jack Rosenberg",
+        "kind": "employee",
+        "refId": "meetjackrosenberg",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Director, Investments & Business Development",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAAAU2vqkBA9MI_i37pk5b0mZx2Q5qrNgiidA",
+        "label": "Linhao Zhang",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C4E03AQGbj2GK8iNMqg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1612659818748?e=1787788800&v=beta&t=bkTAuFrpWK8PUrp0kM5UhLCRjakQEAFaH0YxId4t7Gc",
+        "refId": "linhaozhang",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Co-Founder",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAAADFUKEBOz8cvWKVQ4K4Lbt9TiX8qHq2fok",
+        "label": "Bob Silverman",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C4E03AQGkrPo_bwoyFQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1517684943100?e=1787788800&v=beta&t=QgFLFUdX_WiE8m1dQuErKnWKOLsiwBzvf1wGQlhcYKY",
+        "refId": "bob-silverman-4293b74",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Vice President, Business Transactions",
+        "location": "Red Bank, New Jersey"
+      },
+      {
+        "id": "ACoAAAnTyEsBPAhcqgBFxO00rV5Jt-MKlmsRPJI",
+        "label": "Enrique García-Rivera",
+        "kind": "employee",
+        "refId": "egarciarivera",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "VP, Data Science",
+        "location": "Cambridge, Massachusetts"
+      },
+      {
+        "id": "ACoAAAT2aqsBmPUnHtgKXAhe0TP8e9gc-2bC778",
+        "label": "Jennifer Kang",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C4D03AQHosjk6ZrKxoQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517052276190?e=1787788800&v=beta&t=KVXEUsxbXptVkNMpXUL9zNenldwdn-37vrBZOkkBCUI",
+        "refId": "jenniferkang88",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Head of Portfolio Strategy & Management",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAAAsB7ZAB3TeKq4KvtCbHhJWcsWiM9aKSBCk",
+        "label": "Neel Madhukar",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C4E03AQEnbDYussqOTg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1667864297548?e=1787788800&v=beta&t=2mLrydDUP_IK3CJ5zISkoZjXX60CyHPoQq4tVI1VxlY",
+        "refId": "neelmadhukar",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Product General Manager: Asset Acquisition and Diligence",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAACSfuzUBdQIred9lyQE17gKEREYmy8hWJkc",
+        "label": "Jessica Chen",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQEaW9r9BY5Lpw/profile-displayphoto-crop_800_800/B4EZ0cDXzMHsAM-/0/1774292140302?e=1787788800&v=beta&t=MthcVcE5PLbGO_K6kIm3mMGG4YG9wy8mc2WpoKI4faA",
+        "refId": "chenjessica1",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Senior Manager, Brand & Content",
+        "location": "United States"
+      },
+      {
+        "id": "ACoAACOnZTcB9urRT8eYI-xcXLHF567wMjPuglM",
+        "label": "Glenice Gallagher",
+        "kind": "employee",
+        "refId": "glenicegallagher",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Senior Associate, Talent Operations",
+        "location": "Boston, Massachusetts"
+      },
+      {
+        "id": "ACoAAAOm2Q8BGNqrGRucIx8RKFqb2zgfW0MMGHg",
+        "label": "Melanie Hullings",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C4E03AQEm3-dL0Zc8UA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1620229536005?e=1787788800&v=beta&t=0R0bCNNjQytTqDyx-8fhzxH4zJZIteXa4QAcrNg589Q",
+        "refId": "melaniehullings",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Director, Clinical Data Analytics & Programming",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAAAAqWmIBoRDvu5G1Ffu8J9yPKZULKS3J40A",
+        "label": "John Taylor",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C4D03AQHMNfxfg_x7Wg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1628830741449?e=1787788800&v=beta&t=NZDjRagqcp1FIiX5URlHAieefCpuw_xiLBUR7yaavFY",
+        "refId": "johntaylor0",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "VP, Business Development",
+        "location": "Raleigh, North Carolina"
+      },
+      {
+        "id": "ACoAABN1-DkBAICgPqNMwhVKdvonyVG5YwmbAYQ",
+        "label": "Chris Bialas",
+        "kind": "employee",
+        "refId": "chris-bialas-98941591",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Director of Business Development",
+        "location": "Philadelphia, Pennsylvania"
+      },
+      {
+        "id": "ACoAABpP7YoB9F3qjkElc6K-fsiyyrDZE_ENLnE",
+        "label": "Anthony Walsh",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQGsnfSJGCNBHA/profile-displayphoto-shrink_800_800/B4EZb5_BoEHQAc-/0/1747950770996?e=1787788800&v=beta&t=qzK98MrEgYUTqzaX_Eodeh3gHi8yBFlcteTEm-_KOEg",
+        "refId": "anthony-walsh-376a0a103",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "VP Search and Evaluation",
+        "location": "Boston, Massachusetts"
+      },
+      {
+        "id": "ACoAAAB660cBrijFjN3laaW_IaRe3v336T5K8DA",
+        "label": "Matt Stehle",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHCP7udH-DJbg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1690561695894?e=1787788800&v=beta&t=s7ZhpQF69plV4x8y3s2qAjlxGbpEIcXeBkv_ddEaXRk",
+        "refId": "matt-stehle-99b8452",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Senior Vice President, Operations",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAAAB1HK0BnOk2Z32dRcwcy5kTd4gvrgnTrvE",
+        "label": "Emily Gransky",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQGBMMbLgMAMxA/profile-displayphoto-crop_800_800/B4EZlSals2IwAI-/0/1758024327321?e=1787788800&v=beta&t=a4myDWC-Gv0hr-7kb27kaiW6cbLEw7x5AFX1UdsnmSM",
+        "refId": "emilygransky",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "VP, Talent",
+        "location": "Somerville, Massachusetts"
+      },
+      {
+        "id": "ACoAAAItS6EBStJHqlUE8_FP7lUHzXyvuuwstJc",
+        "label": "Dan Neil",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHcy0c0T_hH4g/profile-displayphoto-shrink_800_800/B4EZYb2olLHcAg-/0/1744224029340?e=1787788800&v=beta&t=q-6ZhsZD2uWcy5imSQbXyYyAvyRiyht0wif8Y7YouzQ",
+        "refId": "danielneil",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Chief Technology Officer",
+        "location": "United States"
+      },
+      {
+        "id": "ACoAAAFRnSUBvlVOo2BZ9SIZVw9Cg5P0gdqy6Iw",
+        "label": "Chris Kakidas",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHZ-Rdk1Dpfyw/profile-displayphoto-shrink_800_800/B4EZc8tMASGcAk-/0/1749070168477?e=1787788800&v=beta&t=gflN-1zQGDUV2dR67B_32QMLQt7MPMZx-sB0yvJaygA",
+        "refId": "ckakidas",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Director, Drug Product Development",
+        "location": "Cornelius, North Carolina"
+      },
+      {
+        "id": "ACoAAAA6_kcBXbk90ZyiYdyPNBIHzIhKWiscpy8",
+        "label": "Gavin Corcoran, MD FACP",
+        "kind": "employee",
+        "refId": "gavin-corcoran-md-facp-45b3651",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Chief Development Officer (CDO)",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAAAORSsMB1QxVTZV2Lij3_92D3WyWwu-kKJY",
+        "label": "Benjamine Liu",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C4E03AQEtFhsudanOng/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1626994207650?e=1787788800&v=beta&t=lKZ7dcXUsUswCvqMqu_VSikftj__j-f8NqstFkvcX5Q",
+        "refId": "benjamine-liu-54306518",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "CEO and Co-founder at Formation Bio",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAAAQubJ8BAdzQELMOUrOxOgGYzoVdLY4uhnE",
+        "label": "Justin Frick",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHIP4lWQfD1Bg/profile-displayphoto-crop_800_800/B4EZhdvoWoHoAI-/0/1753919424234?e=1787788800&v=beta&t=LXpH1ARML3QJNc86b4I2iXJ6v_6BPfCpms8k-ZIArts",
+        "refId": "justin-frick",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Recruiting Manager",
+        "location": "Brooklyn, New York"
+      },
+      {
+        "id": "ACoAABKXBXYBLZocPJs8RkjJZL_rx1Ay_ps8ZE0",
+        "label": "Lily Mintz",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQHn1RqmkKNZtA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710196627034?e=1787788800&v=beta&t=tihLVMpxCyrXxPYO042H5iUs8r84KAAFpGXsTKrz5BA",
+        "refId": "lilymintz",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Head of Brand & Communications",
+        "location": "New York City, New York"
+      },
+      {
+        "id": "ACoAAAJbrIQBrZR1queTJEg871JEPIqv1e47WhA",
+        "label": "Nicholas Audo",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C5603AQGFkFLp43eD8g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1626840844543?e=1787788800&v=beta&t=F3Y_p1UXx2XgZeTnfaeKO087eYUpfQ7A6UMyQwBbMkg",
+        "refId": "nicholasaudo",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Director of Engineering - Platform",
+        "location": "United States"
+      },
+      {
+        "id": "ACoAAAAnKT8BYkAvQLXDYytN4QfA3aftJSvjqxI",
+        "label": "James Leslie",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQFfJXD7Vq82aw/profile-displayphoto-crop_800_800/B4EZnYncYSIUAI-/0/1760275842989?e=1787788800&v=beta&t=76X_XeCyQaFzuuIqSIABhm5ELzmVOYwFnvZ5d4X-o60",
+        "refId": "jaleslie",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Chief Financial Officer",
+        "location": "Pittsburgh, Pennsylvania"
+      },
+      {
+        "id": "ACoAAAUtFPgB1-sXVXvVa1aICkFeNNYf58elDvo",
+        "label": "Sean Greene, PMP",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/C4D03AQE7ChTsx3s52g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1603112053512?e=1787788800&v=beta&t=Z77UnebtuGIUZKdK_MUkRKL__4p3MGjDeRM6YygB5Sw",
+        "refId": "seanmgreene",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Director of Procurement",
+        "location": "Weston, Massachusetts"
+      },
+      {
+        "id": "ACoAAAbPbGgBJF5Sm6GOiMkp-5Trobu2_iHlJco",
+        "label": "Ameya Borwankar",
+        "kind": "employee",
+        "refId": "ameya-borwankar-b4832032",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Senior Director, Biologics",
+        "location": "San Francisco, California"
+      },
+      {
+        "id": "ACoAAANU4nIBJLdWQJx89zwnBa3iIIRQXOxrw5A",
+        "label": "Michael Ehlers",
+        "kind": "employee",
+        "refId": "michael-ehlers-52a87616",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "CSO and Head of R&D",
+        "location": "Boston, Massachusetts"
+      },
+      {
+        "id": "ACoAAABkuKkBgy-WtOMiCdp9nGgTuGGk06Keag4",
+        "label": "David Steinberg",
+        "kind": "employee",
+        "imageUrl": "https://media.licdn.com/dms/image/v2/D4E03AQEDt6OrNNVO6w/profile-displayphoto-crop_800_800/B4EZhhnE4_GoAI-/0/1753984290714?e=1787788800&v=beta&t=n1LC-9ZZpb1-fm4eykewljC4-_EJMc8Ccp18sXRH_PA",
+        "refId": "david-steinberg-b492632",
+        "weight": 22,
+        "color": "#509BF5",
+        "title": "Chief Business Officer",
+        "location": "Milton, Massachusetts"
+      }
+    ],
+    "links": [
+      {
+        "source": "11016612",
+        "target": "ACoAAA2klpYBa4isEex3Z3_-OCguMNXnZJ-t_lA",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAABiqMmkBPkX91u3zfVRvLpDEKov56EPFHqw",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAABi0wUwBT0QgKj0G6_fOjtuRo_WT-w_VktM",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAU2vqkBA9MI_i37pk5b0mZx2Q5qrNgiidA",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAADFUKEBOz8cvWKVQ4K4Lbt9TiX8qHq2fok",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAnTyEsBPAhcqgBFxO00rV5Jt-MKlmsRPJI",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAT2aqsBmPUnHtgKXAhe0TP8e9gc-2bC778",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAsB7ZAB3TeKq4KvtCbHhJWcsWiM9aKSBCk",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAACSfuzUBdQIred9lyQE17gKEREYmy8hWJkc",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAACOnZTcB9urRT8eYI-xcXLHF567wMjPuglM",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAOm2Q8BGNqrGRucIx8RKFqb2zgfW0MMGHg",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAAqWmIBoRDvu5G1Ffu8J9yPKZULKS3J40A",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAABN1-DkBAICgPqNMwhVKdvonyVG5YwmbAYQ",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAABpP7YoB9F3qjkElc6K-fsiyyrDZE_ENLnE",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAB660cBrijFjN3laaW_IaRe3v336T5K8DA",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAB1HK0BnOk2Z32dRcwcy5kTd4gvrgnTrvE",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAItS6EBStJHqlUE8_FP7lUHzXyvuuwstJc",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAFRnSUBvlVOo2BZ9SIZVw9Cg5P0gdqy6Iw",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAA6_kcBXbk90ZyiYdyPNBIHzIhKWiscpy8",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAORSsMB1QxVTZV2Lij3_92D3WyWwu-kKJY",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAQubJ8BAdzQELMOUrOxOgGYzoVdLY4uhnE",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAABKXBXYBLZocPJs8RkjJZL_rx1Ay_ps8ZE0",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAJbrIQBrZR1queTJEg871JEPIqv1e47WhA",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAAnKT8BYkAvQLXDYytN4QfA3aftJSvjqxI",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAUtFPgB1-sXVXvVa1aICkFeNNYf58elDvo",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAAbPbGgBJF5Sm6GOiMkp-5Trobu2_iHlJco",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAANU4nIBJLdWQJx89zwnBa3iIIRQXOxrw5A",
+        "kind": "company-employee"
+      },
+      {
+        "source": "11016612",
+        "target": "ACoAAABkuKkBgy-WtOMiCdp9nGgTuGGk06Keag4",
+        "kind": "company-employee"
+      }
+    ]
+  },
+  "stats": {
+    "employeeCount": 28,
+    "totalReported": 198,
+    "locationCount": 15,
+    "schoolCount": 24,
+    "avgConnections": 2182,
+    "topLocations": [
+      {
+        "label": "New York City, New York",
+        "count": 10
+      },
+      {
+        "label": "United States",
+        "count": 3
+      },
+      {
+        "label": "Boston, Massachusetts",
+        "count": 3
+      },
+      {
+        "label": "Austin, Texas",
+        "count": 1
+      },
+      {
+        "label": "Red Bank, New Jersey",
+        "count": 1
+      },
+      {
+        "label": "Cambridge, Massachusetts",
+        "count": 1
+      },
+      {
+        "label": "Raleigh, North Carolina",
+        "count": 1
+      },
+      {
+        "label": "Philadelphia, Pennsylvania",
+        "count": 1
+      }
+    ],
+    "topSchools": [
+      {
+        "label": "Georgetown University",
+        "count": 2,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQEnN4XznomLJw/company-logo_400_400/company-logo_400_400/0/1631309453384?e=1787788800&v=beta&t=EEM7OZtmW9hGnSBStYOL1W7A0KLHYTHhVbSV1jKYink"
+      },
+      {
+        "label": "The University of Texas at Austin",
+        "count": 2,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQEREeDg1PACXA/company-logo_400_400/company-logo_400_400/0/1630670868977/theuniversityoftexasataustin__logo?e=1787788800&v=beta&t=iVco5W3ByQlKdEeVjsGTrzaMwh1Hzcy8DdBFUL3Yvt8"
+      },
+      {
+        "label": "University of Oxford",
+        "count": 2,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/D4E0BAQGnc4qXLbE8Sg/company-logo_400_400/company-logo_400_400/0/1709206435851/oxforduni_logo?e=1787788800&v=beta&t=Ablndhd1nLQmOpf07VCj51EgBIoacOBxGGSVHz8gzuk"
+      },
+      {
+        "label": "Harvard University",
+        "count": 2,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQF5t62bcL0e9g/company-logo_400_400/company-logo_400_400/0/1631318058235?e=1787788800&v=beta&t=nDl6foHa_r44E77VC_TW--_p3FbMHgYhCk5-NqrdZzk"
+      },
+      {
+        "label": "Massachusetts Institute of Technology",
+        "count": 1,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQH-UXRfIDIKug/company-logo_400_400/company-logo_400_400/0/1689799729035/mit_logo?e=1787788800&v=beta&t=rqnJ5cLL6kKlUfQn3rTC2A8i_c7dCd56ab33UHFHHb8"
+      },
+      {
+        "label": "Boston University School of Law",
+        "count": 1,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/C560BAQH4x06gXWlwFg/company-logo_400_400/company-logo_400_400/0/1630598143620/boston_university_school_of_law_logo?e=1787788800&v=beta&t=E4afHevTLbeffIwb26MCfmKPsR2iyzcHhYQK6ykvS74"
+      },
+      {
+        "label": "Harvard Medical School",
+        "count": 1,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/C4E0BAQFpnx840JxXEA/company-logo_400_400/company-logo_400_400/0/1631308066635?e=1787788800&v=beta&t=mdxSdaWXYurWMS-rM7thj5DYN8lAgytdtPkpKuEt7KU"
+      },
+      {
+        "label": "University of Notre Dame",
+        "count": 1,
+        "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQFTtW9IxZTgdA/company-logo_400_400/company-logo_400_400/0/1737395581692?e=1787788800&v=beta&t=KF7n2s7E80u2u-KL6Nj-cJueVWbcd--XyF3KmaX6j1c"
+      }
+    ]
+  }
+}

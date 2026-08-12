@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Heart, MessageCircle, Users, FileText } from "lucide-react";
 import type { ScrapeResult, SocialSourcePlatform } from "@/lib/types";
 import {
   computeSocialAnalytics,
@@ -9,10 +8,8 @@ import {
 } from "@/lib/analytics";
 import { compactNumber } from "@/lib/graphUtils";
 import { resolveProfilePicUrl } from "@/lib/avatarUrl";
-import MetricTile from "@/components/analytics/MetricTile";
-import AnalyticsSection, {
-  AnalyticsRow,
-} from "@/components/analytics/AnalyticsSection";
+import AnalyticsDashboardShell from "@/components/analytics/AnalyticsDashboardShell";
+import type { BreakdownRow } from "@/components/analytics/BreakdownCard";
 
 interface Props {
   data: ScrapeResult;
@@ -21,6 +18,12 @@ interface Props {
   onSelectUsername?: (username: string) => void;
   selectedUsername?: string | null;
 }
+
+const ACCENT: Record<SocialSourcePlatform, string> = {
+  linkedin: "#0A66C2",
+  instagram: "#E1306C",
+  facebook: "#1877F2",
+};
 
 function Avatar({
   username,
@@ -43,12 +46,12 @@ function Avatar({
         alt=""
         referrerPolicy="no-referrer"
         onError={() => setFailed(true)}
-        className="h-8 w-8 rounded-full object-cover ring-1 ring-white/15"
+        className="h-7 w-7 rounded-full object-cover ring-1 ring-white/15"
       />
     );
   }
   return (
-    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-[11px] font-semibold text-white/70 ring-1 ring-white/10">
+    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[10px] font-semibold text-white/70 ring-1 ring-white/10">
       {(fullName || username).charAt(0).toUpperCase()}
     </span>
   );
@@ -66,119 +69,127 @@ export default function SocialAnalyticsBody({
     [data, range],
   );
 
-  const emptyPeriod =
-    range !== "all" &&
-    overview.comments === 0 &&
-    overview.reactions === 0 &&
-    overview.activeEngagers === 0;
+  const personRows = (
+    people: typeof overview.topEngagers,
+  ): BreakdownRow[] =>
+    people.map((person) => ({
+      id: person.username,
+      label: person.fullName || `@${person.username}`,
+      subtitle: person.position || `@${person.username}`,
+      value: person.value,
+      valueLabel: person.metricLabel,
+      selected:
+        selectedUsername?.toLowerCase() === person.username.toLowerCase(),
+      onClick: onSelectUsername
+        ? () => onSelectUsername(person.username)
+        : undefined,
+      leading: (
+        <Avatar
+          username={person.username}
+          fullName={person.fullName}
+          profilePicUrl={person.profilePicUrl}
+          platform={platform}
+        />
+      ),
+    }));
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="grid grid-cols-2 gap-2.5">
-        <MetricTile
-          label="Comments"
-          value={compactNumber(overview.comments)}
-          icon={<MessageCircle className="h-4 w-4" />}
-          series={overview.commentSeries}
-        />
-        <MetricTile
-          label="Reactions"
-          value={compactNumber(overview.reactions)}
-          icon={<Heart className="h-4 w-4" />}
-        />
-        <MetricTile
-          label="Active"
-          value={compactNumber(overview.activeEngagers)}
-          icon={<Users className="h-4 w-4" />}
-          hint="Engagers in range"
-        />
-        <MetricTile
-          label="Posts"
-          value={compactNumber(overview.postsTouched)}
-          icon={<FileText className="h-4 w-4" />}
-          hint="Touched in range"
-        />
-      </div>
-
-      {emptyPeriod ? (
-        <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center text-xs text-white/45">
-          No activity in this range
-          {!overview.hasDatedEvents
-            ? " — this snapshot has few dated events"
-            : ""}
-          .
-        </p>
-      ) : null}
-
-      <AnalyticsSection
-        title="Top engagers"
-        subtitle={`${overview.topEngagers.length}`}
-        empty={
-          overview.topEngagers.length === 0
-            ? "No engagers in this range"
-            : null
-        }
-      >
-        {overview.topEngagers.map((person) => (
-          <AnalyticsRow
-            key={person.username}
-            leading={
-              <Avatar
-                username={person.username}
-                fullName={person.fullName}
-                profilePicUrl={person.profilePicUrl}
-                platform={platform}
-              />
+    <AnalyticsDashboardShell
+      accent={ACCENT[platform]}
+      chartEmptyLabel={
+        overview.hasDatedEvents
+          ? "No activity in this range"
+          : "Few dated events in this snapshot"
+      }
+      metrics={[
+        {
+          id: "comments",
+          label: "Comments",
+          value: compactNumber(overview.comments),
+          delta: overview.commentsDelta,
+          series: overview.commentsSeries,
+        },
+        {
+          id: "reactions",
+          label: "Reactions",
+          value: compactNumber(overview.reactions),
+          delta: overview.reactionsDelta,
+          series: overview.reactionsSeries,
+        },
+        {
+          id: "engagers",
+          label: "Engagers",
+          value: compactNumber(overview.activeEngagers),
+          delta: overview.engagersDelta,
+          series: overview.engagersSeries,
+        },
+        {
+          id: "posts",
+          label: "Posts",
+          value: compactNumber(overview.postsTouched),
+          delta: overview.postsDelta,
+          series: overview.postsSeries,
+        },
+      ]}
+      primary={{
+        tabs: [
+          {
+            id: "posts",
+            label: "Posts",
+            valueHeader: "Engagement",
+            empty: "No posts touched in this range",
+            rows: overview.topPosts.map((post) => ({
+              id: post.id,
+              label: post.label,
+              subtitle:
+                post.comments || post.reactions
+                  ? `${post.comments} comments · ${post.reactions} reactions`
+                  : undefined,
+              value: post.value,
+              valueLabel: compactNumber(post.value),
+              leading: post.imageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={post.imageUrl}
+                  alt=""
+                  className="h-7 w-7 rounded-md object-cover ring-1 ring-white/15"
+                />
+              ) : (
+                <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white/10 text-[10px] text-white/45">
+                  #
+                </span>
+              ),
+            })),
+          },
+          {
+            id: "new",
+            label: "New profiles",
+            valueHeader: "Activity",
+            empty: "No new profiles in this range",
+            rows: personRows(overview.newProfiles),
+          },
+        ],
+      }}
+      secondary={{
+        title: "Top engagers",
+        valueHeader: "Activity",
+        empty: "No engagers in this range",
+        rows: personRows(overview.topEngagers),
+      }}
+      tertiary={
+        overview.reactionMix.length > 0
+          ? {
+              title: "Reaction mix",
+              valueHeader: "Count",
+              rows: overview.reactionMix.map((r) => ({
+                id: r.id,
+                label: r.label,
+                value: r.value,
+                valueLabel: compactNumber(r.value),
+              })),
             }
-            title={person.fullName || `@${person.username}`}
-            subtitle={person.position || `@${person.username}`}
-            trailing={person.metricLabel}
-            selected={
-              selectedUsername?.toLowerCase() === person.username.toLowerCase()
-            }
-            onClick={
-              onSelectUsername
-                ? () => onSelectUsername(person.username)
-                : undefined
-            }
-          />
-        ))}
-      </AnalyticsSection>
-
-      <AnalyticsSection
-        title="New profiles"
-        subtitle={`${overview.newProfiles.length}`}
-        empty={
-          overview.newProfiles.length === 0
-            ? "No new profiles in this range"
-            : null
-        }
-      >
-        {overview.newProfiles.map((person) => (
-          <AnalyticsRow
-            key={person.username}
-            leading={
-              <Avatar
-                username={person.username}
-                fullName={person.fullName}
-                profilePicUrl={person.profilePicUrl}
-                platform={platform}
-              />
-            }
-            title={person.fullName || `@${person.username}`}
-            subtitle={person.position || `@${person.username}`}
-            trailing={person.metricLabel}
-            selected={
-              selectedUsername?.toLowerCase() === person.username.toLowerCase()
-            }
-            onClick={
-              onSelectUsername
-                ? () => onSelectUsername(person.username)
-                : undefined
-            }
-          />
-        ))}
-      </AnalyticsSection>
-    </div>
+          : undefined
+      }
+    />
   );
 }
