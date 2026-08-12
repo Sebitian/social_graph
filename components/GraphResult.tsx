@@ -285,7 +285,6 @@ export default function GraphResult({
   });
   const graphWrapRef = useRef<HTMLDivElement>(null);
   const graphSectionRef = useRef<HTMLDivElement>(null);
-  const footerPanelRef = useRef<HTMLDivElement>(null);
   const mobileTabPanelRef = useRef<HTMLDivElement>(null);
   const requestedBudget = useMemo(
     () => estimateScrapeBudget(initialBudget),
@@ -296,61 +295,10 @@ export default function GraphResult({
     setFooterTab(tab);
     requestAnimationFrame(() => {
       const target =
-        tab === "map"
-          ? graphSectionRef.current
-          : mobileTabPanelRef.current ?? footerPanelRef.current;
+        tab === "map" ? graphSectionRef.current : mobileTabPanelRef.current;
       target?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   }, []);
-
-  // Only react to selection *changes* — never re-force Map when the user
-  // navigates to Analytics/Profile/Share while a selection is still active.
-  const selectionSyncKey = [
-    selected?.id ?? "",
-    companySelected?.id ?? "",
-    spotifySelected?.id ?? "",
-    tiktokSelected?.id ?? "",
-  ].join("|");
-  const prevSelectionSyncKey = useRef(selectionSyncKey);
-
-  useEffect(() => {
-    const selectionChanged = prevSelectionSyncKey.current !== selectionSyncKey;
-    prevSelectionSyncKey.current = selectionSyncKey;
-
-    if (!selectionChanged) return;
-    if (!selected && !companySelected && !spotifySelected && !tiktokSelected)
-      return;
-
-    // Engagement grid lives inside Analytics — keep the tab and scroll to it.
-    if (footerTab === "analytics" && statsView === "grid") {
-      requestAnimationFrame(() => {
-        mobileTabPanelRef.current?.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-        });
-      });
-      return;
-    }
-
-    // Selecting a row while browsing Analytics / Profile / Share should not
-    // yank the user to Map (and must not block returning to those tabs).
-    if (footerTab !== "map") return;
-
-    requestAnimationFrame(() => {
-      footerPanelRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-      });
-    });
-  }, [
-    selectionSyncKey,
-    selected,
-    companySelected,
-    spotifySelected,
-    tiktokSelected,
-    footerTab,
-    statsView,
-  ]);
 
   useEffect(() => {
     if (!graphFullscreen) return;
@@ -1521,31 +1469,6 @@ export default function GraphResult({
                           className="absolute inset-0"
                         />
                       </div>
-                      {selected ? (
-                        <PersonPanel
-                          variant="inline"
-                          node={selected}
-                          proximityRing={
-                            selected.circle >= 0
-                              ? PROXIMITY_RINGS[selected.circle]
-                              : undefined
-                          }
-                          friendCluster={
-                            selected.clusterId != null &&
-                            selected.clusterId >= 0
-                              ? analyticsCircleById.get(selected.clusterId)
-                              : undefined
-                          }
-                          onClose={() => setSelected(null)}
-                          platform={
-                            analyticsPlatform === "linkedin" ||
-                            analyticsPlatform === "instagram" ||
-                            analyticsPlatform === "facebook"
-                              ? analyticsPlatform
-                              : null
-                          }
-                        />
-                      ) : null}
                     </div>
                   ) : null
                 }
@@ -1862,43 +1785,46 @@ export default function GraphResult({
           </div>
         )}
 
-        {/* Person detail below map (all breakpoints) */}
-        <div ref={footerPanelRef} className="scroll-mt-3">
-          {footerTab === "map" && (companySelected || selected) && (
-          <div className="mt-2.5">
-                {isLinkedInCompany && companySelected ? (
-                  <CompanyEmployeePanel
-                    employee={companySelected}
-                    onClose={() => setCompanySelected(null)}
-                  />
-                ) : selected ? (
-                  <PersonPanel
-                    variant="inline"
-                    node={selected}
-                    proximityRing={
-                      selected.circle >= 0
-                        ? PROXIMITY_RINGS[selected.circle]
-                        : undefined
-                    }
-                    friendCluster={
-                      selected.clusterId != null && selected.clusterId >= 0
-                        ? circleById.get(selected.clusterId)
-                        : undefined
-                    }
-                    onClose={() => setSelected(null)}
-                    platform={
-                      isAlternatePlatform
-                        ? null
-                        : platform
-                    }
-                  />
-                ) : null}
-          </div>
-          )}
-        </div>
         </div>
         </div>
       </div>
+
+      {/* Node profile modals (portal overlays) */}
+      {isLinkedInCompany ? (
+        <CompanyEmployeePanel
+          employee={companySelected}
+          onClose={() => setCompanySelected(null)}
+        />
+      ) : (
+        <PersonPanel
+          node={selected}
+          proximityRing={
+            selected && selected.circle >= 0
+              ? PROXIMITY_RINGS[selected.circle]
+              : undefined
+          }
+          friendCluster={
+            selected && selected.clusterId != null && selected.clusterId >= 0
+              ? (footerTab === "analytics"
+                  ? analyticsCircleById
+                  : circleById
+                ).get(selected.clusterId)
+              : undefined
+          }
+          onClose={() => setSelected(null)}
+          platform={
+            footerTab === "analytics"
+              ? analyticsPlatform === "linkedin" ||
+                analyticsPlatform === "instagram" ||
+                analyticsPlatform === "facebook"
+                ? analyticsPlatform
+                : null
+              : isAlternatePlatform
+                ? null
+                : platform
+          }
+        />
+      )}
 
       {!graphFullscreen && (
         <GraphFooterTabs active={footerTab} onSelect={selectFooterTab} />

@@ -612,24 +612,9 @@ export default function GraphVisualizer({
   }, [size.width, size.height]);
 
   useEffect(() => {
-    if (!selectedId || !fgRef.current || !mapLayout) return;
-    const pos = mapLayout.positions.get(selectedId);
-    if (!pos) return;
+    if (!selectedId) return;
     setShowHint(false);
-
-    const mobile = isMobileWidth(size.width);
-    if (mobile) {
-      fgRef.current.zoomToFit(
-        450,
-        28,
-        (node) => node.group === "self" || node.id === selectedId,
-      );
-      return;
-    }
-
-    fgRef.current.centerAt(pos.x, pos.y, 500);
-    fgRef.current.zoom(1.85, 500);
-  }, [selectedId, mapLayout, size.width]);
+  }, [selectedId]);
 
   useEffect(() => {
     const fg = fgRef.current;
