@@ -24,20 +24,20 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Netgraph - See your Instagram network, visualized",
+  title: "Netgraph — Map your multi-platform network",
   description:
-    "Drop in an Instagram handle and explore visible public interaction patterns as an explainable graph.",
+    "Add LinkedIn, Instagram, Facebook, TikTok, and Spotify handles. Explore visible interaction, audience, and taste as explainable graphs with analytics.",
   openGraph: {
-    title: "See your Instagram network, visualized",
+    title: "Netgraph — Map your multi-platform network",
     description:
-      "Explore visible Instagram interaction patterns as an explainable graph.",
+      "Visible interaction graphs and analytics across LinkedIn, Instagram, Facebook, TikTok, and Spotify.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "See your Instagram network, visualized",
+    title: "Netgraph — Map your multi-platform network",
     description:
-      "Explore visible Instagram interaction patterns as an explainable graph.",
+      "Visible interaction graphs and analytics across LinkedIn, Instagram, Facebook, TikTok, and Spotify.",
   },
 };
 
