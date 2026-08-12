@@ -15,6 +15,8 @@ const ALLOWED_HOST_SUFFIXES = [
   "instagram.com",
   "fna.fbcdn.net",
   "xx.fbcdn.net",
+  // Demo / home showcase portraits
+  "randomuser.me",
 ];
 
 function hostAllowed(hostname: string): boolean {
