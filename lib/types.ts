@@ -8,6 +8,11 @@ export interface ProfileData {
   profilePicUrl: string;
   followersCount: number;
   followingCount: number;
+  /**
+   * LinkedIn-style connection count (distinct from followers).
+   * Instagram/Facebook leave this unset and use followingCount instead.
+   */
+  connectionsCount?: number;
   postsCount: number;
   isPrivate: boolean;
   isVerified: boolean;

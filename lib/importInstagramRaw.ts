@@ -727,10 +727,52 @@ export function isInstagramFollowersDataset(raw: unknown): boolean {
   return flattenInstagramFollowers(raw).length > 0;
 }
 
+/** Soft-presence followers kept for the map (beyond real commenters/tags). */
+const MAX_FOLLOW_ONLY_NODES = 36;
+/** Posts kept in the snapshot for the grid + analytics (newest first). */
+const MAX_PROFILE_POSTS = 40;
+
+function isSoftPresencePerson(person: Commentator): boolean {
+  if (person.comments > 0) return false;
+  return (
+    person.position === "Follower" ||
+    person.position === "Following" ||
+    person.position === "Tagged in reel" ||
+    person.position === "Mentioned in reel" ||
+    person.history.every(
+      (c) =>
+        c.post === "Follower" ||
+        c.post === "Following" ||
+        c.post === "Tagged" ||
+        c.post === "Mentioned",
+    )
+  );
+}
+
+function trimProfilePosts(posts: ProfilePost[]): ProfilePost[] {
+  if (posts.length <= MAX_PROFILE_POSTS) return posts;
+  // Keep the newest posts, but always retain high-signal reels in-window.
+  const newest = posts.slice(0, MAX_PROFILE_POSTS);
+  const keptIds = new Set(newest.map((p) => p.id));
+  const extras = posts
+    .slice(MAX_PROFILE_POSTS)
+    .filter(
+      (p) =>
+        !keptIds.has(p.id) &&
+        ((p.videoPlayCount ?? 0) >= 500 || (p.likesCount ?? 0) >= 40),
+    )
+    .slice(0, 8);
+  return [...newest, ...extras].sort((a, b) => {
+    const ta = a.postedAt ? Date.parse(a.postedAt) : 0;
+    const tb = b.postedAt ? Date.parse(b.postedAt) : 0;
+    return tb - ta;
+  });
+}
+
 /**
  * Build a social ScrapeResult from Instagram profile + posts + reels +
  * comments + followers. Graph people are commenters / tagged / mentioned,
- * with followers filling the wider circle.
+ * with a capped follower sample filling the wider circle.
  */
 export function buildScrapeResultFromInstagramRaw(
   handle: string,
@@ -757,8 +799,8 @@ export function buildScrapeResultFromInstagramRaw(
 
   const profile = buildProfile(clean, profileRaw, posts);
   const profileHandle = profile.username.toLowerCase();
-  const profilePosts = buildProfilePosts(posts, reels);
-  const allEngagers = peopleFromInstagram(
+  const profilePosts = trimProfilePosts(buildProfilePosts(posts, reels));
+  const allPeople = peopleFromInstagram(
     profileHandle,
     posts,
     reels,
@@ -766,16 +808,27 @@ export function buildScrapeResultFromInstagramRaw(
     inputs.followers ?? [],
     selfIds,
   );
-  const graphPeople = allEngagers.slice(0, MAX_NODES);
+
+  // Prefer real engagers; only keep a small follower sample for map density.
+  const activePeople = allPeople.filter((p) => !isSoftPresencePerson(p));
+  const followOnly = allPeople.filter(isSoftPresencePerson);
+  const cappedPeople = [
+    ...activePeople,
+    ...followOnly.slice(0, MAX_FOLLOW_ONLY_NODES),
+  ].sort(compareByCloseness);
+
+  const graphPeople = cappedPeople.slice(0, MAX_NODES);
+  // Engagement grid uses the same capped set — full follower dumps make it lag.
+  const gridPeople = cappedPeople;
   const budget = estimateScrapeBudget({});
   const graph = buildGraph(profile, graphPeople);
-  const engagers = buildMemberNodes(profile, allEngagers);
+  const engagers = buildMemberNodes(profile, gridPeople);
   const selfNode = graph.nodes.find((node) => node.group === "self");
   if (selfNode && profile.fullName) {
     selfNode.fullName = profile.fullName;
   }
 
-  const commentEvents = allEngagers.reduce(
+  const commentEvents = activePeople.reduce(
     (sum, p) =>
       sum +
       p.history.filter(
@@ -793,7 +846,7 @@ export function buildScrapeResultFromInstagramRaw(
     profile,
     graph,
     stats: {
-      ...computeStats(profile, allEngagers, commentEvents),
+      ...computeStats(profile, graphPeople, commentEvents),
       shown: graphPeople.length,
     },
     budget,

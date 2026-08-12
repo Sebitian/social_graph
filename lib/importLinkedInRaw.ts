@@ -221,6 +221,7 @@ function isSelfActor(
 function buildProfile(
   handle: string,
   posts: LinkedInPostItem[],
+  overrides: Partial<ProfileData> = {},
 ): ProfileData {
   const author = posts.find((p) => p.author)?.author;
   let vanity: string | undefined;
@@ -240,19 +241,24 @@ function buildProfile(
       break;
     }
   }
-  const username = vanity || handle;
+  const username = overrides.username || vanity || handle;
   return {
     username,
-    fullName: author?.name ?? handle,
-    biography: author?.info ?? author?.position ?? "",
-    profilePicUrl: pictureUrlFromActor(author) ?? "",
-    followersCount: 0,
-    followingCount: 0,
-    postsCount: posts.length,
-    isPrivate: false,
-    isVerified: false,
-    highlightReelCount: 0,
-    profileUrl: `https://www.linkedin.com/in/${encodeURIComponent(username)}`,
+    fullName: overrides.fullName ?? author?.name ?? handle,
+    biography:
+      overrides.biography ?? author?.info ?? author?.position ?? "",
+    profilePicUrl:
+      overrides.profilePicUrl ?? pictureUrlFromActor(author) ?? "",
+    followersCount: overrides.followersCount ?? 0,
+    followingCount: overrides.followingCount ?? 0,
+    connectionsCount: overrides.connectionsCount,
+    postsCount: overrides.postsCount ?? posts.length,
+    isPrivate: overrides.isPrivate ?? false,
+    isVerified: overrides.isVerified ?? false,
+    highlightReelCount: overrides.highlightReelCount ?? 0,
+    profileUrl:
+      overrides.profileUrl ??
+      `https://www.linkedin.com/in/${encodeURIComponent(username)}`,
   };
 }
 
@@ -516,6 +522,7 @@ function peopleFromLinkedIn(
 export function buildScrapeResultFromLinkedInRaw(
   handle: string,
   raw: LinkedInRawItem[],
+  profileOverrides: Partial<ProfileData> = {},
 ): ScrapeResult {
   const clean = handle.replace(/^@/, "").trim().toLowerCase();
   const posts = raw.filter(isPost);
@@ -526,7 +533,7 @@ export function buildScrapeResultFromLinkedInRaw(
     throw new Error("LinkedIn dataset has no posts — cannot build profile snapshot");
   }
 
-  const profile = buildProfile(clean, posts);
+  const profile = buildProfile(clean, posts, profileOverrides);
   const profilePosts = buildProfilePosts(posts);
   const allEngagers = peopleFromLinkedIn(clean, posts, comments, reactions);
   const graphPeople = allEngagers.slice(0, MAX_NODES);
@@ -539,6 +546,7 @@ export function buildScrapeResultFromLinkedInRaw(
   }
 
   return {
+    platform: "linkedin",
     profile,
     graph,
     stats: {

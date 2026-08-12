@@ -38,6 +38,19 @@ export default function TikTokAnalyticsBody({
       }
       metrics={[
         {
+          id: "followers",
+          label: "Followers",
+          value: formatTikTokCount(data.profile.followerCount ?? 0),
+          series: [
+            {
+              t: data.scrapedAt || Date.now(),
+              label: "Total",
+              v: data.profile.followerCount ?? 0,
+            },
+          ],
+          chartMode: "bars" as const,
+        },
+        {
           id: "plays",
           label: "Plays",
           value: formatTikTokCount(overview.plays),
@@ -66,6 +79,7 @@ export default function TikTokAnalyticsBody({
           series: overview.videosSeries,
         },
       ]}
+      defaultMetricId="followers"
       primary={{
         tabs: [
           {
