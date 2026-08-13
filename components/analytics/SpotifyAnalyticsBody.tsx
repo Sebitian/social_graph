@@ -57,12 +57,14 @@ export default function SpotifyAnalyticsBody({
         },
       ]}
       primary={{
+        searchPlaceholder: "Search playlists…",
         tabs: [
           {
             id: "playlists",
             label: "Playlists",
             valueHeader: "Tracks",
             empty: "No playlists active in this range",
+            searchPlaceholder: "Search playlists…",
             rows: overview.topPlaylists.map((pl) => ({
               id: pl.id,
               label: pl.name,
@@ -75,6 +77,7 @@ export default function SpotifyAnalyticsBody({
             label: "Genres",
             valueHeader: "Weight",
             empty: "No genres in this range",
+            searchPlaceholder: "Search genres…",
             rows: overview.topGenres.map((genre) => ({
               id: genre.label,
               label: genre.label,
@@ -97,6 +100,7 @@ export default function SpotifyAnalyticsBody({
         title: "Top artists",
         valueHeader: "Tracks",
         empty: "No artists in this range",
+        searchPlaceholder: "Search artists…",
         rows: overview.topArtists.map((artist) => ({
           id: artist.name,
           label: artist.name,

@@ -362,7 +362,7 @@ export default function AnalyticsPanel({
                       !showingCompany ? TAB_ACTIVE : TAB_AVAILABLE
                     }`}
                   >
-                    <LinkedInIcon className="h-3.5 w-3.5" />
+                    <User className="h-3.5 w-3.5" />
                     Person
                   </button>
                 ) : null}

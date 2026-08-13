@@ -1,14 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ScrapeResult, SocialSourcePlatform } from "@/lib/types";
 import {
   computeAudienceStats,
   computeSocialAnalytics,
+  type AnalyticsPersonRow,
   type AnalyticsRangeId,
 } from "@/lib/analytics";
 import { compactNumber } from "@/lib/graphUtils";
 import { resolveProfilePicUrl } from "@/lib/avatarUrl";
+import { formatPosition, isUsefulPosition } from "@/lib/position";
 import AnalyticsDashboardShell, {
   type DashboardMetric,
 } from "@/components/analytics/AnalyticsDashboardShell";
@@ -28,6 +30,56 @@ const ACCENT: Record<SocialSourcePlatform, string> = {
   instagram: "#E1306C",
   facebook: "#1877F2",
 };
+
+function roleSubtitle(person: AnalyticsPersonRow): string {
+  const formatted = formatPosition(person.position);
+  if (formatted) return formatted;
+  if (person.position && isUsefulPosition(person.position)) return person.position;
+  return `@${person.username}`;
+}
+
+function normalizeRole(value: string): string {
+  return value.replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function uniqueRoleOptions(
+  people: AnalyticsPersonRow[],
+  field: "title" | "company",
+): { key: string; label: string }[] {
+  const counts = new Map<string, { label: string; count: number }>();
+  for (const person of people) {
+    const raw = person[field]?.trim();
+    if (!raw) continue;
+    if (field === "title" && raw.length > 48) continue;
+    const key = normalizeRole(raw);
+    const prev = counts.get(key);
+    if (prev) {
+      prev.count += 1;
+      if (raw.length < prev.label.length) prev.label = raw;
+    } else {
+      counts.set(key, { label: raw, count: 1 });
+    }
+  }
+  return [...counts.entries()]
+    .sort(
+      (a, b) =>
+        b[1].count - a[1].count || a[1].label.localeCompare(b[1].label),
+    )
+    .slice(0, 24)
+    .map(([key, { label }]) => ({ key, label }));
+}
+
+function personMatchesRoleFilter(
+  person: AnalyticsPersonRow,
+  filter: string,
+): boolean {
+  if (filter === "all") return true;
+  const [kind, ...rest] = filter.split(":");
+  const key = rest.join(":");
+  if (kind === "title") return normalizeRole(person.title ?? "") === key;
+  if (kind === "company") return normalizeRole(person.company ?? "") === key;
+  return true;
+}
 
 function Avatar({
   username,
@@ -76,14 +128,37 @@ export default function SocialAnalyticsBody({
     () => computeAudienceStats(data, platform, range),
     [data, platform, range],
   );
+  const [roleFilter, setRoleFilter] = useState("all");
+
+  useEffect(() => {
+    setRoleFilter("all");
+  }, [range, data.scrapedAt, data.profile.username]);
+
+  const newPeople = overview.newPeople;
+  const titleOptions = useMemo(
+    () => uniqueRoleOptions(newPeople, "title"),
+    [newPeople],
+  );
+  const companyOptions = useMemo(
+    () => uniqueRoleOptions(newPeople, "company"),
+    [newPeople],
+  );
+  const showRoleFilter =
+    platform === "linkedin" &&
+    (titleOptions.length > 1 || companyOptions.length > 0);
+
+  const filteredNewPeople = useMemo(() => {
+    const filter = showRoleFilter ? roleFilter : "all";
+    return newPeople.filter((person) => personMatchesRoleFilter(person, filter));
+  }, [newPeople, roleFilter, showRoleFilter]);
 
   const personRows = (
-    people: typeof overview.topEngagers,
+    people: AnalyticsPersonRow[],
   ): BreakdownRow[] =>
     people.map((person) => ({
       id: person.username,
       label: person.fullName || `@${person.username}`,
-      subtitle: person.position || `@${person.username}`,
+      subtitle: roleSubtitle(person),
       value: person.value,
       valueLabel: person.metricLabel,
       selected:
@@ -182,11 +257,59 @@ export default function SocialAnalyticsBody({
       }
       metrics={metrics}
       primary={{
+        searchPlaceholder: "Search name, role, company…",
         tabs: [
+          {
+            id: "new",
+            label: "New people",
+            valueHeader: "Activity",
+            searchPlaceholder: "Search name, role, company…",
+            empty:
+              roleFilter !== "all"
+                ? "No new people in this role"
+                : "No new people in this range",
+            rows: personRows(filteredNewPeople),
+            toolbar: showRoleFilter ? (
+              <label className="block">
+                <span className="sr-only">Filter by position or company</span>
+                <select
+                  value={
+                    titleOptions.some((o) => `title:${o.key}` === roleFilter) ||
+                    companyOptions.some((o) => `company:${o.key}` === roleFilter)
+                      ? roleFilter
+                      : "all"
+                  }
+                  onChange={(event) => setRoleFilter(event.target.value)}
+                  className="w-full rounded-lg border border-white/10 bg-black/40 px-2.5 py-1.5 text-[11px] text-white/80 outline-none focus:border-white/25"
+                >
+                  <option value="all">All positions</option>
+                  {titleOptions.length > 0 ? (
+                    <optgroup label="Position">
+                      {titleOptions.map((option) => (
+                        <option key={`title:${option.key}`} value={`title:${option.key}`}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ) : null}
+                  {companyOptions.length > 0 ? (
+                    <optgroup label="Company">
+                      {companyOptions.map((option) => (
+                        <option key={`company:${option.key}`} value={`company:${option.key}`}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ) : null}
+                </select>
+              </label>
+            ) : undefined,
+          },
           {
             id: "posts",
             label: "Posts",
             valueHeader: "Engagement",
+            searchPlaceholder: "Search posts…",
             empty: "No posts touched in this range",
             rows: overview.topPosts.map((post) => {
               const parts: string[] = [];
@@ -227,19 +350,13 @@ export default function SocialAnalyticsBody({
               };
             }),
           },
-          {
-            id: "new",
-            label: "New profiles",
-            valueHeader: "Activity",
-            empty: "No new profiles in this range",
-            rows: personRows(overview.newProfiles),
-          },
         ],
       }}
       secondary={{
         title: "Top engagers",
         valueHeader: "Activity",
         empty: "No engagers in this range",
+        searchPlaceholder: "Search name, role, company…",
         rows: personRows(overview.topEngagers),
       }}
       tertiary={

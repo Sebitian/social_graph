@@ -126,6 +126,7 @@ export default function CompanyAnalyticsBody({
         },
       ]}
       primary={{
+        searchPlaceholder: "Search people…",
         title: "Top by followers",
         valueHeader: "Followers",
         empty: "No follower data",
@@ -143,6 +144,7 @@ export default function CompanyAnalyticsBody({
         })),
       }}
       secondary={{
+        searchPlaceholder: "Search…",
         tabs: [
           {
             id: "schools",

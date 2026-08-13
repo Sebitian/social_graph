@@ -5,7 +5,7 @@ import {
   type UIMessage,
 } from "ai";
 import { NextResponse } from "next/server";
-import { loadChatContext } from "@/lib/chat/loadContext";
+import { loadChatContext, parseEnabledSourceIds, restrictChatBundle } from "@/lib/chat/loadContext";
 import {
   getTokenRouterChatModel,
   tokenRouterConfigured,
@@ -86,6 +86,7 @@ export async function POST(req: Request) {
     handle?: string;
     pinned?: boolean;
     budget?: Partial<ScrapeBudget>;
+    enabledSources?: unknown;
   };
   try {
     body = await req.json();
@@ -105,6 +106,12 @@ export async function POST(req: Request) {
       { status: loaded.status },
     );
   }
+
+  const enabled = parseEnabledSourceIds(
+    body.enabledSources,
+    loaded.bundle.sources,
+  );
+  const bundle = restrictChatBundle(loaded.bundle, enabled);
 
   const quota = await consumeChatQuota(req);
   if (!quota.ok) {
@@ -130,9 +137,9 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model,
-    system: chatSystemPrompt(loaded.bundle),
+    system: chatSystemPrompt(bundle),
     messages: await convertToModelMessages(messages),
-    tools: createChatTools(loaded.bundle),
+    tools: createChatTools(bundle),
     stopWhen: isStepCount(8),
   });
 

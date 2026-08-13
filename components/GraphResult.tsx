@@ -384,8 +384,18 @@ export default function GraphResult({
         subtitle: `@${facebook.profile.username} · Account graph`,
       });
     }
+    if (tiktokResult) {
+      sources.push({
+        id: "tiktok",
+        label: "TikTok",
+        title:
+          tiktokResult.profile.displayName || tiktokResult.profile.username,
+        handle: tiktokResult.profile.username,
+        subtitle: `@${tiktokResult.profile.username} · Videos & hashtags`,
+      });
+    }
     return sources;
-  }, [companyResult, platformResults]);
+  }, [companyResult, platformResults, tiktokResult]);
   const isAlternatePlatform =
     platform === "spotify" || platform === "tiktok" || isLinkedInCompany;
   const platformHasData =
@@ -902,7 +912,8 @@ export default function GraphResult({
           <span className="hidden sm:inline">New search</span>
         </Link>
         <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5">
-          {platform !== "spotify" &&
+          {footerTab === "map" &&
+            platform !== "spotify" &&
             platform !== "tiktok" &&
             !isLinkedInCompany && (
             <button
@@ -938,7 +949,8 @@ export default function GraphResult({
       </header>
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-1.5 pb-[calc(5.5rem+env(safe-area-inset-bottom))] pt-[calc(4.25rem+env(safe-area-inset-top))] sm:px-4 sm:pt-20">
-        {platform !== "spotify" &&
+        {footerTab === "map" &&
+          platform !== "spotify" &&
           platform !== "tiktok" &&
           !isLinkedInCompany && (
           <GraphHowToRead
@@ -976,7 +988,7 @@ export default function GraphResult({
             {/* Mobile: platform toggles above graph */}
             {!graphFullscreen ? (
             <div className="flex shrink-0 flex-col gap-1.5 border-b border-white/10 px-1.5 py-1.5 sm:hidden">
-              <div className="inline-flex max-w-full self-start overflow-x-auto rounded-lg border border-white/10 bg-black/30 p-0.5">
+              <div className="flex flex-wrap items-center gap-1">
                 {PLATFORM_TABS.map(({ id, label, Icon }) => {
                   const available =
                     id === "spotify"
@@ -1007,7 +1019,13 @@ export default function GraphResult({
                         }
                       }}
                       className={`${TOOLBAR_TAB} min-w-[40px] justify-center ${
-                        active ? TOOLBAR_TAB_ACTIVE : available ? TOOLBAR_TAB_AVAILABLE : TOOLBAR_TAB_DISABLED
+                        active
+                          ? id === "linkedin"
+                            ? LINKEDIN_TAB_ACTIVE
+                            : TOOLBAR_TAB_ACTIVE
+                          : available
+                            ? TOOLBAR_TAB_AVAILABLE
+                            : TOOLBAR_TAB_DISABLED
                       }`}
                     >
                       <Icon className="h-4 w-4 shrink-0" />
@@ -1016,7 +1034,7 @@ export default function GraphResult({
                 })}
               </div>
               {(platform === "linkedin" && hasLinkedIn) || showCompanyViews ? (
-                <div className="flex flex-wrap items-center gap-1.5">
+                <div className="flex flex-wrap items-center gap-2">
                   {platform === "linkedin" && hasLinkedIn && (
                     <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
                       {(
@@ -1039,7 +1057,7 @@ export default function GraphResult({
                           }}
                           className={`${TOOLBAR_TAB} ${
                             linkedinMode === modeId
-                              ? LINKEDIN_TAB_ACTIVE
+                              ? TOOLBAR_TAB_ACTIVE
                               : enabled ? TOOLBAR_TAB_AVAILABLE : TOOLBAR_TAB_DISABLED
                           }`}
                         >
@@ -1069,107 +1087,98 @@ export default function GraphResult({
             ) : null}
 
             <div className="hidden shrink-0 flex-col gap-2 border-b border-white/10 px-3 py-2 sm:flex">
-              <div className="flex items-center gap-2">
-                <div className="shrink-0 text-[11px] font-semibold uppercase tracking-wide text-white/35">
-                  Platform
-                </div>
-                <div className="inline-flex max-w-full overflow-x-auto rounded-lg border border-white/10 bg-black/30 p-0.5">
-                  {PLATFORM_TABS.map(({ id, label, Icon }) => {
-                    const available =
-                      id === "spotify"
-                        ? hasSpotify
-                        : id === "tiktok"
-                          ? hasTikTok
-                          : id === "linkedin"
-                            ? hasLinkedIn
-                            : id === "facebook"
-                              ? hasFacebook
-                              : Boolean(platformResults[id]);
-                    const active = platform === id;
-                    return (
-                      <button
-                        key={id}
-                        type="button"
-                        title={available ? label : `${label} snapshot not loaded yet`}
-                        onClick={() => {
-                          setPlatform(id);
-                          setSelected(null);
-                          setSpotifySelected(null);
-                          setCompanySelected(null);
-                          setTiktokSelected(null);
-                          setView("map");
-                          setStatsView("summary");
-                          if (id === "linkedin") {
-                            setLinkedinMode(hasLinkedInPerson ? "person" : "company");
-                          }
-                        }}
-                        className={`${TOOLBAR_TAB} ${
-                          active ? TOOLBAR_TAB_ACTIVE : available ? TOOLBAR_TAB_AVAILABLE : TOOLBAR_TAB_DISABLED
-                        }`}
-                      >
-                        <Icon className="h-3.5 w-3.5 shrink-0" />
-                        <span>{label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
+              <div className="flex flex-wrap items-center gap-1">
+                {PLATFORM_TABS.map(({ id, label, Icon }) => {
+                  const available =
+                    id === "spotify"
+                      ? hasSpotify
+                      : id === "tiktok"
+                        ? hasTikTok
+                        : id === "linkedin"
+                          ? hasLinkedIn
+                          : id === "facebook"
+                            ? hasFacebook
+                            : Boolean(platformResults[id]);
+                  const active = platform === id;
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      title={available ? label : `${label} snapshot not loaded yet`}
+                      onClick={() => {
+                        setPlatform(id);
+                        setSelected(null);
+                        setSpotifySelected(null);
+                        setCompanySelected(null);
+                        setTiktokSelected(null);
+                        setView("map");
+                        setStatsView("summary");
+                        if (id === "linkedin") {
+                          setLinkedinMode(hasLinkedInPerson ? "person" : "company");
+                        }
+                      }}
+                      className={`${TOOLBAR_TAB} ${
+                        active
+                          ? id === "linkedin"
+                            ? LINKEDIN_TAB_ACTIVE
+                            : TOOLBAR_TAB_ACTIVE
+                          : available
+                            ? TOOLBAR_TAB_AVAILABLE
+                            : TOOLBAR_TAB_DISABLED
+                      }`}
+                    >
+                      <Icon className="h-3.5 w-3.5 shrink-0" />
+                      <span>{label}</span>
+                    </button>
+                  );
+                })}
               </div>
               {(platform === "linkedin" && hasLinkedIn) || showCompanyViews ? (
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <div className="flex flex-wrap items-center gap-2">
                   {platform === "linkedin" && hasLinkedIn && (
-                    <div className="flex items-center gap-2">
-                      <div className="shrink-0 text-[11px] font-semibold uppercase tracking-wide text-white/35">
-                        LinkedIn
-                      </div>
-                      <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
-                        {(
-                          [
-                            { id: "person" as const, label: "Person", Icon: User, enabled: hasLinkedInPerson },
-                            { id: "company" as const, label: "Company", Icon: CompanyIcon, enabled: hasCompany },
-                          ] as const
-                        ).map(({ id: modeId, label: modeLabel, Icon: ModeIcon, enabled }) => (
-                          <button
-                            key={modeId}
-                            type="button"
-                            title={enabled ? modeLabel : `${modeLabel} snapshot not loaded yet`}
-                            onClick={() => {
-                              if (!enabled) return;
-                              setLinkedinMode(modeId);
-                              setSelected(null);
-                              setCompanySelected(null);
-                              setView("map");
-                              setStatsView("summary");
-                            }}
-                            className={`${TOOLBAR_TAB} ${
-                              linkedinMode === modeId
-                                ? LINKEDIN_TAB_ACTIVE
-                                : enabled ? TOOLBAR_TAB_AVAILABLE : TOOLBAR_TAB_DISABLED
-                            }`}
-                          >
-                            <ModeIcon className="h-3.5 w-3.5 shrink-0" />
-                            <span>{modeLabel}</span>
-                          </button>
-                        ))}
-                      </div>
+                    <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
+                      {(
+                        [
+                          { id: "person" as const, label: "Person", Icon: User, enabled: hasLinkedInPerson },
+                          { id: "company" as const, label: "Company", Icon: CompanyIcon, enabled: hasCompany },
+                        ] as const
+                      ).map(({ id: modeId, label: modeLabel, Icon: ModeIcon, enabled }) => (
+                        <button
+                          key={modeId}
+                          type="button"
+                          title={enabled ? modeLabel : `${modeLabel} snapshot not loaded yet`}
+                          onClick={() => {
+                            if (!enabled) return;
+                            setLinkedinMode(modeId);
+                            setSelected(null);
+                            setCompanySelected(null);
+                            setView("map");
+                            setStatsView("summary");
+                          }}
+                          className={`${TOOLBAR_TAB} ${
+                            linkedinMode === modeId
+                              ? TOOLBAR_TAB_ACTIVE
+                              : enabled ? TOOLBAR_TAB_AVAILABLE : TOOLBAR_TAB_DISABLED
+                          }`}
+                        >
+                          <ModeIcon className="h-3.5 w-3.5 shrink-0" />
+                          <span>{modeLabel}</span>
+                        </button>
+                      ))}
                     </div>
                   )}
                   {showCompanyViews && (
-                    <div className="flex items-center gap-2">
-                      <div className="shrink-0 text-[11px] font-semibold uppercase tracking-wide text-white/35">
-                        View
-                      </div>
-                      <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
-                        <button
-                          type="button"
-                          onClick={() => setView(view === "roster" ? "map" : "roster")}
-                          className={`${TOOLBAR_TAB} ${
-                            view === "roster" ? TOOLBAR_TAB_ACTIVE : TOOLBAR_TAB_AVAILABLE
-                          }`}
-                        >
-                          <List className="h-3.5 w-3.5" />
-                          Roster
-                        </button>
-                      </div>
+                    <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
+                      <button
+                        type="button"
+                        onClick={() => setView(view === "roster" ? "map" : "roster")}
+                        className={`${TOOLBAR_TAB} ${
+                          view === "roster" ? TOOLBAR_TAB_ACTIVE : TOOLBAR_TAB_AVAILABLE
+                        }`}
+                      >
+                        <List className="h-3.5 w-3.5" />
+                        Roster
+                      </button>
                     </div>
                   )}
                 </div>

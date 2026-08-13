@@ -6,6 +6,7 @@ import type {
   ScrapeResult,
   SocialSourcePlatform,
 } from "@/lib/types";
+import { parsePosition } from "@/lib/position";
 import type { TikTokResult, TikTokVideo } from "@/lib/tiktokTypes";
 import type { SpotifyTasteResult, SpotifyTrack } from "@/lib/spotifyTypes";
 import type { CompanyResult } from "@/lib/companyTypes";
@@ -391,6 +392,10 @@ export interface AnalyticsPersonRow {
   fullName?: string;
   profilePicUrl?: string;
   position?: string;
+  /** Job title parsed from `position` when possible. */
+  title?: string;
+  /** Company parsed from `position` (`@` / `at` / comma). */
+  company?: string;
   comments: number;
   reactions: number;
   metricLabel: string;
@@ -436,6 +441,9 @@ export interface SocialAnalyticsOverview {
   commentSeries: number[];
   hasDatedEvents: boolean;
   topEngagers: AnalyticsPersonRow[];
+  /** People whose first interaction falls in the selected range (newest first). */
+  newPeople: AnalyticsPersonRow[];
+  /** @deprecated use newPeople */
   newProfiles: AnalyticsPersonRow[];
   topPosts: AnalyticsPostRow[];
   reactionMix: AnalyticsBreakdownRow[];
@@ -475,6 +483,26 @@ function formatPersonMetric(comments: number, reactions: number): string {
   if (reactions > 0)
     parts.push(`${reactions} reaction${reactions === 1 ? "" : "s"}`);
   return parts.join(" · ") || "Active";
+}
+
+function toPersonRow(
+  node: GraphNode,
+  comments: number,
+  reactions: number,
+): AnalyticsPersonRow {
+  const parsed = parsePosition(node.position);
+  return {
+    username: node.label || node.id,
+    fullName: node.fullName,
+    profilePicUrl: node.profilePicUrl,
+    position: node.position,
+    title: parsed.title,
+    company: parsed.company,
+    comments,
+    reactions,
+    metricLabel: formatPersonMetric(comments, reactions),
+    value: comments + reactions,
+  };
 }
 
 /** Soft graph-presence rows (followers/tags) — not real comment events. */
@@ -744,35 +772,17 @@ export function computeSocialAnalytics(
         b.comments - a.comments,
     )
     .slice(0, 12)
-    .map(({ node, comments: c, reactions: r }) => ({
-      username: node.label || node.id,
-      fullName: node.fullName,
-      profilePicUrl: node.profilePicUrl,
-      position: node.position,
-      comments: c,
-      reactions: r,
-      metricLabel: formatPersonMetric(c, r),
-      value: c + r,
-    }));
+    .map(({ node, comments: c, reactions: r }) => toPersonRow(node, c, r));
 
-  const newProfiles: AnalyticsPersonRow[] = [...engagerCounts.values()]
+  const newPeople: AnalyticsPersonRow[] = [...engagerCounts.values()]
     .filter(({ firstMs }) => {
       if (firstMs == null) return false;
       if (startMs == null) return true;
       return firstMs >= startMs;
     })
     .sort((a, b) => (b.firstMs ?? 0) - (a.firstMs ?? 0))
-    .slice(0, 12)
-    .map(({ node, comments: c, reactions: r }) => ({
-      username: node.label || node.id,
-      fullName: node.fullName,
-      profilePicUrl: node.profilePicUrl,
-      position: node.position,
-      comments: c,
-      reactions: r,
-      metricLabel: formatPersonMetric(c, r),
-      value: c + r,
-    }));
+    .slice(0, 40)
+    .map(({ node, comments: c, reactions: r }) => toPersonRow(node, c, r));
 
   const topPosts: AnalyticsPostRow[] = [...postStats.entries()]
     .map(([id, stats]) => {
@@ -840,7 +850,8 @@ export function computeSocialAnalytics(
       commentEvents.length > 0 ||
       posts.some((p) => parseEventMs(p.postedAt, now) != null),
     topEngagers,
-    newProfiles,
+    newPeople,
+    newProfiles: newPeople,
     topPosts,
     reactionMix,
     hasPostMetrics,

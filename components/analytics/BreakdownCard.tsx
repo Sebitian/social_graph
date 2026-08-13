@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { Search, X } from "lucide-react";
 
 export interface BreakdownRow {
   id: string;
@@ -19,6 +20,9 @@ export interface BreakdownTab {
   rows: BreakdownRow[];
   empty?: string;
   valueHeader?: string;
+  /** Extra controls shown under the tab header (filters, etc.). */
+  toolbar?: ReactNode;
+  searchPlaceholder?: string;
 }
 
 interface Props {
@@ -29,6 +33,58 @@ interface Props {
   empty?: string;
   valueHeader?: string;
   className?: string;
+  searchable?: boolean;
+  searchPlaceholder?: string;
+}
+
+function normalizeSearch(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+function rowMatches(row: BreakdownRow, query: string): boolean {
+  const needle = normalizeSearch(query.trim());
+  if (!needle) return true;
+  const haystack = normalizeSearch(
+    [row.label, row.subtitle, row.id, row.valueLabel]
+      .filter(Boolean)
+      .join(" "),
+  );
+  return needle.split(/\s+/).every((token) => haystack.includes(token));
+}
+
+function ListSearch({
+  value,
+  onChange,
+  placeholder,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+}) {
+  return (
+    <label className="relative block">
+      <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-white/35" />
+      <input
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        placeholder={placeholder}
+        className="h-8 w-full rounded-lg border border-white/10 bg-black/40 py-0 pl-8 pr-8 text-[11px] text-white outline-none transition placeholder:text-white/35 focus:border-white/25 focus:bg-black/60"
+      />
+      {value ? (
+        <button
+          type="button"
+          onClick={() => onChange("")}
+          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-white/40 hover:text-white/80"
+          aria-label="Clear search"
+        >
+          <X className="h-3.5 w-3.5" />
+        </button>
+      ) : null}
+    </label>
+  );
 }
 
 function RowList({
@@ -108,9 +164,30 @@ export default function BreakdownCard({
   empty,
   valueHeader,
   className = "",
+  searchable = false,
+  searchPlaceholder = "Search…",
 }: Props) {
   const [tabId, setTabId] = useState(tabs?.[0]?.id ?? "");
+  const [query, setQuery] = useState("");
   const activeTab = tabs?.find((t) => t.id === tabId) ?? tabs?.[0];
+
+  useEffect(() => {
+    setQuery("");
+  }, [tabId]);
+
+  const sourceRows = activeTab ? activeTab.rows : (rows ?? []);
+  const visibleRows = useMemo(
+    () =>
+      searchable
+        ? sourceRows.filter((row) => rowMatches(row, query))
+        : sourceRows,
+    [searchable, sourceRows, query],
+  );
+  const emptyLabel = query.trim()
+    ? "No matches"
+    : (activeTab?.empty ?? empty);
+  const placeholder = activeTab?.searchPlaceholder ?? searchPlaceholder;
+  const showTools = searchable || Boolean(activeTab?.toolbar);
 
   return (
     <section
@@ -155,14 +232,27 @@ export default function BreakdownCard({
         </header>
       ) : null}
 
-      {activeTab ? (
+      {showTools ? (
+        <div className="flex flex-col gap-2 border-b border-white/10 px-3 py-2">
+          {searchable ? (
+            <ListSearch
+              value={query}
+              onChange={setQuery}
+              placeholder={placeholder}
+            />
+          ) : null}
+          {activeTab?.toolbar}
+        </div>
+      ) : null}
+
+      {activeTab || rows ? (
         <RowList
-          rows={activeTab.rows}
-          empty={activeTab.empty}
-          valueHeader={activeTab.valueHeader ?? valueHeader}
+          rows={visibleRows}
+          empty={emptyLabel}
+          valueHeader={activeTab?.valueHeader ?? valueHeader}
         />
       ) : (
-        <RowList rows={rows ?? []} empty={empty} valueHeader={valueHeader} />
+        <RowList rows={[]} empty={empty} valueHeader={valueHeader} />
       )}
     </section>
   );

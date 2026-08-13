@@ -2,33 +2,74 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { Loader2, MessageCircle, Send } from "lucide-react";
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { ArrowUp, Check, Copy, Loader2, MessageCircle, User } from "lucide-react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import ChatDataTable, {
+  tableFromToolPart,
+} from "@/components/chat/ChatDataTable";
+import ChatMarkdown from "@/components/chat/ChatMarkdown";
+import ChatTimeChart from "@/components/chat/ChatTimeChart";
 import {
   CompanyIcon,
   FacebookIcon,
   InstagramIcon,
   LinkedInIcon,
+  TikTokIcon,
 } from "@/components/PlatformIcons";
-import type { ChatSourceId, ChatSourceInfo } from "@/lib/chat/types";
+import { chartFromToolPart } from "@/lib/chat/chart";
+import { displayPartsFromMessage } from "@/lib/chat/display";
+import type { ChatChart, ChatSourceId, ChatSourceInfo, ChatTable } from "@/lib/chat/types";
 import type { ScrapeBudget } from "@/lib/scrapeBudget";
 
 const SOURCE_ICON: Record<
-  ChatSourceId,
+  Exclude<ChatSourceId, "company">,
   typeof LinkedInIcon
 > = {
   linkedin: LinkedInIcon,
   instagram: InstagramIcon,
   facebook: FacebookIcon,
-  company: CompanyIcon,
+  tiktok: TikTokIcon,
 };
+
+const LINKEDIN_CLUSTER_IDS: ChatSourceId[] = ["linkedin", "company"];
+
+function iconBtnClass(selected: boolean): string {
+  return `inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition ${
+    selected
+      ? "border-white/20 bg-white/15 text-white"
+      : "border-white/10 bg-transparent text-white/40 hover:border-white/20 hover:text-white/70"
+  }`;
+}
 
 function suggestions(sources: ChatSourceInfo[]): string[] {
   const ids = new Set(sources.map((source) => source.id));
   const prompts: string[] = [];
+  const viewNames = [
+    ids.has("instagram") ? "Instagram" : null,
+    ids.has("facebook") ? "Facebook" : null,
+    ids.has("tiktok") ? "TikTok" : null,
+  ].filter((name): name is string => Boolean(name));
+
+  if (viewNames.length >= 2) {
+    prompts.push(
+      `Compare ${viewNames[0]} vs ${viewNames[1]} views this week`,
+    );
+  }
+  if (ids.has("tiktok")) {
+    prompts.push("Show TikTok plays over the past week");
+  } else if (ids.has("instagram")) {
+    prompts.push("Show Instagram plays over the past week");
+  } else if (ids.has("facebook")) {
+    prompts.push("Show Facebook views over the past week");
+  }
+  if (ids.has("instagram") || ids.has("facebook") || ids.has("linkedin")) {
+    prompts.push("Top posts this month as a table");
+  }
+  if (ids.has("tiktok") && !prompts.includes("Top posts this month as a table")) {
+    prompts.push("Top TikTok videos by plays");
+  }
   if (ids.has("linkedin") || ids.has("instagram") || ids.has("facebook")) {
     prompts.push("Who is my top engager?");
-    prompts.push("What was my last post?");
   }
   if (ids.has("company")) {
     const company = sources.find((source) => source.id === "company");
@@ -38,37 +79,102 @@ function suggestions(sources: ChatSourceInfo[]): string[] {
         : "Who is the company CEO?",
     );
   }
-  return prompts.slice(0, 4);
+  if (
+    (ids.has("linkedin") || ids.has("instagram") || ids.has("facebook")) &&
+    prompts.length < 4
+  ) {
+    prompts.push("Show engagement over time");
+  }
+  return [...new Set(prompts)].slice(0, 4);
 }
 
-function MessageBody({
-  text,
-  onSelectUsername,
-}: {
-  text: string;
-  onSelectUsername?: (username: string) => void;
-}) {
-  const chunks = text.split(/(@[A-Za-z0-9._]+)/g);
-  return (
-    <span className="whitespace-pre-wrap break-words">
-      {chunks.map((chunk, index) => {
-        if (chunk.startsWith("@") && chunk.length > 1 && onSelectUsername) {
-          const username = chunk.slice(1);
-          return (
-            <button
-              key={`${chunk}-${index}`}
-              type="button"
-              className="font-medium text-white underline decoration-white/30 underline-offset-2 hover:decoration-white"
-              onClick={() => onSelectUsername(username)}
-            >
-              {chunk}
-            </button>
-          );
-        }
-        return <span key={`${chunk}-${index}`}>{chunk}</span>;
-      })}
-    </span>
+function isPresentTablePart(part: { type: string }): part is {
+  type: "tool-present_table";
+  toolCallId: string;
+  state: string;
+  input?: unknown;
+  output?: unknown;
+} {
+  return part.type === "tool-present_table";
+}
+
+function isPresentChartPart(part: { type: string }): part is {
+  type: "tool-present_chart";
+  toolCallId: string;
+  state: string;
+  input?: unknown;
+  output?: unknown;
+} {
+  return part.type === "tool-present_chart";
+}
+
+function chartToMarkdown(chart: ChatChart): string {
+  const lines = [chart.title ? `**${chart.title}**` : "**Chart**"];
+  for (const series of chart.series) {
+    const tail = series.points
+      .slice(-6)
+      .map((p) => `${p.label}: ${p.v}`)
+      .join(", ");
+    lines.push(`${series.label} — ${tail}`);
+  }
+  if (chart.caption) lines.push(chart.caption);
+  return lines.join("\n");
+}
+
+function tableToMarkdown(table: ChatTable): string {
+  const header = `| ${table.columns.map((col) => col.label).join(" | ")} |`;
+  const divider = `| ${table.columns.map(() => "---").join(" | ")} |`;
+  const rows = table.rows.map((row) =>
+    `| ${table.columns
+      .map((col) => {
+        const value = row[col.key];
+        return value == null ? "" : String(value).replace(/\|/g, "\\|");
+      })
+      .join(" | ")} |`,
   );
+  return [
+    table.title ? `**${table.title}**` : null,
+    header,
+    divider,
+    ...rows,
+    table.caption || null,
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+function formatChatTranscript(
+  messages: Array<{
+    role: string;
+    parts: Array<{ type: string; text?: string }>;
+  }>,
+): string {
+  const blocks: string[] = [];
+  for (const message of messages) {
+    const chunks: string[] = [];
+    const display = displayPartsFromMessage(
+      message.parts.map((part) => {
+        if (part.type === "text") return { type: "text", text: part.text };
+        if (isPresentTablePart(part)) {
+          return { type: "table", table: tableFromToolPart(part) };
+        }
+        if (isPresentChartPart(part)) {
+          return { type: "chart", chart: chartFromToolPart(part) };
+        }
+        return { type: part.type };
+      }),
+    );
+    for (const part of display) {
+      if (part.type === "text") chunks.push(part.text);
+      if (part.type === "table") chunks.push(tableToMarkdown(part.table));
+      if (part.type === "chart") chunks.push(chartToMarkdown(part.chart));
+    }
+    const body = chunks.join("\n\n").trim();
+    if (!body) continue;
+    const who = message.role === "user" ? "You" : "Netgraph";
+    blocks.push(`**${who}**\n${body}`);
+  }
+  return blocks.join("\n\n---\n\n");
 }
 
 interface Props {
@@ -85,6 +191,109 @@ type QuotaState = {
   enabled: boolean;
 };
 
+function LinkedInSourceCluster({
+  person,
+  company,
+  activeIds,
+  busy,
+  onToggleParent,
+  onToggleChild,
+}: {
+  person?: ChatSourceInfo;
+  company?: ChatSourceInfo;
+  activeIds: ChatSourceId[];
+  busy: boolean;
+  onToggleParent: () => void;
+  onToggleChild: (id: ChatSourceId) => void;
+}) {
+  const personOn = Boolean(person && activeIds.includes("linkedin"));
+  const companyOn = Boolean(company && activeIds.includes("company"));
+  const parentOn = personOn || companyOn;
+  const lastCluster =
+    parentOn &&
+    activeIds.every((id) => id === "linkedin" || id === "company");
+  const lastPerson = personOn && activeIds.length === 1;
+  const lastCompany = companyOn && activeIds.length === 1;
+
+  return (
+    <div className="inline-flex shrink-0 items-center">
+      <button
+        type="button"
+        aria-pressed={parentOn}
+        aria-label="LinkedIn"
+        disabled={busy}
+        title={
+          lastCluster
+            ? "Keep at least one account selected"
+            : parentOn
+              ? "Remove LinkedIn"
+              : "Add LinkedIn"
+        }
+        onClick={() => {
+          if (!lastCluster) onToggleParent();
+        }}
+        className={iconBtnClass(parentOn)}
+      >
+        <LinkedInIcon className="h-3.5 w-3.5" />
+      </button>
+      {person ? (
+        <>
+          <span
+            className={`h-px w-2.5 shrink-0 ${
+              parentOn ? "bg-white/35" : "bg-white/15"
+            }`}
+            aria-hidden
+          />
+          <button
+            type="button"
+            aria-pressed={personOn}
+            aria-label="Person"
+            disabled={busy}
+            title={
+              lastPerson
+                ? "Keep at least one account selected"
+                : person.subtitle || person.title
+            }
+            onClick={() => {
+              if (!lastPerson) onToggleChild("linkedin");
+            }}
+            className={iconBtnClass(personOn)}
+          >
+            <User className="h-3.5 w-3.5" />
+          </button>
+        </>
+      ) : null}
+      {company ? (
+        <>
+          <span
+            className={`h-px w-2.5 shrink-0 ${
+              parentOn ? "bg-white/35" : "bg-white/15"
+            }`}
+            aria-hidden
+          />
+          <button
+            type="button"
+            aria-pressed={companyOn}
+            aria-label="Company"
+            disabled={busy}
+            title={
+              lastCompany
+                ? "Keep at least one account selected"
+                : company.title
+            }
+            onClick={() => {
+              if (!lastCompany) onToggleChild("company");
+            }}
+            className={iconBtnClass(companyOn)}
+          >
+            <CompanyIcon className="h-3.5 w-3.5" />
+          </button>
+        </>
+      ) : null}
+    </div>
+  );
+}
+
 export default function ChatPanel({
   handle,
   pinned,
@@ -94,6 +303,24 @@ export default function ChatPanel({
 }: Props) {
   const [input, setInput] = useState("");
   const [quota, setQuota] = useState<QuotaState | null>(null);
+  const [enabledIds, setEnabledIds] = useState<ChatSourceId[]>(() =>
+    sources.map((source) => source.id),
+  );
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [copied, setCopied] = useState(false);
+  const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const activeIds = useMemo(() => {
+    const availableIds = sources.map((source) => source.id);
+    const resolved = enabledIds.filter((id) => availableIds.includes(id));
+    return resolved.length > 0 ? resolved : availableIds;
+  }, [enabledIds, sources]);
+  const enabledSources = sources.filter((source) => activeIds.includes(source.id));
+
+  const resizeInput = (node: HTMLTextAreaElement) => {
+    node.style.height = "auto";
+    node.style.height = `${Math.min(node.scrollHeight, 160)}px`;
+  };
 
   const applyQuotaHeaders = (response: Response) => {
     const remaining = response.headers.get("x-chat-remaining");
@@ -132,6 +359,13 @@ export default function ChatPanel({
     };
   }, []);
 
+  useEffect(
+    () => () => {
+      if (copiedTimer.current) clearTimeout(copiedTimer.current);
+    },
+    [],
+  );
+
   const transport = useMemo(
     () =>
       new DefaultChatTransport({
@@ -153,6 +387,7 @@ export default function ChatPanel({
         body: () => ({
           handle,
           pinned,
+          enabledSources: activeIds,
           budget: {
             postLimit: budget.postLimit,
             commentsPerPost: budget.commentsPerPost,
@@ -162,7 +397,7 @@ export default function ChatPanel({
           },
         }),
       }),
-    [budget, handle, pinned],
+    [activeIds, budget, handle, pinned],
   );
 
   const { messages, sendMessage, status, error, clearError } = useChat({
@@ -171,11 +406,49 @@ export default function ChatPanel({
   });
 
   const busy = status === "submitted" || status === "streaming";
-  const prompts = suggestions(sources);
-  const canChat = sources.length > 0;
+  const prompts = suggestions(enabledSources);
+  const canChat = enabledSources.length > 0;
   const quotaBlocked =
     quota?.enabled === true && quota.remaining <= 0;
   const canSend = canChat && !quotaBlocked;
+
+  const toggleSource = (id: ChatSourceId) => {
+    setEnabledIds((prev) => {
+      const available = sources.map((source) => source.id);
+      const current = prev.filter((item) => available.includes(item));
+      const base = current.length > 0 ? current : available;
+      if (base.includes(id)) {
+        if (base.length === 1) return base;
+        return base.filter((item) => item !== id);
+      }
+      return [...base, id];
+    });
+  };
+
+  const toggleLinkedInCluster = () => {
+    setEnabledIds((prev) => {
+      const available = sources.map((source) => source.id);
+      const current = prev.filter((item) => available.includes(item));
+      const base = current.length > 0 ? current : available;
+      const clusterIds = LINKEDIN_CLUSTER_IDS.filter((id) =>
+        available.includes(id),
+      );
+      if (clusterIds.length === 0) return base;
+      const clusterOn = clusterIds.some((id) => base.includes(id));
+      const others = base.filter((id) => !clusterIds.includes(id));
+      if (clusterOn) {
+        if (others.length === 0) return base;
+        return others;
+      }
+      return [...base, ...clusterIds.filter((id) => !base.includes(id))];
+    });
+  };
+
+  const linkedinPerson = sources.find((source) => source.id === "linkedin");
+  const linkedinCompany = sources.find((source) => source.id === "company");
+  const platformSources = sources.filter(
+    (source) => source.id !== "linkedin" && source.id !== "company",
+  );
 
   const submit = (text: string) => {
     const next = text.trim();
@@ -183,6 +456,11 @@ export default function ChatPanel({
     clearError();
     void sendMessage({ text: next });
     setInput("");
+    requestAnimationFrame(() => {
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto";
+      }
+    });
   };
 
   const onSubmit = (event: FormEvent) => {
@@ -190,46 +468,58 @@ export default function ChatPanel({
     submit(input);
   };
 
+  const copyChat = async () => {
+    const text = formatChatTranscript(messages);
+    if (!text) return;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      if (copiedTimer.current) clearTimeout(copiedTimer.current);
+      copiedTimer.current = setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* clipboard may be blocked */
+    }
+  };
+
   return (
     <div className="flex min-h-[70dvh] flex-col rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
       <div className="border-b border-white/10 px-4 py-3">
-        <div className="flex items-center gap-2 text-sm font-semibold text-white/85">
-          <MessageCircle className="h-4 w-4" /> Chat
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 text-sm font-semibold text-white/85">
+              <MessageCircle className="h-4 w-4" /> Chat
+            </div>
+            <p className="mt-1 text-xs text-white/40">
+              Frozen snapshots — not live scraping.
+              {quota?.enabled
+                ? ` ${quota.remaining} of ${quota.limit} demo questions left today.`
+                : null}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => void copyChat()}
+            disabled={messages.length === 0}
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/12 bg-black/25 px-2.5 py-1 text-[11px] font-medium text-white/70 transition hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
+            aria-label={copied ? "Copied chat" : "Copy chat"}
+            title={copied ? "Copied" : "Copy entire chat"}
+          >
+            {copied ? (
+              <Check className="h-3.5 w-3.5 text-emerald-400" />
+            ) : (
+              <Copy className="h-3.5 w-3.5" />
+            )}
+            {copied ? "Copied" : "Copy"}
+          </button>
         </div>
-        <p className="mt-1 text-xs text-white/40">
-          Frozen snapshots — not live scraping.
-          {quota?.enabled
-            ? ` ${quota.remaining} of ${quota.limit} demo questions left today.`
-            : null}
-        </p>
-        {sources.length > 0 ? (
-          <ul className="mt-2.5 flex flex-wrap gap-1.5">
-            {sources.map((source) => {
-              const Icon = SOURCE_ICON[source.id];
-              return (
-                <li
-                  key={source.id}
-                  className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-white/12 bg-black/30 px-2.5 py-1 text-[11px] text-white/75"
-                >
-                  <Icon className="h-3 w-3 shrink-0 text-white/70" />
-                  <span className="truncate">
-                    <span className="font-medium text-white/90">
-                      {source.label}
-                    </span>
-                    <span className="text-white/45"> · {source.title}</span>
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
+        {sources.length === 0 ? (
           <p className="mt-2 text-xs text-white/45">
             No Chat snapshots are loaded on this page.
           </p>
-        )}
+        ) : null}
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-4 py-3">
+      <div className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-4 py-4">
         {messages.length === 0 && canSend && (
           <div className="flex flex-wrap gap-2">
             {prompts.map((prompt) => (
@@ -246,26 +536,73 @@ export default function ChatPanel({
         )}
 
         {messages.map((message) => {
-          const text = message.parts
-            .filter((part) => part.type === "text")
-            .map((part) => part.text)
-            .join("");
-          if (!text && message.role === "assistant") {
-            return null;
-          }
+          const display = displayPartsFromMessage(
+            message.parts.map((part) => {
+              if (part.type === "text") return { type: "text", text: part.text };
+              if (isPresentTablePart(part)) {
+                return {
+                  type: "table",
+                  toolCallId: part.toolCallId,
+                  table: tableFromToolPart(part),
+                };
+              }
+              if (isPresentChartPart(part)) {
+                return {
+                  type: "chart",
+                  toolCallId: part.toolCallId,
+                  chart: chartFromToolPart(part),
+                };
+              }
+              return { type: part.type };
+            }),
+          );
+          if (display.length === 0) return null;
+          const isUser = message.role === "user";
           return (
             <div
               key={message.id}
-              className={`max-w-[92%] rounded-2xl px-3 py-2 text-sm leading-relaxed ${
-                message.role === "user"
-                  ? "ml-auto bg-white/15 text-white"
-                  : "bg-black/30 text-white/80"
-              }`}
+              className={
+                isUser
+                  ? "ml-auto max-w-[min(100%,32rem)] rounded-[22px] bg-white/[0.12] px-4 py-2.5 text-[15px] leading-relaxed text-white"
+                  : "w-full max-w-none text-[15px] leading-7 text-white/85"
+              }
             >
-              {message.role === "user" ? (
-                <span className="whitespace-pre-wrap break-words">{text}</span>
+              {isUser ? (
+                <span className="whitespace-pre-wrap break-words">
+                  {display
+                    .filter((part) => part.type === "text")
+                    .map((part) => part.text)
+                    .join("")}
+                </span>
               ) : (
-                <MessageBody text={text} onSelectUsername={onSelectUsername} />
+                <div className="min-w-0 space-y-3">
+                  {display.map((part, index) => {
+                    if (part.type === "text") {
+                      return (
+                        <ChatMarkdown
+                          key={`${message.id}-text-${index}`}
+                          text={part.text}
+                          onSelectUsername={onSelectUsername}
+                        />
+                      );
+                    }
+                    if (part.type === "table") {
+                      return (
+                        <ChatDataTable
+                          key={`${message.id}-table-${part.key}`}
+                          table={part.table}
+                          onSelectUsername={onSelectUsername}
+                        />
+                      );
+                    }
+                    return (
+                      <ChatTimeChart
+                        key={`${message.id}-chart-${part.key}`}
+                        chart={part.chart}
+                      />
+                    );
+                  })}
+                </div>
               )}
             </div>
           );
@@ -292,38 +629,86 @@ export default function ChatPanel({
         )}
       </div>
 
-      <form
-        onSubmit={onSubmit}
-        className="flex items-end gap-2 border-t border-white/10 p-3"
-      >
-        <textarea
-          value={input}
-          onChange={(event) => setInput(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" && !event.shiftKey) {
-              event.preventDefault();
-              submit(input);
+      <form onSubmit={onSubmit} className="p-3 pt-1">
+        <div className="rounded-[28px] border border-white/10 bg-[#2c2c32] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] focus-within:border-white/20">
+          <textarea
+            ref={textareaRef}
+            value={input}
+            onChange={(event) => {
+              setInput(event.target.value);
+              resizeInput(event.currentTarget);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                submit(input);
+              }
+            }}
+            rows={1}
+            disabled={busy || !canSend}
+            placeholder={
+              quotaBlocked
+                ? "Demo question limit reached for today"
+                : canChat
+                  ? "Ask anything"
+                  : "No snapshots loaded for Chat"
             }
-          }}
-          rows={2}
-          disabled={busy || !canSend}
-          placeholder={
-            quotaBlocked
-              ? "Demo question limit reached for today"
-              : canChat
-                ? "Ask about engagers, posts, or the company roster…"
-                : "No snapshots loaded for Chat"
-          }
-          className="min-h-[44px] flex-1 resize-none rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/25 focus:outline-none"
-        />
-        <button
-          type="submit"
-          disabled={busy || !canSend || !input.trim()}
-          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/15 text-white transition hover:bg-white/25 disabled:opacity-35"
-          aria-label="Send"
-        >
-          <Send className="h-4 w-4" />
-        </button>
+            className="max-h-40 min-h-[44px] w-full resize-none bg-transparent px-4 pb-1 pt-3.5 text-sm leading-relaxed text-white placeholder:text-white/35 focus:outline-none disabled:opacity-50"
+          />
+          <div className="flex items-end gap-2 px-2.5 pb-2.5">
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5">
+              {linkedinPerson || linkedinCompany ? (
+                <LinkedInSourceCluster
+                  person={linkedinPerson}
+                  company={linkedinCompany}
+                  activeIds={activeIds}
+                  busy={busy}
+                  onToggleParent={toggleLinkedInCluster}
+                  onToggleChild={toggleSource}
+                />
+              ) : null}
+              {platformSources.map((source) => {
+                if (source.id === "company") return null;
+                const Icon = SOURCE_ICON[source.id];
+                const selected = activeIds.includes(source.id);
+                const lastSelected = selected && activeIds.length === 1;
+                const name = `${source.label} · ${source.title}`;
+                return (
+                  <button
+                    key={source.id}
+                    type="button"
+                    aria-pressed={selected}
+                    aria-label={
+                      lastSelected
+                        ? "Keep at least one account selected"
+                        : `${selected ? "Remove" : "Add"} ${name}`
+                    }
+                    disabled={busy}
+                    title={
+                      lastSelected
+                        ? "Keep at least one account selected"
+                        : name
+                    }
+                    onClick={() => {
+                      if (!lastSelected) toggleSource(source.id);
+                    }}
+                    className={iconBtnClass(selected)}
+                  >
+                    <Icon className="h-3.5 w-3.5" />
+                  </button>
+                );
+              })}
+            </div>
+            <button
+              type="submit"
+              disabled={busy || !canSend || !input.trim()}
+              className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-black transition hover:bg-white/90 disabled:bg-white/15 disabled:text-white/35"
+              aria-label="Send"
+            >
+              <ArrowUp className="h-4 w-4" strokeWidth={2.5} />
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   );

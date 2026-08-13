@@ -2,16 +2,24 @@ import { getCached } from "@/lib/cache";
 import type { CompanyResult } from "@/lib/companyTypes";
 import { COMPANION_SNAPSHOTS } from "@/lib/paths";
 import { DEFAULT_SCRAPE_BUDGET, type ScrapeBudget } from "@/lib/scrapeBudget";
-import { readCompanySnapshot, readSnapshot } from "@/lib/snapshot";
+import {
+  readCompanySnapshot,
+  readSnapshot,
+  readTikTokSnapshot,
+} from "@/lib/snapshot";
+import type { TikTokResult } from "@/lib/tiktokTypes";
 import type { ScrapeResult, SocialSourcePlatform } from "@/lib/types";
-import type {
-  ChatSocialPlatform,
-  ChatSourceInfo,
+import {
+  isChatSourceId,
+  type ChatSocialPlatform,
+  type ChatSourceId,
+  type ChatSourceInfo,
 } from "./types";
 
 export type ChatBundle = {
   social: Partial<Record<ChatSocialPlatform, ScrapeResult>>;
   company: CompanyResult | null;
+  tiktok: TikTokResult | null;
   sources: ChatSourceInfo[];
 };
 
@@ -62,6 +70,16 @@ function companySource(data: CompanyResult, snapshotHandle: string): ChatSourceI
   };
 }
 
+function tiktokSource(data: TikTokResult, snapshotHandle: string): ChatSourceInfo {
+  return {
+    id: "tiktok",
+    label: "TikTok",
+    title: data.profile.displayName || data.profile.username,
+    handle: snapshotHandle,
+    subtitle: `@${data.profile.username} · Videos & hashtags`,
+  };
+}
+
 function addSocial(
   social: ChatBundle["social"],
   sources: ChatSourceInfo[],
@@ -78,7 +96,7 @@ function addSocial(
 
 /**
  * Load every Chat-capable snapshot for this graph: LinkedIn person,
- * Instagram/Facebook companions, and the LinkedIn company roster.
+ * Instagram/Facebook companions, LinkedIn company roster, and TikTok.
  */
 export async function loadChatContext(input: {
   handle: string;
@@ -121,6 +139,20 @@ export async function loadChatContext(input: {
     sources.push(companySource(company, companyHandle));
   }
 
+  const tiktokHandle = COMPANION_SNAPSHOTS.tiktok;
+  const tiktok =
+    (await readTikTokSnapshot(handle)) ??
+    (input.pinned ? await readTikTokSnapshot(tiktokHandle) : null);
+
+  if (tiktok) {
+    sources.push(
+      tiktokSource(
+        tiktok,
+        tiktok.profile.username || tiktokHandle,
+      ),
+    );
+  }
+
   if (sources.length === 0) {
     return {
       ok: false,
@@ -132,6 +164,42 @@ export async function loadChatContext(input: {
 
   return {
     ok: true,
-    bundle: { social, company, sources },
+    bundle: { social, company, tiktok, sources },
+  };
+}
+
+export function parseEnabledSourceIds(
+  value: unknown,
+  available: ChatSourceInfo[],
+): ChatSourceId[] {
+  const allow = new Set(available.map((source) => source.id));
+  const fallback = available.map((source) => source.id);
+  if (!Array.isArray(value)) return fallback;
+  const picked = value.filter(
+    (id): id is ChatSourceId => isChatSourceId(id) && allow.has(id),
+  );
+  return picked.length > 0 ? picked : fallback;
+}
+
+export function restrictChatBundle(
+  bundle: ChatBundle,
+  enabled: ChatSourceId[],
+): ChatBundle {
+  const allow = new Set(enabled);
+  const social: ChatBundle["social"] = {};
+  if (allow.has("linkedin") && bundle.social.linkedin) {
+    social.linkedin = bundle.social.linkedin;
+  }
+  if (allow.has("instagram") && bundle.social.instagram) {
+    social.instagram = bundle.social.instagram;
+  }
+  if (allow.has("facebook") && bundle.social.facebook) {
+    social.facebook = bundle.social.facebook;
+  }
+  return {
+    social,
+    company: allow.has("company") ? bundle.company : null,
+    tiktok: allow.has("tiktok") ? bundle.tiktok : null,
+    sources: bundle.sources.filter((source) => allow.has(source.id)),
   };
 }

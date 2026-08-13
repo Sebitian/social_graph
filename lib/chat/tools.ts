@@ -1,15 +1,20 @@
-import { tool } from "ai";
+import { tool, type ToolSet } from "ai";
 import { z } from "zod";
 import {
   computeCompanyAnalytics,
   computeSocialAnalytics,
+  computeTikTokAnalytics,
+  inRange,
   parseEventMs,
   type AnalyticsRangeId,
 } from "@/lib/analytics";
 import type { CompanyEmployee, CompanyResult } from "@/lib/companyTypes";
 import { compareByCloseness, engagementVolume } from "@/lib/graphUtils";
+import type { TikTokResult, TikTokVideo } from "@/lib/tiktokTypes";
 import type { GraphNode, PostComment, ProfilePost, ScrapeResult } from "@/lib/types";
 import type { ChatBundle } from "./loadContext";
+import { parseChatChart } from "./chart";
+import { parseChatTable } from "./table";
 import type { ChatSocialPlatform } from "./types";
 
 const MAX_PEOPLE = 15;
@@ -192,6 +197,9 @@ export function queryOverview(
       reactions: overview.reactions,
       activeEngagers: overview.activeEngagers,
       postsTouched: overview.postsTouched,
+      likes: overview.postLikes || null,
+      plays: overview.postPlays || null,
+      shares: overview.postShares || null,
     },
     graphShown: data.stats.shown,
     topEngagers: overview.topEngagers.slice(0, MAX_PEOPLE).map((row) => ({
@@ -206,7 +214,31 @@ export function queryOverview(
       label: row.label,
       comments: row.comments,
       reactions: row.reactions,
+      plays: row.plays ?? null,
+      likes: row.reactions,
     })),
+    series: {
+      comments: overview.commentsSeries.map((p) => ({
+        t: p.t,
+        label: p.label,
+        v: p.v,
+      })),
+      reactions: overview.reactionsSeries.map((p) => ({
+        t: p.t,
+        label: p.label,
+        v: p.v,
+      })),
+      engagers: overview.engagersSeries.map((p) => ({
+        t: p.t,
+        label: p.label,
+        v: p.v,
+      })),
+      plays: overview.postPlaysSeries.map((p) => ({
+        t: p.t,
+        label: p.label,
+        v: p.v,
+      })),
+    },
   };
 }
 
@@ -229,6 +261,8 @@ export function queryPosts(data: ScrapeResult, limit = MAX_POSTS) {
     commentsInSnapshot: commentCountForPost(data, post),
     commentsCount: post.commentsCount ?? null,
     likesCount: post.likesCount ?? null,
+    plays: post.videoPlayCount ?? null,
+    sharesCount: post.sharesCount ?? null,
     isLatest: index === 0,
   }));
   return {
@@ -442,6 +476,133 @@ export function queryFindEmployee(data: CompanyResult, query: string) {
   };
 }
 
+function videoTime(video: TikTokVideo): number {
+  return parseEventMs(video.createTime) ?? 0;
+}
+
+function serializeTikTokVideo(video: TikTokVideo, index?: number) {
+  return {
+    id: video.id,
+    text: truncate(video.text, 180),
+    createdAt: video.createTime ?? null,
+    plays: video.playCount,
+    likes: video.diggCount,
+    comments: video.commentCount,
+    shares: video.shareCount,
+    collects: video.collectCount,
+    hashtags: video.hashtags.map((tag) => tag.name).slice(0, 8),
+    music: video.musicName ?? null,
+    url: video.url,
+    isLatest: index === 0,
+  };
+}
+
+function tiktokVideosInRange(
+  data: TikTokResult,
+  range: AnalyticsRangeId,
+): TikTokVideo[] {
+  if (range === "all") return data.videos;
+  const now = Date.now();
+  return data.videos.filter((video) =>
+    inRange(parseEventMs(video.createTime, now), range, now),
+  );
+}
+
+export function queryTikTokOverview(
+  data: TikTokResult,
+  range: AnalyticsRangeId = "all",
+) {
+  const overview = computeTikTokAnalytics(data, range);
+  const inPeriod = tiktokVideosInRange(data, range);
+  return {
+    source: "tiktok" as const,
+    profile: {
+      username: data.profile.username,
+      displayName: data.profile.displayName,
+      followers: data.profile.followerCount,
+      following: data.profile.followingCount,
+      hearts: data.profile.heartCount,
+      videoCount: data.profile.videoCount,
+      verified: data.profile.verified,
+      bio: truncate(data.profile.bio, 220),
+    },
+    range,
+    totals: {
+      plays: overview.plays,
+      likes: overview.likes,
+      shares: overview.shares,
+      comments: inPeriod.reduce((sum, video) => sum + video.commentCount, 0),
+      videosPosted: overview.videosPosted,
+    },
+    topVideos: overview.topVideos.slice(0, 8).map((row) => ({
+      id: row.id,
+      text: truncate(row.text, 120),
+      plays: row.playCount,
+      likes: row.diggCount,
+      url: row.url,
+    })),
+    topHashtags: overview.topHashtags.slice(0, 8).map((row) => ({
+      hashtag: row.label,
+      videos: row.weight,
+      plays: row.plays,
+    })),
+    series: {
+      plays: overview.playsSeries.map((p) => ({
+        t: p.t,
+        label: p.label,
+        v: p.v,
+      })),
+      likes: overview.likesSeries.map((p) => ({
+        t: p.t,
+        label: p.label,
+        v: p.v,
+      })),
+      shares: overview.sharesSeries.map((p) => ({
+        t: p.t,
+        label: p.label,
+        v: p.v,
+      })),
+    },
+  };
+}
+
+export function queryTikTokVideos(data: TikTokResult, limit = MAX_POSTS) {
+  const videos = [...data.videos]
+    .sort((a, b) => videoTime(b) - videoTime(a))
+    .slice(0, Math.min(limit, MAX_POSTS));
+  const mapped = videos.map((video, index) => serializeTikTokVideo(video, index));
+  return {
+    source: "tiktok" as const,
+    count: data.videos.length,
+    latest: mapped[0] ?? null,
+    videos: mapped,
+  };
+}
+
+export function queryTikTokHashtag(data: TikTokResult, query?: string) {
+  const needle = query ? normalize(query.replace(/^#/, "")) : "";
+  const rows = data.hashtags
+    .filter((tag) => {
+      if (!needle) return true;
+      return normalize(tag.label).includes(needle) || tag.id.toLowerCase() === needle;
+    })
+    .sort((a, b) => b.playCount - a.playCount || b.weight - a.weight)
+    .slice(0, MAX_POSTS)
+    .map((tag) => ({
+      hashtag: tag.label,
+      videos: tag.weight,
+      plays: tag.playCount,
+      likes: tag.diggCount,
+      videoIds: tag.videoIds.slice(0, 8),
+    }));
+  return {
+    source: "tiktok" as const,
+    query: query ?? null,
+    count: rows.length,
+    hashtags: rows,
+  };
+}
+
 function pickSocial(bundle: ChatBundle, source?: ChatSocialPlatform) {
   if (source) {
     const data = bundle.social[source];
@@ -463,160 +624,324 @@ function pickSocial(bundle: ChatBundle, source?: ChatSocialPlatform) {
   };
 }
 
-export function createChatTools(bundle: ChatBundle) {
+export function createChatTools(bundle: ChatBundle): ToolSet {
   const socialEnum = ["linkedin", "instagram", "facebook"] as const;
+  const loadedSocial = socialEnum.filter((id) => bundle.social[id]);
+  const hasSocial = loadedSocial.length > 0;
+  const sourceEnum = (
+    hasSocial ? loadedSocial : socialEnum
+  ) as [(typeof socialEnum)[number], ...(typeof socialEnum)[number][]];
   const sourceField = z
-    .enum(socialEnum)
+    .enum(sourceEnum)
     .optional()
     .describe(
-      "Which person-graph snapshot to query. Defaults to LinkedIn if loaded, else Instagram/Facebook.",
+      "Which selected person-graph snapshot to query. Omit to use the first selected social account.",
     );
 
-  return {
-    list_sources: tool({
-      description:
-        "List the snapshots Chat can query (LinkedIn person graph, Instagram, Facebook, company roster).",
-      inputSchema: z.object({}),
-      execute: async () => ({ sources: bundle.sources }),
+  const presentTable = tool({
+    description:
+      "Render a styled comparison table in the chat UI. Always use this for last/recent posts across platforms, rankings, and side-by-side metrics. Do not write those as bullets after calling this.",
+    inputSchema: z.object({
+      title: z
+        .string()
+        .max(80)
+        .optional()
+        .describe("Short table title, e.g. Platform performance."),
+      caption: z
+        .string()
+        .max(160)
+        .optional()
+        .describe("Optional footnote under the table."),
+      columns: z
+        .array(
+          z.object({
+            key: z
+              .string()
+              .min(1)
+              .max(40)
+              .describe("Row object key, e.g. reactions."),
+            label: z
+              .string()
+              .min(1)
+              .max(40)
+              .describe("Column header shown in the UI."),
+            align: z
+              .enum(["left", "right"])
+              .optional()
+              .describe("Right-align numeric columns."),
+          }),
+        )
+        .min(2)
+        .max(8),
+      rows: z
+        .array(
+          z.record(z.string(), z.union([z.string(), z.number(), z.null()])),
+        )
+        .min(1)
+        .max(20)
+        .describe(
+          "One object per row. Keys must match column keys. Prefer raw numbers over preformatted strings.",
+        ),
     }),
-    get_overview: tool({
-      description:
-        "Person-graph totals and top engagers. Use for questions like who is the top engager or how many comments.",
-      inputSchema: z.object({
-        source: sourceField,
-        range: z
-          .enum(ANALYTICS_RANGES)
-          .optional()
-          .describe("Time window. Defaults to all available data."),
-      }),
-      execute: async ({ source, range }) => {
-        const picked = pickSocial(bundle, source);
-        if ("error" in picked) return picked;
-        return {
-          source: picked.source,
-          ...queryOverview(picked.data, range ?? "all"),
-        };
-      },
+    execute: async (input) => {
+      const table = parseChatTable(input);
+      if (!table) {
+        return { error: "Table needs at least two columns and one row." };
+      }
+      return table;
+    },
+  });
+
+  const presentChart = tool({
+    description:
+      "Render an interactive time-series chart (stock-style hover). Use for trends over time from overview series (comments, reactions, plays, likes). Do not restate the same series as a table.",
+    inputSchema: z.object({
+      title: z
+        .string()
+        .max(80)
+        .optional()
+        .describe("Short chart title, e.g. Instagram engagement over time."),
+      caption: z
+        .string()
+        .max(160)
+        .optional()
+        .describe("Optional footnote under the chart."),
+      yLabel: z
+        .string()
+        .max(40)
+        .optional()
+        .describe("Y-axis label, e.g. Plays."),
+      series: z
+        .array(
+          z.object({
+            id: z.string().min(1).max(40),
+            label: z.string().min(1).max(40),
+            color: z.string().optional(),
+            points: z
+              .array(
+                z.object({
+                  t: z
+                    .number()
+                    .optional()
+                    .describe("Unix timestamp in milliseconds when known."),
+                  label: z.string().min(1).max(32),
+                  v: z.number().describe("Raw numeric value."),
+                }),
+              )
+              .min(2)
+              .max(40),
+          }),
+        )
+        .min(1)
+        .max(4)
+        .describe(
+          "Copy series from get_overview / get_tiktok_overview. One series per metric or platform.",
+        ),
     }),
-    list_posts: tool({
-      description:
-        "List recent posts in a person-graph snapshot, newest first.",
-      inputSchema: z.object({
-        source: sourceField,
-        limit: z
-          .number()
-          .int()
-          .min(1)
-          .max(MAX_POSTS)
-          .optional()
-          .describe("How many posts to return. Default 10."),
-      }),
-      execute: async ({ source, limit }) => {
-        const picked = pickSocial(bundle, source);
-        if ("error" in picked) return picked;
-        return { source: picked.source, ...queryPosts(picked.data, limit ?? 10) };
-      },
-    }),
-    find_person: tool({
-      description:
-        "Look up a commenter/engager by username or name in the person-graph snapshots (not the company roster).",
-      inputSchema: z.object({
-        query: z
-          .string()
-          .min(1)
-          .describe("Username, @handle, or full name to search for."),
-        source: sourceField,
-      }),
-      execute: async ({ query, source }) => {
-        const targets: { source: ChatSocialPlatform; data: ScrapeResult }[] = [];
-        if (source) {
-          const picked = pickSocial(bundle, source);
-          if ("error" in picked) return picked;
-          targets.push(picked);
-        } else {
-          for (const id of socialEnum) {
-            const data = bundle.social[id];
-            if (data) targets.push({ source: id, data });
-          }
-        }
-        const matches = [];
-        for (const picked of targets) {
-          const found = queryFindPerson(picked.data, query);
-          matches.push(
-            ...found.matches.map((person) => ({
+    execute: async (input) => {
+      const chart = parseChatChart(input);
+      if (!chart) {
+        return { error: "Chart needs at least one series with two points." };
+      }
+      return chart;
+    },
+  });
+
+  const listSources = tool({
+    description:
+      "List the snapshots currently selected for this question.",
+    inputSchema: z.object({}),
+    execute: async () => ({ sources: bundle.sources }),
+  });
+
+  const socialTools = hasSocial
+    ? {
+        get_overview: tool({
+          description:
+            "Person-graph totals, top engagers, top posts, and time series for charts. Series include comments, reactions, engagers, and plays (Instagram reel plays / Facebook video views when the snapshot has them). Plays are lifetime views on posts published in the range, bucketed by post date — not views earned that day.",
+          inputSchema: z.object({
+            source: sourceField,
+            range: z
+              .enum(ANALYTICS_RANGES)
+              .optional()
+              .describe("Time window. Defaults to all available data."),
+          }),
+          execute: async ({ source, range }) => {
+            const picked = pickSocial(bundle, source);
+            if ("error" in picked) return picked;
+            return {
               source: picked.source,
-              ...person,
-            })),
-          );
-        }
-        return { query, matches: matches.slice(0, MAX_PEOPLE) };
-      },
-    }),
-    get_comments: tool({
-      description:
-        "Fetch comments from a person-graph snapshot. Filter by person and/or post.",
-      inputSchema: z.object({
-        source: sourceField,
-        person: z
-          .string()
-          .optional()
-          .describe("Username or display name of the commenter."),
-        post: z
-          .string()
-          .optional()
-          .describe("Post id or post label/title."),
-        query: z
-          .string()
-          .optional()
-          .describe("Optional text search within comment bodies."),
-        latestPost: z
-          .boolean()
-          .optional()
-          .describe("If true, restrict to the most recent post."),
-      }),
-      execute: async (input) => {
-        const picked = pickSocial(bundle, input.source);
-        if ("error" in picked) return picked;
-        return {
-          source: picked.source,
-          ...queryComments(picked.data, input),
-        };
-      },
-    }),
-    get_company_overview: tool({
-      description:
-        "LinkedIn company roster summary: name, headcount, leadership, top employees. Use for Formation Bio / company questions.",
-      inputSchema: z.object({}),
-      execute: async () => {
-        if (!bundle.company) {
-          return {
-            error: "No company snapshot is loaded.",
-            available: bundle.sources.map((s) => s.id),
-          };
-        }
-        return queryCompanyOverview(bundle.company);
-      },
-    }),
-    find_employee: tool({
-      description:
-        "Look up someone on the LinkedIn company roster by name, title, or role (CEO, founder, etc.). Use this for Formation Bio people — not commenters on the person graph.",
-      inputSchema: z.object({
-        query: z
-          .string()
-          .min(1)
-          .describe("Employee name, @handle, or role such as CEO / founder."),
-      }),
-      execute: async ({ query }) => {
-        if (!bundle.company) {
-          return {
-            error: "No company snapshot is loaded.",
-            available: bundle.sources.map((s) => s.id),
-          };
-        }
-        return queryFindEmployee(bundle.company, query);
-      },
-    }),
-  };
+              ...queryOverview(picked.data, range ?? "all"),
+            };
+          },
+        }),
+        list_posts: tool({
+          description:
+            "List recent posts newest first, with comments, likes, and plays/views when the snapshot has them. Use with present_table for a sortable ranking.",
+          inputSchema: z.object({
+            source: sourceField,
+            limit: z
+              .number()
+              .int()
+              .min(1)
+              .max(MAX_POSTS)
+              .optional()
+              .describe("How many posts to return. Default 10."),
+          }),
+          execute: async ({ source, limit }) => {
+            const picked = pickSocial(bundle, source);
+            if ("error" in picked) return picked;
+            return {
+              source: picked.source,
+              ...queryPosts(picked.data, limit ?? 10),
+            };
+          },
+        }),
+        find_person: tool({
+          description:
+            "Look up a commenter/engager by username or name in the person-graph snapshots (not the company roster).",
+          inputSchema: z.object({
+            query: z
+              .string()
+              .min(1)
+              .describe("Username, @handle, or full name to search for."),
+            source: sourceField,
+          }),
+          execute: async ({ query, source }) => {
+            const targets: { source: ChatSocialPlatform; data: ScrapeResult }[] =
+              [];
+            if (source) {
+              const picked = pickSocial(bundle, source);
+              if ("error" in picked) return picked;
+              targets.push(picked);
+            } else {
+              for (const id of socialEnum) {
+                const data = bundle.social[id];
+                if (data) targets.push({ source: id, data });
+              }
+            }
+            const matches = [];
+            for (const picked of targets) {
+              const found = queryFindPerson(picked.data, query);
+              matches.push(
+                ...found.matches.map((person) => ({
+                  source: picked.source,
+                  ...person,
+                })),
+              );
+            }
+            return { query, matches: matches.slice(0, MAX_PEOPLE) };
+          },
+        }),
+        get_comments: tool({
+          description:
+            "Fetch comments from a person-graph snapshot. Filter by person and/or post.",
+          inputSchema: z.object({
+            source: sourceField,
+            person: z
+              .string()
+              .optional()
+              .describe("Username or display name of the commenter."),
+            post: z
+              .string()
+              .optional()
+              .describe("Post id or post label/title."),
+            query: z
+              .string()
+              .optional()
+              .describe("Optional text search within comment bodies."),
+            latestPost: z
+              .boolean()
+              .optional()
+              .describe("If true, restrict to the most recent post."),
+          }),
+          execute: async (input) => {
+            const picked = pickSocial(bundle, input.source);
+            if ("error" in picked) return picked;
+            return {
+              source: picked.source,
+              ...queryComments(picked.data, input),
+            };
+          },
+        }),
+      }
+    : {};
+
+  const company = bundle.company;
+  const companyTools = company
+    ? {
+        get_company_overview: tool({
+          description:
+            "LinkedIn company roster summary: name, headcount, leadership, top employees. Use for company questions.",
+          inputSchema: z.object({}),
+          execute: async () => queryCompanyOverview(company),
+        }),
+        find_employee: tool({
+          description:
+            "Look up someone on the LinkedIn company roster by name, title, or role (CEO, founder, etc.).",
+          inputSchema: z.object({
+            query: z
+              .string()
+              .min(1)
+              .describe("Employee name, @handle, or role such as CEO / founder."),
+          }),
+          execute: async ({ query }) => queryFindEmployee(company, query),
+        }),
+      }
+    : {};
+
+  const tiktok = bundle.tiktok;
+  const tiktokTools = tiktok
+    ? {
+        get_tiktok_overview: tool({
+          description:
+            "TikTok snapshot totals, top videos, top hashtags, and time series (plays/likes/shares) for charts.",
+          inputSchema: z.object({
+            range: z
+              .enum(ANALYTICS_RANGES)
+              .optional()
+              .describe("Time window. Defaults to all available data."),
+          }),
+          execute: async ({ range }) =>
+            queryTikTokOverview(tiktok, range ?? "all"),
+        }),
+        list_tiktok_videos: tool({
+          description:
+            "List recent TikTok videos, newest first, with plays, likes, comments, shares, and hashtags.",
+          inputSchema: z.object({
+            limit: z
+              .number()
+              .int()
+              .min(1)
+              .max(MAX_POSTS)
+              .optional()
+              .describe("How many videos to return. Default 10."),
+          }),
+          execute: async ({ limit }) =>
+            queryTikTokVideos(tiktok, limit ?? 10),
+        }),
+        find_tiktok_hashtag: tool({
+          description:
+            "Look up TikTok hashtags by name, or list the top hashtags if no query is given.",
+          inputSchema: z.object({
+            query: z
+              .string()
+              .optional()
+              .describe("Hashtag name without #. Omit to list top hashtags."),
+          }),
+          execute: async ({ query }) => queryTikTokHashtag(tiktok, query),
+        }),
+      }
+    : {};
+
+  return {
+    list_sources: listSources,
+    ...socialTools,
+    ...companyTools,
+    ...tiktokTools,
+    present_table: presentTable,
+    present_chart: presentChart,
+  } as ToolSet;
 }
 
 export function chatSystemPrompt(bundle: ChatBundle): string {
@@ -626,15 +951,41 @@ export function chatSystemPrompt(bundle: ChatBundle): string {
         `- ${source.label}: ${source.title}${source.subtitle ? ` (${source.subtitle})` : ""}`,
     )
     .join("\n");
-  return [
+  const hasSocial = Boolean(
+    bundle.social.linkedin || bundle.social.instagram || bundle.social.facebook,
+  );
+  const lines = [
     "You are Netgraph Chat, an assistant for social and company snapshots.",
-    "Loaded sources:",
+    "The user selected these sources for this question. Only use them. If asked about a platform that is not listed, say it is not selected.",
     catalog || "- none",
-    "Use list_sources, get_overview, find_person, and get_comments for person-graph engagement (comments/reactions).",
-    "Use get_company_overview and find_employee for the LinkedIn company roster (employees, CEO, titles).",
-    "Company people are not commenters. If a name is not in the person graph, try the company roster before saying they are missing.",
+  ];
+  if (hasSocial) {
+    lines.push(
+      "Use list_sources, get_overview, find_person, and get_comments for person-graph engagement (comments/reactions).",
+      "Instagram get_overview.series.plays is reel/video play counts. Facebook series.plays is video views when present. These are lifetime totals on posts published in the range, plotted by post date.",
+      "To compare views across Instagram, Facebook, and TikTok: call each overview with the same range (e.g. 7d), then present_chart with one series per platform (copy series.plays). LinkedIn has comments and reactions, not views.",
+    );
+  }
+  if (bundle.company) {
+    lines.push(
+      "Use get_company_overview and find_employee for the LinkedIn company roster (employees, CEO, titles).",
+      "Company people are not commenters. If a name is not in the person graph, try the company roster before saying they are missing.",
+    );
+  }
+  if (bundle.tiktok) {
+    lines.push(
+      "Use get_tiktok_overview, list_tiktok_videos, and find_tiktok_hashtag for TikTok videos, plays, likes, shares, and hashtags. TikTok has no commenter graph in Chat.",
+    );
+  }
+  lines.push(
+    "Use present_table for last/recent posts, rankings, and side-by-side snapshots (Platform, Posted, Post, metrics). Never answer 'last post' across multiple accounts as a bullet list.",
+    "After present_table or present_chart, write at most one or two sentences. Do not paste a markdown table, restated rows, or the same intro twice — the UI already shows the tool output.",
+    "Use present_chart for trends over time. Pass the series arrays from get_overview or get_tiktok_overview (t, label, v). Overlay platforms by putting each plays series on the same chart. The UI is an interactive stock-style chart — do not dump the same points as a table or bullet list.",
+    "Keep prose short: one or two sentences around a table or chart. Skip long captions and nested quotes when a table already has the post title.",
     "Cite people as @handles when they are social accounts, and by full name + title for employees.",
-    "Only state facts tools return. Do not invent names, comments, or titles.",
-    "Answers come from frozen snapshots, not live scraping. TikTok and Spotify are not in Chat yet.",
-  ].join("\n");
+    "Format leftover prose in Markdown: **bold** for names/dates, short lists only when a table does not fit. Avoid ## headings unless the answer has 3+ distinct sections.",
+    "Only state facts tools return. Do not invent names, comments, titles, or chart points.",
+    "Answers come from frozen snapshots, not live scraping. Spotify is not in Chat yet.",
+  );
+  return lines.join("\n");
 }

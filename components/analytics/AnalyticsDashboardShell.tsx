@@ -27,24 +27,80 @@ interface Props {
   /** Static audience totals (followers / following) above the chart KPIs. */
   audience?: ReactNode;
   /** Primary widget (often tabbed). */
-  primary?: { tabs: BreakdownTab[] } | { rows: BreakdownRow[]; title: string; valueHeader?: string; empty?: string };
+  primary?:
+    | {
+        tabs: BreakdownTab[];
+        searchable?: boolean;
+        searchPlaceholder?: string;
+      }
+    | {
+        rows: BreakdownRow[];
+        title: string;
+        valueHeader?: string;
+        empty?: string;
+        searchable?: boolean;
+        searchPlaceholder?: string;
+      };
   /** Secondary widget. */
-  secondary?: { tabs: BreakdownTab[] } | { rows: BreakdownRow[]; title: string; valueHeader?: string; empty?: string };
+  secondary?:
+    | {
+        tabs: BreakdownTab[];
+        searchable?: boolean;
+        searchPlaceholder?: string;
+      }
+    | {
+        rows: BreakdownRow[];
+        title: string;
+        valueHeader?: string;
+        empty?: string;
+        searchable?: boolean;
+        searchPlaceholder?: string;
+      };
   /** Optional third widget (full or half width). */
-  tertiary?: { tabs: BreakdownTab[] } | { rows: BreakdownRow[]; title: string; valueHeader?: string; empty?: string };
+  tertiary?:
+    | {
+        tabs: BreakdownTab[];
+        searchable?: boolean;
+        searchPlaceholder?: string;
+      }
+    | {
+        rows: BreakdownRow[];
+        title: string;
+        valueHeader?: string;
+        empty?: string;
+        searchable?: boolean;
+        searchPlaceholder?: string;
+      };
   footer?: ReactNode;
   className?: string;
 }
 
-function renderCard(
-  card:
-    | { tabs: BreakdownTab[] }
-    | { rows: BreakdownRow[]; title: string; valueHeader?: string; empty?: string }
-    | undefined,
-) {
+type CardConfig =
+  | {
+      tabs: BreakdownTab[];
+      searchable?: boolean;
+      searchPlaceholder?: string;
+    }
+  | {
+      rows: BreakdownRow[];
+      title: string;
+      valueHeader?: string;
+      empty?: string;
+      searchable?: boolean;
+      searchPlaceholder?: string;
+    };
+
+function renderCard(card: CardConfig | undefined, searchableDefault = true) {
   if (!card) return null;
+  const searchable = card.searchable ?? searchableDefault;
   if ("tabs" in card) {
-    return <BreakdownCard tabs={card.tabs} />;
+    return (
+      <BreakdownCard
+        tabs={card.tabs}
+        searchable={searchable}
+        searchPlaceholder={card.searchPlaceholder}
+      />
+    );
   }
   return (
     <BreakdownCard
@@ -52,6 +108,8 @@ function renderCard(
       rows={card.rows}
       valueHeader={card.valueHeader}
       empty={card.empty}
+      searchable={searchable}
+      searchPlaceholder={card.searchPlaceholder}
     />
   );
 }
@@ -114,7 +172,7 @@ export default function AnalyticsDashboardShell({
 
       {tertiary ? (
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-          {renderCard(tertiary)}
+          {renderCard(tertiary, false)}
         </div>
       ) : null}
 

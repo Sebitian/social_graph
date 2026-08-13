@@ -272,6 +272,13 @@ function buildProfilePosts(posts: RawFacebookPost[]): ProfilePost[] {
       label: postSnippet(post.text),
       postedAt,
       imageUrl: postImageUrl(post),
+      likesCount: typeof post.likes === "number" ? post.likes : undefined,
+      commentsCount:
+        typeof post.comments === "number" ? post.comments : undefined,
+      sharesCount: typeof post.shares === "number" ? post.shares : undefined,
+      videoPlayCount:
+        typeof post.viewsCount === "number" ? post.viewsCount : undefined,
+      postType: post.isVideo ? "Video" : undefined,
     });
   }
   return built.sort((a, b) => {

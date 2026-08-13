@@ -74,12 +74,14 @@ export default function TikTokAnalyticsBody({
         },
       ]}
       primary={{
+        searchPlaceholder: "Search videos…",
         tabs: [
           {
             id: "videos",
             label: "Videos",
             valueHeader: "Plays",
             empty: "No videos in this range",
+            searchPlaceholder: "Search videos…",
             rows: overview.topVideos.map((video) => ({
               id: video.id,
               label: video.text || "Untitled video",
@@ -108,6 +110,7 @@ export default function TikTokAnalyticsBody({
             label: "Hashtags",
             valueHeader: "Videos",
             empty: "No hashtags in this range",
+            searchPlaceholder: "Search hashtags…",
             rows: overview.topHashtags.map((tag) => ({
               id: tag.label,
               label: `#${tag.label}`,
@@ -131,6 +134,7 @@ export default function TikTokAnalyticsBody({
         title: "Top by likes",
         valueHeader: "Likes",
         empty: "No videos in this range",
+        searchPlaceholder: "Search videos…",
         rows: [...overview.topVideos]
           .sort((a, b) => b.diggCount - a.diggCount)
           .map((video) => ({
