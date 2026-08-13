@@ -2,7 +2,15 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { ArrowUp, Check, Copy, Loader2, MessageCircle, User } from "lucide-react";
+import {
+  ArrowUp,
+  Check,
+  Copy,
+  Loader2,
+  MessageCircle,
+  SquarePen,
+  User,
+} from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import ChatDataTable, {
   tableFromToolPart,
@@ -21,14 +29,34 @@ import { displayPartsFromMessage } from "@/lib/chat/display";
 import type { ChatChart, ChatSourceId, ChatSourceInfo, ChatTable } from "@/lib/chat/types";
 import type { ScrapeBudget } from "@/lib/scrapeBudget";
 
-const SOURCE_ICON: Record<
-  Exclude<ChatSourceId, "company">,
-  typeof LinkedInIcon
-> = {
+const SOURCE_ICON: Record<ChatSourceId, typeof LinkedInIcon> = {
   linkedin: LinkedInIcon,
   instagram: InstagramIcon,
   facebook: FacebookIcon,
   tiktok: TikTokIcon,
+  company: CompanyIcon,
+};
+
+const PROMPT_ICON_CLASS: Record<ChatSourceId, string> = {
+  linkedin: "text-[#0A66C2]",
+  instagram: "text-[#E4405F]",
+  facebook: "text-[#1877F2]",
+  tiktok: "text-white",
+  company: "text-white/75",
+};
+
+const PROMPT_HIGHLIGHTS = [
+  "top engager",
+  "past week",
+  "view over time",
+  "over time",
+  "this week",
+  "this month",
+];
+
+type PromptSuggestion = {
+  text: string;
+  sources: ChatSourceId[];
 };
 
 const LINKEDIN_CLUSTER_IDS: ChatSourceId[] = ["linkedin", "company"];
@@ -41,51 +69,144 @@ function iconBtnClass(selected: boolean): string {
   }`;
 }
 
-function suggestions(sources: ChatSourceInfo[]): string[] {
-  const ids = new Set(sources.map((source) => source.id));
-  const prompts: string[] = [];
-  const viewNames = [
-    ids.has("instagram") ? "Instagram" : null,
-    ids.has("facebook") ? "Facebook" : null,
-    ids.has("tiktok") ? "TikTok" : null,
-  ].filter((name): name is string => Boolean(name));
+function firstSource(
+  ids: Set<ChatSourceId>,
+  order: ChatSourceId[],
+): ChatSourceId | null {
+  return order.find((id) => ids.has(id)) ?? null;
+}
 
-  if (viewNames.length >= 2) {
-    prompts.push(
-      `Compare ${viewNames[0]} vs ${viewNames[1]} views this week`,
-    );
+function suggestions(sources: ChatSourceInfo[]): PromptSuggestion[] {
+  const ids = new Set(sources.map((source) => source.id));
+  const prompts: PromptSuggestion[] = [];
+  const viewIds = (
+    ["instagram", "facebook", "tiktok"] as const satisfies ChatSourceId[]
+  ).filter((id) => ids.has(id));
+  const viewLabel: Record<(typeof viewIds)[number], string> = {
+    instagram: "Instagram",
+    facebook: "Facebook",
+    tiktok: "TikTok",
+  };
+
+  const firstView = viewIds[0];
+  const secondView = viewIds[1];
+  if (firstView && secondView) {
+    prompts.push({
+      text: `Compare ${viewLabel[firstView]} vs ${viewLabel[secondView]} views this week`,
+      sources: [firstView, secondView],
+    });
   }
   if (ids.has("tiktok")) {
-    prompts.push("Show TikTok plays over the past week");
+    prompts.push({
+      text: "Show TikTok plays over the past week",
+      sources: ["tiktok"],
+    });
   } else if (ids.has("instagram")) {
-    prompts.push("Show Instagram plays over the past week");
+    prompts.push({
+      text: "Show Instagram plays over the past week",
+      sources: ["instagram"],
+    });
   } else if (ids.has("facebook")) {
-    prompts.push("Show Facebook views over the past week");
+    prompts.push({
+      text: "Show Facebook views over the past week",
+      sources: ["facebook"],
+    });
   }
-  if (ids.has("instagram") || ids.has("facebook") || ids.has("linkedin")) {
-    prompts.push("Top posts this month as a table");
+  const postsSource = firstSource(ids, ["instagram", "facebook", "linkedin"]);
+  if (postsSource) {
+    prompts.push({
+      text: "Top posts this month as a table",
+      sources: [postsSource],
+    });
+  } else if (ids.has("tiktok")) {
+    prompts.push({
+      text: "Top TikTok videos by plays",
+      sources: ["tiktok"],
+    });
   }
-  if (ids.has("tiktok") && !prompts.includes("Top posts this month as a table")) {
-    prompts.push("Top TikTok videos by plays");
-  }
-  if (ids.has("linkedin") || ids.has("instagram") || ids.has("facebook")) {
-    prompts.push("Who is my top engager?");
+  const engagerSource = firstSource(ids, ["instagram", "facebook", "linkedin"]);
+  if (engagerSource) {
+    prompts.push({
+      text: "Who was the top engager this past week?",
+      sources: [engagerSource],
+    });
   }
   if (ids.has("company")) {
     const company = sources.find((source) => source.id === "company");
-    prompts.push(
-      company
+    prompts.push({
+      text: company
         ? `Who is the ${company.title} CEO?`
         : "Who is the company CEO?",
-    );
+      sources: ["company"],
+    });
   }
-  if (
-    (ids.has("linkedin") || ids.has("instagram") || ids.has("facebook")) &&
-    prompts.length < 4
-  ) {
-    prompts.push("Show engagement over time");
+  const trendSource = firstSource(ids, ["instagram", "facebook", "linkedin"]);
+  if (trendSource && prompts.length < 4) {
+    prompts.push({
+      text: "Show view over time",
+      sources: [trendSource],
+    });
   }
-  return [...new Set(prompts)].slice(0, 4);
+
+  const seen = new Set<string>();
+  return prompts.filter((prompt) => {
+    if (seen.has(prompt.text)) return false;
+    seen.add(prompt.text);
+    return true;
+  }).slice(0, 4);
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function PromptText({ text }: { text: string }) {
+  const pattern = new RegExp(
+    `(${PROMPT_HIGHLIGHTS.map(escapeRegExp).join("|")})`,
+    "gi",
+  );
+  const parts = text.split(pattern);
+  return (
+    <>
+      {parts.map((part, index) => {
+        const highlight = PROMPT_HIGHLIGHTS.some(
+          (phrase) => phrase.toLowerCase() === part.toLowerCase(),
+        );
+        return highlight ? (
+          <strong key={index} className="font-semibold text-white">
+            {part}
+          </strong>
+        ) : (
+          <span key={index}>{part}</span>
+        );
+      })}
+    </>
+  );
+}
+
+function PromptLogos({ sources }: { sources: ChatSourceId[] }) {
+  return (
+    <span
+      className={`flex shrink-0 items-center justify-center ${
+        sources.length > 1 ? "w-9" : "w-7"
+      }`}
+      aria-hidden
+    >
+      {sources.map((id, index) => {
+        const Icon = SOURCE_ICON[id];
+        return (
+          <span
+            key={`${id}-${index}`}
+            className={`inline-flex h-5 w-5 items-center justify-center ${
+              index > 0 ? "-ml-1.5" : ""
+            }`}
+          >
+            <Icon className={`h-4 w-4 ${PROMPT_ICON_CLASS[id]}`} />
+          </span>
+        );
+      })}
+    </span>
+  );
 }
 
 function isPresentTablePart(part: { type: string }): part is {
@@ -411,10 +532,11 @@ export default function ChatPanel({
     [activeIds, budget, handle, pinned],
   );
 
-  const { messages, sendMessage, status, error, clearError } = useChat({
-    id: handle,
-    transport,
-  });
+  const { messages, sendMessage, setMessages, status, error, clearError, stop } =
+    useChat({
+      id: handle,
+      transport,
+    });
 
   const busy = status === "submitted" || status === "streaming";
   const prompts = suggestions(enabledSources);
@@ -505,6 +627,118 @@ export default function ChatPanel({
     }
   };
 
+  const isEmpty = messages.length === 0;
+
+  const startNewChat = () => {
+    if (isEmpty && !input.trim()) return;
+    void stop();
+    setMessages([]);
+    clearError();
+    setInput("");
+    setCopied(false);
+    requestAnimationFrame(() => {
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto";
+      }
+    });
+  };
+
+  const composer = (
+    <form onSubmit={onSubmit} className={isEmpty ? "w-full" : "p-3 pt-1"}>
+      {limitsOn ? (
+        <p
+          className="mb-1.5 pr-1 text-right text-[11px] tabular-nums text-white/40"
+          aria-live="polite"
+        >
+          {remaining === 1
+            ? "1 message left"
+            : `${remaining} messages left`}
+        </p>
+      ) : null}
+      <div className="rounded-[28px] border border-white/10 bg-[#2c2c32] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] focus-within:border-white/20">
+        <textarea
+          ref={textareaRef}
+          value={input}
+          onChange={(event) => {
+            setInput(event.target.value);
+            resizeInput(event.currentTarget);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+              event.preventDefault();
+              submit(input);
+            }
+          }}
+          rows={1}
+          disabled={busy || !canSend}
+          placeholder={
+            quotaBlocked
+              ? "Demo question limit reached for today"
+              : cooling
+                ? "Wait a few seconds…"
+                : canChat
+                  ? "Ask anything"
+                  : "No snapshots loaded for Chat"
+          }
+          className="max-h-40 min-h-[44px] w-full resize-none bg-transparent px-4 pb-1 pt-3.5 text-sm leading-relaxed text-white placeholder:text-white/35 focus:outline-none disabled:opacity-50"
+        />
+        <div className="flex items-end gap-2 px-2.5 pb-2.5">
+          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5">
+            {linkedinPerson || linkedinCompany ? (
+              <LinkedInSourceCluster
+                person={linkedinPerson}
+                company={linkedinCompany}
+                activeIds={activeIds}
+                busy={busy}
+                onToggleParent={toggleLinkedInCluster}
+                onToggleChild={toggleSource}
+              />
+            ) : null}
+            {platformSources.map((source) => {
+              if (source.id === "company") return null;
+              const Icon = SOURCE_ICON[source.id];
+              const selected = activeIds.includes(source.id);
+              const lastSelected = selected && activeIds.length === 1;
+              const name = `${source.label} · ${source.title}`;
+              return (
+                <button
+                  key={source.id}
+                  type="button"
+                  aria-pressed={selected}
+                  aria-label={
+                    lastSelected
+                      ? "Keep at least one account selected"
+                      : `${selected ? "Remove" : "Add"} ${name}`
+                  }
+                  disabled={busy}
+                  title={
+                    lastSelected
+                      ? "Keep at least one account selected"
+                      : name
+                  }
+                  onClick={() => {
+                    if (!lastSelected) toggleSource(source.id);
+                  }}
+                  className={iconBtnClass(selected)}
+                >
+                  <Icon className="h-3.5 w-3.5" />
+                </button>
+              );
+            })}
+          </div>
+          <button
+            type="submit"
+            disabled={busy || !canSend || !input.trim()}
+            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-black transition hover:bg-white/90 disabled:bg-white/15 disabled:text-white/35"
+            aria-label="Send"
+          >
+            <ArrowUp className="h-4 w-4" strokeWidth={2.5} />
+          </button>
+        </div>
+      </div>
+    </form>
+  );
+
   return (
     <div className="flex min-h-[70dvh] flex-col rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
       <div className="border-b border-white/10 px-4 py-3">
@@ -517,21 +751,32 @@ export default function ChatPanel({
               Frozen snapshots — not live scraping.
             </p>
           </div>
-          <button
-            type="button"
-            onClick={() => void copyChat()}
-            disabled={messages.length === 0}
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/12 bg-black/25 px-2.5 py-1 text-[11px] font-medium text-white/70 transition hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
-            aria-label={copied ? "Copied chat" : "Copy chat"}
-            title={copied ? "Copied" : "Copy entire chat"}
-          >
-            {copied ? (
-              <Check className="h-3.5 w-3.5 text-emerald-400" />
-            ) : (
-              <Copy className="h-3.5 w-3.5" />
-            )}
-            {copied ? "Copied" : "Copy"}
-          </button>
+          <div className="flex shrink-0 items-center gap-2">
+            <button
+              type="button"
+              onClick={startNewChat}
+              disabled={isEmpty && !input.trim()}
+              className="inline-flex items-center gap-2 rounded-lg bg-[#2a2a2a] px-3 py-1.5 text-[13px] font-medium text-white transition hover:bg-[#333333] disabled:cursor-not-allowed disabled:opacity-35"
+              aria-label="New chat"
+            >
+              <SquarePen className="h-3.5 w-3.5" strokeWidth={2} />
+              New chat
+            </button>
+            <button
+              type="button"
+              onClick={() => void copyChat()}
+              disabled={isEmpty}
+              className="inline-flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-lg bg-[#2a2a2a] text-white/80 transition hover:bg-[#333333] hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
+              aria-label={copied ? "Copied chat" : "Copy chat"}
+              title={copied ? "Copied" : "Copy chat"}
+            >
+              {copied ? (
+                <Check className="h-3.5 w-3.5 text-emerald-400" />
+              ) : (
+                <Copy className="h-3.5 w-3.5" />
+              )}
+            </button>
+          </div>
         </div>
         {sources.length === 0 ? (
           <p className="mt-2 text-xs text-white/45">
@@ -540,22 +785,47 @@ export default function ChatPanel({
         ) : null}
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-4 py-4">
-        {messages.length === 0 && canSend && (
-          <div className="flex flex-wrap gap-2">
-            {prompts.map((prompt) => (
-              <button
-                key={prompt}
-                type="button"
-                onClick={() => submit(prompt)}
-                className="rounded-full border border-white/15 bg-black/25 px-3 py-1.5 text-left text-xs text-white/70 transition hover:bg-white/10 hover:text-white"
-              >
-                {prompt}
-              </button>
-            ))}
+      {isEmpty ? (
+        <div className="flex min-h-0 flex-1 flex-col items-center justify-center px-5 py-10">
+          <div className="flex w-full max-w-xl flex-col">
+            <h2 className="mb-6 text-center text-[1.7rem] font-medium tracking-tight text-white">
+              Where should we begin?
+            </h2>
+            {composer}
+            {canSend && prompts.length > 0 ? (
+              <ul className="mt-5 w-full">
+                {prompts.map((prompt) => (
+                  <li key={prompt.text}>
+                    <button
+                      type="button"
+                      onClick={() => submit(prompt.text)}
+                      className="flex w-full items-center gap-3 rounded-xl px-2 py-2.5 text-left transition hover:bg-white/[0.06]"
+                    >
+                      <PromptLogos sources={prompt.sources} />
+                      <span className="min-w-0 text-[13.5px] leading-snug text-white/65">
+                        <PromptText text={prompt.text} />
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {quotaBlocked ? (
+              <div className="mt-4 rounded-xl border border-white/10 bg-black/25 px-3 py-2 text-xs text-white/55">
+                That&apos;s the {questionLimit}-question demo limit for today. The
+                graph and analytics stay open.
+              </div>
+            ) : null}
+            {error ? (
+              <div className="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 px-3 py-2 text-xs text-red-200">
+                {error.message || "Chat request failed."}
+              </div>
+            ) : null}
           </div>
-        )}
-
+        </div>
+      ) : (
+        <>
+          <div className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-4 py-4">
         {messages.map((message) => {
           const display = displayPartsFromMessage(
             message.parts.map((part) => {
@@ -648,101 +918,10 @@ export default function ChatPanel({
             {error.message || "Chat request failed."}
           </div>
         )}
-      </div>
-
-      <form onSubmit={onSubmit} className="p-3 pt-1">
-        {limitsOn ? (
-          <p
-            className="mb-1.5 pr-1 text-right text-[11px] tabular-nums text-white/40"
-            aria-live="polite"
-          >
-            {remaining === 1
-              ? "1 message left"
-              : `${remaining} messages left`}
-          </p>
-        ) : null}
-        <div className="rounded-[28px] border border-white/10 bg-[#2c2c32] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] focus-within:border-white/20">
-          <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={(event) => {
-              setInput(event.target.value);
-              resizeInput(event.currentTarget);
-            }}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault();
-                submit(input);
-              }
-            }}
-            rows={1}
-            disabled={busy || !canSend}
-            placeholder={
-              quotaBlocked
-                ? "Demo question limit reached for today"
-                : cooling
-                  ? "Wait a few seconds…"
-                  : canChat
-                    ? "Ask anything"
-                    : "No snapshots loaded for Chat"
-            }
-            className="max-h-40 min-h-[44px] w-full resize-none bg-transparent px-4 pb-1 pt-3.5 text-sm leading-relaxed text-white placeholder:text-white/35 focus:outline-none disabled:opacity-50"
-          />
-          <div className="flex items-end gap-2 px-2.5 pb-2.5">
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5">
-              {linkedinPerson || linkedinCompany ? (
-                <LinkedInSourceCluster
-                  person={linkedinPerson}
-                  company={linkedinCompany}
-                  activeIds={activeIds}
-                  busy={busy}
-                  onToggleParent={toggleLinkedInCluster}
-                  onToggleChild={toggleSource}
-                />
-              ) : null}
-              {platformSources.map((source) => {
-                if (source.id === "company") return null;
-                const Icon = SOURCE_ICON[source.id];
-                const selected = activeIds.includes(source.id);
-                const lastSelected = selected && activeIds.length === 1;
-                const name = `${source.label} · ${source.title}`;
-                return (
-                  <button
-                    key={source.id}
-                    type="button"
-                    aria-pressed={selected}
-                    aria-label={
-                      lastSelected
-                        ? "Keep at least one account selected"
-                        : `${selected ? "Remove" : "Add"} ${name}`
-                    }
-                    disabled={busy}
-                    title={
-                      lastSelected
-                        ? "Keep at least one account selected"
-                        : name
-                    }
-                    onClick={() => {
-                      if (!lastSelected) toggleSource(source.id);
-                    }}
-                    className={iconBtnClass(selected)}
-                  >
-                    <Icon className="h-3.5 w-3.5" />
-                  </button>
-                );
-              })}
-            </div>
-            <button
-              type="submit"
-              disabled={busy || !canSend || !input.trim()}
-              className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-black transition hover:bg-white/90 disabled:bg-white/15 disabled:text-white/35"
-              aria-label="Send"
-            >
-              <ArrowUp className="h-4 w-4" strokeWidth={2.5} />
-            </button>
           </div>
-        </div>
-      </form>
+          {composer}
+        </>
+      )}
     </div>
   );
 }
