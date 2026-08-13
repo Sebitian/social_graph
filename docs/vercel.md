@@ -38,9 +38,9 @@ Project → **Settings → Environment Variables**. Add them for **Production** 
 
 Chat streams for several seconds (`maxDuration = 60` on `/api/chat`). Hobby is enough for that.
 
-**Do not give visitors your API key.** The browser only talks to `/api/chat`. Production enforces the quotas above (cookie + IP + global). Connect **KV** so those counts survive across serverless instances — without KV, limits are per-instance and weaker.
+**Do not give visitors your API key.** The browser only talks to `/api/chat`. Quotas are on by default (cookie + IP + global + 8s cooldown, plus duplicate/short-message checks). Connect **KV** so those counts survive across serverless instances — without KV, limits are per-instance and weaker.
 
-Local `next dev` skips quotas unless you set `CHAT_QUOTA=1`.
+Set `CHAT_QUOTA=0` only for unlimited local testing.
 
 ### Vercel Blob (pin new snapshots)
 

@@ -11,6 +11,9 @@ function readNumber(raw: string | undefined, fallback: number): number {
   return Number.isFinite(n) && n > 0 ? n : fallback;
 }
 
+export const CHAT_MIN_MESSAGE_CHARS = 2;
+export const CHAT_MAX_MESSAGE_CHARS = 500;
+
 /** 5 is enough to try suggested prompts + a follow-up without becoming a free LLM. */
 export function chatVisitorLimit(): number {
   return readNumber(process.env.CHAT_MESSAGES_PER_VISITOR, 5);
@@ -35,9 +38,7 @@ export function chatMaxHistory(): number {
 }
 
 export function chatQuotaEnabled(): boolean {
-  if (process.env.CHAT_QUOTA === "0") return false;
-  if (process.env.CHAT_QUOTA === "1") return true;
-  return process.env.NODE_ENV !== "development";
+  return process.env.CHAT_QUOTA !== "0";
 }
 
 export type ChatQuotaSnapshot = {
@@ -45,8 +46,14 @@ export type ChatQuotaSnapshot = {
   remaining: number;
   limit: number;
   globalRemaining: number;
+  cooldownSeconds: number;
   retryAfterSeconds?: number;
-  reason?: "visitor" | "ip" | "global" | "cooldown";
+  reason?: "visitor" | "ip" | "global" | "cooldown" | "duplicate";
+};
+
+type ChatMessageLike = {
+  role?: string;
+  parts?: Array<{ type?: string; text?: string }>;
 };
 
 export type ChatQuotaDecision = ChatQuotaSnapshot & {
@@ -201,10 +208,72 @@ function snapshotFromCounts(args: {
     remaining: Math.min(remaining, ipRemaining, globalRemaining),
     limit,
     globalRemaining,
+    cooldownSeconds: chatCooldownSeconds(),
     reason,
     retryAfterSeconds:
       reason === "cooldown" ? chatCooldownSeconds() : undefined,
   };
+}
+
+function messageText(message: ChatMessageLike): string {
+  if (!Array.isArray(message.parts)) return "";
+  return message.parts
+    .filter((part) => part.type === "text" && typeof part.text === "string")
+    .map((part) => part.text ?? "")
+    .join("")
+    .trim();
+}
+
+export function userMessageTexts(messages: unknown): string[] {
+  if (!Array.isArray(messages)) return [];
+  return messages
+    .filter((message): message is ChatMessageLike =>
+      Boolean(message && typeof message === "object"),
+    )
+    .filter((message) => message.role === "user")
+    .map(messageText)
+    .filter(Boolean);
+}
+
+/** Cheap spam guards that do not consume quota. */
+export function validateChatInput(
+  messages: unknown,
+  opts?: { enforceLimit?: boolean },
+): {
+  error: string;
+  status: 400 | 429;
+  reason?: ChatQuotaSnapshot["reason"];
+} | null {
+  const texts = userMessageTexts(messages);
+  if (texts.length === 0) {
+    return { error: "Message required.", status: 400 };
+  }
+  if (opts?.enforceLimit !== false && texts.length > chatVisitorLimit()) {
+    return {
+      error: quotaMessage("visitor"),
+      status: 429,
+      reason: "visitor",
+    };
+  }
+  const last = texts[texts.length - 1] ?? "";
+  if (last.length < CHAT_MIN_MESSAGE_CHARS) {
+    return { error: "Ask a slightly longer question.", status: 400 };
+  }
+  if (last.length > CHAT_MAX_MESSAGE_CHARS) {
+    return {
+      error: `Keep questions under ${CHAT_MAX_MESSAGE_CHARS} characters.`,
+      status: 400,
+    };
+  }
+  const previous = texts[texts.length - 2];
+  if (previous && previous.toLowerCase() === last.toLowerCase()) {
+    return {
+      error: "Ask a new question — that one was just sent.",
+      status: 429,
+      reason: "duplicate",
+    };
+  }
+  return null;
 }
 
 export async function inspectChatQuota(req: Request): Promise<ChatQuotaDecision> {
@@ -217,6 +286,7 @@ export async function inspectChatQuota(req: Request): Promise<ChatQuotaDecision>
       remaining: limit,
       limit,
       globalRemaining: chatGlobalLimit(),
+      cooldownSeconds: 0,
       visitorId,
       setCookie,
     };
@@ -269,6 +339,9 @@ export async function consumeChatQuota(req: Request): Promise<ChatQuotaDecision>
 export function quotaMessage(reason?: ChatQuotaSnapshot["reason"]): string {
   if (reason === "cooldown") {
     return `Wait a few seconds between demo questions.`;
+  }
+  if (reason === "duplicate") {
+    return "Ask a new question — that one was just sent.";
   }
   if (reason === "global") {
     return "The shared demo chat is at today's cap. Graph and analytics stay open.";

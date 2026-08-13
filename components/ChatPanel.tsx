@@ -189,6 +189,7 @@ type QuotaState = {
   remaining: number;
   limit: number;
   enabled: boolean;
+  cooldownSeconds: number;
 };
 
 function LinkedInSourceCluster({
@@ -309,6 +310,8 @@ export default function ChatPanel({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [copied, setCopied] = useState(false);
   const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [cooling, setCooling] = useState(false);
+  const coolTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const activeIds = useMemo(() => {
     const availableIds = sources.map((source) => source.id);
@@ -330,6 +333,7 @@ export default function ChatPanel({
       remaining: Number(remaining),
       limit: Number(limit),
       enabled: prev?.enabled ?? true,
+      cooldownSeconds: prev?.cooldownSeconds ?? 8,
     }));
   };
 
@@ -341,6 +345,7 @@ export default function ChatPanel({
           remaining?: number;
           limit?: number;
           enabled?: boolean;
+          cooldownSeconds?: number;
         };
         if (cancelled) return;
         if (typeof json.remaining === "number" && typeof json.limit === "number") {
@@ -348,6 +353,8 @@ export default function ChatPanel({
             remaining: json.remaining,
             limit: json.limit,
             enabled: Boolean(json.enabled),
+            cooldownSeconds:
+              typeof json.cooldownSeconds === "number" ? json.cooldownSeconds : 8,
           });
         }
       })
@@ -362,6 +369,7 @@ export default function ChatPanel({
   useEffect(
     () => () => {
       if (copiedTimer.current) clearTimeout(copiedTimer.current);
+      if (coolTimer.current) clearTimeout(coolTimer.current);
     },
     [],
   );
@@ -373,13 +381,16 @@ export default function ChatPanel({
         fetch: async (input, init) => {
           const response = await fetch(input, init);
           applyQuotaHeaders(response);
-          if (response.status === 429) {
+          if (response.status === 429 || response.status === 400) {
             const json = (await response
               .clone()
               .json()
               .catch(() => null)) as { error?: string } | null;
             throw new Error(
-              json?.error || "Demo chat limit reached for today.",
+              json?.error ||
+                (response.status === 429
+                  ? "Demo chat limit reached for today."
+                  : "Could not send that message."),
             );
           }
           return response;
@@ -408,9 +419,15 @@ export default function ChatPanel({
   const busy = status === "submitted" || status === "streaming";
   const prompts = suggestions(enabledSources);
   const canChat = enabledSources.length > 0;
-  const quotaBlocked =
-    quota?.enabled === true && quota.remaining <= 0;
-  const canSend = canChat && !quotaBlocked;
+  const userTurns = messages.filter((message) => message.role === "user").length;
+  const questionLimit = quota?.limit ?? 5;
+  const limitsOn = quota?.enabled !== false;
+  const remaining = Math.max(
+    0,
+    Math.min(quota?.remaining ?? questionLimit, questionLimit - userTurns),
+  );
+  const quotaBlocked = limitsOn && (remaining <= 0 || userTurns >= questionLimit);
+  const canSend = canChat && !quotaBlocked && !cooling;
 
   const toggleSource = (id: ChatSourceId) => {
     setEnabledIds((prev) => {
@@ -452,10 +469,17 @@ export default function ChatPanel({
 
   const submit = (text: string) => {
     const next = text.trim();
-    if (!next || busy || !canSend) return;
+    if (next.length < 2 || busy || !canSend) return;
     clearError();
     void sendMessage({ text: next });
     setInput("");
+    const coolMs =
+      (limitsOn ? (quota?.cooldownSeconds ?? 8) : 0) * 1000;
+    if (coolMs > 0) {
+      setCooling(true);
+      if (coolTimer.current) clearTimeout(coolTimer.current);
+      coolTimer.current = setTimeout(() => setCooling(false), coolMs);
+    }
     requestAnimationFrame(() => {
       if (textareaRef.current) {
         textareaRef.current.style.height = "auto";
@@ -491,9 +515,6 @@ export default function ChatPanel({
             </div>
             <p className="mt-1 text-xs text-white/40">
               Frozen snapshots — not live scraping.
-              {quota?.enabled
-                ? ` ${quota.remaining} of ${quota.limit} demo questions left today.`
-                : null}
             </p>
           </div>
           <button
@@ -608,9 +629,9 @@ export default function ChatPanel({
           );
         })}
 
-        {quotaBlocked && quota ? (
+        {quotaBlocked ? (
           <div className="rounded-xl border border-white/10 bg-black/25 px-3 py-2 text-xs text-white/55">
-            That&apos;s the {quota.limit}-question demo limit for today. The
+            That&apos;s the {questionLimit}-question demo limit for today. The
             graph and analytics stay open.
           </div>
         ) : null}
@@ -630,6 +651,16 @@ export default function ChatPanel({
       </div>
 
       <form onSubmit={onSubmit} className="p-3 pt-1">
+        {limitsOn ? (
+          <p
+            className="mb-1.5 pr-1 text-right text-[11px] tabular-nums text-white/40"
+            aria-live="polite"
+          >
+            {remaining === 1
+              ? "1 message left"
+              : `${remaining} messages left`}
+          </p>
+        ) : null}
         <div className="rounded-[28px] border border-white/10 bg-[#2c2c32] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] focus-within:border-white/20">
           <textarea
             ref={textareaRef}
@@ -649,9 +680,11 @@ export default function ChatPanel({
             placeholder={
               quotaBlocked
                 ? "Demo question limit reached for today"
-                : canChat
-                  ? "Ask anything"
-                  : "No snapshots loaded for Chat"
+                : cooling
+                  ? "Wait a few seconds…"
+                  : canChat
+                    ? "Ask anything"
+                    : "No snapshots loaded for Chat"
             }
             className="max-h-40 min-h-[44px] w-full resize-none bg-transparent px-4 pb-1 pt-3.5 text-sm leading-relaxed text-white placeholder:text-white/35 focus:outline-none disabled:opacity-50"
           />

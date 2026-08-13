@@ -12,17 +12,18 @@ import {
 } from "@/lib/chat/provider";
 import { chatSystemPrompt, createChatTools } from "@/lib/chat/tools";
 import {
+  CHAT_MAX_MESSAGE_CHARS,
   chatMaxHistory,
+  chatQuotaEnabled,
   consumeChatQuota,
   inspectChatQuota,
   quotaMessage,
+  validateChatInput,
 } from "@/lib/chat/quota";
 import type { ScrapeBudget } from "@/lib/scrapeBudget";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
-
-const MAX_MESSAGE_CHARS = 500;
 
 function withQuotaHeaders(
   response: Response,
@@ -42,6 +43,7 @@ function withQuotaHeaders(
 function quotaJson(
   quota: Awaited<ReturnType<typeof inspectChatQuota>>,
   extra?: Record<string, unknown>,
+  status = extra?.error ? 429 : 200,
 ) {
   const response = NextResponse.json(
     {
@@ -49,10 +51,11 @@ function quotaJson(
       limit: quota.limit,
       globalRemaining: quota.globalRemaining,
       enabled: quota.enabled,
+      cooldownSeconds: quota.cooldownSeconds,
       configured: tokenRouterConfigured(),
       ...extra,
     },
-    { status: extra?.error ? 429 : 200 },
+    { status },
   );
   return withQuotaHeaders(response, quota);
 }
@@ -113,6 +116,22 @@ export async function POST(req: Request) {
   );
   const bundle = restrictChatBundle(loaded.bundle, enabled);
 
+  const history = Array.isArray(body.messages) ? body.messages : [];
+  const spam = validateChatInput(history, {
+    enforceLimit: chatQuotaEnabled(),
+  });
+  if (spam) {
+    const quota = await inspectChatQuota(req);
+    return quotaJson(
+      quota,
+      {
+        error: spam.error,
+        retryAfterSeconds: quota.retryAfterSeconds,
+      },
+      spam.status,
+    );
+  }
+
   const quota = await consumeChatQuota(req);
   if (!quota.ok) {
     return quotaJson(quota, {
@@ -121,13 +140,12 @@ export async function POST(req: Request) {
     });
   }
 
-  const history = Array.isArray(body.messages) ? body.messages : [];
   const messages = history.slice(-chatMaxHistory()).map((message) => {
     if (!message || typeof message !== "object") return message;
     const parts = Array.isArray(message.parts)
       ? message.parts.map((part) => {
           if (part && part.type === "text" && typeof part.text === "string") {
-            return { ...part, text: part.text.slice(0, MAX_MESSAGE_CHARS) };
+            return { ...part, text: part.text.slice(0, CHAT_MAX_MESSAGE_CHARS) };
           }
           return part;
         })
