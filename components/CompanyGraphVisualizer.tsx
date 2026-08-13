@@ -16,6 +16,7 @@ import type {
   CompanyGraphNode,
   CompanyNodeKind,
 } from "@/lib/companyTypes";
+import { proxiedAvatarUrlIfFresh } from "@/lib/avatarUrl";
 
 type FGNode = CompanyGraphNode & {
   x?: number;
@@ -172,9 +173,9 @@ export default function CompanyGraphVisualizer({
 
     for (const remote of urls) {
       const url = remote.startsWith("http")
-        ? `/api/avatar/image?url=${encodeURIComponent(remote)}`
+        ? proxiedAvatarUrlIfFresh(remote)
         : remote;
-      if (cache.has(url) || cache.has(remote)) continue;
+      if (!url || cache.has(url) || cache.has(remote)) continue;
       const img = new Image();
       img.decoding = "async";
       img.crossOrigin = "anonymous";
@@ -188,7 +189,10 @@ export default function CompanyGraphVisualizer({
           fgRef.current?.refresh?.();
         }
       };
-      img.onerror = () => {};
+      img.onerror = () => {
+        cache.set(url, img);
+        cache.set(remote, img);
+      };
       img.src = url;
     }
 

@@ -19,6 +19,37 @@ export function proxiedAvatarUrl(remoteUrl: string): string {
   return `/api/avatar/image?url=${encodeURIComponent(remoteUrl)}`;
 }
 
+/**
+ * LinkedIn (and similar) signed CDN URLs carry unix-seconds `e=`.
+ * After that timestamp the CDN returns 403 "Invalid e query string".
+ */
+export function isSignedMediaExpired(
+  remoteUrl: string,
+  skewMs = 60_000,
+): boolean {
+  try {
+    const raw = new URL(remoteUrl).searchParams.get("e");
+    if (!raw) return false;
+    const expiry = Number(raw);
+    if (!Number.isFinite(expiry) || expiry <= 0) return false;
+    const expMs = expiry < 1e12 ? expiry * 1000 : expiry;
+    return expMs + skewMs < Date.now();
+  } catch {
+    return false;
+  }
+}
+
+/** Proxy a remote photo unless its signed CDN expiry has already passed. */
+export function proxiedAvatarUrlIfFresh(
+  remoteUrl: string,
+): string | undefined {
+  const scraped = remoteUrl.trim();
+  if (!scraped) return undefined;
+  if (!/^https?:\/\//i.test(scraped)) return scraped;
+  if (isSignedMediaExpired(scraped)) return undefined;
+  return proxiedAvatarUrl(scraped);
+}
+
 export type AvatarPlatform =
   | "instagram"
   | "linkedin"
@@ -47,12 +78,8 @@ export function resolveProfilePicUrl(
 
   if (scraped) {
     // Facebook / LinkedIn CDN / leftover IG CDN — same-origin proxy for canvas.
-    // LinkedIn signed URLs expire (~30d); GraphVisualizer falls back to the
-    // live /api/avatar/linkedin/:handle lookup when the scraped URL 403s.
-    if (/^https?:\/\//i.test(scraped)) {
-      return proxiedAvatarUrl(scraped);
-    }
-    return scraped;
+    // Skip expired signed URLs so the graph shows initials instead of 502s.
+    return proxiedAvatarUrlIfFresh(scraped);
   }
   return undefined;
 }

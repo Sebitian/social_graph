@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import {
   AlertTriangle,
   ArrowLeft,
-  BadgeCheck,
   CreditCard,
   FlaskConical,
   HelpCircle,
@@ -51,7 +50,8 @@ import {
 import AnalyticsPanel, {
   type AnalyticsPlatform,
 } from "@/components/analytics/AnalyticsPanel";
-import ShareCard from "@/components/ShareCard";
+import ChatPanel from "@/components/ChatPanel";
+import ProfilePanel from "@/components/ProfilePanel";
 import GraphFooterTabs, { type FooterTab } from "@/components/GraphFooterTabs";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import {
@@ -74,7 +74,8 @@ import {
   budgetCacheSuffix,
   SCRAPE_BUDGET_LIMITS,
 } from "@/lib/scrapeBudget";
-import { pinnedGraphPath } from "@/lib/paths";
+import { DEMO_HANDLE } from "@/lib/paths";
+import type { ChatSourceInfo } from "@/lib/chat/types";
 
 type GraphPlatform =
   | "linkedin"
@@ -235,8 +236,6 @@ export default function GraphResult({
   >(pinned ? "confirmed" : "checking");
   const [profileLimitHit, setProfileLimitHit] = useState(false);
   const [searchedCount, setSearchedCount] = useState(0);
-  const [pinStatus, setPinStatus] = useState<string | null>(null);
-  const [pinning, setPinning] = useState(false);
   const [view, setView] = useState<GraphView>("map");
   const [statsView, setStatsView] = useState<StatsView>("summary");
   const [footerTab, setFooterTab] = useState<FooterTab>("map");
@@ -344,6 +343,49 @@ export default function GraphResult({
   const hasFacebook = Boolean(platformResults.facebook);
   const isLinkedInCompany =
     platform === "linkedin" && linkedinMode === "company";
+  const chatSources = useMemo((): ChatSourceInfo[] => {
+    const sources: ChatSourceInfo[] = [];
+    const linkedin = platformResults.linkedin;
+    if (linkedin) {
+      sources.push({
+        id: "linkedin",
+        label: "LinkedIn",
+        title: linkedin.profile.fullName || linkedin.profile.username,
+        handle: linkedin.profile.username,
+        subtitle: `@${linkedin.profile.username} · Person graph`,
+      });
+    }
+    if (companyResult) {
+      sources.push({
+        id: "company",
+        label: "Company",
+        title: companyResult.company.name,
+        handle: companyResult.company.name,
+        subtitle: `${companyResult.stats.employeeCount} employees in graph`,
+      });
+    }
+    const instagram = platformResults.instagram;
+    if (instagram) {
+      sources.push({
+        id: "instagram",
+        label: "Instagram",
+        title: instagram.profile.fullName || instagram.profile.username,
+        handle: instagram.profile.username,
+        subtitle: `@${instagram.profile.username} · Account graph`,
+      });
+    }
+    const facebook = platformResults.facebook;
+    if (facebook) {
+      sources.push({
+        id: "facebook",
+        label: "Facebook",
+        title: facebook.profile.fullName || facebook.profile.username,
+        handle: facebook.profile.username,
+        subtitle: `@${facebook.profile.username} · Account graph`,
+      });
+    }
+    return sources;
+  }, [companyResult, platformResults]);
   const isAlternatePlatform =
     platform === "spotify" || platform === "tiktok" || isLinkedInCompany;
   const platformHasData =
@@ -683,47 +725,19 @@ export default function GraphResult({
     companyResult,
   ]);
 
-  const pinCurrentRun = useCallback(async () => {
-    if (!data || pinning) return;
-    setPinning(true);
-    setPinStatus(null);
-    try {
-      const res = await fetch("/api/snapshot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error ?? "Could not pin snapshot");
-      setPinStatus(json.url as string);
-    } catch (err) {
-      setPinStatus(err instanceof Error ? err.message : "Pin failed");
-    } finally {
-      setPinning(false);
-    }
-  }, [data, pinning]);
-
-  const downloadSnapshotJson = useCallback(() => {
-    if (!data) return;
-    const blob = new Blob([JSON.stringify(data, null, 2)], {
-      type: "application/json",
-    });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.download = `${handle}-snapshot.json`;
-    link.href = url;
-    link.click();
-    URL.revokeObjectURL(url);
-  }, [data, handle]);
-
-  const downloadPng = useCallback(() => {
-    const canvas = graphWrapRef.current?.querySelector("canvas");
-    if (!canvas) return;
-    const link = document.createElement("a");
-    link.download = `${handle}-network.png`;
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-  }, [handle]);
+  const viewProfileGraph = useCallback(
+    (nextPlatform: GraphPlatform, nextLinkedinMode?: LinkedInMode) => {
+      setPlatform(nextPlatform);
+      if (nextPlatform === "linkedin") {
+        setLinkedinMode(
+          nextLinkedinMode ??
+            (platformResults.linkedin ? "person" : "company"),
+        );
+      }
+      selectFooterTab("map");
+    },
+    [platformResults.linkedin, selectFooterTab],
+  );
 
   if (error) {
     return (
@@ -1457,12 +1471,11 @@ export default function GraphResult({
           )}
         </div>
 
-        {/* Analytics / Profile / Share — same tab panels on every breakpoint */}
-        {footerTab !== "map" && (
-          <div
-            ref={mobileTabPanelRef}
-            className="mx-auto w-full max-w-5xl scroll-mt-3"
-          >
+        {/* Analytics / Chat / Profile — Chat stays mounted so the thread survives Map switches */}
+        <div
+          ref={mobileTabPanelRef}
+          className={`mx-auto w-full max-w-5xl scroll-mt-3 ${footerTab === "map" ? "hidden" : ""}`}
+        >
             {footerTab === "analytics" && (
               <AnalyticsPanel
                 socialResults={platformResults}
@@ -1500,308 +1513,28 @@ export default function GraphResult({
               />
             )}
 
+            <div className={footerTab === "chat" ? "" : "hidden"}>
+              <ChatPanel
+                key={handle}
+                handle={handle}
+                pinned={pinned}
+                sources={chatSources}
+                budget={requestedBudget}
+                onSelectUsername={selectMemberByUsername}
+              />
+            </div>
+
             {footerTab === "profile" && (
-              <>
-                {isLinkedInCompany && companyResult ? (
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur">
-                    <div className="flex items-center gap-3">
-                      {companyResult.company.logoUrl ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={companyResult.company.logoUrl}
-                          alt=""
-                          className="h-12 w-12 rounded-lg object-cover ring-1 ring-white/15"
-                        />
-                      ) : (
-                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0A66C2]/20 text-lg font-bold text-[#0A66C2]">
-                          {companyResult.company.name.charAt(0)}
-                        </div>
-                      )}
-                      <div className="min-w-0">
-                        <h1 className="truncate text-lg font-bold text-white">
-                          {companyResult.company.name}
-                        </h1>
-                        <div className="text-sm text-white/50">LinkedIn company map</div>
-                      </div>
-                    </div>
-                    <div className="mt-3 text-xs text-white/35">
-                      {companyResult.stats.employeeCount}
-                      {companyResult.stats.totalReported &&
-                      companyResult.stats.totalReported >
-                        companyResult.stats.employeeCount
-                        ? ` of ${companyResult.stats.totalReported}`
-                        : ""}{" "}
-                      employees · {companyResult.stats.locationCount} locations ·{" "}
-                      {companyResult.stats.schoolCount} schools
-                    </div>
-                    {companyResult.company.linkedinUrl && (
-                      <a
-                        href={companyResult.company.linkedinUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-2 inline-block text-xs text-[#0A66C2] hover:underline"
-                      >
-                        Open company page
-                      </a>
-                    )}
-                  </div>
-                ) : platform === "spotify" && spotifyResult ? (
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur">
-                    <div className="flex items-center gap-3">
-                      {spotifyResult.profile.profileImage ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={spotifyResult.profile.profileImage}
-                          alt=""
-                          className="h-12 w-12 rounded-full object-cover ring-1 ring-white/15"
-                        />
-                      ) : (
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1DB954]/20 text-lg font-bold text-[#1DB954]">
-                          {spotifyResult.profile.displayName.charAt(0)}
-                        </div>
-                      )}
-                      <div className="min-w-0">
-                        <h1 className="truncate text-lg font-bold text-white">
-                          {spotifyResult.profile.displayName}
-                        </h1>
-                        <div className="text-sm text-white/50">Spotify taste map</div>
-                      </div>
-                    </div>
-                    <div className="mt-3 text-xs text-white/35">
-                      {spotifyResult.stats.friendCount} friend
-                      {spotifyResult.stats.friendCount === 1 ? "" : "s"} ·{" "}
-                      {spotifyResult.stats.playlistCount} playlists ·{" "}
-                      {spotifyResult.stats.trackCount} tracks ·{" "}
-                      {spotifyResult.stats.genreCount} genres
-                    </div>
-                    {spotifyResult.profile.sourceUrl && (
-                      <a
-                        href={spotifyResult.profile.sourceUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-2 inline-block text-xs text-[#1DB954] hover:underline"
-                      >
-                        Open profile
-                      </a>
-                    )}
-                  </div>
-                ) : platform === "tiktok" && tiktokResult ? (
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur">
-                    <div className="flex items-center gap-3">
-                      {tiktokResult.profile.avatarUrl ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={tiktokResult.profile.avatarUrl}
-                          alt=""
-                          className="h-12 w-12 rounded-full object-cover ring-1 ring-white/15"
-                        />
-                      ) : (
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FE2C55]/20 text-lg font-bold text-[#FE2C55]">
-                          {tiktokResult.profile.displayName.charAt(0)}
-                        </div>
-                      )}
-                      <div className="min-w-0">
-                        <h1 className="truncate text-lg font-bold text-white">
-                          {tiktokResult.profile.displayName}
-                        </h1>
-                        <div className="text-sm text-white/50">
-                          @{tiktokResult.profile.username} · TikTok visibility
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mt-3 text-xs text-white/35">
-                      {tiktokResult.stats.followers} followers ·{" "}
-                      {tiktokResult.stats.videoCount} videos ·{" "}
-                      {tiktokResult.stats.totalPlays} plays ·{" "}
-                      {tiktokResult.stats.totalDiggs} likes
-                    </div>
-                    {tiktokResult.profile.profileUrl && (
-                      <a
-                        href={tiktokResult.profile.profileUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-2 inline-block text-xs text-[#25F4EE] hover:underline"
-                      >
-                        Open profile
-                      </a>
-                    )}
-                  </div>
-                ) : activeData ? (
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur">
-                    <div className="flex items-center gap-2">
-                      <h1 className="truncate text-lg font-bold text-white">
-                        @{activeData.profile.username}
-                      </h1>
-                      {activeData.profile.isVerified && (
-                        <BadgeCheck className="h-5 w-5 shrink-0 text-ig-blue" />
-                      )}
-                    </div>
-                    {activeData.profile.fullName && (
-                      <div className="text-sm text-white/60">
-                        {activeData.profile.fullName}
-                      </div>
-                    )}
-                    {activeData.profile.biography && (
-                      <p className="mt-2 text-sm text-white/40">
-                        {activeData.profile.biography}
-                      </p>
-                    )}
-                    <div className="mt-3 text-xs text-white/30">
-                      {activeData.engagers && activeData.engagers.length > 0
-                        ? `${activeData.engagers.length} unique engagers · map shows top ${activeData.stats.shown}`
-                        : `Top ${activeData.stats.shown} connections`}
-                    </div>
-                  </div>
-                ) : (
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur">
-                    <div className="text-sm font-semibold text-white/70">
-                      {PLATFORM_LABEL[platform]}
-                    </div>
-                    <p className="mt-2 text-xs text-white/40">
-                      No snapshot loaded for this platform yet.
-                    </p>
-                  </div>
-                )}
-              </>
+              <ProfilePanel
+                socialResults={platformResults}
+                companyResult={companyResult}
+                tiktokResult={tiktokResult}
+                spotifyResult={spotifyResult}
+                demo={handle === DEMO_HANDLE}
+                onViewGraph={viewProfileGraph}
+              />
             )}
-
-            {footerTab === "share" && (
-              <div className="flex flex-col gap-3">
-                {data && !data.pinned && (
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur">
-                    <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-white/80">
-                      <ShieldAlert className="h-4 w-4 text-ig-orange" /> Scrape budget
-                    </div>
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                      <div className="rounded-xl bg-black/25 p-3">
-                        <div className="text-xs text-white/35">Your posts</div>
-                        <div className="mt-1 font-mono text-white">
-                          {data.budget.postLimit} x {data.budget.commentsPerPost}
-                        </div>
-                      </div>
-                      <div className="rounded-xl bg-black/25 p-3">
-                        <div className="text-xs text-white/35">Reciprocity</div>
-                        <div className="mt-1 font-mono text-white">
-                          {data.budget.reciprocityEnabled
-                            ? `${data.budget.reciprocityFriends} x ${data.budget.reciprocityPostsPerFriend}`
-                            : "Off"}
-                        </div>
-                      </div>
-                      <div className="rounded-xl bg-black/25 p-3">
-                        <div className="text-xs text-white/35">Max estimate</div>
-                        <div className="mt-1 font-mono text-white">
-                          {data.budget.withinFreeTier
-                            ? "Free"
-                            : formatUsd(data.budget.estimatedCostUsd)}
-                        </div>
-                      </div>
-                      <div className="rounded-xl bg-black/25 p-3">
-                        <div className="text-xs text-white/35">Comment cap</div>
-                        <div className="mt-1 font-mono text-white">
-                          {data.budget.maxComments}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {data && !pinned && !data.demo && (
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur">
-                    <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-white/80">
-                      <Pin className="h-4 w-4 text-ig-blue" /> Save this run
-                    </div>
-                    <p className="text-xs leading-relaxed text-white/45">
-                      Pin the graph so anyone can open a share link without spending
-                      Apify credits again.
-                    </p>
-                    <div className="mt-3 flex flex-col gap-2">
-                      <button
-                        type="button"
-                        onClick={pinCurrentRun}
-                        disabled={pinning}
-                        className="min-h-[44px] rounded-xl bg-ig-gradient px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
-                      >
-                        {pinning ? "Saving…" : "Pin for share link"}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={downloadSnapshotJson}
-                        className="min-h-[44px] rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 transition hover:bg-white/10"
-                      >
-                        Download JSON backup
-                      </button>
-                    </div>
-                    {pinStatus && (
-                      <p className="mt-2 break-all text-xs text-white/55">
-                        {pinStatus.startsWith("http") ? (
-                          <>
-                            Share:{" "}
-                            <Link
-                              href={pinnedGraphPath(handle)}
-                              className="text-ig-blue underline"
-                            >
-                              {pinnedGraphPath(handle)}
-                            </Link>
-                          </>
-                        ) : (
-                          pinStatus
-                        )}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {pinned &&
-                  ((isLinkedInCompany &&
-                    companyResult &&
-                    companyResult.scrapedAt > 0) ||
-                    (platform === "spotify" &&
-                      spotifyResult &&
-                      spotifyResult.scrapedAt > 0) ||
-                    (platform === "tiktok" &&
-                      tiktokResult &&
-                      tiktokResult.scrapedAt > 0) ||
-                    (displayData && displayData.scrapedAt > 0)) && (
-                    <p className="rounded-2xl border border-ig-blue/20 bg-ig-blue/5 px-4 py-3 text-xs text-white/55">
-                      Frozen snapshot from{" "}
-                      {new Date(
-                        isLinkedInCompany && companyResult
-                          ? companyResult.scrapedAt
-                          : platform === "spotify" && spotifyResult
-                            ? spotifyResult.scrapedAt
-                            : platform === "tiktok" && tiktokResult
-                              ? tiktokResult.scrapedAt
-                              : displayData!.scrapedAt,
-                      ).toLocaleString()}
-                      . No live scrape runs on this page.
-                    </p>
-                  )}
-
-                {activeData && !isAlternatePlatform ? (
-                  <ShareCard
-                    handle={activeData.profile.username}
-                    stats={activeData.stats}
-                    platform={
-                      platform === "facebook" ||
-                      platform === "linkedin" ||
-                      platform === "instagram"
-                        ? platform
-                        : "linkedin"
-                    }
-                    onDownload={downloadPng}
-                  />
-                ) : (
-                  !data?.pinned &&
-                  !pinned && (
-                    <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center text-sm text-white/40">
-                      Share options appear when a social graph is loaded.
-                    </div>
-                  )
-                )}
-              </div>
-            )}
-          </div>
-        )}
+        </div>
 
         </div>
         </div>

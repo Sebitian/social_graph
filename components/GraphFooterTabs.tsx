@@ -1,15 +1,15 @@
 "use client";
 
 import type { LucideIcon } from "lucide-react";
-import { BarChart3, Network, Share2, UserCircle } from "lucide-react";
+import { BarChart3, MessageCircle, Network, User } from "lucide-react";
 
-export type FooterTab = "map" | "analytics" | "profile" | "share";
+export type FooterTab = "map" | "analytics" | "chat" | "profile";
 
 const TABS: { id: FooterTab; label: string; Icon: LucideIcon }[] = [
   { id: "map", label: "Map", Icon: Network },
   { id: "analytics", label: "Analytics", Icon: BarChart3 },
-  { id: "profile", label: "Profile", Icon: UserCircle },
-  { id: "share", label: "Share", Icon: Share2 },
+  { id: "chat", label: "Chat", Icon: MessageCircle },
+  { id: "profile", label: "Profile", Icon: User },
 ];
 
 interface Props {

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isSignedMediaExpired } from "@/lib/avatarUrl";
 
 export const runtime = "nodejs";
 
@@ -18,6 +19,9 @@ const ALLOWED_HOST_SUFFIXES = [
   // Demo / home showcase portraits
   "randomuser.me",
 ];
+
+const MISS_TTL_MS = 1000 * 60 * 60;
+const missCache = new Map<string, number>();
 
 function hostAllowed(hostname: string): boolean {
   const host = hostname.toLowerCase();
@@ -40,6 +44,30 @@ function refererFor(hostname: string): string {
   return "https://www.google.com/";
 }
 
+function rememberMiss(url: string) {
+  missCache.set(url, Date.now());
+}
+
+function recentlyMissed(url: string): boolean {
+  const at = missCache.get(url);
+  if (at == null) return false;
+  if (Date.now() - at > MISS_TTL_MS) {
+    missCache.delete(url);
+    return false;
+  }
+  return true;
+}
+
+/** Expected CDN miss (expired signature, 403, non-image) — not a proxy outage. */
+function notFound() {
+  return new NextResponse(null, {
+    status: 404,
+    headers: {
+      "Cache-Control": "public, max-age=86400, s-maxage=86400",
+    },
+  });
+}
+
 export async function GET(req: NextRequest) {
   const raw = req.nextUrl.searchParams.get("url");
   if (!raw) {
@@ -60,8 +88,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Host not allowed" }, { status: 400 });
   }
 
+  const href = target.toString();
+  if (isSignedMediaExpired(href) || recentlyMissed(href)) {
+    return notFound();
+  }
+
   try {
-    const imageRes = await fetch(target.toString(), {
+    const imageRes = await fetch(href, {
       headers: {
         "User-Agent": USER_AGENT,
         Referer: refererFor(target.hostname),
@@ -71,16 +104,10 @@ export async function GET(req: NextRequest) {
       redirect: "follow",
     });
 
-    if (!imageRes.ok || !imageRes.body) {
-      return NextResponse.json(
-        { error: "Upstream image failed" },
-        { status: imageRes.status === 404 ? 404 : 502 },
-      );
-    }
-
-    const contentType = imageRes.headers.get("content-type") ?? "image/jpeg";
-    if (!contentType.startsWith("image/")) {
-      return NextResponse.json({ error: "Not an image" }, { status: 502 });
+    const contentType = imageRes.headers.get("content-type") ?? "";
+    if (!imageRes.ok || !imageRes.body || !contentType.startsWith("image/")) {
+      rememberMiss(href);
+      return notFound();
     }
 
     return new NextResponse(imageRes.body, {
@@ -91,6 +118,7 @@ export async function GET(req: NextRequest) {
       },
     });
   } catch {
-    return NextResponse.json({ error: "Avatar proxy failed" }, { status: 502 });
+    rememberMiss(href);
+    return notFound();
   }
 }

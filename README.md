@@ -28,9 +28,14 @@ Share link: `/demo` (Diandra) or `/graph/<handle>/pinned` (other handles)
 
 ## Deploy on Vercel
 
-1. Import this repo on [Vercel](https://vercel.com)
-2. Add **Blob** storage (connects `BLOB_READ_WRITE_TOKEN`)
-3. Set `NEXT_PUBLIC_SITE_URL` and `SNAPSHOT_PIN_SECRET`
-4. Upload snapshot with `--push` (see above)
+Step-by-step (env vars, Blob, KV, Chat / TokenRouter): **[docs/vercel.md](docs/vercel.md)**
 
-Optional: `APIFY_TOKEN` + Vercel KV for live scrapes.
+Short version:
+
+1. Import this repo on [Vercel](https://vercel.com/new) (Next.js is auto-detected).
+2. Set `NEXT_PUBLIC_SITE_URL` and `SNAPSHOT_PIN_SECRET`.
+3. Set `TOKENROUTER_API_KEY` so the Chat tab works.
+4. Optional: add **Blob** (new pinned snapshots) and **KV** (live-scrape cache).
+5. Leave `APIFY_TOKEN` unset unless you have Apify credits — `/demo` is snapshot-only.
+
+Redeploy after changing any `NEXT_PUBLIC_*` variable.
