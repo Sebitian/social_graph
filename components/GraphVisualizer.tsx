@@ -27,6 +27,7 @@ import {
   resolveProfilePicUrl,
   type AvatarPlatform,
 } from "@/lib/avatarUrl";
+import { INSTAGRAM_EMPLOYEE_COLOR } from "@/lib/instagramPeople";
 
 type FGNode = GraphNode & {
   x?: number;
@@ -110,10 +111,14 @@ function isMobileWidth(width: number): boolean {
   return width > 0 && width < 640;
 }
 
-function visualNodeRadius(node: FGNode, mobile: boolean): number {
+function visualNodeRadius(
+  node: FGNode,
+  mobile: boolean,
+  featured = false,
+): number {
   const scale = mobile ? 1.14 : 1;
   if (node.group === "self") return SELF_NODE_RADIUS * scale;
-  return MEMBER_NODE_RADIUS * scale;
+  return (MEMBER_NODE_RADIUS + (featured ? 3 : 0)) * scale;
 }
 
 function endpointId(end: string | FGNode): string {
@@ -349,6 +354,11 @@ interface Props {
   labelStyle?: "auto" | "handles";
   /** Drives live avatar proxies (LinkedIn / Instagram CDN links expire). */
   platform?: AvatarPlatform;
+  /** Always-labeled nodes (e.g. company employees) with a distinct ring. */
+  featuredIds?: readonly string[];
+  /** Featured nodes that cannot be opened — drawn muted. */
+  mutedFeaturedIds?: readonly string[];
+  hintText?: string;
 }
 
 export default function GraphVisualizer({
@@ -359,6 +369,9 @@ export default function GraphVisualizer({
   onSelect,
   labelStyle = "auto",
   platform = null,
+  featuredIds,
+  mutedFeaturedIds,
+  hintText,
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const fgRef = useRef<ForceGraphInstance | null>(null);
@@ -513,11 +526,23 @@ export default function GraphVisualizer({
     return map;
   }, [friendClusters]);
 
+  const featuredIdSet = useMemo(() => {
+    const set = new Set<string>();
+    for (const id of featuredIds ?? []) set.add(id.toLowerCase());
+    for (const id of mutedFeaturedIds ?? []) set.add(id.toLowerCase());
+    return set;
+  }, [featuredIds, mutedFeaturedIds]);
+
+  const mutedFeaturedIdSet = useMemo(
+    () => new Set((mutedFeaturedIds ?? []).map((id) => id.toLowerCase())),
+    [mutedFeaturedIds],
+  );
+
   const defaultLabelIds = useMemo(() => {
     const count = isMobileWidth(size.width)
       ? DEFAULT_LABEL_COUNT_MOBILE
       : DEFAULT_LABEL_COUNT;
-    return new Set(
+    const ids = new Set(
       [...members]
         .sort(
           (a, b) =>
@@ -527,7 +552,11 @@ export default function GraphVisualizer({
         .slice(0, count)
         .map((n) => n.id),
     );
-  }, [members, size.width]);
+    for (const member of members) {
+      if (featuredIdSet.has(member.id.toLowerCase())) ids.add(member.id);
+    }
+    return ids;
+  }, [members, size.width, featuredIdSet]);
 
   useEffect(() => {
     if (mapLayout && appearStartRef.current === 0) {
@@ -706,14 +735,18 @@ export default function GraphVisualizer({
     (node: FGNode, ctx: CanvasRenderingContext2D, scale: number) => {
       if (avatarRevision < 0) return;
       const mobile = isMobileWidth(size.width);
-      const dim = isDim(node);
+      const featured = featuredIdSet.has(node.id.toLowerCase());
+      const mutedFeatured = mutedFeaturedIdSet.has(node.id.toLowerCase());
+      const dim = isDim(node) && !featured;
       const x = node.x ?? 0;
       const y = node.y ?? 0;
-      const r = visualNodeRadius(node, mobile);
+      const r = visualNodeRadius(node, mobile, featured);
       const color =
         node.group === "self"
           ? SELF_COLOR
-          : clusterColorByMember.get(node.id) ?? UNCLUSTERED_COLOR;
+          : featured
+            ? INSTAGRAM_EMPLOYEE_COLOR
+            : clusterColorByMember.get(node.id) ?? UNCLUSTERED_COLOR;
       const avatarUrl = avatarUrlByNodeRef.current.get(node.id) ?? node.profilePicUrl;
       const avatar = avatarUrl
         ? avatarCacheRef.current.get(avatarUrl)
@@ -730,7 +763,8 @@ export default function GraphVisualizer({
       }
 
       ctx.save();
-      ctx.globalAlpha = (dim ? (mobile ? 0.4 : 0.22) : 1) * appear;
+      ctx.globalAlpha =
+        (mutedFeatured ? 0.62 : dim ? (mobile ? 0.4 : 0.22) : 1) * appear;
 
       if (node.group === "self" || isHovered || isSelected) {
         ctx.shadowColor = color;
@@ -766,15 +800,26 @@ export default function GraphVisualizer({
       ctx.strokeStyle = node.group === "self" ? "rgba(255,255,255,0.95)" : color;
       ctx.stroke();
 
+      if (featured) {
+        ctx.beginPath();
+        ctx.arc(x, y, r + 4.5, 0, 2 * Math.PI);
+        ctx.lineWidth = 2;
+        ctx.setLineDash(mutedFeatured ? [3 / scale, 2.5 / scale] : []);
+        ctx.strokeStyle = INSTAGRAM_EMPLOYEE_COLOR;
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
       if (isSelected) {
         ctx.beginPath();
-        ctx.arc(x, y, r + 4, 0, 2 * Math.PI);
+        ctx.arc(x, y, r + (featured ? 7 : 4), 0, 2 * Math.PI);
         ctx.lineWidth = 1.5;
         ctx.strokeStyle = "rgba(255,255,255,0.85)";
         ctx.stroke();
       }
 
       const showLabel =
+        featured ||
         labelStyle === "handles" ||
         node.group === "self" ||
         isHovered ||
@@ -784,16 +829,18 @@ export default function GraphVisualizer({
       if (showLabel) {
         const handle = node.label.replace(/^@/, "");
         const label =
-          labelStyle === "handles"
-            ? `@${handle}`
-            : node.group === "self"
-              ? node.fullName || `@${handle}`
-              : node.fullName || node.label;
+          featured
+            ? node.fullName || node.label
+            : labelStyle === "handles"
+              ? `@${handle}`
+              : node.group === "self"
+                ? node.fullName || `@${handle}`
+                : node.fullName || node.label;
         const fontSize = Math.max(
           mobile ? 4.5 : 3.5,
           (mobile ? 12 : 10) / scale,
         );
-        ctx.font = `${node.group === "self" ? "700" : "500"} ${fontSize}px ui-sans-serif, system-ui`;
+        ctx.font = `${node.group === "self" || featured ? "700" : "500"} ${fontSize}px ui-sans-serif, system-ui`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "rgba(255,255,255,0.95)";
@@ -802,6 +849,15 @@ export default function GraphVisualizer({
           ctx.shadowBlur = 3 / scale;
         }
         ctx.fillText(label, x, y + r + fontSize + 2);
+        if (featured) {
+          const caption = mutedFeatured ? "No graph" : "Employee";
+          const captionSize = Math.max(mobile ? 3.5 : 3, (mobile ? 9 : 8) / scale);
+          ctx.font = `500 ${captionSize}px ui-sans-serif, system-ui`;
+          ctx.fillStyle = mutedFeatured
+            ? "rgba(255,255,255,0.45)"
+            : INSTAGRAM_EMPLOYEE_COLOR;
+          ctx.fillText(caption, x, y + r + fontSize + captionSize + 5);
+        }
         ctx.shadowBlur = 0;
       }
 
@@ -814,6 +870,8 @@ export default function GraphVisualizer({
       defaultLabelIds,
       isDim,
       clusterColorByMember,
+      featuredIdSet,
+      mutedFeaturedIdSet,
       labelStyle,
       size.width,
     ],
@@ -822,13 +880,14 @@ export default function GraphVisualizer({
   const paintPointerArea = useCallback(
     (node: FGNode, color: string, ctx: CanvasRenderingContext2D) => {
       const mobile = isMobileWidth(size.width);
-      const r = visualNodeRadius(node, mobile) + (mobile ? 8 : 5);
+      const featured = featuredIdSet.has(node.id.toLowerCase());
+      const r = visualNodeRadius(node, mobile, featured) + (mobile ? 8 : 5);
       ctx.beginPath();
       ctx.arc(node.x ?? 0, node.y ?? 0, r, 0, 2 * Math.PI);
       ctx.fillStyle = color;
       ctx.fill();
     },
-    [size.width],
+    [size.width, featuredIdSet],
   );
 
   const linkTouchesSelection = useCallback(
@@ -898,7 +957,7 @@ export default function GraphVisualizer({
     <div ref={wrapRef} className={`max-sm:touch-pan-y sm:touch-none ${className}`}>
       {interactive && showHint && members.length > 0 && (
         <div className="pointer-events-none absolute bottom-4 left-1/2 z-10 max-w-[90%] -translate-x-1/2 animate-pulse rounded-full border border-white/15 bg-black/70 px-3.5 py-1.5 text-center text-[11px] font-medium text-white/75 backdrop-blur sm:bottom-6 sm:max-w-none sm:px-4">
-          Tap anyone to explore their connections
+          {hintText ?? "Tap anyone to explore their connections"}
         </div>
       )}
 

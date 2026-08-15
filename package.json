@@ -10,6 +10,7 @@
     "pin-snapshot": "node scripts/pin-snapshot.mjs",
     "import-raw-snapshot": "npx tsx scripts/import-raw-snapshot.ts",
     "import-instagram-snapshot": "npx tsx scripts/import-instagram-snapshot.ts",
+    "import-instagram-people-snapshot": "npx tsx scripts/import-instagram-people-snapshot.ts",
     "import-spotify-snapshot": "npx tsx scripts/import-spotify-snapshot.ts",
     "import-company-snapshot": "npx tsx scripts/import-company-snapshot.ts"
   },

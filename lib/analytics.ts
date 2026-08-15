@@ -3,6 +3,7 @@
 import type {
   AudienceSnapshot,
   GraphNode,
+  ProfilePost,
   ScrapeResult,
   SocialSourcePlatform,
 } from "@/lib/types";
@@ -424,6 +425,18 @@ export interface AnalyticsBreakdownRow {
   leadingColor?: string;
 }
 
+export interface ContentKindStats {
+  count: number;
+  likes: number;
+  comments: number;
+  reactions: number;
+  views: number;
+  likesSeries: ChartPoint[];
+  commentsSeries: ChartPoint[];
+  reactionsSeries: ChartPoint[];
+  viewsSeries: ChartPoint[];
+}
+
 export interface SocialAnalyticsOverview {
   comments: number;
   reactions: number;
@@ -446,6 +459,8 @@ export interface SocialAnalyticsOverview {
   /** @deprecated use newPeople */
   newProfiles: AnalyticsPersonRow[];
   topPosts: AnalyticsPostRow[];
+  feedPosts: AnalyticsPostRow[];
+  reelPosts: AnalyticsPostRow[];
   reactionMix: AnalyticsBreakdownRow[];
   /**
    * True when posts carry aggregate likes/plays from the scraper
@@ -462,6 +477,9 @@ export interface SocialAnalyticsOverview {
   postPlaysDelta: AnalyticsDelta;
   postLikesSeries: ChartPoint[];
   postPlaysSeries: ChartPoint[];
+  /** Feed posts (images/carousels) vs reels, for Instagram tiles. */
+  feed: ContentKindStats;
+  reels: ContentKindStats;
 }
 
 function memberNodes(data: ScrapeResult): GraphNode[] {
@@ -528,6 +546,54 @@ function isSoftPresenceComment(c: {
     text === "Tagged in this reel" ||
     text === "Mentioned in this reel"
   );
+}
+
+export function isReelPost(post: Pick<ProfilePost, "postType">): boolean {
+  return (post.postType ?? "").toLowerCase() === "reel";
+}
+
+type ContentAccum = {
+  count: number;
+  likes: number;
+  comments: number;
+  reactions: number;
+  views: number;
+  likeEvents: { t: number; weight?: number }[];
+  commentEvents: { t: number; weight?: number }[];
+  reactionEvents: { t: number; weight?: number }[];
+  viewEvents: { t: number; weight?: number }[];
+};
+
+function emptyContentAccum(): ContentAccum {
+  return {
+    count: 0,
+    likes: 0,
+    comments: 0,
+    reactions: 0,
+    views: 0,
+    likeEvents: [],
+    commentEvents: [],
+    reactionEvents: [],
+    viewEvents: [],
+  };
+}
+
+function finishContentKind(
+  accum: ContentAccum,
+  range: AnalyticsRangeId,
+  now: number,
+): ContentKindStats {
+  return {
+    count: accum.count,
+    likes: accum.likes,
+    comments: accum.comments,
+    reactions: accum.reactions,
+    views: accum.views,
+    likesSeries: bucketSeriesPoints(accum.likeEvents, range, now),
+    commentsSeries: bucketSeriesPoints(accum.commentEvents, range, now),
+    reactionsSeries: bucketSeriesPoints(accum.reactionEvents, range, now),
+    viewsSeries: bucketSeriesPoints(accum.viewEvents, range, now),
+  };
 }
 
 export function computeSocialAnalytics(
@@ -682,16 +748,19 @@ export function computeSocialAnalytics(
   const playEvents: { t: number; weight?: number }[] = [];
   const postCommentEvents: { t: number; weight?: number }[] = [];
   let hasPostMetrics = false;
+  const feedAccum = emptyContentAccum();
+  const reelAccum = emptyContentAccum();
 
   for (const post of posts) {
     const ms = parseEventMs(post.postedAt, now);
     const likes = post.likesCount ?? 0;
-    const plays = post.videoPlayCount ?? 0;
+    const plays = post.videoPlayCount ?? post.videoViewCount ?? 0;
     const shares = post.sharesCount ?? 0;
     const postComments = post.commentsCount ?? 0;
     if (
       post.likesCount != null ||
       post.videoPlayCount != null ||
+      post.videoViewCount != null ||
       post.sharesCount != null ||
       post.commentsCount != null
     ) {
@@ -711,6 +780,23 @@ export function computeSocialAnalytics(
         if (postComments > 0) {
           postCommentEvents.push({ t: ms, weight: postComments });
         }
+      }
+      const personReactions = postStats.get(post.id)?.reactions ?? 0;
+      const bucket = isReelPost(post) ? reelAccum : feedAccum;
+      bucket.count += 1;
+      bucket.likes += likes;
+      bucket.comments += postComments;
+      bucket.reactions += personReactions;
+      bucket.views += plays;
+      if (ms != null) {
+        if (likes > 0) bucket.likeEvents.push({ t: ms, weight: likes });
+        if (postComments > 0) {
+          bucket.commentEvents.push({ t: ms, weight: postComments });
+        }
+        if (personReactions > 0) {
+          bucket.reactionEvents.push({ t: ms, weight: personReactions });
+        }
+        if (plays > 0) bucket.viewEvents.push({ t: ms, weight: plays });
       }
       // Prefer aggregate post metrics for the Posts leaderboard when present.
       if (hasPostMetrics) {
@@ -784,10 +870,10 @@ export function computeSocialAnalytics(
     .slice(0, 40)
     .map(({ node, comments: c, reactions: r }) => toPersonRow(node, c, r));
 
-  const topPosts: AnalyticsPostRow[] = [...postStats.entries()]
-    .map(([id, stats]) => {
+  const allPostRows: AnalyticsPostRow[] = [...postStats.entries()].map(
+    ([id, stats]) => {
       const post = postById.get(id);
-      const plays = post?.videoPlayCount ?? 0;
+      const plays = post?.videoPlayCount ?? post?.videoViewCount ?? 0;
       const shares = post?.sharesCount ?? 0;
       return {
         id,
@@ -801,8 +887,18 @@ export function computeSocialAnalytics(
         postType: post?.postType,
         value: stats.comments + stats.reactions + plays,
       };
-    })
-    .sort((a, b) => b.value - a.value)
+    },
+  );
+  const byEngagement = (a: AnalyticsPostRow, b: AnalyticsPostRow) =>
+    b.value - a.value;
+  const topPosts = [...allPostRows].sort(byEngagement).slice(0, 12);
+  const feedPosts = allPostRows
+    .filter((post) => !isReelPost(post))
+    .sort(byEngagement)
+    .slice(0, 12);
+  const reelPosts = allPostRows
+    .filter((post) => isReelPost(post))
+    .sort(byEngagement)
     .slice(0, 12);
 
   const reactionMix: AnalyticsBreakdownRow[] = [...reactionTypes.entries()]
@@ -853,6 +949,8 @@ export function computeSocialAnalytics(
     newPeople,
     newProfiles: newPeople,
     topPosts,
+    feedPosts,
+    reelPosts,
     reactionMix,
     hasPostMetrics,
     postLikes,
@@ -862,6 +960,8 @@ export function computeSocialAnalytics(
     postPlaysDelta: { pct: percentDelta(postPlays, prevPostPlays) },
     postLikesSeries,
     postPlaysSeries,
+    feed: finishContentKind(feedAccum, range, now),
+    reels: finishContentKind(reelAccum, range, now),
   };
 }
 

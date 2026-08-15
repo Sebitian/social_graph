@@ -3,6 +3,7 @@ import path from "path";
 import {
   buildScrapeResultFromInstagramRaw,
   flattenInstagramFollowers,
+  flattenInstagramReels,
   isInstagramCommentsDataset,
   isInstagramFollowersDataset,
   isInstagramPostsDataset,
@@ -11,7 +12,6 @@ import {
   type RawInstagramComment,
   type RawInstagramPost,
   type RawInstagramProfile,
-  type RawInstagramReel,
 } from "../lib/importInstagramRaw";
 
 /**
@@ -21,7 +21,8 @@ import {
  *     --posts <posts.json> \
  *     [--reels <reels.json>] \
  *     [--comments <comments.json>] \
- *     [--followers <followers.json>]
+ *     [--followers <followers.json>] \
+ *     [--no-soft-presence]
  *
  * Example:
  *   npx tsx scripts/import-instagram-snapshot.ts kossof-instagram \
@@ -29,31 +30,33 @@ import {
  *     --posts data/insta_raw/dataset_instagram-post-scraper_*.json \
  *     --reels data/insta_raw/dataset_instagram-reel-scraper_*.json \
  *     --comments data/insta_raw/dataset_instagram-comment-scraper_*.json \
- *     --followers data/insta_raw/dataset_instagram-followers-scraper_*.json
+ *     --followers data/insta_raw/dataset_instagram-followers-scraper_*.json \
+ *     --no-soft-presence
  */
 function parseArgs(argv: string[]) {
   const handle = argv[0]?.replace(/^@/, "").trim().toLowerCase();
   const flags: Record<string, string> = {};
+  const boolFlags = new Set<string>();
   for (let i = 1; i < argv.length; i += 1) {
     const arg = argv[i];
     if (!arg.startsWith("--")) continue;
     const key = arg.slice(2);
     const value = argv[i + 1];
     if (!value || value.startsWith("--")) {
-      console.error(`Missing value for --${key}`);
-      process.exit(1);
+      boolFlags.add(key);
+      continue;
     }
     flags[key] = value;
     i += 1;
   }
-  return { handle, flags };
+  return { handle, flags, boolFlags };
 }
 
-const { handle, flags } = parseArgs(process.argv.slice(2));
+const { handle, flags, boolFlags } = parseArgs(process.argv.slice(2));
 
 if (!handle || !flags.posts) {
   console.error(
-    "Usage: npx tsx scripts/import-instagram-snapshot.ts <handle> --posts <posts.json> [--profile <profile.json>] [--reels <reels.json>] [--comments <comments.json>] [--followers <followers.json>]",
+    "Usage: npx tsx scripts/import-instagram-snapshot.ts <handle> --posts <posts.json> [--profile <profile.json>] [--reels <reels.json>] [--comments <comments.json>] [--followers <followers.json>] [--no-soft-presence]",
   );
   process.exit(1);
 }
@@ -85,14 +88,14 @@ if (flags.profile) {
   profile = (profileParsed as RawInstagramProfile[])[0] ?? null;
 }
 
-let reels: RawInstagramReel[] = [];
+let reels = [] as ReturnType<typeof flattenInstagramReels>;
 if (flags.reels) {
   const reelsParsed = readJson(flags.reels);
   if (!isInstagramReelsDataset(reelsParsed)) {
     console.error("Unrecognized reels format — expected instagram-reel-scraper export");
     process.exit(1);
   }
-  reels = reelsParsed as RawInstagramReel[];
+  reels = flattenInstagramReels(reelsParsed);
 }
 
 let comments: RawInstagramComment[] = [];
@@ -125,6 +128,7 @@ const result = buildScrapeResultFromInstagramRaw(handle, {
   reels,
   comments,
   followers,
+  includeSoftPresence: !boolFlags.has("no-soft-presence"),
 });
 
 const outDir = path.join(process.cwd(), "data", "snapshots");

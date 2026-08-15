@@ -4,6 +4,7 @@ import {
   readSpotifySnapshot,
   readCompanySnapshot,
   readTikTokSnapshot,
+  readInstagramPeopleSnapshot,
 } from "@/lib/snapshot";
 import { COMPANION_SNAPSHOTS, DEMO_HANDLE } from "@/lib/paths";
 import type { ScrapeResult, SocialSourcePlatform } from "@/lib/types";
@@ -32,6 +33,9 @@ export async function loadPinnedGraph(handle: string) {
   const spotifyData = await readSpotifySnapshot(COMPANION_SNAPSHOTS.spotify);
   const companyData = await readCompanySnapshot(COMPANION_SNAPSHOTS.company);
   const tiktokData = await readTikTokSnapshot(COMPANION_SNAPSHOTS.tiktok);
+  const instagramPeopleData = await readInstagramPeopleSnapshot(
+    COMPANION_SNAPSHOTS.instagramPeople,
+  );
 
   const initialPlatformData: Partial<
     Record<SocialSourcePlatform, ScrapeResult>
@@ -55,6 +59,7 @@ export async function loadPinnedGraph(handle: string) {
       spotifyData={spotifyData}
       companyData={companyData}
       tiktokData={tiktokData}
+      instagramPeopleData={instagramPeopleData}
     />
   );
 }

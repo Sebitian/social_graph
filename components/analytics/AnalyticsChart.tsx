@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { ChartPoint } from "@/lib/analytics";
 import { compactNumber } from "@/lib/graphUtils";
 
@@ -35,10 +35,24 @@ export default function AnalyticsChart({
 }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [hover, setHover] = useState<number | null>(null);
+  const [containerW, setContainerW] = useState(0);
+
+  const hasData = points.some((p) => p.v > 0);
+
+  useLayoutEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const update = () => setContainerW(el.clientWidth);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasData, points.length]);
 
   const width = Math.max(
     MIN_CHART_WIDTH,
     PAD.left + PAD.right + Math.max(points.length, 2) * MIN_SLOT_PX,
+    containerW,
   );
   const innerW = width - PAD.left - PAD.right;
   const innerH = HEIGHT - PAD.top - PAD.bottom;
@@ -83,8 +97,6 @@ export default function AnalyticsChart({
     return { maxY, yTicks, pathSolid, pathDash, coords };
   }, [points, innerW, innerH]);
 
-  const hasData = points.some((p) => p.v > 0);
-
   function onMove(clientX: number) {
     const el = scrollRef.current;
     if (!el || coords.length === 0) return;
@@ -108,7 +120,7 @@ export default function AnalyticsChart({
       : 0;
 
   return (
-    <div className={`relative rounded-b-xl ${className}`}>
+    <div className={`relative w-full rounded-b-xl ${className}`}>
       {!hasData ? (
         <div className="flex h-[220px] items-center justify-center text-sm text-white/35">
           {emptyLabel}
@@ -116,7 +128,7 @@ export default function AnalyticsChart({
       ) : (
         <div
           ref={scrollRef}
-          className="overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch] [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent]"
+          className="w-full overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch] [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent]"
           onMouseLeave={() => setHover(null)}
           onMouseMove={(e) => onMove(e.clientX)}
           onTouchStart={(e) => onMove(e.touches[0]?.clientX ?? 0)}

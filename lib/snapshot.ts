@@ -8,6 +8,10 @@ import {
 } from "./spotifyTypes";
 import { isCompanyResult, type CompanyResult } from "./companyTypes";
 import { isTikTokResult, type TikTokResult } from "./tiktokTypes";
+import {
+  isInstagramPeopleResult,
+  type InstagramPeopleResult,
+} from "./instagramPeople";
 import { blobConfigured } from "./blob";
 
 const SNAPSHOT_DIR = path.join(process.cwd(), "data", "snapshots");
@@ -38,7 +42,14 @@ function normalizeSnapshot(parsed: ScrapeResult): ScrapeResult {
 function asSocialSnapshot(parsed: unknown): ScrapeResult | null {
   if (!parsed || typeof parsed !== "object") return null;
   const kind = (parsed as { kind?: string }).kind;
-  if (kind === "spotify" || kind === "company" || kind === "tiktok") return null;
+  if (
+    kind === "spotify" ||
+    kind === "company" ||
+    kind === "tiktok" ||
+    kind === "instagram-people"
+  ) {
+    return null;
+  }
   if (!("profile" in parsed) || !("graph" in parsed)) return null;
   return normalizeSnapshot(parsed as ScrapeResult);
 }
@@ -231,6 +242,61 @@ export async function readCompanySnapshot(
       ...parsed,
       pinned: true,
       cached: true,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Read an Instagram employee-people snapshot from disk (and Blob when configured).
+ * Separate from the salon ScrapeResult companion.
+ */
+export async function readInstagramPeopleSnapshot(
+  handle: string,
+): Promise<InstagramPeopleResult | null> {
+  const clean = cleanHandle(handle);
+
+  if (blobConfigured()) {
+    try {
+      const meta = await head(snapshotBlobPathname(clean));
+      const response = await fetch(meta.downloadUrl);
+      if (response.ok) {
+        const parsed: unknown = await response.json();
+        if (isInstagramPeopleResult(parsed)) {
+          return {
+            ...parsed,
+            people: parsed.people.map((person) =>
+              person.result
+                ? {
+                    ...person,
+                    result: normalizeSnapshot(person.result),
+                  }
+                : person,
+            ),
+          };
+        }
+      }
+    } catch {
+      // fall through to disk
+    }
+  }
+
+  const file = snapshotPath(clean);
+  if (!fs.existsSync(file)) return null;
+  try {
+    const parsed: unknown = JSON.parse(fs.readFileSync(file, "utf-8"));
+    if (!isInstagramPeopleResult(parsed)) return null;
+    return {
+      ...parsed,
+      people: parsed.people.map((person) =>
+        person.result
+          ? {
+              ...person,
+              result: normalizeSnapshot(person.result),
+            }
+          : person,
+      ),
     };
   } catch {
     return null;

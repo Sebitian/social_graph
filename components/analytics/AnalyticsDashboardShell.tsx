@@ -19,6 +19,8 @@ export interface DashboardMetric extends KpiItem {
 
 interface Props {
   metrics: DashboardMetric[];
+  /** Optional labeled KPI groups (Instagram posts vs reels). */
+  metricGroups?: { label: string; items: DashboardMetric[] }[];
   /** Initial / controlled selected metric id. */
   defaultMetricId?: string;
   accent?: string;
@@ -116,6 +118,7 @@ function renderCard(card: CardConfig | undefined, searchableDefault = true) {
 
 export default function AnalyticsDashboardShell({
   metrics,
+  metricGroups,
   defaultMetricId,
   accent = "#60a5fa",
   chartMode = "line",
@@ -134,33 +137,56 @@ export default function AnalyticsDashboardShell({
   const [selectedId, setSelectedId] = useState(initial);
 
   useEffect(() => {
+    if (defaultMetricId) setSelectedId(defaultMetricId);
+  }, [defaultMetricId]);
+
+  useEffect(() => {
     if (!metrics.some((m) => m.id === selectedId)) {
       setSelectedId(metrics[0]?.id ?? "");
     }
   }, [metrics, selectedId]);
 
   const selected = metrics.find((m) => m.id === selectedId) ?? metrics[0];
+  const grouped = (metricGroups ?? []).filter((group) => group.items.length > 0);
+
+  const chart = selected?.chart != null ? (
+    selected.chart
+  ) : (
+    <AnalyticsChart
+      points={selected?.series ?? []}
+      accent={accent}
+      mode={selected?.chartMode ?? chartMode}
+      emptyLabel={chartEmptyLabel}
+    />
+  );
 
   return (
     <div className={`flex flex-col gap-3 ${className}`}>
       {audience}
 
-      <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.03]">
+      {grouped.length > 0 ? (
+        grouped.map((group) => (
+          <div key={group.label} className="flex flex-col gap-2">
+            <div className="px-0.5 text-[10px] font-semibold uppercase tracking-wide text-white/40">
+              {group.label}
+            </div>
+            <KpiStrip
+              items={group.items}
+              selectedId={selected?.id ?? ""}
+              onSelect={setSelectedId}
+            />
+          </div>
+        ))
+      ) : (
         <KpiStrip
           items={metrics}
           selectedId={selected?.id ?? ""}
           onSelect={setSelectedId}
         />
-        {selected?.chart != null ? (
-          selected.chart
-        ) : (
-          <AnalyticsChart
-            points={selected?.series ?? []}
-            accent={accent}
-            mode={selected?.chartMode ?? chartMode}
-            emptyLabel={chartEmptyLabel}
-          />
-        )}
+      )}
+
+      <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.03]">
+        {chart}
       </div>
 
       {(primary || secondary) && (

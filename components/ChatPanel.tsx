@@ -8,8 +8,11 @@ import {
   Copy,
   Loader2,
   MessageCircle,
+  Mic,
+  Square,
   SquarePen,
   User,
+  Volume2,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import ChatDataTable, {
@@ -17,6 +20,7 @@ import ChatDataTable, {
 } from "@/components/chat/ChatDataTable";
 import ChatMarkdown from "@/components/chat/ChatMarkdown";
 import ChatTimeChart from "@/components/chat/ChatTimeChart";
+import { useChatVoice } from "@/components/chat/useChatVoice";
 import {
   CompanyIcon,
   FacebookIcon,
@@ -25,7 +29,8 @@ import {
   TikTokIcon,
 } from "@/components/PlatformIcons";
 import { chartFromToolPart } from "@/lib/chat/chart";
-import { displayPartsFromMessage } from "@/lib/chat/display";
+import { displayPartsFromMessage, type ChatDisplayPart } from "@/lib/chat/display";
+import { spokenTextFromDisplay } from "@/lib/chat/speech";
 import type { ChatChart, ChatSourceId, ChatSourceInfo, ChatTable } from "@/lib/chat/types";
 import type { ScrapeBudget } from "@/lib/scrapeBudget";
 
@@ -52,6 +57,7 @@ const PROMPT_HIGHLIGHTS = [
   "over time",
   "this week",
   "this month",
+  "employees",
 ];
 
 type PromptSuggestion = {
@@ -104,6 +110,10 @@ function suggestions(sources: ChatSourceInfo[]): PromptSuggestion[] {
   } else if (ids.has("instagram")) {
     prompts.push({
       text: "Show Instagram plays over the past week",
+      sources: ["instagram"],
+    });
+    prompts.push({
+      text: "List Instagram employees and their follower counts",
       sources: ["instagram"],
     });
   } else if (ids.has("facebook")) {
@@ -264,6 +274,21 @@ function tableToMarkdown(table: ChatTable): string {
     .join("\n");
 }
 
+function displayFromMessage(parts: Array<{ type: string; text?: string }>): ChatDisplayPart[] {
+  return displayPartsFromMessage(
+    parts.map((part) => {
+      if (part.type === "text") return { type: "text", text: part.text };
+      if (isPresentTablePart(part)) {
+        return { type: "table", table: tableFromToolPart(part) };
+      }
+      if (isPresentChartPart(part)) {
+        return { type: "chart", chart: chartFromToolPart(part) };
+      }
+      return { type: part.type };
+    }),
+  );
+}
+
 function formatChatTranscript(
   messages: Array<{
     role: string;
@@ -273,18 +298,7 @@ function formatChatTranscript(
   const blocks: string[] = [];
   for (const message of messages) {
     const chunks: string[] = [];
-    const display = displayPartsFromMessage(
-      message.parts.map((part) => {
-        if (part.type === "text") return { type: "text", text: part.text };
-        if (isPresentTablePart(part)) {
-          return { type: "table", table: tableFromToolPart(part) };
-        }
-        if (isPresentChartPart(part)) {
-          return { type: "chart", chart: chartFromToolPart(part) };
-        }
-        return { type: part.type };
-      }),
-    );
+    const display = displayFromMessage(message.parts);
     for (const part of display) {
       if (part.type === "text") chunks.push(part.text);
       if (part.type === "table") chunks.push(tableToMarkdown(part.table));
@@ -433,6 +447,22 @@ export default function ChatPanel({
   const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [cooling, setCooling] = useState(false);
   const coolTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const {
+    listening,
+    speakingId,
+    sttSupported,
+    ttsSupported,
+    micError,
+    voices,
+    voiceURI,
+    selectVoice,
+    speak,
+    stopSpeaking,
+    stopListening,
+    toggleListening,
+    bindVoice,
+    consumeAskedWithVoice,
+  } = useChatVoice();
 
   const activeIds = useMemo(() => {
     const availableIds = sources.map((source) => source.id);
@@ -592,6 +622,8 @@ export default function ChatPanel({
   const submit = (text: string) => {
     const next = text.trim();
     if (next.length < 2 || busy || !canSend) return;
+    stopListening("cancel");
+    stopSpeaking();
     clearError();
     void sendMessage({ text: next });
     setInput("");
@@ -629,8 +661,34 @@ export default function ChatPanel({
 
   const isEmpty = messages.length === 0;
 
+  bindVoice({
+    setInput: (text) => {
+      setInput(text);
+      requestAnimationFrame(() => {
+        if (textareaRef.current) resizeInput(textareaRef.current);
+      });
+    },
+    submit: (text) => {
+      setInput(text);
+      submit(text);
+    },
+  });
+
+  useEffect(() => {
+    if (status !== "ready" || !ttsSupported) return;
+    if (!consumeAskedWithVoice()) return;
+    const last = [...messages]
+      .reverse()
+      .find((message) => message.role === "assistant");
+    if (!last) return;
+    const spoken = spokenTextFromDisplay(displayFromMessage(last.parts));
+    if (spoken) speak(last.id, spoken, { toggle: false });
+  }, [consumeAskedWithVoice, messages, speak, status, ttsSupported]);
+
   const startNewChat = () => {
     if (isEmpty && !input.trim()) return;
+    stopListening("cancel");
+    stopSpeaking();
     void stop();
     setMessages([]);
     clearError();
@@ -672,7 +730,9 @@ export default function ChatPanel({
           rows={1}
           disabled={busy || !canSend}
           placeholder={
-            quotaBlocked
+            listening
+              ? "Listening…"
+              : quotaBlocked
               ? "Demo question limit reached for today"
               : cooling
                 ? "Wait a few seconds…"
@@ -726,6 +786,27 @@ export default function ChatPanel({
               );
             })}
           </div>
+          {sttSupported ? (
+            <button
+              type="button"
+              onClick={() => toggleListening(input)}
+              disabled={(busy || !canSend) && !listening}
+              className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition ${
+                listening
+                  ? "animate-pulse border-red-400/50 bg-red-500 text-white"
+                  : "border-white/10 bg-transparent text-white/50 hover:border-white/20 hover:text-white/80 disabled:opacity-35"
+              }`}
+              aria-label={listening ? "Stop listening" : "Ask with voice"}
+              aria-pressed={listening}
+              title={
+                listening
+                  ? "Stop listening and send"
+                  : "Ask with voice"
+              }
+            >
+              <Mic className="h-4 w-4" />
+            </button>
+          ) : null}
           <button
             type="submit"
             disabled={busy || !canSend || !input.trim()}
@@ -736,6 +817,9 @@ export default function ChatPanel({
           </button>
         </div>
       </div>
+      {micError ? (
+        <p className="mt-2 px-1 text-xs text-red-200/80">{micError}</p>
+      ) : null}
     </form>
   );
 
@@ -752,6 +836,21 @@ export default function ChatPanel({
             </p>
           </div>
           <div className="flex shrink-0 items-center gap-2">
+            {ttsSupported && voices.length > 0 ? (
+              <select
+                aria-label="Read-aloud voice"
+                value={voiceURI}
+                onChange={(event) => selectVoice(event.target.value)}
+                className="max-w-[10.5rem] truncate rounded-lg bg-[#2a2a2a] px-2 py-1.5 text-[12px] text-white/80 outline-none transition hover:bg-[#333333] hover:text-white"
+                title="Read-aloud voice"
+              >
+                {voices.map((voice) => (
+                  <option key={voice.voiceURI} value={voice.voiceURI}>
+                    {voice.name}
+                  </option>
+                ))}
+              </select>
+            ) : null}
             <button
               type="button"
               onClick={startNewChat}
@@ -827,28 +926,13 @@ export default function ChatPanel({
         <>
           <div className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-4 py-4">
         {messages.map((message) => {
-          const display = displayPartsFromMessage(
-            message.parts.map((part) => {
-              if (part.type === "text") return { type: "text", text: part.text };
-              if (isPresentTablePart(part)) {
-                return {
-                  type: "table",
-                  toolCallId: part.toolCallId,
-                  table: tableFromToolPart(part),
-                };
-              }
-              if (isPresentChartPart(part)) {
-                return {
-                  type: "chart",
-                  toolCallId: part.toolCallId,
-                  chart: chartFromToolPart(part),
-                };
-              }
-              return { type: part.type };
-            }),
-          );
+          const display = displayFromMessage(message.parts);
           if (display.length === 0) return null;
           const isUser = message.role === "user";
+          const spoken = isUser ? "" : spokenTextFromDisplay(display);
+          const speakingThis = speakingId === message.id;
+          const streamingThis =
+            busy && !isUser && message.id === messages[messages.length - 1]?.id;
           return (
             <div
               key={message.id}
@@ -893,6 +977,22 @@ export default function ChatPanel({
                       />
                     );
                   })}
+                  {ttsSupported && spoken ? (
+                    <button
+                      type="button"
+                      disabled={streamingThis}
+                      onClick={() => speak(message.id, spoken)}
+                      className="inline-flex h-7 w-7 items-center justify-center rounded-full text-white/35 transition hover:bg-white/10 hover:text-white/80 disabled:opacity-30"
+                      aria-label={speakingThis ? "Stop reading" : "Read response"}
+                      title={speakingThis ? "Stop reading" : "Read response"}
+                    >
+                      {speakingThis ? (
+                        <Square className="h-3 w-3 fill-current" />
+                      ) : (
+                        <Volume2 className="h-3.5 w-3.5" />
+                      )}
+                    </button>
+                  ) : null}
                 </div>
               )}
             </div>

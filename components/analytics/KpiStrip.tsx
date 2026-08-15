@@ -36,6 +36,13 @@ function DeltaBadge({ delta }: { delta?: AnalyticsDelta }) {
   );
 }
 
+function gridClass(count: number): string {
+  if (count <= 1) return "grid-cols-1";
+  if (count === 2) return "grid-cols-2";
+  if (count === 3) return "grid-cols-3";
+  return "grid-cols-2 sm:grid-cols-4";
+}
+
 export default function KpiStrip({
   items,
   selectedId,
@@ -44,7 +51,7 @@ export default function KpiStrip({
 }: Props) {
   return (
     <div
-      className={`flex gap-0 overflow-x-auto border-b border-white/10 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${className}`}
+      className={`grid gap-2 ${gridClass(items.length)} ${className}`}
       role="tablist"
       aria-label="Metrics"
     >
@@ -57,24 +64,21 @@ export default function KpiStrip({
             role="tab"
             aria-selected={selected}
             onClick={() => onSelect(item.id)}
-            className={`relative min-w-[7.5rem] flex-1 px-3 py-3 text-left transition sm:min-w-0 sm:px-4 ${
-              selected ? "text-white" : "text-white/55 hover:text-white/80"
+            className={`min-w-0 rounded-xl border px-3 py-2.5 text-left transition sm:px-4 ${
+              selected
+                ? "border-white/25 bg-white/[0.07] text-white"
+                : "border-white/10 bg-white/[0.03] text-white/70 hover:border-white/20 hover:text-white"
             }`}
           >
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-medium tracking-wide">
+              <span className="text-[11px] font-medium tracking-wide text-white/55">
                 {item.label}
               </span>
               <DeltaBadge delta={item.delta} />
             </div>
-            <div className="mt-1 font-mono text-2xl font-semibold tracking-tight tabular-nums sm:text-[1.75rem]">
+            <div className="mt-1 font-mono text-2xl font-semibold tracking-tight tabular-nums text-white sm:text-[1.75rem]">
               {item.value}
             </div>
-            <span
-              className={`absolute inset-x-3 bottom-0 h-[2px] rounded-full transition ${
-                selected ? "bg-white" : "bg-transparent"
-              }`}
-            />
           </button>
         );
       })}

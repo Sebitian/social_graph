@@ -4,6 +4,7 @@ export const DEMO_HANDLE = "diandra";
 /** Extra platform demos loaded alongside the primary pinned handle. */
 export const COMPANION_SNAPSHOTS = {
   instagram: "kossof-instagram",
+  instagramPeople: "kossof-instagram-people",
   spotify: "sebastian-spotify",
   company: "formationbio",
   facebook: "kossof-facebook",

@@ -247,6 +247,8 @@ export interface ProfilePost {
   sharesCount?: number;
   /** Video/reel play count when available. */
   videoPlayCount?: number;
+  /** Instagram view count when the reel scraper provides it separately. */
+  videoViewCount?: number;
   /** Platform media type: Image, Video, Sidecar, Reel, etc. */
   postType?: string;
 }

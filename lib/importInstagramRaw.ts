@@ -42,6 +42,15 @@ export interface RawInstagramProfile {
     date_joined?: string;
     country?: string;
   };
+  latestPosts?: RawInstagramPost[];
+}
+
+export interface RawInstagramTaggedUser {
+  username?: string;
+  full_name?: string;
+  profile_pic_url?: string;
+  is_verified?: boolean;
+  id?: string;
 }
 
 /** Raw post row from apify/instagram-post-scraper. */
@@ -57,10 +66,16 @@ export interface RawInstagramPost {
   likesCount?: number;
   commentsCount?: number;
   hashtags?: string[];
+  mentions?: string[];
+  taggedUsers?: RawInstagramTaggedUser[];
+  coauthorProducers?: RawInstagramTaggedUser[];
+  locationName?: string;
   ownerUsername?: string;
   ownerId?: string;
   ownerFullName?: string;
   videoUrl?: string;
+  videoPlayCount?: number;
+  videoViewCount?: number;
 }
 
 /** Nested comment on a reel (latestComments). */
@@ -154,6 +169,8 @@ export interface InstagramRawInputs {
   reels?: RawInstagramReel[];
   comments?: RawInstagramComment[];
   followers?: RawInstagramFollower[];
+  /** Followers / tags / mentions with no comments or reactions. Default true. */
+  includeSoftPresence?: boolean;
 }
 
 function relativeWhen(timestamp?: string): string {
@@ -315,6 +332,57 @@ function resolvePostType(
   return post.type || "Image";
 }
 
+function reelToProfilePost(reel: RawInstagramReel): ProfilePost | null {
+  if (!reel.id) return null;
+  return {
+    id: reel.id,
+    url: reel.url,
+    label: postSnippet(reel.caption),
+    postedAt: reel.timestamp,
+    imageUrl: reel.displayUrl,
+    likesCount: normalizeLikes(reel.likesCount),
+    commentsCount: reel.commentsCount,
+    sharesCount: reel.sharesCount,
+    videoPlayCount: reel.videoPlayCount ?? reel.videoViewCount,
+    videoViewCount: reel.videoViewCount,
+    postType: "Reel",
+  };
+}
+
+function mergeReelOntoPost(post: ProfilePost, reel: ProfilePost): ProfilePost {
+  return {
+    ...post,
+    url: reel.url || post.url,
+    label: reel.label || post.label,
+    postedAt: reel.postedAt || post.postedAt,
+    imageUrl: reel.imageUrl || post.imageUrl,
+    likesCount: reel.likesCount ?? post.likesCount,
+    commentsCount: reel.commentsCount ?? post.commentsCount,
+    sharesCount: reel.sharesCount ?? post.sharesCount,
+    videoPlayCount: reel.videoPlayCount ?? post.videoPlayCount,
+    videoViewCount: reel.videoViewCount ?? post.videoViewCount,
+    postType: "Reel",
+  };
+}
+
+export function mergeReelsIntoProfilePosts(
+  posts: ProfilePost[],
+  reels: RawInstagramReel[],
+): ProfilePost[] {
+  const byId = new Map(posts.map((post) => [post.id, { ...post }]));
+  for (const reel of reels) {
+    const extra = reelToProfilePost(reel);
+    if (!extra) continue;
+    const existing = byId.get(extra.id);
+    byId.set(extra.id, existing ? mergeReelOntoPost(existing, extra) : extra);
+  }
+  return [...byId.values()].sort((a, b) => {
+    const ta = a.postedAt ? Date.parse(a.postedAt) : 0;
+    const tb = b.postedAt ? Date.parse(b.postedAt) : 0;
+    return tb - ta;
+  });
+}
+
 function buildProfilePosts(
   posts: RawInstagramPost[],
   reels: RawInstagramReel[],
@@ -323,13 +391,11 @@ function buildProfilePosts(
     reels.filter((r) => r.id).map((r) => [r.id as string, r]),
   );
   const built: ProfilePost[] = [];
-  const seen = new Set<string>();
 
   for (const post of posts) {
     if (!post.id) continue;
-    seen.add(post.id);
     const reel = reelById.get(post.id);
-    built.push({
+    const row: ProfilePost = {
       id: post.id,
       url: post.url || reel?.url,
       label: postSnippet(post.caption || reel?.caption),
@@ -338,33 +404,15 @@ function buildProfilePosts(
       likesCount: normalizeLikes(reel?.likesCount ?? post.likesCount),
       commentsCount: reel?.commentsCount ?? post.commentsCount,
       sharesCount: reel?.sharesCount,
-      videoPlayCount: reel?.videoPlayCount ?? reel?.videoViewCount,
+      videoPlayCount:
+        reel?.videoPlayCount ?? post.videoPlayCount ?? reel?.videoViewCount,
+      videoViewCount: reel?.videoViewCount,
       postType: resolvePostType(post, reelById),
-    });
+    };
+    built.push(row);
   }
 
-  // Reels not present in the posts export (shouldn't happen often).
-  for (const reel of reels) {
-    if (!reel.id || seen.has(reel.id)) continue;
-    built.push({
-      id: reel.id,
-      url: reel.url,
-      label: postSnippet(reel.caption),
-      postedAt: reel.timestamp,
-      imageUrl: reel.displayUrl,
-      likesCount: normalizeLikes(reel.likesCount),
-      commentsCount: reel.commentsCount,
-      sharesCount: reel.sharesCount,
-      videoPlayCount: reel.videoPlayCount ?? reel.videoViewCount,
-      postType: "Reel",
-    });
-  }
-
-  return built.sort((a, b) => {
-    const ta = a.postedAt ? Date.parse(a.postedAt) : 0;
-    const tb = b.postedAt ? Date.parse(b.postedAt) : 0;
-    return tb - ta;
-  });
+  return mergeReelsIntoProfilePosts(built, reels);
 }
 
 function postIdFromComment(
@@ -552,6 +600,93 @@ function peopleFromInstagram(
     }
   }
 
+  const addSoftTag = (opts: {
+    username?: string;
+    fullName?: string;
+    profilePicUrl?: string;
+    isVerified?: boolean;
+    userId?: string;
+    postId?: string;
+    position: string;
+    text: string;
+    postType?: PostComment["postType"];
+  }) => {
+    const username = opts.username?.replace(/^@/, "").trim().toLowerCase();
+    if (!username || username === handle) return;
+    if (opts.userId && selfIds.has(opts.userId)) return;
+    const key = opts.userId ? `id:${opts.userId}` : `user:${username}`;
+    const person = ensurePerson(byKey, key, {
+      username,
+      fullName: opts.fullName,
+      profilePicUrl: opts.profilePicUrl,
+      isVerified: opts.isVerified,
+      position: opts.position,
+    });
+    if (person.history.length === 0) {
+      person.history.push({
+        authorUsername: person.username,
+        postId: opts.postId,
+        text: opts.text,
+        when: "recently",
+        post: "Tagged",
+        isReply: false,
+        isTopLevel: true,
+        postType: opts.postType ?? "unknown",
+        captionCategory: "unknown",
+      });
+    }
+  };
+
+  for (const post of posts) {
+    if (!post.id) continue;
+    const postType: PostComment["postType"] =
+      post.productType === "clips" || post.type === "Video" ? "reel" : "unknown";
+
+    for (const tagged of post.taggedUsers ?? []) {
+      addSoftTag({
+        username: tagged.username,
+        fullName: tagged.full_name,
+        profilePicUrl: tagged.profile_pic_url,
+        isVerified: tagged.is_verified,
+        userId: tagged.id,
+        postId: post.id,
+        position: "Tagged in post",
+        text: "Tagged in this post",
+        postType,
+      });
+    }
+
+    for (const coauthor of post.coauthorProducers ?? []) {
+      addSoftTag({
+        username: coauthor.username,
+        fullName: coauthor.full_name,
+        profilePicUrl: coauthor.profile_pic_url,
+        isVerified: coauthor.is_verified,
+        userId: coauthor.id,
+        postId: post.id,
+        position: "Collaborator",
+        text: "Co-authored this post",
+        postType,
+      });
+    }
+
+    const captionMentions = [
+      ...(post.mentions ?? []),
+      ...((post.caption ?? "").match(/@([a-z0-9._]+)/gi) ?? []).map((m) =>
+        m.slice(1),
+      ),
+    ];
+    for (const mention of captionMentions) {
+      addSoftTag({
+        username: mention,
+        postId: post.id,
+        position: "Mentioned in post",
+        text: "Mentioned in this post",
+        postType,
+      });
+    }
+  }
+
   for (const follower of followers) {
     const username = follower.username?.replace(/^@/, "").trim().toLowerCase();
     if (!username || username === handle) continue;
@@ -606,7 +741,10 @@ function peopleFromInstagram(
           c.text !== "Follows this account" &&
           c.text !== "Account follows this profile" &&
           c.text !== "Tagged in this reel" &&
-          c.text !== "Mentioned in this reel",
+          c.text !== "Mentioned in this reel" &&
+          c.text !== "Tagged in this post" &&
+          c.text !== "Mentioned in this post" &&
+          c.text !== "Co-authored this post",
       ).length;
 
       return {
@@ -620,7 +758,10 @@ function peopleFromInstagram(
             ? realComments
             : person.followRelation ||
                 person.position === "Tagged in reel" ||
-                person.position === "Mentioned in reel"
+                person.position === "Mentioned in reel" ||
+                person.position === "Tagged in post" ||
+                person.position === "Mentioned in post" ||
+                person.position === "Collaborator"
               ? 0
               : enriched.length,
         circle: -1,
@@ -672,19 +813,19 @@ export function isInstagramPostsDataset(raw: unknown): raw is RawInstagramPost[]
   );
 }
 
+/** Flatten reel-scraper export, skipping empty/error rows. */
+export function flattenInstagramReels(raw: unknown): RawInstagramReel[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.filter((item): item is RawInstagramReel => {
+    if (!item || typeof item !== "object") return false;
+    const row = item as RawInstagramReel;
+    return Boolean(row.id);
+  });
+}
+
 /** True when the array looks like instagram-reel-scraper output. */
 export function isInstagramReelsDataset(raw: unknown): raw is RawInstagramReel[] {
-  if (!Array.isArray(raw) || raw.length === 0) return false;
-  const sample = raw.slice(0, 10);
-  return sample.some(
-    (item) =>
-      item &&
-      typeof item === "object" &&
-      ("videoPlayCount" in item ||
-        "transcript" in item ||
-        ("productType" in item &&
-          (item as RawInstagramReel).productType === "clips")),
-  );
+  return flattenInstagramReels(raw).length > 0;
 }
 
 /** True when the array looks like instagram-comment-scraper output. */
@@ -740,6 +881,9 @@ function isSoftPresencePerson(person: Commentator): boolean {
     person.position === "Following" ||
     person.position === "Tagged in reel" ||
     person.position === "Mentioned in reel" ||
+    person.position === "Tagged in post" ||
+    person.position === "Mentioned in post" ||
+    person.position === "Collaborator" ||
     person.history.every(
       (c) =>
         c.post === "Follower" ||
@@ -750,12 +894,18 @@ function isSoftPresencePerson(person: Commentator): boolean {
   );
 }
 
+function isReelProfilePost(post: ProfilePost): boolean {
+  return (post.postType ?? "").toLowerCase() === "reel";
+}
+
 function trimProfilePosts(posts: ProfilePost[]): ProfilePost[] {
-  if (posts.length <= MAX_PROFILE_POSTS) return posts;
-  // Keep the newest posts, but always retain high-signal reels in-window.
-  const newest = posts.slice(0, MAX_PROFILE_POSTS);
-  const keptIds = new Set(newest.map((p) => p.id));
-  const extras = posts
+  const reels = posts.filter(isReelProfilePost);
+  const feed = posts.filter((post) => !isReelProfilePost(post));
+  if (feed.length <= MAX_PROFILE_POSTS) return posts;
+
+  const newestFeed = feed.slice(0, MAX_PROFILE_POSTS);
+  const keptIds = new Set(newestFeed.map((p) => p.id));
+  const extras = feed
     .slice(MAX_PROFILE_POSTS)
     .filter(
       (p) =>
@@ -763,7 +913,7 @@ function trimProfilePosts(posts: ProfilePost[]): ProfilePost[] {
         ((p.videoPlayCount ?? 0) >= 500 || (p.likesCount ?? 0) >= 40),
     )
     .slice(0, 8);
-  return [...newest, ...extras].sort((a, b) => {
+  return [...newestFeed, ...extras, ...reels].sort((a, b) => {
     const ta = a.postedAt ? Date.parse(a.postedAt) : 0;
     const tb = b.postedAt ? Date.parse(b.postedAt) : 0;
     return tb - ta;
@@ -813,10 +963,12 @@ export function buildScrapeResultFromInstagramRaw(
   // Prefer real engagers; only keep a small follower sample for map density.
   const activePeople = allPeople.filter((p) => !isSoftPresencePerson(p));
   const followOnly = allPeople.filter(isSoftPresencePerson);
-  const cappedPeople = [
-    ...activePeople,
-    ...followOnly.slice(0, MAX_FOLLOW_ONLY_NODES),
-  ].sort(compareByCloseness);
+  const includeSoftPresence = inputs.includeSoftPresence !== false;
+  const cappedPeople = (
+    includeSoftPresence
+      ? [...activePeople, ...followOnly.slice(0, MAX_FOLLOW_ONLY_NODES)]
+      : activePeople
+  ).sort(compareByCloseness);
 
   const graphPeople = cappedPeople.slice(0, MAX_NODES);
   // Engagement grid uses the same capped set — full follower dumps make it lag.

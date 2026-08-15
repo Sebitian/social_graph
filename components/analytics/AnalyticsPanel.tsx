@@ -12,7 +12,6 @@ import {
 } from "@/lib/analytics";
 import { resolveAnalyticsMediaIdentity } from "@/lib/mediaIdentity";
 import {
-  CompanyIcon,
   FacebookIcon,
   InstagramIcon,
   LinkedInIcon,
@@ -24,6 +23,18 @@ import SocialAnalyticsBody from "@/components/analytics/SocialAnalyticsBody";
 import TikTokAnalyticsBody from "@/components/analytics/TikTokAnalyticsBody";
 import SpotifyAnalyticsBody from "@/components/analytics/SpotifyAnalyticsBody";
 import CompanyAnalyticsBody from "@/components/analytics/CompanyAnalyticsBody";
+import InstagramModeControls, {
+  peopleFromInstagramBundle,
+  peopleFromSocialResult,
+} from "@/components/InstagramModeControls";
+import type {
+  InstagramMode,
+  InstagramPeopleResult,
+} from "@/lib/instagramPeople";
+import {
+  firstAvailableInstagramPersonId,
+  instagramPersonById,
+} from "@/lib/instagramPeople";
 
 export type AnalyticsPlatform =
   | "linkedin"
@@ -73,6 +84,11 @@ interface Props {
   onSelectSpotifyGenre?: (label: string) => void;
   onSelectCompanyLocation?: (label: string) => void;
   onSelectCompanySchool?: (label: string) => void;
+  instagramPeople?: InstagramPeopleResult | null;
+  instagramMode?: InstagramMode;
+  onInstagramModeChange?: (mode: InstagramMode) => void;
+  instagramPersonId?: string;
+  onInstagramPersonIdChange?: (id: string) => void;
   className?: string;
 }
 
@@ -110,6 +126,11 @@ export default function AnalyticsPanel({
   onSelectSpotifyGenre,
   onSelectCompanyLocation,
   onSelectCompanySchool,
+  instagramPeople = null,
+  instagramMode: controlledInstagramMode,
+  onInstagramModeChange,
+  instagramPersonId: controlledInstagramPersonId,
+  onInstagramPersonIdChange,
   className = "",
 }: Props) {
   const [internalPlatform, setInternalPlatform] = useState<AnalyticsPlatform>(
@@ -122,10 +143,22 @@ export default function AnalyticsPanel({
   const [linkedinMode, setLinkedinMode] = useState<LinkedInMode>(() =>
     !socialResults.linkedin && companyResult ? "company" : "person",
   );
+  const [internalInstagramMode, setInternalInstagramMode] =
+    useState<InstagramMode>(() =>
+      socialResults.instagram ? "company" : "person",
+    );
+  const [internalInstagramPersonId, setInternalInstagramPersonId] =
+    useState(() => firstAvailableInstagramPersonId(instagramPeople));
 
   const platform = controlledPlatform ?? internalPlatform;
   const range = controlledRange ?? internalRange;
   const view = controlledView ?? internalView;
+  const instagramMode = controlledInstagramMode ?? internalInstagramMode;
+  const instagramPersonId = controlledInstagramPersonId ?? internalInstagramPersonId;
+  const selectedInstagramPerson = instagramPersonById(
+    instagramPeople,
+    instagramPersonId,
+  );
 
   const setPlatform = (next: AnalyticsPlatform) => {
     onPlatformChange?.(next);
@@ -145,19 +178,26 @@ export default function AnalyticsPanel({
   const availability = useMemo(
     () => ({
       linkedin: Boolean(socialResults.linkedin) || Boolean(companyResult),
-      instagram: Boolean(socialResults.instagram),
+      instagram:
+        Boolean(socialResults.instagram) ||
+        Boolean(instagramPeople?.people.length),
       facebook: Boolean(socialResults.facebook),
       tiktok: Boolean(tiktokResult),
       spotify: Boolean(spotifyResult),
     }),
-    [socialResults, companyResult, tiktokResult, spotifyResult],
+    [socialResults, companyResult, tiktokResult, spotifyResult, instagramPeople],
   );
+
+  const instagramSocial =
+    instagramMode === "person"
+      ? (selectedInstagramPerson?.result ?? null)
+      : (socialResults.instagram ?? null);
 
   const activeSocial =
     platform === "linkedin"
       ? socialResults.linkedin
       : platform === "instagram"
-        ? socialResults.instagram
+        ? instagramSocial
         : platform === "facebook"
           ? socialResults.facebook
           : null;
@@ -167,6 +207,10 @@ export default function AnalyticsPanel({
   const showLinkedInCompany = Boolean(companyResult);
   const showLinkedInSubnav =
     platform === "linkedin" && (showLinkedInPerson || showLinkedInCompany);
+  const showInstagramCompany = Boolean(socialResults.instagram);
+  const showInstagramPeople = Boolean(instagramPeople?.people.length);
+  const showInstagramSubnav =
+    platform === "instagram" && (showInstagramCompany || showInstagramPeople);
 
   useEffect(() => {
     if (view === "grid" && !canShowGrid) setView("summary");
@@ -183,6 +227,20 @@ export default function AnalyticsPanel({
     setView("summary");
   };
 
+  const setInstagramMode = (next: InstagramMode) => {
+    onInstagramModeChange?.(next);
+    if (controlledInstagramMode == null) setInternalInstagramMode(next);
+    setView("summary");
+  };
+
+  const setInstagramPersonId = (next: string) => {
+    onInstagramPersonIdChange?.(next);
+    if (controlledInstagramPersonId == null) {
+      setInternalInstagramPersonId(next);
+    }
+    setView("summary");
+  };
+
   const handlePlatformClick = (id: AnalyticsPlatform) => {
     setPlatform(id);
     setView("summary");
@@ -190,6 +248,9 @@ export default function AnalyticsPanel({
       setLinkedinMode(
         socialResults.linkedin ? "person" : companyResult ? "company" : "person",
       );
+    }
+    if (id === "instagram") {
+      setInstagramMode(socialResults.instagram ? "company" : "person");
     }
   };
 
@@ -201,7 +262,7 @@ export default function AnalyticsPanel({
   const showingPerson =
     (platform === "linkedin" && !showingCompany && showLinkedInPerson) ||
     platform === "facebook" ||
-    platform === "instagram";
+    (platform === "instagram" && Boolean(activeSocial));
 
   const showPersonGridSubnav = showingPerson && canShowGrid;
 
@@ -210,7 +271,10 @@ export default function AnalyticsPanel({
       resolveAnalyticsMediaIdentity({
         platform,
         linkedinMode: showingCompany ? "company" : "person",
-        socialResults,
+        socialResults: {
+          ...socialResults,
+          instagram: instagramSocial ?? socialResults.instagram,
+        },
         spotifyResult,
         companyResult,
         tiktokResult,
@@ -219,6 +283,7 @@ export default function AnalyticsPanel({
       platform,
       showingCompany,
       socialResults,
+      instagramSocial,
       spotifyResult,
       companyResult,
       tiktokResult,
@@ -350,35 +415,32 @@ export default function AnalyticsPanel({
           ) : null}
         </div>
 
-        {(showLinkedInSubnav || showPersonGridSubnav) && (
+        {(showLinkedInSubnav || showInstagramSubnav || showPersonGridSubnav) && (
           <div className="flex flex-wrap items-center gap-2">
+            {showInstagramSubnav ? (
+              <InstagramModeControls
+                mode={instagramMode}
+                onModeChange={setInstagramMode}
+                people={peopleFromInstagramBundle(instagramPeople)}
+                personId={instagramPersonId}
+                onPersonIdChange={setInstagramPersonId}
+                hasCompany={showInstagramCompany}
+                avatarPlatform="instagram"
+              />
+            ) : null}
             {showLinkedInSubnav ? (
-              <div className="inline-flex max-w-full flex-wrap self-start rounded-lg border border-white/10 bg-black/30 p-0.5">
-                {showLinkedInPerson ? (
-                  <button
-                    type="button"
-                    onClick={selectPerson}
-                    className={`${TAB} ${
-                      !showingCompany ? TAB_ACTIVE : TAB_AVAILABLE
-                    }`}
-                  >
-                    <User className="h-3.5 w-3.5" />
-                    Person
-                  </button>
-                ) : null}
-                {showLinkedInCompany ? (
-                  <button
-                    type="button"
-                    onClick={selectCompany}
-                    className={`${TAB} ${
-                      showingCompany ? TAB_ACTIVE : TAB_AVAILABLE
-                    }`}
-                  >
-                    <CompanyIcon className="h-3.5 w-3.5" />
-                    Company
-                  </button>
-                ) : null}
-              </div>
+              <InstagramModeControls
+                mode={showingCompany ? "company" : "person"}
+                onModeChange={(next) => {
+                  if (next === "person") selectPerson();
+                  else selectCompany();
+                }}
+                people={peopleFromSocialResult(socialResults.linkedin)}
+                personId={socialResults.linkedin?.profile.username ?? ""}
+                onPersonIdChange={selectPerson}
+                hasCompany={showLinkedInCompany}
+                avatarPlatform="linkedin"
+              />
             ) : null}
 
             {showPersonGridSubnav ? (

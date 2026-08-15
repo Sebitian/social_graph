@@ -6,6 +6,7 @@ import {
   computeAudienceStats,
   computeSocialAnalytics,
   type AnalyticsPersonRow,
+  type AnalyticsPostRow,
   type AnalyticsRangeId,
 } from "@/lib/analytics";
 import { compactNumber } from "@/lib/graphUtils";
@@ -113,6 +114,48 @@ function Avatar({
   );
 }
 
+function postRows(
+  posts: AnalyticsPostRow[],
+  usePostMetrics: boolean,
+): BreakdownRow[] {
+  return posts.map((post) => {
+    const parts: string[] = [];
+    if (post.plays) parts.push(`${compactNumber(post.plays)} views`);
+    if (post.reactions) {
+      parts.push(
+        `${compactNumber(post.reactions)} ${usePostMetrics ? "likes" : "reactions"}`,
+      );
+    }
+    if (post.comments) {
+      parts.push(
+        `${compactNumber(post.comments)} comment${post.comments === 1 ? "" : "s"}`,
+      );
+    }
+    if (post.shares) {
+      parts.push(`${compactNumber(post.shares)} shares`);
+    }
+    return {
+      id: post.id,
+      label: post.label,
+      subtitle: parts.length ? parts.join(" · ") : post.postType || undefined,
+      value: post.value,
+      valueLabel: compactNumber(post.value),
+      leading: post.imageUrl ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={post.imageUrl}
+          alt=""
+          className="h-7 w-7 rounded-md object-cover ring-1 ring-white/15"
+        />
+      ) : (
+        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white/10 text-[10px] text-white/45">
+          #
+        </span>
+      ),
+    };
+  });
+}
+
 export default function SocialAnalyticsBody({
   data,
   range,
@@ -178,11 +221,64 @@ export default function SocialAnalyticsBody({
 
   const usePostMetrics = overview.hasPostMetrics;
   const showPlays = usePostMetrics && overview.postPlays > 0;
+  const instagramSplit = platform === "instagram" && usePostMetrics;
 
-  // Instagram post scrapes give lifetime likes/plays on content published in
-  // the range — not "earned this week". Period % deltas vs the prior window
-  // are misleading there, so we only show the totals + chart.
-  const metrics: DashboardMetric[] = showPlays
+  const postGroup: DashboardMetric[] = instagramSplit
+    ? [
+        {
+          id: "feed-likes",
+          label: "Likes",
+          value: compactNumber(overview.feed.likes),
+          series: overview.feed.likesSeries,
+        },
+        {
+          id: "feed-comments",
+          label: "Comments",
+          value: compactNumber(overview.feed.comments),
+          series: overview.feed.commentsSeries,
+        },
+      ]
+    : [];
+
+  const reelGroup: DashboardMetric[] = instagramSplit
+    ? [
+        {
+          id: "reel-views",
+          label: "Views",
+          value: compactNumber(overview.reels.views),
+          series: overview.reels.viewsSeries,
+        },
+        {
+          id: "reel-likes",
+          label: "Likes",
+          value: compactNumber(overview.reels.likes),
+          series: overview.reels.likesSeries,
+        },
+        {
+          id: "reel-comments",
+          label: "Comments",
+          value: compactNumber(overview.reels.comments),
+          series: overview.reels.commentsSeries,
+        },
+      ]
+    : [];
+
+  const metricGroups = instagramSplit
+    ? [
+        {
+          label: `Posts · ${compactNumber(overview.feed.count)}`,
+          items: postGroup,
+        },
+        {
+          label: `Reels · ${compactNumber(overview.reels.count)}`,
+          items: reelGroup,
+        },
+      ]
+    : undefined;
+
+  const metrics: DashboardMetric[] = instagramSplit
+    ? [...postGroup, ...reelGroup]
+    : showPlays
     ? [
         {
           id: "plays",
@@ -246,6 +342,13 @@ export default function SocialAnalyticsBody({
     <AnalyticsDashboardShell
       accent={ACCENT[platform]}
       audience={<AudienceStatsBar items={audience.items} />}
+      defaultMetricId={
+        instagramSplit
+          ? overview.reels.views > 0
+            ? "reel-views"
+            : "feed-likes"
+          : undefined
+      }
       chartEmptyLabel={
         showPlays
           ? overview.hasDatedEvents
@@ -256,6 +359,7 @@ export default function SocialAnalyticsBody({
             : "Few dated events in this snapshot"
       }
       metrics={metrics}
+      metricGroups={metricGroups}
       primary={{
         searchPlaceholder: "Search name, role, company…",
         tabs: [
@@ -310,46 +414,24 @@ export default function SocialAnalyticsBody({
             label: "Posts",
             valueHeader: "Engagement",
             searchPlaceholder: "Search posts…",
-            empty: "No posts touched in this range",
-            rows: overview.topPosts.map((post) => {
-              const parts: string[] = [];
-              if (post.plays) parts.push(`${compactNumber(post.plays)} plays`);
-              if (post.reactions) {
-                parts.push(
-                  `${compactNumber(post.reactions)} ${usePostMetrics ? "likes" : "reactions"}`,
-                );
-              }
-              if (post.comments) {
-                parts.push(
-                  `${compactNumber(post.comments)} comment${post.comments === 1 ? "" : "s"}`,
-                );
-              }
-              if (post.shares) {
-                parts.push(`${compactNumber(post.shares)} shares`);
-              }
-              return {
-                id: post.id,
-                label: post.label,
-                subtitle: parts.length
-                  ? parts.join(" · ")
-                  : post.postType || undefined,
-                value: post.value,
-                valueLabel: compactNumber(post.value),
-                leading: post.imageUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={post.imageUrl}
-                    alt=""
-                    className="h-7 w-7 rounded-md object-cover ring-1 ring-white/15"
-                  />
-                ) : (
-                  <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white/10 text-[10px] text-white/45">
-                    #
-                  </span>
-                ),
-              };
-            }),
+            empty: "No posts in this range",
+            rows: postRows(
+              instagramSplit ? overview.feedPosts : overview.topPosts,
+              usePostMetrics,
+            ),
           },
+          ...(instagramSplit
+            ? [
+                {
+                  id: "reels",
+                  label: "Reels",
+                  valueHeader: "Engagement",
+                  searchPlaceholder: "Search reels…",
+                  empty: "No reels in this range",
+                  rows: postRows(overview.reelPosts, usePostMetrics),
+                },
+              ]
+            : []),
         ],
       }}
       secondary={{

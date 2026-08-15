@@ -1,9 +1,11 @@
 import { getCached } from "@/lib/cache";
 import type { CompanyResult } from "@/lib/companyTypes";
+import type { InstagramPeopleResult } from "@/lib/instagramPeople";
 import { COMPANION_SNAPSHOTS } from "@/lib/paths";
 import { DEFAULT_SCRAPE_BUDGET, type ScrapeBudget } from "@/lib/scrapeBudget";
 import {
   readCompanySnapshot,
+  readInstagramPeopleSnapshot,
   readSnapshot,
   readTikTokSnapshot,
 } from "@/lib/snapshot";
@@ -20,6 +22,7 @@ export type ChatBundle = {
   social: Partial<Record<ChatSocialPlatform, ScrapeResult>>;
   company: CompanyResult | null;
   tiktok: TikTokResult | null;
+  instagramPeople: InstagramPeopleResult | null;
   sources: ChatSourceInfo[];
 };
 
@@ -153,6 +156,16 @@ export async function loadChatContext(input: {
     );
   }
 
+  const instagramPeople = social.instagram
+    ? await readInstagramPeopleSnapshot(COMPANION_SNAPSHOTS.instagramPeople)
+    : null;
+  if (instagramPeople?.people.length) {
+    const instagram = sources.find((source) => source.id === "instagram");
+    if (instagram) {
+      instagram.subtitle = `@${social.instagram?.profile.username} · Company + ${instagramPeople.people.length} employees`;
+    }
+  }
+
   if (sources.length === 0) {
     return {
       ok: false,
@@ -164,7 +177,7 @@ export async function loadChatContext(input: {
 
   return {
     ok: true,
-    bundle: { social, company, tiktok, sources },
+    bundle: { social, company, tiktok, instagramPeople, sources },
   };
 }
 
@@ -200,6 +213,7 @@ export function restrictChatBundle(
     social,
     company: allow.has("company") ? bundle.company : null,
     tiktok: allow.has("tiktok") ? bundle.tiktok : null,
+    instagramPeople: allow.has("instagram") ? bundle.instagramPeople : null,
     sources: bundle.sources.filter((source) => allow.has(source.id)),
   };
 }

@@ -10,6 +10,10 @@ import {
 } from "@/lib/analytics";
 import type { CompanyEmployee, CompanyResult } from "@/lib/companyTypes";
 import { compareByCloseness, engagementVolume } from "@/lib/graphUtils";
+import type {
+  InstagramPeopleResult,
+  InstagramPersonOption,
+} from "@/lib/instagramPeople";
 import type { TikTokResult, TikTokVideo } from "@/lib/tiktokTypes";
 import type { GraphNode, PostComment, ProfilePost, ScrapeResult } from "@/lib/types";
 import type { ChatBundle } from "./loadContext";
@@ -201,6 +205,17 @@ export function queryOverview(
       plays: overview.postPlays || null,
       shares: overview.postShares || null,
     },
+    feed: {
+      count: overview.feed.count,
+      likes: overview.feed.likes,
+      comments: overview.feed.comments,
+    },
+    reels: {
+      count: overview.reels.count,
+      views: overview.reels.views || null,
+      likes: overview.reels.likes,
+      comments: overview.reels.comments,
+    },
     graphShown: data.stats.shown,
     topEngagers: overview.topEngagers.slice(0, MAX_PEOPLE).map((row) => ({
       username: row.username,
@@ -216,6 +231,22 @@ export function queryOverview(
       reactions: row.reactions,
       plays: row.plays ?? null,
       likes: row.reactions,
+      postType: row.postType ?? null,
+    })),
+    topFeedPosts: overview.feedPosts.slice(0, 8).map((row) => ({
+      id: row.id,
+      label: row.label,
+      comments: row.comments,
+      likes: row.reactions,
+      postType: row.postType ?? null,
+    })),
+    topReelPosts: overview.reelPosts.slice(0, 8).map((row) => ({
+      id: row.id,
+      label: row.label,
+      comments: row.comments,
+      likes: row.reactions,
+      views: row.plays ?? null,
+      postType: row.postType ?? null,
     })),
     series: {
       comments: overview.commentsSeries.map((p) => ({
@@ -234,6 +265,11 @@ export function queryOverview(
         v: p.v,
       })),
       plays: overview.postPlaysSeries.map((p) => ({
+        t: p.t,
+        label: p.label,
+        v: p.v,
+      })),
+      reelViews: overview.reels.viewsSeries.map((p) => ({
         t: p.t,
         label: p.label,
         v: p.v,
@@ -624,6 +660,225 @@ function pickSocial(bundle: ChatBundle, source?: ChatSocialPlatform) {
   };
 }
 
+function serializeInstagramEmployee(person: InstagramPersonOption) {
+  const result = person.result;
+  const members =
+    result?.graph.nodes.filter((node) => node.group === "member").length ?? 0;
+  return {
+    username: person.username,
+    fullName: person.fullName,
+    title: person.title ?? null,
+    available: person.available,
+    unavailableReason: person.unavailableReason ?? null,
+    followers: person.followersCount ?? null,
+    posts: result?.posts?.length ?? 0,
+    graphPeople: members,
+  };
+}
+
+function queryInstagramEmployees(data: InstagramPeopleResult | null) {
+  const people = data?.people ?? [];
+  return {
+    source: "instagram" as const,
+    companyHandle: data?.companyHandle ?? null,
+    count: people.length,
+    people: people.map(serializeInstagramEmployee),
+  };
+}
+
+function queryFindInstagramEmployee(
+  data: InstagramPeopleResult | null,
+  query: string,
+) {
+  const people = data?.people ?? [];
+  const needle = normalize(query.replace(/^@/, ""));
+  if (!needle) {
+    return { source: "instagram" as const, query, matches: [] };
+  }
+  const scored = people
+    .map((person) => {
+      const username = normalize(person.username);
+      const fullName = normalize(person.fullName);
+      const title = normalize(person.title ?? "");
+      let score: number | null = null;
+      if (username === needle || fullName === needle) score = 0;
+      else if (username.startsWith(needle) || fullName.startsWith(needle))
+        score = 1;
+      else if (
+        username.includes(needle) ||
+        fullName.includes(needle) ||
+        title.includes(needle)
+      ) {
+        score = 4;
+      } else {
+        const fuzzy =
+          fuzzyScore(needle, username) ?? fuzzyScore(needle, fullName);
+        if (fuzzy != null) score = 20 + fuzzy;
+      }
+      return score == null ? null : { person, score };
+    })
+    .filter(
+      (row): row is { person: InstagramPersonOption; score: number } =>
+        row != null,
+    )
+    .sort((a, b) => a.score - b.score)
+    .slice(0, MAX_PEOPLE);
+
+  return {
+    source: "instagram" as const,
+    companyHandle: data?.companyHandle ?? null,
+    query,
+    matches: scored.map((row) => serializeInstagramEmployee(row.person)),
+  };
+}
+
+type InstagramAccountHit = {
+  source: "instagram";
+  account: string;
+  kind: "company" | "employee";
+  data: ScrapeResult;
+};
+
+function matchInstagramAccount(
+  bundle: ChatBundle,
+  account?: string,
+): InstagramAccountHit | { error: string; available: string[] } {
+  const company = bundle.social.instagram;
+  const people = bundle.instagramPeople?.people ?? [];
+  const available = [
+    ...(company ? [company.profile.username] : []),
+    ...people.map((person) => person.username),
+  ];
+
+  if (!account?.trim()) {
+    if (company) {
+      return {
+        source: "instagram",
+        account: company.profile.username,
+        kind: "company",
+        data: company,
+      };
+    }
+    const first = people.find((person) => person.available && person.result);
+    if (first?.result) {
+      return {
+        source: "instagram",
+        account: first.username,
+        kind: "employee",
+        data: first.result,
+      };
+    }
+    return {
+      error: "No Instagram snapshot is loaded.",
+      available,
+    };
+  }
+
+  const needle = normalize(account.replace(/^@/, ""));
+  if (company) {
+    const username = normalize(company.profile.username);
+    const fullName = normalize(company.profile.fullName);
+    if (
+      username === needle ||
+      fullName === needle ||
+      username.startsWith(needle) ||
+      fullName.includes(needle)
+    ) {
+      return {
+        source: "instagram",
+        account: company.profile.username,
+        kind: "company",
+        data: company,
+      };
+    }
+  }
+
+  const scored = people
+    .map((person) => {
+      const username = normalize(person.username);
+      const fullName = normalize(person.fullName);
+      const title = normalize(person.title ?? "");
+      let score: number | null = null;
+      if (username === needle || fullName === needle) score = 0;
+      else if (username.startsWith(needle) || fullName.startsWith(needle))
+        score = 1;
+      else if (
+        username.includes(needle) ||
+        fullName.includes(needle) ||
+        title.includes(needle)
+      ) {
+        score = 3;
+      }
+      return score == null ? null : { person, score };
+    })
+    .filter(
+      (row): row is { person: InstagramPersonOption; score: number } =>
+        row != null,
+    )
+    .sort((a, b) => a.score - b.score);
+
+  const hit = scored[0]?.person;
+  if (!hit) {
+    return {
+      error: `No Instagram account matches "${account}".`,
+      available,
+    };
+  }
+  if (!hit.available || !hit.result) {
+    return {
+      error: `${hit.fullName} (@${hit.username}) has no Instagram graph${
+        hit.unavailableReason ? `: ${hit.unavailableReason}` : ""
+      }.`,
+      available,
+    };
+  }
+  return {
+    source: "instagram",
+    account: hit.username,
+    kind: "employee",
+    data: hit.result,
+  };
+}
+
+function pickSocialAccount(
+  bundle: ChatBundle,
+  source?: ChatSocialPlatform,
+  account?: string,
+) {
+  if (account?.trim() && (!source || source === "instagram")) {
+    return matchInstagramAccount(bundle, account);
+  }
+  if (source === "instagram") {
+    return matchInstagramAccount(bundle, account);
+  }
+  return pickSocial(bundle, source);
+}
+
+function instagramQueryTargets(
+  bundle: ChatBundle,
+): InstagramAccountHit[] {
+  const targets: InstagramAccountHit[] = [];
+  const company = bundle.social.instagram;
+  if (company) {
+    targets.push({
+      source: "instagram",
+      account: company.profile.username,
+      kind: "company",
+      data: company,
+    });
+  }
+  for (const person of bundle.instagramPeople?.people ?? []) {
+    if (!person.available || !person.result) continue;
+    targets.push({
+      source: "instagram",
+      account: person.username,
+      kind: "employee",
+      data: person.result,
+    });
+  }
+  return targets;
+}
+
 export function createChatTools(bundle: ChatBundle): ToolSet {
   const socialEnum = ["linkedin", "instagram", "facebook"] as const;
   const loadedSocial = socialEnum.filter((id) => bundle.social[id]);
@@ -636,6 +891,12 @@ export function createChatTools(bundle: ChatBundle): ToolSet {
     .optional()
     .describe(
       "Which selected person-graph snapshot to query. Omit to use the first selected social account.",
+    );
+  const accountField = z
+    .string()
+    .optional()
+    .describe(
+      "Instagram company or employee @handle / name (kossof_salonspa, joanna_artistry, Jenny). Defaults to the salon company account. Ignored for LinkedIn and Facebook.",
     );
 
   const presentTable = tool({
@@ -749,37 +1010,57 @@ export function createChatTools(bundle: ChatBundle): ToolSet {
 
   const listSources = tool({
     description:
-      "List the snapshots currently selected for this question.",
+      "List the snapshots currently selected for this question, including Instagram employee accounts when loaded.",
     inputSchema: z.object({}),
-    execute: async () => ({ sources: bundle.sources }),
+    execute: async () => ({
+      sources: bundle.sources,
+      instagramAccounts: bundle.social.instagram
+        ? [
+            {
+              username: bundle.social.instagram.profile.username,
+              fullName: bundle.social.instagram.profile.fullName,
+              kind: "company" as const,
+              available: true,
+            },
+            ...(bundle.instagramPeople?.people ?? []).map(
+              serializeInstagramEmployee,
+            ),
+          ]
+        : [],
+    }),
   });
 
   const socialTools = hasSocial
     ? {
         get_overview: tool({
           description:
-            "Person-graph totals, top engagers, top posts, and time series for charts. Series include comments, reactions, engagers, and plays (Instagram reel plays / Facebook video views when the snapshot has them). Plays are lifetime views on posts published in the range, bucketed by post date — not views earned that day.",
+            "Person-graph totals, top engagers, top posts, and time series for charts. Instagram splits feed vs reels (likes, comments, and reel views). Series include comments, reactions, engagers, plays, and reelViews. Plays/views are lifetime totals on posts published in the range, bucketed by post date. For an Instagram employee graph, pass account=@handle.",
           inputSchema: z.object({
             source: sourceField,
+            account: accountField,
             range: z
               .enum(ANALYTICS_RANGES)
               .optional()
               .describe("Time window. Defaults to all available data."),
           }),
-          execute: async ({ source, range }) => {
-            const picked = pickSocial(bundle, source);
+          execute: async ({ source, account, range }) => {
+            const picked = pickSocialAccount(bundle, source, account);
             if ("error" in picked) return picked;
             return {
               source: picked.source,
+              ...("account" in picked
+                ? { account: picked.account, kind: picked.kind }
+                : {}),
               ...queryOverview(picked.data, range ?? "all"),
             };
           },
         }),
         list_posts: tool({
           description:
-            "List recent posts newest first, with comments, likes, and plays/views when the snapshot has them. Use with present_table for a sortable ranking.",
+            "List recent posts newest first, with comments, likes, and plays/views when the snapshot has them. Use with present_table for a sortable ranking. For an Instagram employee, pass account=@handle.",
           inputSchema: z.object({
             source: sourceField,
+            account: accountField,
             limit: z
               .number()
               .int()
@@ -788,44 +1069,86 @@ export function createChatTools(bundle: ChatBundle): ToolSet {
               .optional()
               .describe("How many posts to return. Default 10."),
           }),
-          execute: async ({ source, limit }) => {
-            const picked = pickSocial(bundle, source);
+          execute: async ({ source, account, limit }) => {
+            const picked = pickSocialAccount(bundle, source, account);
             if ("error" in picked) return picked;
             return {
               source: picked.source,
+              ...("account" in picked
+                ? { account: picked.account, kind: picked.kind }
+                : {}),
               ...queryPosts(picked.data, limit ?? 10),
             };
           },
         }),
         find_person: tool({
           description:
-            "Look up a commenter/engager by username or name in the person-graph snapshots (not the company roster).",
+            "Look up a commenter/engager by username or name in person-graph snapshots, including Instagram employee graphs. Also matches Instagram employee roster names. Not the LinkedIn company roster.",
           inputSchema: z.object({
             query: z
               .string()
               .min(1)
               .describe("Username, @handle, or full name to search for."),
             source: sourceField,
+            account: accountField,
           }),
-          execute: async ({ query, source }) => {
-            const targets: { source: ChatSocialPlatform; data: ScrapeResult }[] =
-              [];
-            if (source) {
+          execute: async ({ query, source, account }) => {
+            const targets: Array<
+              | { source: ChatSocialPlatform; data: ScrapeResult }
+              | InstagramAccountHit
+            > = [];
+            const searchInstagram =
+              !source || source === "instagram" || Boolean(account);
+
+            if (searchInstagram) {
+              if (account) {
+                const picked = matchInstagramAccount(bundle, account);
+                if ("error" in picked) return picked;
+                targets.push(picked);
+              } else {
+                targets.push(...instagramQueryTargets(bundle));
+              }
+            }
+
+            if (source && source !== "instagram") {
               const picked = pickSocial(bundle, source);
               if ("error" in picked) return picked;
               targets.push(picked);
-            } else {
-              for (const id of socialEnum) {
+            } else if (!source) {
+              for (const id of ["linkedin", "facebook"] as const) {
                 const data = bundle.social[id];
                 if (data) targets.push({ source: id, data });
               }
             }
-            const matches = [];
+
+            const matches: Array<Record<string, unknown>> = [];
+            if (
+              searchInstagram &&
+              !account &&
+              bundle.instagramPeople?.people.length
+            ) {
+              const roster = queryFindInstagramEmployee(
+                bundle.instagramPeople,
+                query,
+              );
+              for (const person of roster.matches) {
+                matches.push({
+                  source: "instagram",
+                  kind: "employee",
+                  account: person.username,
+                  ...person,
+                });
+              }
+            }
+
             for (const picked of targets) {
               const found = queryFindPerson(picked.data, query);
               matches.push(
                 ...found.matches.map((person) => ({
                   source: picked.source,
+                  ...("account" in picked
+                    ? { account: picked.account, kind: picked.kind }
+                    : {}),
                   ...person,
                 })),
               );
@@ -835,9 +1158,10 @@ export function createChatTools(bundle: ChatBundle): ToolSet {
         }),
         get_comments: tool({
           description:
-            "Fetch comments from a person-graph snapshot. Filter by person and/or post.",
+            "Fetch comments from a person-graph snapshot. Filter by person and/or post. For an Instagram employee graph, pass account=@handle.",
           inputSchema: z.object({
             source: sourceField,
+            account: accountField,
             person: z
               .string()
               .optional()
@@ -856,10 +1180,17 @@ export function createChatTools(bundle: ChatBundle): ToolSet {
               .describe("If true, restrict to the most recent post."),
           }),
           execute: async (input) => {
-            const picked = pickSocial(bundle, input.source);
+            const picked = pickSocialAccount(
+              bundle,
+              input.source,
+              input.account,
+            );
             if ("error" in picked) return picked;
             return {
               source: picked.source,
+              ...("account" in picked
+                ? { account: picked.account, kind: picked.kind }
+                : {}),
               ...queryComments(picked.data, input),
             };
           },
@@ -886,6 +1217,30 @@ export function createChatTools(bundle: ChatBundle): ToolSet {
               .describe("Employee name, @handle, or role such as CEO / founder."),
           }),
           execute: async ({ query }) => queryFindEmployee(company, query),
+        }),
+      }
+    : {};
+
+  const instagramPeople = bundle.instagramPeople;
+  const instagramPeopleTools = instagramPeople?.people.length
+    ? {
+        list_instagram_employees: tool({
+          description:
+            "List Instagram employees attached to the salon company account, with availability and follower counts.",
+          inputSchema: z.object({}),
+          execute: async () => queryInstagramEmployees(instagramPeople),
+        }),
+        find_instagram_employee: tool({
+          description:
+            "Look up an Instagram employee by name, @handle, or title (colorist, stylist, etc.). Use this for Joanna, Jenny, Brentley, Donna, and other rostered staff. Then get_overview / list_posts with account=@handle for their graph.",
+          inputSchema: z.object({
+            query: z
+              .string()
+              .min(1)
+              .describe("Employee name, @handle, or role/title."),
+          }),
+          execute: async ({ query }) =>
+            queryFindInstagramEmployee(instagramPeople, query),
         }),
       }
     : {};
@@ -938,6 +1293,7 @@ export function createChatTools(bundle: ChatBundle): ToolSet {
     list_sources: listSources,
     ...socialTools,
     ...companyTools,
+    ...instagramPeopleTools,
     ...tiktokTools,
     present_table: presentTable,
     present_chart: presentChart,
@@ -945,12 +1301,18 @@ export function createChatTools(bundle: ChatBundle): ToolSet {
 }
 
 export function chatSystemPrompt(bundle: ChatBundle): string {
-  const catalog = bundle.sources
-    .map(
+  const catalog = [
+    ...bundle.sources.map(
       (source) =>
         `- ${source.label}: ${source.title}${source.subtitle ? ` (${source.subtitle})` : ""}`,
-    )
-    .join("\n");
+    ),
+    ...(bundle.instagramPeople?.people ?? []).map((person) => {
+      const status = person.available
+        ? "graph available"
+        : person.unavailableReason || "no graph";
+      return `- Instagram employee: ${person.fullName} (@${person.username})${person.title ? `, ${person.title}` : ""} — ${status}`;
+    }),
+  ].join("\n");
   const hasSocial = Boolean(
     bundle.social.linkedin || bundle.social.instagram || bundle.social.facebook,
   );
@@ -962,7 +1324,7 @@ export function chatSystemPrompt(bundle: ChatBundle): string {
   if (hasSocial) {
     lines.push(
       "Use list_sources, get_overview, find_person, and get_comments for person-graph engagement (comments/reactions).",
-      "Instagram get_overview.series.plays is reel/video play counts. Facebook series.plays is video views when present. These are lifetime totals on posts published in the range, plotted by post date.",
+      "Instagram get_overview.feed / reels split posts vs reels (likes, comments, views). Instagram has no reaction types. series.plays and series.reelViews are lifetime view totals on items published in the range, plotted by post date.",
       "To compare views across Instagram, Facebook, and TikTok: call each overview with the same range (e.g. 7d), then present_chart with one series per platform (copy series.plays). LinkedIn has comments and reactions, not views.",
     );
   }
@@ -970,6 +1332,13 @@ export function chatSystemPrompt(bundle: ChatBundle): string {
     lines.push(
       "Use get_company_overview and find_employee for the LinkedIn company roster (employees, CEO, titles).",
       "Company people are not commenters. If a name is not in the person graph, try the company roster before saying they are missing.",
+    );
+  }
+  if (bundle.instagramPeople?.people.length) {
+    lines.push(
+      "Instagram includes the salon company account plus employee graphs. Use list_instagram_employees and find_instagram_employee for the staff roster (Joanna, Jenny, Brentley, Donna).",
+      "For an employee's own posts, comments, or overview, call get_overview / list_posts / get_comments / find_person with source=instagram and account=@their_handle. Donna has no graph if marked unavailable.",
+      "Company-graph people are commenters on the salon account. Employees may not appear there even when their person graph exists.",
     );
   }
   if (bundle.tiktok) {
