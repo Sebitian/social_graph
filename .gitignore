@@ -47,3 +47,4 @@ next-env.d.ts
 !data/snapshots/kossof-tiktok.json
 !data/snapshots/kossof-instagram.json
 !data/snapshots/kossof-instagram-people.json
+!data/snapshots/romanian.json

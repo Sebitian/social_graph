@@ -6,7 +6,7 @@ export const CHAT_SOCIAL_PLATFORMS = [
 
 export type ChatSocialPlatform = (typeof CHAT_SOCIAL_PLATFORMS)[number];
 
-export type ChatSourceId = ChatSocialPlatform | "company" | "tiktok";
+export type ChatSourceId = ChatSocialPlatform | "company" | "tiktok" | "conference";
 
 export type ChatSourceInfo = {
   id: ChatSourceId;
@@ -25,7 +25,7 @@ export function isChatSocialPlatform(
 }
 
 export function isChatSourceId(value: unknown): value is ChatSourceId {
-  return isChatSocialPlatform(value) || value === "company" || value === "tiktok";
+  return isChatSocialPlatform(value) || value === "company" || value === "tiktok" || value === "conference";
 }
 
 export type ChatTableCell = string | number | null;

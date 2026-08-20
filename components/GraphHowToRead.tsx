@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 
 const STORAGE_KEY = "netgraph.howToReadDismissed";
 
-const STEPS = [
+const SOCIAL_STEPS = [
   {
     n: "1",
     title: "You're the center",
@@ -26,11 +26,45 @@ const STEPS = [
   },
 ] as const;
 
-function HowToReadContent({ compact = false }: { compact?: boolean }) {
+const CONFERENCE_STEPS = [
+  {
+    n: "1",
+    title: "Event at the center",
+    short: "Everyone came here.",
+    body: "The hub is the conference. Every person around it was on the Luma guest list.",
+  },
+  {
+    n: "2",
+    title: "Color = company",
+    short: "Same color = same employer.",
+    body: "People from the same company share a color and sit together. Gray means no LinkedIn match yet.",
+  },
+  {
+    n: "3",
+    title: "Tap anyone",
+    short: "Tap for LinkedIn.",
+    body: "Open an attendee to see role, company, location, and how confidently we matched their LinkedIn.",
+  },
+] as const;
+
+type HowToStep = {
+  n: string;
+  title: string;
+  short: string;
+  body: string;
+};
+
+function HowToReadContent({
+  compact = false,
+  steps,
+}: {
+  compact?: boolean;
+  steps: readonly HowToStep[];
+}) {
   if (compact) {
     return (
       <ol className="mt-1.5 flex gap-2 overflow-x-auto pb-0.5">
-        {STEPS.map((step) => (
+        {steps.map((step) => (
           <li
             key={step.n}
             className="flex min-w-[9.5rem] flex-1 items-start gap-2 rounded-lg bg-black/25 px-2 py-1.5"
@@ -54,7 +88,7 @@ function HowToReadContent({ compact = false }: { compact?: boolean }) {
 
   return (
     <ol className="mt-3 grid gap-4 sm:grid-cols-3">
-      {STEPS.map((step) => (
+      {steps.map((step) => (
         <li key={step.n} className="flex gap-3">
           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-xs font-semibold text-white">
             {step.n}
@@ -76,13 +110,16 @@ export function GraphHowToRead({
   className = "",
   forceOpen = false,
   onDismiss,
+  variant = "social",
 }: {
   className?: string;
   forceOpen?: boolean;
   onDismiss?: () => void;
+  variant?: "social" | "conference";
 }) {
   const [dismissed, setDismissed] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const steps = variant === "conference" ? CONFERENCE_STEPS : SOCIAL_STEPS;
 
   useEffect(() => {
     setMounted(true);
@@ -124,7 +161,7 @@ export function GraphHowToRead({
           <div className="pr-7 text-[10px] font-semibold uppercase tracking-wide text-white/40">
             How to read this
           </div>
-          <HowToReadContent compact />
+          <HowToReadContent compact steps={steps} />
         </section>
       )}
 
@@ -134,7 +171,7 @@ export function GraphHowToRead({
         <div className="text-[11px] font-semibold uppercase tracking-wide text-white/40">
           How to read this
         </div>
-        <HowToReadContent />
+        <HowToReadContent steps={steps} />
       </section>
     </>
   );

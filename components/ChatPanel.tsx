@@ -23,6 +23,7 @@ import ChatTimeChart from "@/components/chat/ChatTimeChart";
 import { useChatVoice } from "@/components/chat/useChatVoice";
 import {
   CompanyIcon,
+  ConferenceIcon,
   FacebookIcon,
   InstagramIcon,
   LinkedInIcon,
@@ -40,6 +41,7 @@ const SOURCE_ICON: Record<ChatSourceId, typeof LinkedInIcon> = {
   facebook: FacebookIcon,
   tiktok: TikTokIcon,
   company: CompanyIcon,
+  conference: ConferenceIcon,
 };
 
 const PROMPT_ICON_CLASS: Record<ChatSourceId, string> = {
@@ -48,6 +50,7 @@ const PROMPT_ICON_CLASS: Record<ChatSourceId, string> = {
   facebook: "text-[#1877F2]",
   tiktok: "text-white",
   company: "text-white/75",
+  conference: "text-[#FDA4AF]",
 };
 
 const PROMPT_HIGHLIGHTS = [
@@ -148,6 +151,19 @@ function suggestions(sources: ChatSourceInfo[]): PromptSuggestion[] {
         ? `Who is the ${company.title} CEO?`
         : "Who is the company CEO?",
       sources: ["company"],
+    });
+  }
+  if (ids.has("conference")) {
+    const conference = sources.find((source) => source.id === "conference");
+    prompts.push({
+      text: conference
+        ? `Who is at ${conference.title}?`
+        : "Who is on the guest list?",
+      sources: ["conference"],
+    });
+    prompts.push({
+      text: "Which companies showed up?",
+      sources: ["conference"],
     });
   }
   const trendSource = firstSource(ids, ["instagram", "facebook", "linkedin"]);

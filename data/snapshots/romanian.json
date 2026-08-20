@@ -1,0 +1,991 @@
+{
+  "kind": "conference",
+  "scrapedAt": 1787200467637,
+  "pinned": true,
+  "event": {
+    "id": "event:romanian",
+    "name": "Romanian Conference",
+    "attendeeCount": 26
+  },
+  "attendees": [
+    {
+      "id": "attendee:sebastian-sovailescu:0",
+      "lumaName": "Sebastian Sovailescu",
+      "fullName": "Sebastian Sovailescu",
+      "headline": "AI Engineer @ AbbVie R&D | UIUC ECE",
+      "title": "AI Engineer",
+      "company": "AbbVie R&D",
+      "location": "Champaign, Illinois",
+      "publicIdentifier": "sebastian-sovailescu",
+      "linkedinUrl": "https://www.linkedin.com/in/sebastian-sovailescu/",
+      "profileSummary": "Champaign, Illinois, United States. Pulse 2024 Graphic. Board Member. Pulse 2024. Aug 2022 - Nov 2024 2 years 4 months. Champaign, Illinois, United States.",
+      "confidence": 75,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:alexandru-stratulat:1",
+      "lumaName": "Alexandru Stratulat",
+      "fullName": "Alexandru Stratulat",
+      "headline": "",
+      "title": "",
+      "matchStatus": "unmatched",
+      "matchNote": "⚠️ No exact match — result may not be Alexandru Stratulat"
+    },
+    {
+      "id": "attendee:andrei-stoica:2",
+      "lumaName": "Andrei Stoica",
+      "fullName": "Andrei Stoica",
+      "headline": "Lead Information Security Engineer at Wells Fargo",
+      "title": "Lead Information Security Engineer",
+      "company": "Wells Fargo",
+      "location": "Chandler, Arizona",
+      "publicIdentifier": "andrei-stoica-8612a81",
+      "linkedinUrl": "https://www.linkedin.com/in/andrei-stoica-8612a81/",
+      "profileSummary": "Andrei Stoica. Lead Information Security Engineer at Wells Fargo. Wells Fargo University of Bucharest, Geophysics Dept. Chandler, Arizona, United States.",
+      "confidence": 60,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:arianna-daringa:3",
+      "lumaName": "Arianna Daringa",
+      "fullName": "Arianna-Valentina Dărîngă",
+      "headline": "Societe Generale Corporate ...",
+      "title": "",
+      "company": "Societe Generale",
+      "location": "New York, New York",
+      "publicIdentifier": "ariannadaringa",
+      "linkedinUrl": "https://www.linkedin.com/in/ariannadaringa/",
+      "profileSummary": "Arianna-Valentina Dărîngă. Societe Generale Corporate and Investment Banking - SGCIB Stevens Institute of Technology. New York, New York, United States. 4K ...",
+      "confidence": 75,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:bogdan-capatina:4",
+      "lumaName": "Bogdan Capatina",
+      "fullName": "Bogdan Capatina",
+      "headline": "Technical Specialist at Ford Motor Company",
+      "title": "Technical Specialist",
+      "company": "Ford Motor Company",
+      "location": "Livonia",
+      "publicIdentifier": "bogdan-capatina-2571a810",
+      "linkedinUrl": "https://www.linkedin.com/in/bogdan-capatina-2571a810/",
+      "profileSummary": "Nov 18, 2025 · Technical Specialist at Ford Motor Company · Experience: Ford Motor Company · Location: Livonia · 500+ connections on LinkedIn. View Bogdan ...",
+      "connectionsCount": 500,
+      "confidence": 95,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:christopher-randall:5",
+      "lumaName": "Christopher Randall",
+      "fullName": "Christopher Randall",
+      "headline": "Executive Director at HPS Investment Partners",
+      "title": "Executive Director",
+      "company": "HPS Investment Partners",
+      "publicIdentifier": "christopher-randall-b112b288",
+      "linkedinUrl": "https://www.linkedin.com/in/christopher-randall-b112b288/",
+      "profileSummary": "Executive Director at HPS Investment Partners · Experience: HPS Investment Partners, LLC · Education: Stanford Law School · Location: United States · 500+ ...",
+      "confidence": 100,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:cristian-puscas:6",
+      "lumaName": "Cristian Puscas",
+      "fullName": "Cristian Puscas",
+      "headline": "",
+      "title": "",
+      "matchStatus": "unmatched",
+      "matchNote": "⚠️ No exact match — result may not be Cristian Puscas"
+    },
+    {
+      "id": "attendee:daniel-balaceanu:7",
+      "lumaName": "Daniel Balaceanu",
+      "fullName": "Dan Balaceanu",
+      "headline": "Chief Product Officer and Co-Founder at Druid AI",
+      "title": "Chief Product Officer and Co-Founder",
+      "company": "Druid AI",
+      "publicIdentifier": "dan-balaceanu",
+      "linkedinUrl": "https://www.linkedin.com/in/dan-balaceanu/",
+      "profileSummary": "Dan Balaceanu. Chief Product Officer and Co-Founder at Druid AI. Druid AI. United States. 4K followers 500+ connections. See your mutual ...",
+      "connectionsCount": 500,
+      "followerCount": 4000,
+      "confidence": 60,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:daniel-gorgan:8",
+      "lumaName": "Daniel Gorgan",
+      "fullName": "Daniel Gorgan",
+      "headline": "TechQuarter",
+      "title": "Founder & CEO",
+      "company": "TechQuarter",
+      "publicIdentifier": "danigorgan",
+      "linkedinUrl": "https://www.linkedin.com/in/danigorgan/",
+      "profileSummary": "Mar 5, 2026 · Experience. TechQuarter Graphic. Founder & CEO. TechQuarter. Jul 2014 - Present 12 years 2 months. United States. Smartcare Graphic ...",
+      "confidence": 75,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:david-bruining:9",
+      "lumaName": "David Bruining",
+      "fullName": "David Bruining",
+      "headline": "Societe Generale",
+      "title": "",
+      "company": "Societe Generale",
+      "location": "New York, New York",
+      "publicIdentifier": "davebruining",
+      "linkedinUrl": "https://www.linkedin.com/in/davebruining/",
+      "profileSummary": "David Bruining. Societe Generale Lewis University. New York, New York, United States. 1K followers 500+ connections. See your mutual connections ...",
+      "connectionsCount": 500,
+      "followerCount": 1000,
+      "confidence": 75,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:diana-dram:10",
+      "lumaName": "Diana Dram",
+      "fullName": "Diana Dram",
+      "headline": "Chicago, Illinois, United States | Professional Profile",
+      "title": "",
+      "location": "Chicago, Illinois",
+      "publicIdentifier": "diana-dram-95411b",
+      "linkedinUrl": "https://www.linkedin.com/in/diana-dram-95411b/",
+      "profileSummary": "Diana Dram. Chicago, Illinois, United States. 2K followers 500+ connections. See your mutual connections. View mutual connections with Diana. Continue ...",
+      "connectionsCount": 500,
+      "followerCount": 2000,
+      "confidence": 75,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:george-roth:11",
+      "lumaName": "George Roth",
+      "fullName": "George Roth",
+      "headline": "Los Gatos, California, United States | Professional",
+      "title": "",
+      "location": "Los Gatos, California",
+      "publicIdentifier": "geroth",
+      "linkedinUrl": "https://www.linkedin.com/in/geroth/",
+      "profileSummary": "George Roth. Los Gatos, California, United States. 9K followers 500+ connections. See your mutual connections. View mutual connections with George ...",
+      "connectionsCount": 500,
+      "followerCount": 9000,
+      "confidence": 60,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:grant-wainscott:12",
+      "lumaName": "Grant Wainscott",
+      "fullName": "Grant Wainscott",
+      "headline": "Helping companies and communities scale across ...",
+      "title": "Helping companies and communities scale across ...",
+      "location": "Atlanta, Georgia",
+      "publicIdentifier": "grantwainscott",
+      "linkedinUrl": "https://www.linkedin.com/in/grantwainscott/",
+      "profileSummary": "Atlanta, Georgia, United States. 4K followers 500+ connections. See your mutual connections. View mutual connections with Grant. Grant can introduce you to 3 ...",
+      "connectionsCount": 500,
+      "followerCount": 4000,
+      "confidence": 60,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:john-woodward:13",
+      "lumaName": "John Woodward",
+      "fullName": "John Woodward",
+      "headline": "Baltimore, Maryland, United States | Professional",
+      "title": "",
+      "location": "Baltimore, Maryland",
+      "publicIdentifier": "john-woodward-1124212",
+      "linkedinUrl": "https://www.linkedin.com/in/john-woodward-1124212/",
+      "profileSummary": "John Woodward. Baltimore, Maryland, United States. 267 followers 268 connections. See your mutual connections. View mutual connections with John.",
+      "connectionsCount": 268,
+      "followerCount": 267,
+      "confidence": 60,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:madalina-moiceanu:14",
+      "lumaName": "Madalina Moiceanu",
+      "fullName": "Madalina Moiceanu",
+      "headline": "",
+      "title": "",
+      "matchStatus": "unmatched",
+      "matchNote": "⚠️ No exact match — result may not be Madalina Moiceanu"
+    },
+    {
+      "id": "attendee:matei-puiu:15",
+      "lumaName": "Matei Puiu",
+      "fullName": "Matei Puiu",
+      "headline": "VP of Banking and Financial Services at Endava",
+      "title": "VP of Banking and Financial Services",
+      "company": "Endava",
+      "publicIdentifier": "matei-puiu-7541326",
+      "linkedinUrl": "https://www.linkedin.com/in/matei-puiu-7541326/",
+      "profileSummary": "Endava. Jul 2020 - Present 6 years 2 months. New York, United States. VP of Banking, Financial and Asset and Wealth Management services in Endava North America ...",
+      "confidence": 60,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:matei-zatreanu:16",
+      "lumaName": "Matei Zatreanu",
+      "fullName": "Matei Zatreanu",
+      "headline": "AI and data for fundamental investors",
+      "title": "AI and data for fundamental investors",
+      "company": "Spark Family Offices",
+      "location": "New York, New York",
+      "publicIdentifier": "matei-zatreanu",
+      "linkedinUrl": "https://www.linkedin.com/in/matei-zatreanu/",
+      "profileSummary": "New York, New York, United States. Spark Family Offices Graphic. Board Member. Spark Family Offices. 2024 - Present 2 years. New York, New York, United States.",
+      "confidence": 75,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:michaela-britton:17",
+      "lumaName": "Michaela Britton",
+      "fullName": "Michaela Britton",
+      "headline": "Partner at Penningtons Manches Cooper LLP ...",
+      "title": "Partner",
+      "company": "Penningtons Manches Cooper LLP",
+      "publicIdentifier": "michaela-britton-2236a5101",
+      "linkedinUrl": "https://www.linkedin.com/in/michaela-britton-2236a5101/",
+      "profileSummary": "I advise on various corporate matters, such as M&A, start ups, joint ventures, fund raising, LLPs and investment holding SPVs as well as to provide ...",
+      "confidence": 60,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:mihai-lehene:18",
+      "lumaName": "Mihai Lehene",
+      "fullName": "Mihai Lehene",
+      "headline": "Algorithmic Trader | Angel/VC Investor | Super-Connector",
+      "title": "Algorithmic Trader | Angel/VC Investor | Super-Connector",
+      "company": "Romanian United Foundation",
+      "publicIdentifier": "mlehene",
+      "linkedinUrl": "https://www.linkedin.com/in/mlehene/",
+      "profileSummary": "Mihai holds the presidency of the Romanian United Foundation (RUF). Between 2010 and 2022 he ran one of the most successful high frequency trading desks in ...",
+      "confidence": 60,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:radu-lovin:19",
+      "lumaName": "Radu Lovin",
+      "fullName": "Radu Lovin",
+      "headline": "Data Engineer",
+      "title": "Data Engineer",
+      "company": "Comerica Bank",
+      "location": "Rochester, Michigan",
+      "publicIdentifier": "radulovin",
+      "linkedinUrl": "https://www.linkedin.com/in/radulovin/",
+      "profileSummary": "Radu Lovin. Data Engineer. Comerica Bank. Rochester, Michigan, United States. 274 followers 269 connections. See your mutual connections. View mutual ...",
+      "connectionsCount": 269,
+      "followerCount": 274,
+      "confidence": 75,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:romeo-mann:20",
+      "lumaName": "Romeo Mann",
+      "fullName": "Romeo Mann",
+      "headline": "CEO at Mann electronic",
+      "title": "CEO",
+      "company": "Mann electronic",
+      "location": "Arlington, Texas",
+      "publicIdentifier": "romeo-mann-22a7952a",
+      "linkedinUrl": "https://www.linkedin.com/in/romeo-mann-22a7952a/",
+      "profileSummary": "Romeo Mann. CEO at Mann electronic. Mann electronic. Arlington, Texas, United States. See your mutual connections. View mutual connections with Romeo.",
+      "confidence": 60,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:sergiu-stancu:21",
+      "lumaName": "Sergiu Stancu",
+      "fullName": "Sergiu Stancu",
+      "headline": "",
+      "title": "",
+      "matchStatus": "missing",
+      "matchNote": "⚠️ Dataset fetch failed — no data retrieved"
+    },
+    {
+      "id": "attendee:simona-vasile:22",
+      "lumaName": "Simona Vasile",
+      "fullName": "Simona Vasile",
+      "headline": "Tax Principal | Technology & Innovation Champion",
+      "title": "Tax Principal | Technology & Innovation Champion",
+      "company": "BDO",
+      "location": "Stamford, Connecticut",
+      "publicIdentifier": "simonavasilepwckpmgbdotaxdigitalnow",
+      "linkedinUrl": "https://www.linkedin.com/in/simonavasilepwckpmgbdotaxdigitalnow/",
+      "profileSummary": "Tax Principal. BDO. Apr 2025 - Present 1 year 5 months. Stamford, Connecticut, United States.",
+      "confidence": 60,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:sofia-cristina-visan:23",
+      "lumaName": "Sofia-Cristina Visan",
+      "fullName": "Sofia-Cristina Visan",
+      "headline": "",
+      "title": "",
+      "matchStatus": "unmatched",
+      "matchNote": "⚠️ No exact match — result may not be Sofia-Cristina Visan"
+    },
+    {
+      "id": "attendee:vlad-andrei-munteanu:24",
+      "lumaName": "Vlad-Andrei Munteanu",
+      "fullName": "Vlad-Andrei Munteanu",
+      "headline": "Software Engineer at Jane Street",
+      "title": "Software Engineer",
+      "company": "Jane Street",
+      "publicIdentifier": "vlad-andrei-munteanu",
+      "linkedinUrl": "https://www.linkedin.com/in/vlad-andrei-munteanu/",
+      "profileSummary": "I am a Romanian Software Engineer. I graduated at University of Manchester in May, 2021, and I am now working in FinTech industry for Jane Street.",
+      "confidence": 60,
+      "matchStatus": "matched"
+    },
+    {
+      "id": "attendee:voicu-oprean:25",
+      "lumaName": "Voicu Oprean",
+      "fullName": "Voicu Oprean",
+      "headline": "CEO & Founder AROBS | YPO | HBS PPL",
+      "title": "CEO & Founder",
+      "company": "AROBS",
+      "publicIdentifier": "voicuoprean",
+      "linkedinUrl": "https://www.linkedin.com/in/voicuoprean/",
+      "profileSummary": "As the CEO and founder of AROBS Software, I have been leading a team of over 1k+ software specialists for more than 25 years, delivering innovative and ...",
+      "confidence": 75,
+      "matchStatus": "matched"
+    }
+  ],
+  "companies": [
+    {
+      "id": "company:societe-generale",
+      "label": "Societe Generale",
+      "count": 2,
+      "color": "#38BDF8"
+    },
+    {
+      "id": "company:abbvie-r-d",
+      "label": "AbbVie R&D",
+      "count": 1,
+      "color": "#A78BFA"
+    },
+    {
+      "id": "company:arobs",
+      "label": "AROBS",
+      "count": 1,
+      "color": "#34D399"
+    },
+    {
+      "id": "company:bdo",
+      "label": "BDO",
+      "count": 1,
+      "color": "#FBBF24"
+    },
+    {
+      "id": "company:comerica-bank",
+      "label": "Comerica Bank",
+      "count": 1,
+      "color": "#F472B6"
+    },
+    {
+      "id": "company:druid-ai",
+      "label": "Druid AI",
+      "count": 1,
+      "color": "#FB923C"
+    },
+    {
+      "id": "company:endava",
+      "label": "Endava",
+      "count": 1,
+      "color": "#2DD4BF"
+    },
+    {
+      "id": "company:ford-motor-company",
+      "label": "Ford Motor Company",
+      "count": 1,
+      "color": "#818CF8"
+    },
+    {
+      "id": "company:hps-investment-partners",
+      "label": "HPS Investment Partners",
+      "count": 1,
+      "color": "#F87171"
+    },
+    {
+      "id": "company:jane-street",
+      "label": "Jane Street",
+      "count": 1,
+      "color": "#C084FC"
+    },
+    {
+      "id": "company:mann-electronic",
+      "label": "Mann electronic",
+      "count": 1,
+      "color": "#4ADE80"
+    },
+    {
+      "id": "company:penningtons-manches-cooper-llp",
+      "label": "Penningtons Manches Cooper LLP",
+      "count": 1,
+      "color": "#FACC15"
+    },
+    {
+      "id": "company:romanian-united-foundation",
+      "label": "Romanian United Foundation",
+      "count": 1,
+      "color": "#38BDF8"
+    },
+    {
+      "id": "company:spark-family-offices",
+      "label": "Spark Family Offices",
+      "count": 1,
+      "color": "#A78BFA"
+    },
+    {
+      "id": "company:techquarter",
+      "label": "TechQuarter",
+      "count": 1,
+      "color": "#34D399"
+    },
+    {
+      "id": "company:wells-fargo",
+      "label": "Wells Fargo",
+      "count": 1,
+      "color": "#FBBF24"
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "event:romanian",
+        "label": "Romanian Conference",
+        "kind": "event",
+        "refId": "event:romanian",
+        "weight": 1,
+        "color": "#E11D48"
+      },
+      {
+        "id": "company:societe-generale",
+        "label": "Societe Generale",
+        "kind": "company",
+        "refId": "company:societe-generale",
+        "weight": 2,
+        "color": "#38BDF8"
+      },
+      {
+        "id": "attendee:sebastian-sovailescu:0",
+        "label": "Sebastian Sovailescu",
+        "kind": "attendee",
+        "refId": "sebastian-sovailescu",
+        "weight": 0,
+        "color": "#A78BFA",
+        "title": "AI Engineer",
+        "company": "AbbVie R&D",
+        "location": "Champaign, Illinois",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:alexandru-stratulat:1",
+        "label": "Alexandru Stratulat",
+        "kind": "attendee",
+        "refId": "attendee:alexandru-stratulat:1",
+        "weight": 0,
+        "color": "#6B7280",
+        "title": "",
+        "matchStatus": "unmatched"
+      },
+      {
+        "id": "attendee:andrei-stoica:2",
+        "label": "Andrei Stoica",
+        "kind": "attendee",
+        "refId": "andrei-stoica-8612a81",
+        "weight": 0,
+        "color": "#FBBF24",
+        "title": "Lead Information Security Engineer",
+        "company": "Wells Fargo",
+        "location": "Chandler, Arizona",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:arianna-daringa:3",
+        "label": "Arianna-Valentina Dărîngă",
+        "kind": "attendee",
+        "refId": "ariannadaringa",
+        "weight": 0,
+        "color": "#38BDF8",
+        "title": "",
+        "company": "Societe Generale",
+        "location": "New York, New York",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:bogdan-capatina:4",
+        "label": "Bogdan Capatina",
+        "kind": "attendee",
+        "refId": "bogdan-capatina-2571a810",
+        "weight": 500,
+        "color": "#818CF8",
+        "title": "Technical Specialist",
+        "company": "Ford Motor Company",
+        "location": "Livonia",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:christopher-randall:5",
+        "label": "Christopher Randall",
+        "kind": "attendee",
+        "refId": "christopher-randall-b112b288",
+        "weight": 0,
+        "color": "#F87171",
+        "title": "Executive Director",
+        "company": "HPS Investment Partners",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:cristian-puscas:6",
+        "label": "Cristian Puscas",
+        "kind": "attendee",
+        "refId": "attendee:cristian-puscas:6",
+        "weight": 0,
+        "color": "#6B7280",
+        "title": "",
+        "matchStatus": "unmatched"
+      },
+      {
+        "id": "attendee:daniel-balaceanu:7",
+        "label": "Dan Balaceanu",
+        "kind": "attendee",
+        "refId": "dan-balaceanu",
+        "weight": 4000,
+        "color": "#FB923C",
+        "title": "Chief Product Officer and Co-Founder",
+        "company": "Druid AI",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:daniel-gorgan:8",
+        "label": "Daniel Gorgan",
+        "kind": "attendee",
+        "refId": "danigorgan",
+        "weight": 0,
+        "color": "#34D399",
+        "title": "Founder & CEO",
+        "company": "TechQuarter",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:david-bruining:9",
+        "label": "David Bruining",
+        "kind": "attendee",
+        "refId": "davebruining",
+        "weight": 1000,
+        "color": "#38BDF8",
+        "title": "",
+        "company": "Societe Generale",
+        "location": "New York, New York",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:diana-dram:10",
+        "label": "Diana Dram",
+        "kind": "attendee",
+        "refId": "diana-dram-95411b",
+        "weight": 2000,
+        "color": "#E11D48",
+        "title": "",
+        "location": "Chicago, Illinois",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:george-roth:11",
+        "label": "George Roth",
+        "kind": "attendee",
+        "refId": "geroth",
+        "weight": 9000,
+        "color": "#E11D48",
+        "title": "",
+        "location": "Los Gatos, California",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:grant-wainscott:12",
+        "label": "Grant Wainscott",
+        "kind": "attendee",
+        "refId": "grantwainscott",
+        "weight": 4000,
+        "color": "#E11D48",
+        "title": "Helping companies and communities scale across ...",
+        "location": "Atlanta, Georgia",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:john-woodward:13",
+        "label": "John Woodward",
+        "kind": "attendee",
+        "refId": "john-woodward-1124212",
+        "weight": 267,
+        "color": "#E11D48",
+        "title": "",
+        "location": "Baltimore, Maryland",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:madalina-moiceanu:14",
+        "label": "Madalina Moiceanu",
+        "kind": "attendee",
+        "refId": "attendee:madalina-moiceanu:14",
+        "weight": 0,
+        "color": "#6B7280",
+        "title": "",
+        "matchStatus": "unmatched"
+      },
+      {
+        "id": "attendee:matei-puiu:15",
+        "label": "Matei Puiu",
+        "kind": "attendee",
+        "refId": "matei-puiu-7541326",
+        "weight": 0,
+        "color": "#2DD4BF",
+        "title": "VP of Banking and Financial Services",
+        "company": "Endava",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:matei-zatreanu:16",
+        "label": "Matei Zatreanu",
+        "kind": "attendee",
+        "refId": "matei-zatreanu",
+        "weight": 0,
+        "color": "#A78BFA",
+        "title": "AI and data for fundamental investors",
+        "company": "Spark Family Offices",
+        "location": "New York, New York",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:michaela-britton:17",
+        "label": "Michaela Britton",
+        "kind": "attendee",
+        "refId": "michaela-britton-2236a5101",
+        "weight": 0,
+        "color": "#FACC15",
+        "title": "Partner",
+        "company": "Penningtons Manches Cooper LLP",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:mihai-lehene:18",
+        "label": "Mihai Lehene",
+        "kind": "attendee",
+        "refId": "mlehene",
+        "weight": 0,
+        "color": "#38BDF8",
+        "title": "Algorithmic Trader | Angel/VC Investor | Super-Connector",
+        "company": "Romanian United Foundation",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:radu-lovin:19",
+        "label": "Radu Lovin",
+        "kind": "attendee",
+        "refId": "radulovin",
+        "weight": 274,
+        "color": "#F472B6",
+        "title": "Data Engineer",
+        "company": "Comerica Bank",
+        "location": "Rochester, Michigan",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:romeo-mann:20",
+        "label": "Romeo Mann",
+        "kind": "attendee",
+        "refId": "romeo-mann-22a7952a",
+        "weight": 0,
+        "color": "#4ADE80",
+        "title": "CEO",
+        "company": "Mann electronic",
+        "location": "Arlington, Texas",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:sergiu-stancu:21",
+        "label": "Sergiu Stancu",
+        "kind": "attendee",
+        "refId": "attendee:sergiu-stancu:21",
+        "weight": 0,
+        "color": "#6B7280",
+        "title": "",
+        "matchStatus": "missing"
+      },
+      {
+        "id": "attendee:simona-vasile:22",
+        "label": "Simona Vasile",
+        "kind": "attendee",
+        "refId": "simonavasilepwckpmgbdotaxdigitalnow",
+        "weight": 0,
+        "color": "#FBBF24",
+        "title": "Tax Principal | Technology & Innovation Champion",
+        "company": "BDO",
+        "location": "Stamford, Connecticut",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:sofia-cristina-visan:23",
+        "label": "Sofia-Cristina Visan",
+        "kind": "attendee",
+        "refId": "attendee:sofia-cristina-visan:23",
+        "weight": 0,
+        "color": "#6B7280",
+        "title": "",
+        "matchStatus": "unmatched"
+      },
+      {
+        "id": "attendee:vlad-andrei-munteanu:24",
+        "label": "Vlad-Andrei Munteanu",
+        "kind": "attendee",
+        "refId": "vlad-andrei-munteanu",
+        "weight": 0,
+        "color": "#C084FC",
+        "title": "Software Engineer",
+        "company": "Jane Street",
+        "matchStatus": "matched"
+      },
+      {
+        "id": "attendee:voicu-oprean:25",
+        "label": "Voicu Oprean",
+        "kind": "attendee",
+        "refId": "voicuoprean",
+        "weight": 0,
+        "color": "#34D399",
+        "title": "CEO & Founder",
+        "company": "AROBS",
+        "matchStatus": "matched"
+      }
+    ],
+    "links": [
+      {
+        "source": "event:romanian",
+        "target": "company:societe-generale",
+        "kind": "event-company"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:sebastian-sovailescu:0",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:alexandru-stratulat:1",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:andrei-stoica:2",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "company:societe-generale",
+        "target": "attendee:arianna-daringa:3",
+        "kind": "company-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:bogdan-capatina:4",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:christopher-randall:5",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:cristian-puscas:6",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:daniel-balaceanu:7",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:daniel-gorgan:8",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "company:societe-generale",
+        "target": "attendee:david-bruining:9",
+        "kind": "company-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:diana-dram:10",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:george-roth:11",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:grant-wainscott:12",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:john-woodward:13",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:madalina-moiceanu:14",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:matei-puiu:15",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:matei-zatreanu:16",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:michaela-britton:17",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:mihai-lehene:18",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:radu-lovin:19",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:romeo-mann:20",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:sergiu-stancu:21",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:simona-vasile:22",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:sofia-cristina-visan:23",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:vlad-andrei-munteanu:24",
+        "kind": "event-attendee"
+      },
+      {
+        "source": "event:romanian",
+        "target": "attendee:voicu-oprean:25",
+        "kind": "event-attendee"
+      }
+    ]
+  },
+  "stats": {
+    "attendeeCount": 26,
+    "matchedCount": 21,
+    "unmatchedCount": 4,
+    "missingCount": 1,
+    "companyCount": 16,
+    "locationCount": 11,
+    "topCompanies": [
+      {
+        "id": "company:societe-generale",
+        "label": "Societe Generale",
+        "count": 2,
+        "color": "#38BDF8"
+      },
+      {
+        "id": "company:abbvie-r-d",
+        "label": "AbbVie R&D",
+        "count": 1,
+        "color": "#A78BFA"
+      },
+      {
+        "id": "company:arobs",
+        "label": "AROBS",
+        "count": 1,
+        "color": "#34D399"
+      },
+      {
+        "id": "company:bdo",
+        "label": "BDO",
+        "count": 1,
+        "color": "#FBBF24"
+      },
+      {
+        "id": "company:comerica-bank",
+        "label": "Comerica Bank",
+        "count": 1,
+        "color": "#F472B6"
+      },
+      {
+        "id": "company:druid-ai",
+        "label": "Druid AI",
+        "count": 1,
+        "color": "#FB923C"
+      },
+      {
+        "id": "company:endava",
+        "label": "Endava",
+        "count": 1,
+        "color": "#2DD4BF"
+      },
+      {
+        "id": "company:ford-motor-company",
+        "label": "Ford Motor Company",
+        "count": 1,
+        "color": "#818CF8"
+      }
+    ],
+    "topLocations": [
+      {
+        "label": "New York, New York",
+        "count": 3
+      },
+      {
+        "label": "Champaign, Illinois",
+        "count": 1
+      },
+      {
+        "label": "Chandler, Arizona",
+        "count": 1
+      },
+      {
+        "label": "Livonia",
+        "count": 1
+      },
+      {
+        "label": "Chicago, Illinois",
+        "count": 1
+      },
+      {
+        "label": "Los Gatos, California",
+        "count": 1
+      },
+      {
+        "label": "Atlanta, Georgia",
+        "count": 1
+      },
+      {
+        "label": "Baltimore, Maryland",
+        "count": 1
+      }
+    ]
+  }
+}

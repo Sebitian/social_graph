@@ -5,6 +5,7 @@ import { Grid3X3, User } from "lucide-react";
 import type { ScrapeResult, SocialSourcePlatform } from "@/lib/types";
 import type { SpotifyTasteResult } from "@/lib/spotifyTypes";
 import type { CompanyResult } from "@/lib/companyTypes";
+import type { ConferenceResult } from "@/lib/conferenceTypes";
 import type { TikTokResult } from "@/lib/tiktokTypes";
 import {
   DEFAULT_ANALYTICS_RANGE,
@@ -17,12 +18,14 @@ import {
   LinkedInIcon,
   SpotifyIcon,
   TikTokIcon,
+  ConferenceIcon,
 } from "@/components/PlatformIcons";
 import TimeRangeControl from "@/components/analytics/TimeRangeControl";
 import SocialAnalyticsBody from "@/components/analytics/SocialAnalyticsBody";
 import TikTokAnalyticsBody from "@/components/analytics/TikTokAnalyticsBody";
 import SpotifyAnalyticsBody from "@/components/analytics/SpotifyAnalyticsBody";
 import CompanyAnalyticsBody from "@/components/analytics/CompanyAnalyticsBody";
+import ConferenceAnalyticsBody from "@/components/analytics/ConferenceAnalyticsBody";
 import InstagramModeControls, {
   peopleFromInstagramBundle,
   peopleFromSocialResult,
@@ -41,7 +44,8 @@ export type AnalyticsPlatform =
   | "instagram"
   | "facebook"
   | "tiktok"
-  | "spotify";
+  | "spotify"
+  | "conference";
 
 export type AnalyticsView = "summary" | "grid";
 
@@ -53,6 +57,7 @@ const PLATFORM_TABS = [
   { id: "facebook" as const, label: "Facebook", Icon: FacebookIcon },
   { id: "tiktok" as const, label: "TikTok", Icon: TikTokIcon },
   { id: "spotify" as const, label: "Spotify", Icon: SpotifyIcon },
+  { id: "conference" as const, label: "Conference", Icon: ConferenceIcon },
 ] as const;
 
 const TAB =
@@ -67,6 +72,7 @@ interface Props {
   spotifyResult?: SpotifyTasteResult | null;
   companyResult?: CompanyResult | null;
   tiktokResult?: TikTokResult | null;
+  conferenceResult?: ConferenceResult | null;
   /** Independent from Map — controlled or uncontrolled. */
   platform?: AnalyticsPlatform;
   onPlatformChange?: (platform: AnalyticsPlatform) => void;
@@ -84,6 +90,9 @@ interface Props {
   onSelectSpotifyGenre?: (label: string) => void;
   onSelectCompanyLocation?: (label: string) => void;
   onSelectCompanySchool?: (label: string) => void;
+  onSelectConferenceLocation?: (label: string) => void;
+  onSelectConferenceCompany?: (label: string) => void;
+  onSelectConferenceAttendee?: (id: string) => void;
   instagramPeople?: InstagramPeopleResult | null;
   instagramMode?: InstagramMode;
   onInstagramModeChange?: (mode: InstagramMode) => void;
@@ -98,6 +107,7 @@ function defaultPlatform(props: Props): AnalyticsPlatform {
   if (props.socialResults.facebook) return "facebook";
   if (props.tiktokResult) return "tiktok";
   if (props.spotifyResult) return "spotify";
+  if (props.conferenceResult) return "conference";
   return "linkedin";
 }
 
@@ -112,6 +122,7 @@ export default function AnalyticsPanel({
   spotifyResult = null,
   companyResult = null,
   tiktokResult = null,
+  conferenceResult = null,
   platform: controlledPlatform,
   onPlatformChange,
   range: controlledRange,
@@ -126,6 +137,9 @@ export default function AnalyticsPanel({
   onSelectSpotifyGenre,
   onSelectCompanyLocation,
   onSelectCompanySchool,
+  onSelectConferenceLocation,
+  onSelectConferenceCompany,
+  onSelectConferenceAttendee,
   instagramPeople = null,
   instagramMode: controlledInstagramMode,
   onInstagramModeChange,
@@ -134,7 +148,7 @@ export default function AnalyticsPanel({
   className = "",
 }: Props) {
   const [internalPlatform, setInternalPlatform] = useState<AnalyticsPlatform>(
-    () => defaultPlatform({ socialResults, spotifyResult, tiktokResult }),
+    () => defaultPlatform({ socialResults, spotifyResult, tiktokResult, conferenceResult }),
   );
   const [internalRange, setInternalRange] = useState<AnalyticsRangeId>(
     DEFAULT_ANALYTICS_RANGE,
@@ -184,8 +198,9 @@ export default function AnalyticsPanel({
       facebook: Boolean(socialResults.facebook),
       tiktok: Boolean(tiktokResult),
       spotify: Boolean(spotifyResult),
+      conference: Boolean(conferenceResult),
     }),
-    [socialResults, companyResult, tiktokResult, spotifyResult, instagramPeople],
+    [socialResults, companyResult, tiktokResult, spotifyResult, conferenceResult, instagramPeople],
   );
 
   const instagramSocial =
@@ -268,17 +283,19 @@ export default function AnalyticsPanel({
 
   const mediaIdentity = useMemo(
     () =>
-      resolveAnalyticsMediaIdentity({
-        platform,
-        linkedinMode: showingCompany ? "company" : "person",
-        socialResults: {
-          ...socialResults,
-          instagram: instagramSocial ?? socialResults.instagram,
-        },
-        spotifyResult,
-        companyResult,
-        tiktokResult,
-      }),
+      platform === "conference"
+        ? null
+        : resolveAnalyticsMediaIdentity({
+            platform,
+            linkedinMode: showingCompany ? "company" : "person",
+            socialResults: {
+              ...socialResults,
+              instagram: instagramSocial ?? socialResults.instagram,
+            },
+            spotifyResult,
+            companyResult,
+            tiktokResult,
+          }),
     [
       platform,
       showingCompany,
@@ -329,6 +346,20 @@ export default function AnalyticsPanel({
       );
     }
 
+    if (platform === "conference") {
+      if (!conferenceResult) {
+        return <EmptyState message="No conference analytics available yet." />;
+      }
+      return (
+        <ConferenceAnalyticsBody
+          data={conferenceResult}
+          onSelectLocation={onSelectConferenceLocation}
+          onSelectCompany={onSelectConferenceCompany}
+          onSelectAttendee={onSelectConferenceAttendee}
+        />
+      );
+    }
+
     if (showingCompany && companyResult) {
       return (
         <CompanyAnalyticsBody
@@ -356,13 +387,24 @@ export default function AnalyticsPanel({
     );
   })();
 
-  const rangeDisabled = showingCompany || view === "grid";
+  const analyticsTabs =
+    availability.conference &&
+    !availability.linkedin &&
+    !availability.instagram &&
+    !availability.facebook &&
+    !availability.tiktok &&
+    !availability.spotify
+      ? PLATFORM_TABS.filter((tab) => tab.id === "conference")
+      : PLATFORM_TABS.filter(
+          (tab) => tab.id !== "conference" || availability.conference,
+        );
+  const rangeDisabled = showingCompany || platform === "conference" || view === "grid";
 
   return (
     <div className={`flex flex-col gap-3 ${className}`}>
       <div className="flex flex-col gap-2">
         <div className="flex flex-wrap items-center gap-1">
-          {PLATFORM_TABS.map(({ id, label, Icon }) => {
+          {analyticsTabs.map(({ id, label, Icon }) => {
             const available = availability[id];
             const selected = platform === id;
             return (

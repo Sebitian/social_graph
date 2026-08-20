@@ -12,7 +12,8 @@
     "import-instagram-snapshot": "npx tsx scripts/import-instagram-snapshot.ts",
     "import-instagram-people-snapshot": "npx tsx scripts/import-instagram-people-snapshot.ts",
     "import-spotify-snapshot": "npx tsx scripts/import-spotify-snapshot.ts",
-    "import-company-snapshot": "npx tsx scripts/import-company-snapshot.ts"
+    "import-company-snapshot": "npx tsx scripts/import-company-snapshot.ts",
+    "import-conference-snapshot": "npx tsx scripts/import-conference-snapshot.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.41",

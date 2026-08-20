@@ -30,16 +30,24 @@ import type {
   CompanyGraphNode,
   CompanyResult,
 } from "@/lib/companyTypes";
+import type {
+  ConferenceAttendee,
+  ConferenceGraphNode,
+  ConferenceResult,
+} from "@/lib/conferenceTypes";
 import type { TikTokGraphNode, TikTokResult } from "@/lib/tiktokTypes";
 import PersonPanel from "@/components/PersonPanel";
 import GraphVisualizer from "@/components/GraphVisualizer";
 import SpotifyGraphVisualizer from "@/components/SpotifyGraphVisualizer";
 import CompanyGraphVisualizer from "@/components/CompanyGraphVisualizer";
+import ConferenceGraphVisualizer from "@/components/ConferenceGraphVisualizer";
 import TikTokGraphVisualizer from "@/components/TikTokGraphVisualizer";
 import CompanyRosterTable from "@/components/CompanyRosterTable";
+import ConferenceRosterTable from "@/components/ConferenceRosterTable";
 import SpotifyPlaylistPanel from "@/components/SpotifyPlaylistPanel";
 import TikTokVideoPanel from "@/components/TikTokVideoPanel";
 import CompanyEmployeePanel from "@/components/CompanyEmployeePanel";
+import ConferenceAttendeePanel from "@/components/ConferenceAttendeePanel";
 import InstagramModeControls, {
   peopleFromInstagramBundle,
   peopleFromSocialResult,
@@ -64,6 +72,7 @@ import {
   FacebookIcon,
   TikTokIcon,
   CompanyIcon,
+  ConferenceIcon,
 } from "@/components/PlatformIcons";
 import { SELF_COLOR, PROXIMITY_RINGS, UNCLUSTERED_COLOR } from "@/lib/graphUtils";
 import {
@@ -95,7 +104,8 @@ type GraphPlatform =
   | "instagram"
   | "spotify"
   | "facebook"
-  | "tiktok";
+  | "tiktok"
+  | "conference";
 type LinkedInMode = "person" | "company";
 type GraphView = "map" | "roster";
 type StatsView = "summary" | "grid";
@@ -107,6 +117,7 @@ const PLATFORM_LABEL: Record<GraphPlatform, string> = {
   facebook: "Facebook",
   tiktok: "TikTok",
   spotify: "Spotify",
+  conference: "Conference",
 };
 
 const PLATFORM_TABS = [
@@ -115,6 +126,7 @@ const PLATFORM_TABS = [
   { id: "facebook" as const, label: "Facebook", Icon: FacebookIcon },
   { id: "tiktok" as const, label: "TikTok", Icon: TikTokIcon },
   { id: "spotify" as const, label: "Spotify", Icon: SpotifyIcon },
+  { id: "conference" as const, label: "Conference", Icon: ConferenceIcon },
 ] as const;
 
 const TOOLBAR_TAB =
@@ -209,6 +221,8 @@ interface Props {
   tiktokData?: TikTokResult | null;
   /** Instagram employee Person graphs (company account stays in initialPlatformData). */
   instagramPeopleData?: InstagramPeopleResult | null;
+  /** Luma / conference attendee snapshot. */
+  conferenceData?: ConferenceResult | null;
   /** Load a frozen snapshot from data/snapshots — never calls Apify. */
   pinned?: boolean;
 }
@@ -227,6 +241,7 @@ export default function GraphResult({
   companyData = null,
   tiktokData = null,
   instagramPeopleData = null,
+  conferenceData = null,
   pinned = false,
 }: Props) {
   const [data, setData] = useState<ScrapeResult | null>(initialData);
@@ -247,6 +262,10 @@ export default function GraphResult({
     useState<TikTokResult | null>(tiktokData);
   const [tiktokSelected, setTiktokSelected] =
     useState<TikTokGraphNode | null>(null);
+  const [conferenceResult, setConferenceResult] =
+    useState<ConferenceResult | null>(conferenceData);
+  const [conferenceSelected, setConferenceSelected] =
+    useState<ConferenceAttendee | null>(null);
   const [confirmationState, setConfirmationState] = useState<
     "checking" | "required" | "confirmed"
   >(pinned ? "confirmed" : "checking");
@@ -263,6 +282,7 @@ export default function GraphResult({
       if (initialPlatformData.facebook) return "facebook";
       if (tiktokData) return "tiktok";
       if (spotifyData) return "spotify";
+      if (conferenceData) return "conference";
       return "linkedin";
     });
   const [analyticsRange, setAnalyticsRange] = useState<AnalyticsRangeId>(
@@ -295,6 +315,7 @@ export default function GraphResult({
       if (tiktokData) return "tiktok";
       if (spotifyData) return "spotify";
       if (companyData) return "linkedin";
+      if (conferenceData) return "conference";
       return "linkedin";
     }
     // Search flow: the search is Instagram-handle shaped, default to Instagram.
@@ -304,6 +325,7 @@ export default function GraphResult({
     if (initialPlatformData.facebook) return "facebook";
     if (tiktokData) return "tiktok";
     if (spotifyData) return "spotify";
+    if (conferenceData) return "conference";
     return "instagram";
   });
   const graphWrapRef = useRef<HTMLDivElement>(null);
@@ -366,6 +388,7 @@ export default function GraphResult({
   const activeData =
     platform === "spotify" ||
     platform === "tiktok" ||
+    platform === "conference" ||
     (platform === "linkedin" && linkedinMode === "company")
       ? null
       : isInstagramPerson
@@ -373,6 +396,7 @@ export default function GraphResult({
         : (platformResults[platform] ?? null);
   const hasSpotify = Boolean(spotifyData || spotifyResult);
   const hasTikTok = Boolean(tiktokData || tiktokResult);
+  const hasConference = Boolean(conferenceData || conferenceResult);
   const hasCompany = Boolean(companyData || companyResult);
   const hasLinkedInPerson = Boolean(platformResults.linkedin);
   const hasLinkedIn = hasLinkedInPerson || hasCompany;
@@ -471,15 +495,42 @@ export default function GraphResult({
         subtitle: `@${tiktokResult.profile.username} · Videos & hashtags`,
       });
     }
+    if (conferenceResult) {
+      sources.push({
+        id: "conference",
+        label: "Conference",
+        title: conferenceResult.event.name,
+        handle: conferenceResult.event.id.replace(/^event:/, ""),
+        subtitle: `${conferenceResult.stats.attendeeCount} attendees in graph`,
+      });
+    }
     return sources;
-  }, [companyResult, instagramPeople, platformResults, tiktokResult]);
+  }, [companyResult, conferenceResult, instagramPeople, platformResults, tiktokResult]);
+  const isConference = platform === "conference";
+  const conferenceOnly =
+    hasConference &&
+    !hasLinkedIn &&
+    !hasInstagram &&
+    !hasFacebook &&
+    !hasSpotify &&
+    !hasTikTok;
+  const visiblePlatformTabs = conferenceOnly
+    ? PLATFORM_TABS.filter((tab) => tab.id === "conference")
+    : hasConference
+      ? PLATFORM_TABS
+      : PLATFORM_TABS.filter((tab) => tab.id !== "conference");
   const isAlternatePlatform =
-    platform === "spotify" || platform === "tiktok" || isLinkedInCompany;
+    platform === "spotify" ||
+    platform === "tiktok" ||
+    isLinkedInCompany ||
+    isConference;
   const platformHasData =
     platform === "spotify"
       ? hasSpotify
       : platform === "tiktok"
         ? hasTikTok
+        : platform === "conference"
+          ? hasConference
         : platform === "linkedin"
           ? isLinkedInCompany
             ? hasCompany
@@ -490,6 +541,7 @@ export default function GraphResult({
               : hasInstagramCompany
             : Boolean(activeData);
   const showCompanyViews = platformHasData && isLinkedInCompany;
+  const showConferenceViews = platformHasData && isConference;
   const analyticsGridData =
     analyticsPlatform === "instagram"
       ? instagramMode === "person"
@@ -582,8 +634,21 @@ export default function GraphResult({
           }
         }
       }
+      const guest = conferenceResult?.attendees.find(
+        (person) =>
+          person.fullName.toLowerCase() === key ||
+          person.lumaName.toLowerCase() === key ||
+          person.publicIdentifier?.toLowerCase() === key,
+      );
+      if (guest) {
+        setSelected(null);
+        setCompanySelected(null);
+        setSpotifySelected(null);
+        setTiktokSelected(null);
+        setConferenceSelected(guest);
+      }
     },
-    [instagramMode, instagramPeople, nodeByUsername, platform, platformResults, selectFooterTab],
+    [conferenceResult, instagramMode, instagramPeople, nodeByUsername, platform, platformResults, selectFooterTab],
   );
 
   const selectAnalyticsTikTokVideo = useCallback(
@@ -656,6 +721,45 @@ export default function GraphResult({
     [companyResult],
   );
 
+  const selectAnalyticsConferenceLocation = useCallback(
+    (label: string) => {
+      const person = conferenceResult?.attendees.find((a) => a.location === label);
+      if (!person) return;
+      setSelected(null);
+      setCompanySelected(null);
+      setSpotifySelected(null);
+      setTiktokSelected(null);
+      setConferenceSelected(person);
+    },
+    [conferenceResult],
+  );
+
+  const selectAnalyticsConferenceCompany = useCallback(
+    (label: string) => {
+      const person = conferenceResult?.attendees.find((a) => a.company === label);
+      if (!person) return;
+      setSelected(null);
+      setCompanySelected(null);
+      setSpotifySelected(null);
+      setTiktokSelected(null);
+      setConferenceSelected(person);
+    },
+    [conferenceResult],
+  );
+
+  const selectAnalyticsConferenceAttendee = useCallback(
+    (id: string) => {
+      const person = conferenceResult?.attendees.find((a) => a.id === id);
+      if (!person) return;
+      setSelected(null);
+      setCompanySelected(null);
+      setSpotifySelected(null);
+      setTiktokSelected(null);
+      setConferenceSelected(person);
+    },
+    [conferenceResult],
+  );
+
 
   useEffect(() => {
     if (!analyticsCanShowGrid && statsView === "grid") setStatsView("summary");
@@ -663,7 +767,7 @@ export default function GraphResult({
 
   useEffect(() => {
     if (platform !== "linkedin" || linkedinMode !== "company") {
-      if (view === "roster") setView("map");
+      if (platform !== "conference" && view === "roster") setView("map");
     }
   }, [platform, linkedinMode, view]);
 
@@ -692,10 +796,12 @@ export default function GraphResult({
       setSpotifyResult(spotifyData);
       setCompanyResult(companyData);
       setTiktokResult(tiktokData);
+      setConferenceResult(conferenceData);
       setError(null);
       setSelected(null);
       setCompanySelected(null);
       setTiktokSelected(null);
+      setConferenceSelected(null);
       setProfileLimitHit(overFreeProfileLimit);
       setSearchedCount(searchedHandles.length);
       setConfirmationState(
@@ -715,13 +821,14 @@ export default function GraphResult({
     spotifyData,
     companyData,
     tiktokData,
+    conferenceData,
   ]);
 
   useEffect(() => {
     if (!pinned && confirmationState !== "confirmed") return;
     if (pinned && confirmationState !== "confirmed") return;
     if (!pinned && data) return;
-    if (pinned && data) return;
+    if (pinned && (data || conferenceData || conferenceResult)) return;
 
     let cancelled = false;
     const params = new URLSearchParams({ handle });
@@ -762,6 +869,8 @@ export default function GraphResult({
     handle,
     pinned,
     requestedBudget,
+    conferenceData,
+    conferenceResult,
   ]);
 
   // Search flow: also load LinkedIn and Spotify demo data so all platform tabs work.
@@ -1024,7 +1133,8 @@ export default function GraphResult({
     Object.keys(platformResults).length === 0 &&
     !spotifyResult &&
     !companyResult &&
-    !tiktokResult
+    !tiktokResult &&
+    !conferenceResult
   ) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -1038,11 +1148,13 @@ export default function GraphResult({
     Boolean(displayData?.pinned) ||
     (platform === "spotify" && Boolean(spotifyResult?.pinned)) ||
     (platform === "tiktok" && Boolean(tiktokResult?.pinned)) ||
+    (platform === "conference" && Boolean(conferenceResult?.pinned)) ||
     (isLinkedInCompany && Boolean(companyResult?.pinned));
   const showDemoBadge =
     Boolean(displayData?.demo) ||
     (platform === "spotify" && Boolean(spotifyResult?.demo)) ||
     (platform === "tiktok" && Boolean(tiktokResult?.demo)) ||
+    (platform === "conference" && Boolean(conferenceResult?.demo)) ||
     (isLinkedInCompany && Boolean(companyResult?.demo));
   const showCachedBadge =
     (Boolean(displayData?.cached) &&
@@ -1056,6 +1168,10 @@ export default function GraphResult({
       Boolean(tiktokResult?.cached) &&
       !tiktokResult?.demo &&
       !tiktokResult?.pinned) ||
+    (platform === "conference" &&
+      Boolean(conferenceResult?.cached) &&
+      !conferenceResult?.demo &&
+      !conferenceResult?.pinned) ||
     (isLinkedInCompany &&
       Boolean(companyResult?.cached) &&
       !companyResult?.demo &&
@@ -1118,6 +1234,7 @@ export default function GraphResult({
           <GraphHowToRead
             forceOpen={howToOpen}
             onDismiss={() => setHowToOpen(false)}
+            variant={isConference ? "conference" : "social"}
           />
         )}
 
@@ -1151,12 +1268,14 @@ export default function GraphResult({
             {!graphFullscreen ? (
             <div className="flex shrink-0 flex-col gap-1.5 border-b border-white/10 px-1.5 py-1.5 sm:hidden">
               <div className="flex flex-wrap items-center gap-1">
-                {PLATFORM_TABS.map(({ id, label, Icon }) => {
+                {visiblePlatformTabs.map(({ id, label, Icon }) => {
                   const available =
                     id === "spotify"
                       ? hasSpotify
                       : id === "tiktok"
                         ? hasTikTok
+                        : id === "conference"
+                          ? hasConference
                         : id === "linkedin"
                           ? hasLinkedIn
                           : id === "facebook"
@@ -1176,6 +1295,7 @@ export default function GraphResult({
                         setSpotifySelected(null);
                         setCompanySelected(null);
                         setTiktokSelected(null);
+                        setConferenceSelected(null);
                         setView("map");
                         setStatsView("summary");
                         if (id === "linkedin") {
@@ -1204,6 +1324,7 @@ export default function GraphResult({
               </div>
               {(platform === "linkedin" && hasLinkedIn) ||
               showCompanyViews ||
+              showConferenceViews ||
               (platform === "instagram" && hasInstagram) ? (
                 <div className="flex flex-wrap items-center gap-2">
                   {platform === "instagram" && hasInstagram ? (
@@ -1228,7 +1349,7 @@ export default function GraphResult({
                       avatarPlatform="linkedin"
                     />
                   ) : null}
-                  {showCompanyViews && (
+                  {showCompanyViews || showConferenceViews ? (
                     <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
                       <button
                         type="button"
@@ -1241,7 +1362,7 @@ export default function GraphResult({
                         Roster
                       </button>
                     </div>
-                  )}
+                  ) : null}
                 </div>
               ) : null}
             </div>
@@ -1249,12 +1370,14 @@ export default function GraphResult({
 
             <div className="hidden shrink-0 flex-col gap-2 border-b border-white/10 px-3 py-2 sm:flex">
               <div className="flex flex-wrap items-center gap-1">
-                {PLATFORM_TABS.map(({ id, label, Icon }) => {
+                {visiblePlatformTabs.map(({ id, label, Icon }) => {
                   const available =
                     id === "spotify"
                       ? hasSpotify
                       : id === "tiktok"
                         ? hasTikTok
+                        : id === "conference"
+                          ? hasConference
                         : id === "linkedin"
                           ? hasLinkedIn
                           : id === "facebook"
@@ -1274,6 +1397,7 @@ export default function GraphResult({
                         setSpotifySelected(null);
                         setCompanySelected(null);
                         setTiktokSelected(null);
+                        setConferenceSelected(null);
                         setView("map");
                         setStatsView("summary");
                         if (id === "linkedin") {
@@ -1303,6 +1427,7 @@ export default function GraphResult({
               </div>
               {(platform === "linkedin" && hasLinkedIn) ||
               showCompanyViews ||
+              showConferenceViews ||
               (platform === "instagram" && hasInstagram) ? (
                 <div className="flex flex-wrap items-center gap-2">
                   {platform === "instagram" && hasInstagram ? (
@@ -1327,7 +1452,7 @@ export default function GraphResult({
                       avatarPlatform="linkedin"
                     />
                   ) : null}
-                  {showCompanyViews && (
+                  {showCompanyViews || showConferenceViews ? (
                     <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
                       <button
                         type="button"
@@ -1340,7 +1465,7 @@ export default function GraphResult({
                         Roster
                       </button>
                     </div>
-                  )}
+                  ) : null}
                 </div>
               ) : null}
             </div>
@@ -1495,6 +1620,71 @@ export default function GraphResult({
                     <p className="max-w-sm text-xs leading-relaxed text-white/40">
                       Import a TikTok profile + posts scrape to unlock visibility
                       views here.
+                    </p>
+                  </div>
+                )
+              ) : platform === "conference" ? (
+                conferenceResult ? (
+                  view === "roster" ? (
+                    <ConferenceRosterTable
+                      attendees={conferenceResult.attendees}
+                      selectedId={conferenceSelected?.id ?? null}
+                      onSelect={setConferenceSelected}
+                      className="absolute inset-0"
+                    />
+                  ) : (
+                    <>
+                      <ConferenceGraphVisualizer
+                        key={`conference-${conferenceResult.event.id}`}
+                        data={conferenceResult.graph}
+                        className="absolute inset-0"
+                        selectedId={conferenceSelected?.id ?? null}
+                        onSelect={(node: ConferenceGraphNode | null) => {
+                          if (!node || node.kind !== "attendee") {
+                            setConferenceSelected(null);
+                            return;
+                          }
+                          const person = conferenceResult.attendees.find(
+                            (a) => a.id === node.id,
+                          );
+                          setConferenceSelected(person ?? null);
+                        }}
+                      />
+                      <div className="pointer-events-none absolute bottom-4 right-4 hidden max-w-[220px] flex-col gap-1.5 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur sm:flex">
+                        <div className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
+                          Groups
+                        </div>
+                        {conferenceResult.companies.slice(0, 6).map((company) => (
+                          <span
+                            key={company.id}
+                            className="flex items-center gap-1.5 text-xs text-white/55"
+                          >
+                            <span
+                              className="h-2.5 w-2.5 shrink-0 rounded-sm ring-1 ring-white/10"
+                              style={{ backgroundColor: company.color }}
+                            />
+                            <span className="truncate text-white/70">
+                              {company.label}
+                              {company.count > 1 ? ` (${company.count})` : ""}
+                            </span>
+                          </span>
+                        ))}
+                        <span className="flex items-center gap-1.5 text-xs text-white/55">
+                          <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[#6B7280] ring-1 ring-white/10" />
+                          <span className="text-white/70">Unmatched guests</span>
+                        </span>
+                      </div>
+                    </>
+                  )
+                ) : (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
+                    <ConferenceIcon className="h-8 w-8 text-[#E11D48]" />
+                    <div className="text-sm font-medium text-white/80">
+                      No conference snapshot yet
+                    </div>
+                    <p className="max-w-sm text-xs leading-relaxed text-white/40">
+                      Import a Luma guest list + LinkedIn people-search export to
+                      unlock this graph.
                     </p>
                   </div>
                 )
@@ -1692,6 +1882,7 @@ export default function GraphResult({
                 spotifyResult={spotifyResult}
                 companyResult={companyResult}
                 tiktokResult={tiktokResult}
+                conferenceResult={conferenceResult}
                 instagramPeople={instagramPeople}
                 instagramMode={instagramMode}
                 onInstagramModeChange={selectInstagramMode}
@@ -1725,6 +1916,9 @@ export default function GraphResult({
                 onSelectSpotifyGenre={selectAnalyticsSpotifyGenre}
                 onSelectCompanyLocation={selectAnalyticsCompanyLocation}
                 onSelectCompanySchool={selectAnalyticsCompanySchool}
+                onSelectConferenceLocation={selectAnalyticsConferenceLocation}
+                onSelectConferenceCompany={selectAnalyticsConferenceCompany}
+                onSelectConferenceAttendee={selectAnalyticsConferenceAttendee}
               />
             )}
 
@@ -1745,6 +1939,7 @@ export default function GraphResult({
                 companyResult={companyResult}
                 tiktokResult={tiktokResult}
                 spotifyResult={spotifyResult}
+                conferenceResult={conferenceResult}
                 demo={handle === DEMO_HANDLE}
                 onViewGraph={viewProfileGraph}
               />
@@ -1760,6 +1955,11 @@ export default function GraphResult({
         <CompanyEmployeePanel
           employee={companySelected}
           onClose={() => setCompanySelected(null)}
+        />
+      ) : isConference ? (
+        <ConferenceAttendeePanel
+          attendee={conferenceSelected}
+          onClose={() => setConferenceSelected(null)}
         />
       ) : (
         <PersonPanel

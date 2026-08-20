@@ -11,6 +11,7 @@ import { parsePosition } from "@/lib/position";
 import type { TikTokResult, TikTokVideo } from "@/lib/tiktokTypes";
 import type { SpotifyTasteResult, SpotifyTrack } from "@/lib/spotifyTypes";
 import type { CompanyResult } from "@/lib/companyTypes";
+import type { ConferenceAttendee, ConferenceResult } from "@/lib/conferenceTypes";
 
 export type AnalyticsRangeId = "1d" | "7d" | "14d" | "30d" | "90d" | "all";
 
@@ -1444,6 +1445,87 @@ export function computeCompanyAnalytics(
     topByConnections,
     employmentTimeline,
     employeeSeries,
+    snapshotOnly: true,
+  };
+}
+
+export interface ConferenceAttendeeRankRow {
+  id: string;
+  name: string;
+  title: string;
+  company?: string;
+  location?: string;
+  linkedinUrl?: string;
+  followers: number;
+  connections: number;
+  matchStatus: ConferenceAttendee["matchStatus"];
+  value: number;
+}
+
+export interface ConferenceAnalyticsOverview {
+  attendeeCount: number;
+  matchedCount: number;
+  unmatchedCount: number;
+  missingCount: number;
+  companyCount: number;
+  locationCount: number;
+  topCompanies: { label: string; count: number; value: number; color: string }[];
+  topLocations: { label: string; count: number; value: number }[];
+  topByFollowers: ConferenceAttendeeRankRow[];
+  coverageSeries: ChartPoint[];
+  snapshotOnly: true;
+}
+
+function rankConferenceAttendee(attendee: ConferenceAttendee): ConferenceAttendeeRankRow {
+  const followers = attendee.followerCount ?? 0;
+  const connections = attendee.connectionsCount ?? 0;
+  return {
+    id: attendee.id,
+    name: attendee.fullName,
+    title: attendee.title,
+    company: attendee.company,
+    location: attendee.location,
+    linkedinUrl: attendee.linkedinUrl,
+    followers,
+    connections,
+    matchStatus: attendee.matchStatus,
+    value: followers || connections,
+  };
+}
+
+export function computeConferenceAnalytics(
+  data: ConferenceResult,
+): ConferenceAnalyticsOverview {
+  const ranked = data.attendees.map(rankConferenceAttendee);
+  const topByFollowers = [...ranked]
+    .filter((row) => row.matchStatus === "matched")
+    .sort((a, b) => b.followers - a.followers || b.connections - a.connections)
+    .slice(0, 12)
+    .map((row) => ({ ...row, value: row.followers || row.connections }));
+
+  return {
+    attendeeCount: data.stats.attendeeCount,
+    matchedCount: data.stats.matchedCount,
+    unmatchedCount: data.stats.unmatchedCount,
+    missingCount: data.stats.missingCount,
+    companyCount: data.stats.companyCount,
+    locationCount: data.stats.locationCount,
+    topCompanies: data.stats.topCompanies.map((c) => ({
+      label: c.label,
+      count: c.count,
+      value: c.count,
+      color: c.color,
+    })),
+    topLocations: data.stats.topLocations.map((l) => ({
+      ...l,
+      value: l.count,
+    })),
+    topByFollowers,
+    coverageSeries: [
+      { t: 0, label: "Matched", v: data.stats.matchedCount },
+      { t: 1, label: "Unmatched", v: data.stats.unmatchedCount },
+      { t: 2, label: "Missing", v: data.stats.missingCount },
+    ],
     snapshotOnly: true,
   };
 }

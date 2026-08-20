@@ -1,10 +1,12 @@
 import { getCached } from "@/lib/cache";
 import type { CompanyResult } from "@/lib/companyTypes";
+import type { ConferenceResult } from "@/lib/conferenceTypes";
 import type { InstagramPeopleResult } from "@/lib/instagramPeople";
 import { COMPANION_SNAPSHOTS } from "@/lib/paths";
 import { DEFAULT_SCRAPE_BUDGET, type ScrapeBudget } from "@/lib/scrapeBudget";
 import {
   readCompanySnapshot,
+  readConferenceSnapshot,
   readInstagramPeopleSnapshot,
   readSnapshot,
   readTikTokSnapshot,
@@ -22,6 +24,7 @@ export type ChatBundle = {
   social: Partial<Record<ChatSocialPlatform, ScrapeResult>>;
   company: CompanyResult | null;
   tiktok: TikTokResult | null;
+  conference: ConferenceResult | null;
   instagramPeople: InstagramPeopleResult | null;
   sources: ChatSourceInfo[];
 };
@@ -73,6 +76,16 @@ function companySource(data: CompanyResult, snapshotHandle: string): ChatSourceI
   };
 }
 
+function conferenceSource(data: ConferenceResult, snapshotHandle: string): ChatSourceInfo {
+  return {
+    id: "conference",
+    label: "Conference",
+    title: data.event.name,
+    handle: snapshotHandle,
+    subtitle: `${data.stats.attendeeCount} attendees in graph`,
+  };
+}
+
 function tiktokSource(data: TikTokResult, snapshotHandle: string): ChatSourceInfo {
   return {
     id: "tiktok",
@@ -113,6 +126,22 @@ export async function loadChatContext(input: {
 
   const social: ChatBundle["social"] = {};
   const sources: ChatSourceInfo[] = [];
+
+  const conference = await readConferenceSnapshot(handle);
+  if (conference) {
+    sources.push(conferenceSource(conference, handle));
+    return {
+      ok: true,
+      bundle: {
+        social,
+        company: null,
+        tiktok: null,
+        conference,
+        instagramPeople: null,
+        sources,
+      },
+    };
+  }
 
   if (input.pinned) {
     addSocial(social, sources, await readSnapshot(handle), handle);
@@ -177,7 +206,7 @@ export async function loadChatContext(input: {
 
   return {
     ok: true,
-    bundle: { social, company, tiktok, instagramPeople, sources },
+    bundle: { social, company, tiktok, conference: null, instagramPeople, sources },
   };
 }
 
@@ -213,6 +242,7 @@ export function restrictChatBundle(
     social,
     company: allow.has("company") ? bundle.company : null,
     tiktok: allow.has("tiktok") ? bundle.tiktok : null,
+    conference: allow.has("conference") ? bundle.conference : null,
     instagramPeople: allow.has("instagram") ? bundle.instagramPeople : null,
     sources: bundle.sources.filter((source) => allow.has(source.id)),
   };

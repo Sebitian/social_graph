@@ -2,6 +2,7 @@ import { tool, type ToolSet } from "ai";
 import { z } from "zod";
 import {
   computeCompanyAnalytics,
+  computeConferenceAnalytics,
   computeSocialAnalytics,
   computeTikTokAnalytics,
   inRange,
@@ -9,6 +10,7 @@ import {
   type AnalyticsRangeId,
 } from "@/lib/analytics";
 import type { CompanyEmployee, CompanyResult } from "@/lib/companyTypes";
+import type { ConferenceAttendee, ConferenceResult } from "@/lib/conferenceTypes";
 import { compareByCloseness, engagementVolume } from "@/lib/graphUtils";
 import type {
   InstagramPeopleResult,
@@ -461,6 +463,82 @@ export function queryCompanyOverview(data: CompanyResult) {
       label: row.label,
       count: row.count,
     })),
+  };
+}
+
+function serializeAttendee(person: ConferenceAttendee) {
+  return {
+    name: person.fullName,
+    lumaName: person.lumaName,
+    title: person.title || null,
+    company: person.company ?? null,
+    location: person.location ?? null,
+    matchStatus: person.matchStatus,
+    linkedinUrl: person.linkedinUrl ?? null,
+    followers: person.followerCount ?? null,
+    connections: person.connectionsCount ?? null,
+  };
+}
+
+export function queryConferenceOverview(data: ConferenceResult) {
+  const overview = computeConferenceAnalytics(data);
+  return {
+    source: "conference" as const,
+    event: {
+      name: data.event.name,
+      attendeeCount: overview.attendeeCount,
+      matchedCount: overview.matchedCount,
+      unmatchedCount: overview.unmatchedCount,
+      missingCount: overview.missingCount,
+      companyCount: overview.companyCount,
+      locationCount: overview.locationCount,
+    },
+    topCompanies: overview.topCompanies.slice(0, 8).map((row) => ({
+      label: row.label,
+      count: row.count,
+    })),
+    topLocations: overview.topLocations.slice(0, 6).map((row) => ({
+      label: row.label,
+      count: row.count,
+    })),
+    unmatched: data.attendees
+      .filter((person) => person.matchStatus !== "matched")
+      .map((person) => ({
+        name: person.lumaName,
+        status: person.matchStatus,
+        note: person.matchNote ?? null,
+      })),
+  };
+}
+
+export function queryFindAttendee(data: ConferenceResult, query: string) {
+  const needle = normalize(query.replace(/^@/, ""));
+  if (!needle) return { source: "conference" as const, matches: [] };
+  const tokens = needle.split(/\s+/).filter(Boolean);
+
+  const scored = data.attendees
+    .map((person) => {
+      const hay = normalize(
+        [
+          person.fullName,
+          person.lumaName,
+          person.title,
+          person.company,
+          person.location,
+          person.publicIdentifier,
+        ]
+          .filter(Boolean)
+          .join(" "),
+      );
+      const hits = tokens.filter((token) => hay.includes(token)).length;
+      return { person, hits };
+    })
+    .filter((row) => row.hits === tokens.length)
+    .sort((a, b) => b.hits - a.hits);
+
+  return {
+    source: "conference" as const,
+    matches: scored.slice(0, 8).map((row) => serializeAttendee(row.person)),
   };
 }
 
@@ -1289,12 +1367,36 @@ export function createChatTools(bundle: ChatBundle): ToolSet {
       }
     : {};
 
+  const conference = bundle.conference;
+  const conferenceTools = conference
+    ? {
+        get_conference_overview: tool({
+          description:
+            "Conference attendee snapshot: guest count, LinkedIn match coverage, companies, and locations.",
+          inputSchema: z.object({}),
+          execute: async () => queryConferenceOverview(conference),
+        }),
+        find_attendee: tool({
+          description:
+            "Look up a conference guest by Luma name, LinkedIn name, title, or company.",
+          inputSchema: z.object({
+            query: z
+              .string()
+              .min(1)
+              .describe("Attendee name, company, or role."),
+          }),
+          execute: async ({ query }) => queryFindAttendee(conference, query),
+        }),
+      }
+    : {};
+
   return {
     list_sources: listSources,
     ...socialTools,
     ...companyTools,
     ...instagramPeopleTools,
     ...tiktokTools,
+    ...conferenceTools,
     present_table: presentTable,
     present_chart: presentChart,
   } as ToolSet;
@@ -1317,7 +1419,7 @@ export function chatSystemPrompt(bundle: ChatBundle): string {
     bundle.social.linkedin || bundle.social.instagram || bundle.social.facebook,
   );
   const lines = [
-    "You are Netgraph Chat, an assistant for social and company snapshots.",
+    "You are Netgraph Chat, an assistant for social, company, and conference snapshots.",
     "The user selected these sources for this question. Only use them. If asked about a platform that is not listed, say it is not selected.",
     catalog || "- none",
   ];
@@ -1344,6 +1446,12 @@ export function chatSystemPrompt(bundle: ChatBundle): string {
   if (bundle.tiktok) {
     lines.push(
       "Use get_tiktok_overview, list_tiktok_videos, and find_tiktok_hashtag for TikTok videos, plays, likes, shares, and hashtags. TikTok has no commenter graph in Chat.",
+    );
+  }
+  if (bundle.conference) {
+    lines.push(
+      "Use get_conference_overview and find_attendee for the Luma guest list (names, companies, locations, LinkedIn match status).",
+      "Unmatched guests were on the Luma list but did not get a confident LinkedIn profile. Do not treat unmatched LinkedIn names as attendees.",
     );
   }
   lines.push(

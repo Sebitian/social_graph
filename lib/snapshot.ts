@@ -7,6 +7,7 @@ import {
   type SpotifyTasteResult,
 } from "./spotifyTypes";
 import { isCompanyResult, type CompanyResult } from "./companyTypes";
+import { isConferenceResult, type ConferenceResult } from "./conferenceTypes";
 import { isTikTokResult, type TikTokResult } from "./tiktokTypes";
 import {
   isInstagramPeopleResult,
@@ -46,7 +47,8 @@ function asSocialSnapshot(parsed: unknown): ScrapeResult | null {
     kind === "spotify" ||
     kind === "company" ||
     kind === "tiktok" ||
-    kind === "instagram-people"
+    kind === "instagram-people" ||
+    kind === "conference"
   ) {
     return null;
   }
@@ -336,6 +338,49 @@ export async function readTikTokSnapshot(
   try {
     const parsed: unknown = JSON.parse(fs.readFileSync(file, "utf-8"));
     if (!isTikTokResult(parsed)) return null;
+    return {
+      ...parsed,
+      pinned: true,
+      cached: true,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Read a conference attendee snapshot from disk (and Blob when configured).
+ * Separate from social ScrapeResult snapshots.
+ */
+export async function readConferenceSnapshot(
+  handle: string,
+): Promise<ConferenceResult | null> {
+  const clean = cleanHandle(handle);
+
+  if (blobConfigured()) {
+    try {
+      const meta = await head(snapshotBlobPathname(clean));
+      const response = await fetch(meta.downloadUrl);
+      if (response.ok) {
+        const parsed: unknown = await response.json();
+        if (isConferenceResult(parsed)) {
+          return {
+            ...parsed,
+            pinned: true,
+            cached: true,
+          };
+        }
+      }
+    } catch {
+      // fall through to disk
+    }
+  }
+
+  const file = snapshotPath(clean);
+  if (!fs.existsSync(file)) return null;
+  try {
+    const parsed: unknown = JSON.parse(fs.readFileSync(file, "utf-8"));
+    if (!isConferenceResult(parsed)) return null;
     return {
       ...parsed,
       pinned: true,

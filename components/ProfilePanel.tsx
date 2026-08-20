@@ -5,6 +5,7 @@ import { ExternalLink, User } from "lucide-react";
 import type { ScrapeResult, SocialSourcePlatform } from "@/lib/types";
 import type { SpotifyTasteResult } from "@/lib/spotifyTypes";
 import type { CompanyResult } from "@/lib/companyTypes";
+import type { ConferenceResult } from "@/lib/conferenceTypes";
 import type { TikTokResult } from "@/lib/tiktokTypes";
 import { resolveAnalyticsMediaIdentity } from "@/lib/mediaIdentity";
 import { proxiedAvatarUrlIfFresh, resolveProfilePicUrl } from "@/lib/avatarUrl";
@@ -15,6 +16,7 @@ import {
   LinkedInIcon,
   SpotifyIcon,
   TikTokIcon,
+  ConferenceIcon,
 } from "@/components/PlatformIcons";
 
 export type ProfileGraphPlatform =
@@ -22,7 +24,8 @@ export type ProfileGraphPlatform =
   | "instagram"
   | "facebook"
   | "tiktok"
-  | "spotify";
+  | "spotify"
+  | "conference";
 
 export type ProfileLinkedInMode = "person" | "company";
 
@@ -32,7 +35,8 @@ type SourceId =
   | "instagram"
   | "facebook"
   | "tiktok"
-  | "spotify";
+  | "spotify"
+  | "conference";
 
 type ProfileSource = {
   id: SourceId;
@@ -53,6 +57,7 @@ const SOURCE_ICON: Record<SourceId, typeof LinkedInIcon> = {
   facebook: FacebookIcon,
   tiktok: TikTokIcon,
   spotify: SpotifyIcon,
+  conference: ConferenceIcon,
 };
 
 function displayUrl(href: string): string {
@@ -96,8 +101,9 @@ function collectSources(args: {
   companyResult?: CompanyResult | null;
   tiktokResult?: TikTokResult | null;
   spotifyResult?: SpotifyTasteResult | null;
+  conferenceResult?: ConferenceResult | null;
 }): ProfileSource[] {
-  const { socialResults, companyResult, tiktokResult, spotifyResult } = args;
+  const { socialResults, companyResult, tiktokResult, spotifyResult, conferenceResult } = args;
   const sources: ProfileSource[] = [];
 
   if (socialResults.linkedin) {
@@ -177,6 +183,18 @@ function collectSources(args: {
     }
   }
 
+  if (conferenceResult) {
+    sources.push({
+      id: "conference",
+      label: "Conference",
+      title: conferenceResult.event.name,
+      handle: conferenceResult.event.id.replace(/^event:/, ""),
+      href: conferenceResult.event.lumaUrl || "#",
+      bio: `${conferenceResult.stats.attendeeCount} attendees · ${conferenceResult.stats.matchedCount} LinkedIn matches`,
+      graphPlatform: "conference",
+    });
+  }
+
   return sources;
 }
 
@@ -212,6 +230,7 @@ interface Props {
   companyResult?: CompanyResult | null;
   tiktokResult?: TikTokResult | null;
   spotifyResult?: SpotifyTasteResult | null;
+  conferenceResult?: ConferenceResult | null;
   demo?: boolean;
   onViewGraph?: (
     platform: ProfileGraphPlatform,
@@ -224,6 +243,7 @@ export default function ProfilePanel({
   companyResult,
   tiktokResult,
   spotifyResult,
+  conferenceResult,
   demo,
   onViewGraph,
 }: Props) {
@@ -234,8 +254,9 @@ export default function ProfilePanel({
         companyResult,
         tiktokResult,
         spotifyResult,
+        conferenceResult,
       }),
-    [companyResult, socialResults, spotifyResult, tiktokResult],
+    [socialResults, companyResult, tiktokResult, spotifyResult, conferenceResult],
   );
 
   return (
@@ -271,6 +292,7 @@ export default function ProfilePanel({
                     <div className="mt-0.5 truncate text-sm font-semibold text-white">
                       {source.title}
                     </div>
+                    {source.href && source.href !== "#" ? (
                     <a
                       href={source.href}
                       target="_blank"
@@ -280,6 +302,7 @@ export default function ProfilePanel({
                       <span className="truncate">{displayUrl(source.href)}</span>
                       <ExternalLink className="h-3 w-3 shrink-0" />
                     </a>
+                    ) : null}
                     {source.bio ? (
                       <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-white/45">
                         {source.bio}
