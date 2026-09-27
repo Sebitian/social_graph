@@ -49,7 +49,7 @@ export const SHOWCASE_JOBS: CatalogJob[] = [
   {
     id: DEMO_JOB_ID,
     title: "Diandra",
-    detail: "LinkedIn, with Instagram, Facebook, TikTok, Spotify, and company beside it",
+    detail: "LinkedIn, with Instagram, Facebook, TikTok, and Spotify beside it",
     subject: "Diandra",
     label: "diandra-all",
     lane: "account",

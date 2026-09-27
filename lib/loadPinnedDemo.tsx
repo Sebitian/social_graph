@@ -2,7 +2,6 @@ import GraphResult from "@/components/GraphResult";
 import {
   readSnapshot,
   readSpotifySnapshot,
-  readCompanySnapshot,
   readTikTokSnapshot,
   readInstagramPeopleSnapshot,
   readConferenceSnapshot,
@@ -43,7 +42,6 @@ export async function loadPinnedGraph(handle: string) {
         : null
       : await readSnapshot(COMPANION_SNAPSHOTS.facebook);
   const spotifyData = await readSpotifySnapshot(COMPANION_SNAPSHOTS.spotify);
-  const companyData = await readCompanySnapshot(COMPANION_SNAPSHOTS.company);
   const tiktokData = await readTikTokSnapshot(COMPANION_SNAPSHOTS.tiktok);
   const instagramPeopleData = await readInstagramPeopleSnapshot(
     COMPANION_SNAPSHOTS.instagramPeople,
@@ -69,7 +67,6 @@ export async function loadPinnedGraph(handle: string) {
       initialData={snapshot}
       initialPlatformData={initialPlatformData}
       spotifyData={spotifyData}
-      companyData={companyData}
       tiktokData={tiktokData}
       instagramPeopleData={instagramPeopleData}
     />

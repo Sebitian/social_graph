@@ -8,7 +8,6 @@ export const COMPANION_SNAPSHOTS = {
   instagram: "kossof-instagram",
   instagramPeople: "kossof-instagram-people",
   spotify: "sebastian-spotify",
-  company: "formationbio",
   facebook: "kossof-facebook",
   tiktok: "kossof-tiktok",
 } as const;

@@ -218,21 +218,22 @@ export default function InstagramModeControls({
 
     return (
       <div ref={rootRef} className={`flex items-center gap-2 ${className}`}>
-        <button
-          type="button"
-          aria-pressed={companyOpen}
-          aria-label="Company"
-          title={hasCompany ? "Company" : "Company snapshot not loaded yet"}
-          onClick={() => {
-            if (!hasCompany) return;
-            setOpen(false);
-            onModeChange("company");
-          }}
-          className={glassButton(companyOpen, hasCompany)}
-        >
-          <CompanyIcon className="h-4 w-4 shrink-0" />
-          <span className={glassLabel(companyOpen)}>Company</span>
-        </button>
+        {hasCompany ? (
+          <button
+            type="button"
+            aria-pressed={companyOpen}
+            aria-label="Company"
+            title="Company"
+            onClick={() => {
+              setOpen(false);
+              onModeChange("company");
+            }}
+            className={glassButton(companyOpen, true)}
+          >
+            <CompanyIcon className="h-4 w-4 shrink-0" />
+            <span className={glassLabel(companyOpen)}>Company</span>
+          </button>
+        ) : null}
 
         {hasPeople ? (
           <button
@@ -342,25 +343,22 @@ export default function InstagramModeControls({
       className={`flex flex-wrap items-center gap-2 ${className}`}
     >
       <div className={paint.shell}>
-        <button
-          type="button"
-          title={hasCompany ? "Company" : "Company snapshot not loaded yet"}
-          onClick={() => {
-            if (!hasCompany) return;
-            setOpen(false);
-            onModeChange("company");
-          }}
-          className={`${TAB} ${
-            mode === "company"
-              ? paint.active
-              : hasCompany
-                ? paint.available
-                : paint.disabled
-          }`}
-        >
-          <CompanyIcon className="h-3.5 w-3.5 shrink-0" />
-          Company
-        </button>
+        {hasCompany ? (
+          <button
+            type="button"
+            title="Company"
+            onClick={() => {
+              setOpen(false);
+              onModeChange("company");
+            }}
+            className={`${TAB} ${
+              mode === "company" ? paint.active : paint.available
+            }`}
+          >
+            <CompanyIcon className="h-3.5 w-3.5 shrink-0" />
+            Company
+          </button>
+        ) : null}
 
         {hasPeople ? (
           <button
