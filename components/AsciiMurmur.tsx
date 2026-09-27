@@ -289,14 +289,21 @@ export default function AsciiMurmur({ captionClassName = "" }: { captionClassNam
   const layerLabelRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const stage = stageRef.current;
-    const track = trackRef.current;
-    const hero = heroRef.current;
-    const bubble = bubbleRef.current;
-    if (!canvas || !stage || !track || !hero || !bubble) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const canvasNode = canvasRef.current;
+    const stageNode = stageRef.current;
+    const trackNode = trackRef.current;
+    const heroNode = heroRef.current;
+    const bubbleNode = bubbleRef.current;
+    if (!canvasNode || !stageNode || !trackNode || !heroNode || !bubbleNode) return;
+    // Nested functions do not keep the narrowing of a ref's `.current`.
+    const canvas: HTMLCanvasElement = canvasNode;
+    const stage: HTMLDivElement = stageNode;
+    const track: HTMLElement = trackNode;
+    const hero: HTMLDivElement = heroNode;
+    const bubble: HTMLDivElement = bubbleNode;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    const ctx: CanvasRenderingContext2D = context;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const flock = makeFlock(stage.clientWidth < 760 ? 1400 : 2400);

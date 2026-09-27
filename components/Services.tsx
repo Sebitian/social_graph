@@ -1115,8 +1115,8 @@ const AGENT_PROMPTS = [
 ] as const;
 
 function LamprotornisDemo() {
-  const [draft, setDraft] = useState(AGENT_PROMPTS[0]);
-  const [question, setQuestion] = useState(AGENT_PROMPTS[0]);
+  const [draft, setDraft] = useState<string>(AGENT_PROMPTS[0]);
+  const [question, setQuestion] = useState<string>(AGENT_PROMPTS[0]);
   const [answer, setAnswer] = useState(() => askLamprotornis(AGENT_PROMPTS[0]));
 
   function ask(next: string) {

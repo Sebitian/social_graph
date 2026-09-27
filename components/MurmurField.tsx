@@ -133,12 +133,16 @@ export default function MurmurField() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    const parent = canvas.parentElement;
-    if (!parent) return;
+    const canvasNode = canvasRef.current;
+    if (!canvasNode) return;
+    const context = canvasNode.getContext("2d");
+    if (!context) return;
+    const parentNode = canvasNode.parentElement;
+    if (!parentNode) return;
+    // Nested functions do not keep the narrowing of a ref's `.current`.
+    const canvas: HTMLCanvasElement = canvasNode;
+    const ctx: CanvasRenderingContext2D = context;
+    const parent: HTMLElement = parentNode;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const narrow = parent.clientWidth < 760;

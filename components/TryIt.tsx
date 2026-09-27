@@ -30,7 +30,7 @@ const SAVED = [
 ] as const;
 
 const FIELDS: {
-  id: RunPlatform;
+  id: Exclude<RunPlatform, "facebook">;
   label: string;
   Icon: typeof InstagramIcon;
   accent: string;
