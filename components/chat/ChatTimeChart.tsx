@@ -7,7 +7,7 @@ import type { ChatChart, ChatChartSeries } from "@/lib/chat/types";
 const WIDTH = 520;
 const HEIGHT = 196;
 const PAD = { top: 16, right: 14, bottom: 28, left: 38 };
-const COLORS = ["#7dd3fc", "#f9a8d4", "#86efac", "#fcd34d"];
+const COLORS = ["#0F766E", "#E11D48", "#F59E0B", "#4F46E5"];
 const RANGES = [
   { id: "7d", label: "7D", ms: 7 * 86_400_000 },
   { id: "30d", label: "1M", ms: 30 * 86_400_000 },
@@ -154,13 +154,13 @@ export default function ChatTimeChart({ chart }: Props) {
   const hoverX = hover != null ? xOf(hover) : 0;
 
   return (
-    <figure className="overflow-hidden rounded-xl border border-white/10 bg-black/30">
-      <div className="flex items-center justify-between gap-2 border-b border-white/10 px-3 py-2">
-        <figcaption className="min-w-0 truncate text-[11px] font-semibold text-white/70">
+    <figure className="overflow-hidden rounded-xl border border-[#D5CDBF] bg-[#FBF8F2]">
+      <div className="flex items-center justify-between gap-2 border-b border-[#D5CDBF] px-3 py-2">
+        <figcaption className="min-w-0 truncate text-[11px] font-semibold text-[#5E665F]">
           {chart.title || chart.yLabel || "Trend"}
         </figcaption>
         {showRanges ? (
-          <div className="flex shrink-0 gap-0.5 rounded-lg border border-white/10 bg-black/30 p-0.5">
+          <div className="flex shrink-0 gap-0.5 rounded-lg border border-[#D5CDBF] bg-[#F3EEE4] p-0.5">
             {RANGES.filter(
               (item) => item.id === "all" || span >= (item.ms ?? 0),
             ).map((item) => (
@@ -170,8 +170,8 @@ export default function ChatTimeChart({ chart }: Props) {
                 onClick={() => setRange(item.id)}
                 className={`rounded-md px-1.5 py-0.5 text-[10px] font-medium ${
                   range === item.id
-                    ? "bg-white/15 text-white"
-                    : "text-white/40 hover:text-white/70"
+                    ? "bg-[#0F766E]/10 text-[#0F766E]"
+                    : "text-[#5E665F] hover:text-[#161A17]"
                 }`}
               >
                 {item.label}
@@ -182,7 +182,7 @@ export default function ChatTimeChart({ chart }: Props) {
       </div>
 
       {axis.length < 2 ? (
-        <div className="flex h-[196px] items-center justify-center text-xs text-white/35">
+        <div className="flex h-[196px] items-center justify-center text-xs text-[#5E665F]">
           Not enough dated points to chart.
         </div>
       ) : (
@@ -225,13 +225,13 @@ export default function ChatTimeChart({ chart }: Props) {
                     x2={WIDTH - PAD.right}
                     y1={y}
                     y2={y}
-                    stroke="rgba(255,255,255,0.06)"
+                    stroke="rgba(22,26,23,0.08)"
                   />
                   <text
                     x={PAD.left - 6}
                     y={y + 3}
                     textAnchor="end"
-                    className="fill-white/30"
+                    className="fill-[#161A17]/40"
                     style={{ fontSize: 10 }}
                   >
                     {compactNumber(tick)}
@@ -265,7 +265,7 @@ export default function ChatTimeChart({ chart }: Props) {
                   x2={hoverX}
                   y1={PAD.top}
                   y2={PAD.top + innerH}
-                  stroke="rgba(255,255,255,0.28)"
+                  stroke="rgba(22,26,23,0.15)"
                   strokeWidth={1}
                 />
                 {paths.map((path) => {
@@ -278,7 +278,7 @@ export default function ChatTimeChart({ chart }: Props) {
                       cy={c.y}
                       r={4}
                       fill={path.color}
-                      stroke="rgba(0,0,0,0.55)"
+                      stroke="rgba(255,255,255,0.9)"
                       strokeWidth={1.25}
                     />
                   );
@@ -295,7 +295,7 @@ export default function ChatTimeChart({ chart }: Props) {
                   x={xOf(i)}
                   y={HEIGHT - 8}
                   textAnchor="middle"
-                  className="fill-white/35"
+                  className="fill-[#161A17]/40"
                   style={{ fontSize: 10 }}
                 >
                   {slot.label}
@@ -306,20 +306,20 @@ export default function ChatTimeChart({ chart }: Props) {
 
           {hoverSlot ? (
             <div
-              className="pointer-events-none absolute top-2 z-10 min-w-[120px] rounded-lg border border-white/15 bg-black/90 px-2.5 py-1.5 text-xs shadow-lg backdrop-blur"
+              className="pointer-events-none absolute top-2 z-10 min-w-[120px] rounded-lg border border-[#D5CDBF] bg-[#FBF8F2] px-2.5 py-1.5 text-xs shadow-lg"
               style={{
                 left: `clamp(8px, ${(hoverX / WIDTH) * 100}% - 60px, calc(100% - 132px))`,
               }}
             >
-              <div className="text-[10px] text-white/45">{hoverSlot.label}</div>
+              <div className="text-[10px] text-[#5E665F]">{hoverSlot.label}</div>
               {paths.map((path) => {
                 const v = valuesBySeries.get(path.series.id)?.get(hoverSlot.key) ?? 0;
                 return (
                   <div
                     key={path.series.id}
-                    className="mt-0.5 flex items-center justify-between gap-3 font-mono text-[11px] text-white"
+                    className="mt-0.5 flex items-center justify-between gap-3 font-mono text-[11px] text-[#161A17]"
                   >
-                    <span className="flex items-center gap-1.5 font-sans text-white/70">
+                    <span className="flex items-center gap-1.5 font-sans text-[#5E665F]">
                       <span
                         className="h-1.5 w-1.5 rounded-full"
                         style={{ background: path.color }}
@@ -336,7 +336,7 @@ export default function ChatTimeChart({ chart }: Props) {
       )}
 
       {chart.series.length > 1 ? (
-        <div className="flex flex-wrap gap-1.5 border-t border-white/10 px-3 py-2">
+        <div className="flex flex-wrap gap-1.5 border-t border-[#D5CDBF] px-3 py-2">
           {chart.series.map((series, index) => {
             const on = !hidden.has(series.id);
             const color = seriesColor(series, index);
@@ -355,13 +355,13 @@ export default function ChatTimeChart({ chart }: Props) {
                 }}
                 className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] ${
                   on
-                    ? "border-white/15 bg-white/10 text-white/80"
-                    : "border-white/8 text-white/30"
+                    ? "border-[#D5CDBF] bg-[#F3EEE4] text-[#161A17]"
+                    : "border-[#D5CDBF]/60 text-[#5E665F]/70"
                 }`}
               >
                 <span
                   className="h-1.5 w-1.5 rounded-full"
-                  style={{ background: on ? color : "rgba(255,255,255,0.2)" }}
+                  style={{ background: on ? color : "rgba(22,26,23,0.2)" }}
                 />
                 {series.label}
               </button>
@@ -371,7 +371,7 @@ export default function ChatTimeChart({ chart }: Props) {
       ) : null}
 
       {chart.caption ? (
-        <p className="border-t border-white/10 px-3 py-1.5 text-[11px] leading-relaxed text-white/40">
+        <p className="border-t border-[#D5CDBF] px-3 py-1.5 text-[11px] leading-relaxed text-[#5E665F]">
           {chart.caption}
         </p>
       ) : null}

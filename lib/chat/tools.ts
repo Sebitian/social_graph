@@ -12,9 +12,10 @@ import {
 import type { CompanyEmployee, CompanyResult } from "@/lib/companyTypes";
 import type { ConferenceAttendee, ConferenceResult } from "@/lib/conferenceTypes";
 import { compareByCloseness, engagementVolume } from "@/lib/graphUtils";
-import type {
-  InstagramPeopleResult,
-  InstagramPersonOption,
+import {
+  instagramPersonRole,
+  type InstagramPeopleResult,
+  type InstagramPersonOption,
 } from "@/lib/instagramPeople";
 import type { TikTokResult, TikTokVideo } from "@/lib/tiktokTypes";
 import type { GraphNode, PostComment, ProfilePost, ScrapeResult } from "@/lib/types";
@@ -219,6 +220,11 @@ export function queryOverview(
       comments: overview.reels.comments,
     },
     graphShown: data.stats.shown,
+    topCommentators: overview.topCommentators.slice(0, MAX_PEOPLE).map((row) => ({
+      username: row.username,
+      fullName: row.fullName ?? null,
+      comments: row.comments,
+    })),
     topEngagers: overview.topEngagers.slice(0, MAX_PEOPLE).map((row) => ({
       username: row.username,
       fullName: row.fullName ?? null,
@@ -746,6 +752,7 @@ function serializeInstagramEmployee(person: InstagramPersonOption) {
     username: person.username,
     fullName: person.fullName,
     title: person.title ?? null,
+    role: instagramPersonRole(person),
     available: person.available,
     unavailableReason: person.unavailableReason ?? null,
     followers: person.followersCount ?? null,
@@ -974,7 +981,7 @@ export function createChatTools(bundle: ChatBundle): ToolSet {
     .string()
     .optional()
     .describe(
-      "Instagram company or employee @handle / name (kossof_salonspa, joanna_artistry, Jenny). Defaults to the salon company account. Ignored for LinkedIn and Facebook.",
+      "Instagram company or employee @handle / name (kossof_salonspa, joanna_artistry, Jenny). Defaults to the salon company account. Aiman (@nuancedaiman) is a separate Instagram job, not salon staff. Ignored for LinkedIn and Facebook.",
     );
 
   const presentTable = tool({
@@ -1304,13 +1311,13 @@ export function createChatTools(bundle: ChatBundle): ToolSet {
     ? {
         list_instagram_employees: tool({
           description:
-            "List Instagram employees attached to the salon company account, with availability and follower counts.",
+            "List Instagram people on this salon run: employees, with availability and follower counts.",
           inputSchema: z.object({}),
           execute: async () => queryInstagramEmployees(instagramPeople),
         }),
         find_instagram_employee: tool({
           description:
-            "Look up an Instagram employee by name, @handle, or title (colorist, stylist, etc.). Use this for Joanna, Jenny, Brentley, Donna, and other rostered staff. Then get_overview / list_posts with account=@handle for their graph.",
+            "Look up a salon Instagram person by name, @handle, or title. Use this for Joanna, Jenny, Brentley, Donna, and other rostered staff. Then get_overview / list_posts with account=@handle for their graph.",
           inputSchema: z.object({
             query: z
               .string()
@@ -1412,14 +1419,18 @@ export function chatSystemPrompt(bundle: ChatBundle): string {
       const status = person.available
         ? "graph available"
         : person.unavailableReason || "no graph";
-      return `- Instagram employee: ${person.fullName} (@${person.username})${person.title ? `, ${person.title}` : ""} — ${status}`;
+      const kind =
+        instagramPersonRole(person) === "person"
+          ? "Instagram person"
+          : "Instagram employee";
+      return `- ${kind}: ${person.fullName} (@${person.username})${person.title ? `, ${person.title}` : ""} — ${status}`;
     }),
   ].join("\n");
   const hasSocial = Boolean(
     bundle.social.linkedin || bundle.social.instagram || bundle.social.facebook,
   );
   const lines = [
-    "You are Netgraph Chat, an assistant for social, company, and conference snapshots.",
+    "You are Starling Chat, an assistant for social, company, and conference snapshots.",
     "The user selected these sources for this question. Only use them. If asked about a platform that is not listed, say it is not selected.",
     catalog || "- none",
   ];
@@ -1438,7 +1449,7 @@ export function chatSystemPrompt(bundle: ChatBundle): string {
   }
   if (bundle.instagramPeople?.people.length) {
     lines.push(
-      "Instagram includes the salon company account plus employee graphs. Use list_instagram_employees and find_instagram_employee for the staff roster (Joanna, Jenny, Brentley, Donna).",
+      "Instagram includes the salon company account and employee graphs (Joanna, Jenny, Brentley, Donna). Use list_instagram_employees and find_instagram_employee for that roster. Aiman Naqvi (@nuancedaiman) is a separate Instagram job.",
       "For an employee's own posts, comments, or overview, call get_overview / list_posts / get_comments / find_person with source=instagram and account=@their_handle. Donna has no graph if marked unavailable.",
       "Company-graph people are commenters on the salon account. Employees may not appear there even when their person graph exists.",
     );

@@ -1,3 +1,5 @@
+import { catalogJobForHandle, jobPath } from "./jobCatalog";
+
 /** Canonical demo handle (LinkedIn person + multi-platform companions). */
 export const DEMO_HANDLE = "diandra";
 
@@ -11,9 +13,10 @@ export const COMPANION_SNAPSHOTS = {
   tiktok: "kossof-tiktok",
 } as const;
 
-/** Public share path for a pinned snapshot. Diandra's demo lives at `/demo`. */
+/** Public share path. Known runs live at /jobs/{name}-{platform}/{id}. */
 export function pinnedGraphPath(handle: string): string {
   const clean = handle.replace(/^@/, "").trim().toLowerCase();
-  if (clean === DEMO_HANDLE) return "/demo";
+  const job = catalogJobForHandle(clean);
+  if (job) return jobPath(job.id);
   return `/graph/${clean}/pinned`;
 }

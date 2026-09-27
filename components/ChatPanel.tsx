@@ -13,6 +13,7 @@ import {
   SquarePen,
   User,
   Volume2,
+  X,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import ChatDataTable, {
@@ -48,9 +49,9 @@ const PROMPT_ICON_CLASS: Record<ChatSourceId, string> = {
   linkedin: "text-[#0A66C2]",
   instagram: "text-[#E4405F]",
   facebook: "text-[#1877F2]",
-  tiktok: "text-white",
-  company: "text-white/75",
-  conference: "text-[#FDA4AF]",
+  tiktok: "text-[#161A17]",
+  company: "text-[#5E665F]",
+  conference: "text-[#E11D48]",
 };
 
 const PROMPT_HIGHLIGHTS = [
@@ -73,8 +74,8 @@ const LINKEDIN_CLUSTER_IDS: ChatSourceId[] = ["linkedin", "company"];
 function iconBtnClass(selected: boolean): string {
   return `inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition ${
     selected
-      ? "border-white/20 bg-white/15 text-white"
-      : "border-white/10 bg-transparent text-white/40 hover:border-white/20 hover:text-white/70"
+      ? "border-[#0F766E]/30 bg-[#0F766E]/10 text-[#0F766E]"
+      : "border-[#D5CDBF]/70 bg-transparent text-[#5E665F] hover:border-[#0F766E]/40 hover:bg-[#E7E0D4] hover:text-[#161A17]"
   }`;
 }
 
@@ -199,7 +200,7 @@ function PromptText({ text }: { text: string }) {
           (phrase) => phrase.toLowerCase() === part.toLowerCase(),
         );
         return highlight ? (
-          <strong key={index} className="font-semibold text-white">
+          <strong key={index} className="font-semibold text-[#0F766E]">
             {part}
           </strong>
         ) : (
@@ -322,7 +323,7 @@ function formatChatTranscript(
     }
     const body = chunks.join("\n\n").trim();
     if (!body) continue;
-    const who = message.role === "user" ? "You" : "Netgraph";
+    const who = message.role === "user" ? "You" : "Starling";
     blocks.push(`**${who}**\n${body}`);
   }
   return blocks.join("\n\n---\n\n");
@@ -334,6 +335,7 @@ interface Props {
   sources: ChatSourceInfo[];
   budget: ScrapeBudget;
   onSelectUsername?: (username: string) => void;
+  onClose?: () => void;
 }
 
 type QuotaState = {
@@ -392,7 +394,7 @@ function LinkedInSourceCluster({
         <>
           <span
             className={`h-px w-2.5 shrink-0 ${
-              parentOn ? "bg-white/35" : "bg-white/15"
+              parentOn ? "bg-[#0F766E]/40" : "bg-[#D5CDBF]/70"
             }`}
             aria-hidden
           />
@@ -419,7 +421,7 @@ function LinkedInSourceCluster({
         <>
           <span
             className={`h-px w-2.5 shrink-0 ${
-              parentOn ? "bg-white/35" : "bg-white/15"
+              parentOn ? "bg-[#0F766E]/40" : "bg-[#D5CDBF]/70"
             }`}
             aria-hidden
           />
@@ -452,6 +454,7 @@ export default function ChatPanel({
   sources,
   budget,
   onSelectUsername,
+  onClose,
 }: Props) {
   const [input, setInput] = useState("");
   const [quota, setQuota] = useState<QuotaState | null>(null);
@@ -721,7 +724,7 @@ export default function ChatPanel({
     <form onSubmit={onSubmit} className={isEmpty ? "w-full" : "p-3 pt-1"}>
       {limitsOn ? (
         <p
-          className="mb-1.5 pr-1 text-right text-[11px] tabular-nums text-white/40"
+          className="mb-1.5 pr-1 text-right text-[11px] tabular-nums text-[#5E665F]/70"
           aria-live="polite"
         >
           {remaining === 1
@@ -729,7 +732,7 @@ export default function ChatPanel({
             : `${remaining} messages left`}
         </p>
       ) : null}
-      <div className="rounded-[28px] border border-white/10 bg-[#2c2c32] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] focus-within:border-white/20">
+      <div className="rounded-[28px] border border-[#D5CDBF] bg-[#F3EEE4] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] focus-within:border-[#0F766E]/40 focus-within:ring-1 focus-within:ring-[#0F766E]/10">
         <textarea
           ref={textareaRef}
           value={input}
@@ -756,7 +759,7 @@ export default function ChatPanel({
                   ? "Ask anything"
                   : "No snapshots loaded for Chat"
           }
-          className="max-h-40 min-h-[44px] w-full resize-none bg-transparent px-4 pb-1 pt-3.5 text-sm leading-relaxed text-white placeholder:text-white/35 focus:outline-none disabled:opacity-50"
+          className="max-h-40 min-h-[44px] w-full resize-none bg-transparent px-4 pb-1 pt-3.5 text-sm leading-relaxed text-[#161A17] placeholder:text-[#5E665F]/55 focus:outline-none disabled:opacity-50"
         />
         <div className="flex items-end gap-2 px-2.5 pb-2.5">
           <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5">
@@ -810,7 +813,7 @@ export default function ChatPanel({
               className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition ${
                 listening
                   ? "animate-pulse border-red-400/50 bg-red-500 text-white"
-                  : "border-white/10 bg-transparent text-white/50 hover:border-white/20 hover:text-white/80 disabled:opacity-35"
+                  : "border-[#D5CDBF]/70 bg-transparent text-[#5E665F] hover:border-[#0F766E]/40 hover:bg-[#E7E0D4] hover:text-[#161A17] disabled:opacity-35"
               }`}
               aria-label={listening ? "Stop listening" : "Ask with voice"}
               aria-pressed={listening}
@@ -826,7 +829,7 @@ export default function ChatPanel({
           <button
             type="submit"
             disabled={busy || !canSend || !input.trim()}
-            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-black transition hover:bg-white/90 disabled:bg-white/15 disabled:text-white/35"
+            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0F766E] text-white transition hover:bg-[#0D9488] disabled:bg-[#D5CDBF] disabled:text-[#5E665F]/50"
             aria-label="Send"
           >
             <ArrowUp className="h-4 w-4" strokeWidth={2.5} />
@@ -834,20 +837,20 @@ export default function ChatPanel({
         </div>
       </div>
       {micError ? (
-        <p className="mt-2 px-1 text-xs text-red-200/80">{micError}</p>
+        <p className="mt-2 px-1 text-xs text-red-600">{micError}</p>
       ) : null}
     </form>
   );
 
   return (
-    <div className="flex min-h-[70dvh] flex-col rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
-      <div className="border-b border-white/10 px-4 py-3">
+    <div className="flex h-full flex-col bg-[#FBF8F2]">
+      <div className="border-b border-[#D5CDBF] px-4 py-3">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <div className="flex items-center gap-2 text-sm font-semibold text-white/85">
-              <MessageCircle className="h-4 w-4" /> Chat
+            <div className="flex items-center gap-2 text-sm font-semibold text-[#161A17]">
+              <MessageCircle className="h-4 w-4 text-[#0F766E]" /> Chat
             </div>
-            <p className="mt-1 text-xs text-white/40">
+            <p className="mt-1 text-xs text-[#5E665F]">
               Frozen snapshots — not live scraping.
             </p>
           </div>
@@ -857,7 +860,7 @@ export default function ChatPanel({
                 aria-label="Read-aloud voice"
                 value={voiceURI}
                 onChange={(event) => selectVoice(event.target.value)}
-                className="max-w-[10.5rem] truncate rounded-lg bg-[#2a2a2a] px-2 py-1.5 text-[12px] text-white/80 outline-none transition hover:bg-[#333333] hover:text-white"
+                className="max-w-[10.5rem] truncate rounded-lg border border-[#D5CDBF] bg-[#F3EEE4] px-2 py-1.5 text-[12px] text-[#161A17] outline-none transition hover:bg-[#E7E0D4]"
                 title="Read-aloud voice"
               >
                 {voices.map((voice) => (
@@ -867,11 +870,22 @@ export default function ChatPanel({
                 ))}
               </select>
             ) : null}
+            {onClose ? (
+              <button
+                type="button"
+                onClick={onClose}
+                className="inline-flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-lg border border-[#D5CDBF] bg-[#F3EEE4] text-[#161A17]/80 transition hover:bg-[#E7E0D4] hover:text-[#161A17]"
+                aria-label="Close chat"
+                title="Back to graph"
+              >
+                <X className="h-3.5 w-3.5" strokeWidth={2} />
+              </button>
+            ) : null}
             <button
               type="button"
               onClick={startNewChat}
               disabled={isEmpty && !input.trim()}
-              className="inline-flex items-center gap-2 rounded-lg bg-[#2a2a2a] px-3 py-1.5 text-[13px] font-medium text-white transition hover:bg-[#333333] disabled:cursor-not-allowed disabled:opacity-35"
+              className="inline-flex items-center gap-2 rounded-lg border border-[#D5CDBF] bg-[#F3EEE4] px-3 py-1.5 text-[13px] font-medium text-[#161A17] transition hover:bg-[#E7E0D4] disabled:cursor-not-allowed disabled:opacity-35"
               aria-label="New chat"
             >
               <SquarePen className="h-3.5 w-3.5" strokeWidth={2} />
@@ -881,12 +895,12 @@ export default function ChatPanel({
               type="button"
               onClick={() => void copyChat()}
               disabled={isEmpty}
-              className="inline-flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-lg bg-[#2a2a2a] text-white/80 transition hover:bg-[#333333] hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
+              className="inline-flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-lg border border-[#D5CDBF] bg-[#F3EEE4] text-[#161A17]/80 transition hover:bg-[#E7E0D4] hover:text-[#161A17] disabled:cursor-not-allowed disabled:opacity-35"
               aria-label={copied ? "Copied chat" : "Copy chat"}
               title={copied ? "Copied" : "Copy chat"}
             >
               {copied ? (
-                <Check className="h-3.5 w-3.5 text-emerald-400" />
+                <Check className="h-3.5 w-3.5 text-[#0F766E]" />
               ) : (
                 <Copy className="h-3.5 w-3.5" />
               )}
@@ -894,7 +908,7 @@ export default function ChatPanel({
           </div>
         </div>
         {sources.length === 0 ? (
-          <p className="mt-2 text-xs text-white/45">
+          <p className="mt-2 text-xs text-[#5E665F]">
             No Chat snapshots are loaded on this page.
           </p>
         ) : null}
@@ -903,7 +917,7 @@ export default function ChatPanel({
       {isEmpty ? (
         <div className="flex min-h-0 flex-1 flex-col items-center justify-center px-5 py-10">
           <div className="flex w-full max-w-xl flex-col">
-            <h2 className="mb-6 text-center text-[1.7rem] font-medium tracking-tight text-white">
+            <h2 className="mb-6 text-center text-[1.7rem] font-medium tracking-tight text-[#161A17]">
               Where should we begin?
             </h2>
             {composer}
@@ -914,10 +928,10 @@ export default function ChatPanel({
                     <button
                       type="button"
                       onClick={() => submit(prompt.text)}
-                      className="flex w-full items-center gap-3 rounded-xl px-2 py-2.5 text-left transition hover:bg-white/[0.06]"
+                      className="flex w-full items-center gap-3 rounded-xl px-2 py-2.5 text-left transition hover:bg-[#E7E0D4]"
                     >
                       <PromptLogos sources={prompt.sources} />
-                      <span className="min-w-0 text-[13.5px] leading-snug text-white/65">
+                      <span className="min-w-0 text-[13.5px] leading-snug text-[#161A17]/75">
                         <PromptText text={prompt.text} />
                       </span>
                     </button>
@@ -926,13 +940,13 @@ export default function ChatPanel({
               </ul>
             ) : null}
             {quotaBlocked ? (
-              <div className="mt-4 rounded-xl border border-white/10 bg-black/25 px-3 py-2 text-xs text-white/55">
+              <div className="mt-4 rounded-xl border border-[#D5CDBF] bg-[#F3EEE4] px-3 py-2 text-xs text-[#5E665F]">
                 That&apos;s the {questionLimit}-question demo limit for today. The
                 graph and analytics stay open.
               </div>
             ) : null}
             {error ? (
-              <div className="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 px-3 py-2 text-xs text-red-200">
+              <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
                 {error.message || "Chat request failed."}
               </div>
             ) : null}
@@ -941,99 +955,99 @@ export default function ChatPanel({
       ) : (
         <>
           <div className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-4 py-4">
-        {messages.map((message) => {
-          const display = displayFromMessage(message.parts);
-          if (display.length === 0) return null;
-          const isUser = message.role === "user";
-          const spoken = isUser ? "" : spokenTextFromDisplay(display);
-          const speakingThis = speakingId === message.id;
-          const streamingThis =
-            busy && !isUser && message.id === messages[messages.length - 1]?.id;
-          return (
-            <div
-              key={message.id}
-              className={
-                isUser
-                  ? "ml-auto max-w-[min(100%,32rem)] rounded-[22px] bg-white/[0.12] px-4 py-2.5 text-[15px] leading-relaxed text-white"
-                  : "w-full max-w-none text-[15px] leading-7 text-white/85"
-              }
-            >
-              {isUser ? (
-                <span className="whitespace-pre-wrap break-words">
-                  {display
-                    .filter((part) => part.type === "text")
-                    .map((part) => part.text)
-                    .join("")}
-                </span>
-              ) : (
-                <div className="min-w-0 space-y-3">
-                  {display.map((part, index) => {
-                    if (part.type === "text") {
-                      return (
-                        <ChatMarkdown
-                          key={`${message.id}-text-${index}`}
-                          text={part.text}
-                          onSelectUsername={onSelectUsername}
-                        />
-                      );
-                    }
-                    if (part.type === "table") {
-                      return (
-                        <ChatDataTable
-                          key={`${message.id}-table-${part.key}`}
-                          table={part.table}
-                          onSelectUsername={onSelectUsername}
-                        />
-                      );
-                    }
-                    return (
-                      <ChatTimeChart
-                        key={`${message.id}-chart-${part.key}`}
-                        chart={part.chart}
-                      />
-                    );
-                  })}
-                  {ttsSupported && spoken ? (
-                    <button
-                      type="button"
-                      disabled={streamingThis}
-                      onClick={() => speak(message.id, spoken)}
-                      className="inline-flex h-7 w-7 items-center justify-center rounded-full text-white/35 transition hover:bg-white/10 hover:text-white/80 disabled:opacity-30"
-                      aria-label={speakingThis ? "Stop reading" : "Read response"}
-                      title={speakingThis ? "Stop reading" : "Read response"}
-                    >
-                      {speakingThis ? (
-                        <Square className="h-3 w-3 fill-current" />
-                      ) : (
-                        <Volume2 className="h-3.5 w-3.5" />
-                      )}
-                    </button>
-                  ) : null}
+            {messages.map((message) => {
+              const display = displayFromMessage(message.parts);
+              if (display.length === 0) return null;
+              const isUser = message.role === "user";
+              const spoken = isUser ? "" : spokenTextFromDisplay(display);
+              const speakingThis = speakingId === message.id;
+              const streamingThis =
+                busy && !isUser && message.id === messages[messages.length - 1]?.id;
+              return (
+                <div
+                  key={message.id}
+                  className={
+                    isUser
+                      ? "ml-auto max-w-[min(100%,32rem)] rounded-[22px] bg-[#0F766E] px-4 py-2.5 text-[15px] leading-relaxed text-white"
+                      : "w-full max-w-none text-[15px] leading-7 text-[#161A17]/85"
+                  }
+                >
+                  {isUser ? (
+                    <span className="whitespace-pre-wrap break-words">
+                      {display
+                        .filter((part) => part.type === "text")
+                        .map((part) => part.text)
+                        .join("")}
+                    </span>
+                  ) : (
+                    <div className="min-w-0 space-y-3">
+                      {display.map((part, index) => {
+                        if (part.type === "text") {
+                          return (
+                            <ChatMarkdown
+                              key={`${message.id}-text-${index}`}
+                              text={part.text}
+                              onSelectUsername={onSelectUsername}
+                            />
+                          );
+                        }
+                        if (part.type === "table") {
+                          return (
+                            <ChatDataTable
+                              key={`${message.id}-table-${part.key}`}
+                              table={part.table}
+                              onSelectUsername={onSelectUsername}
+                            />
+                          );
+                        }
+                        return (
+                          <ChatTimeChart
+                            key={`${message.id}-chart-${part.key}`}
+                            chart={part.chart}
+                          />
+                        );
+                      })}
+                      {ttsSupported && spoken ? (
+                        <button
+                          type="button"
+                          disabled={streamingThis}
+                          onClick={() => speak(message.id, spoken)}
+                          className="inline-flex h-7 w-7 items-center justify-center rounded-full text-[#5E665F] transition hover:bg-[#E7E0D4] hover:text-[#161A17] disabled:opacity-30"
+                          aria-label={speakingThis ? "Stop reading" : "Read response"}
+                          title={speakingThis ? "Stop reading" : "Read response"}
+                        >
+                          {speakingThis ? (
+                            <Square className="h-3 w-3 fill-current" />
+                          ) : (
+                            <Volume2 className="h-3.5 w-3.5" />
+                          )}
+                        </button>
+                      ) : null}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          );
-        })}
+              );
+            })}
 
-        {quotaBlocked ? (
-          <div className="rounded-xl border border-white/10 bg-black/25 px-3 py-2 text-xs text-white/55">
-            That&apos;s the {questionLimit}-question demo limit for today. The
-            graph and analytics stay open.
-          </div>
-        ) : null}
+            {quotaBlocked ? (
+              <div className="rounded-xl border border-[#D5CDBF] bg-[#F3EEE4] px-3 py-2 text-xs text-[#5E665F]">
+                That&apos;s the {questionLimit}-question demo limit for today. The
+                graph and analytics stay open.
+              </div>
+            ) : null}
 
-        {busy && (
-          <div className="flex items-center gap-2 text-xs text-white/40">
-            <Loader2 className="h-3.5 w-3.5 animate-spin" />
-            Looking up loaded snapshots…
-          </div>
-        )}
+            {busy && (
+              <div className="flex items-center gap-2 text-xs text-[#5E665F]">
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                Looking up loaded snapshots…
+              </div>
+            )}
 
-        {error && (
-          <div className="rounded-xl border border-red-400/30 bg-red-500/10 px-3 py-2 text-xs text-red-200">
-            {error.message || "Chat request failed."}
-          </div>
-        )}
+            {error && (
+              <div className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+                {error.message || "Chat request failed."}
+              </div>
+            )}
           </div>
           {composer}
         </>

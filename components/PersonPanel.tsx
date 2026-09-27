@@ -216,7 +216,11 @@ export default function PersonPanel({
   const color = proximityRing?.color ?? friendCluster?.color ?? "#94a3b8";
   const initial = (node?.label ?? "?").charAt(0).toUpperCase();
   const history = useMemo(() => node?.history ?? [], [node?.history]);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 639px)").matches,
+  );
   const [avatarFailed, setAvatarFailed] = useState(false);
   const avatarSrc = node
     ? resolveProfilePicUrl(node.label, node.profilePicUrl, platform)
@@ -460,17 +464,25 @@ export default function PersonPanel({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-black/45 sm:bg-black/40"
+            className="fixed inset-0 z-[70] bg-black/45 sm:bg-black/40"
             onClick={onClose}
             aria-label="Close profile"
           />
           <motion.div
             key={node.id}
-            initial={isMobile ? { y: "100%" } : { opacity: 0, x: 24 }}
-            animate={isMobile ? { y: 0 } : { opacity: 1, x: 0 }}
-            exit={isMobile ? { y: "100%" } : { opacity: 0, x: 24 }}
+            initial={
+              isMobile
+                ? { opacity: 1, x: 0, y: "100%" }
+                : { opacity: 0, x: 24, y: 0 }
+            }
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={
+              isMobile
+                ? { opacity: 1, x: 0, y: "100%" }
+                : { opacity: 0, x: 24, y: 0 }
+            }
             transition={{ type: "spring", stiffness: 320, damping: 32 }}
-            className="fixed inset-x-0 bottom-0 z-50 flex w-full max-h-[min(88dvh,100%)] flex-col overflow-hidden rounded-t-2xl rounded-b-none border border-white/10 bg-black/90 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-xl sm:inset-x-auto sm:bottom-auto sm:right-4 sm:top-20 sm:max-h-[calc(100dvh-6rem)] sm:w-[300px] sm:rounded-2xl sm:pb-0"
+            className="fixed inset-x-0 bottom-0 z-[80] flex w-full max-h-[min(88dvh,100%)] flex-col overflow-hidden rounded-t-2xl rounded-b-none border border-white/10 bg-black/90 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-xl sm:inset-x-auto sm:bottom-auto sm:right-4 sm:top-20 sm:max-h-[calc(100dvh-6rem)] sm:w-[300px] sm:rounded-2xl sm:pb-0"
             onTouchMove={(event) => event.stopPropagation()}
             onWheel={(event) => event.stopPropagation()}
           >

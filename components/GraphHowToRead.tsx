@@ -105,30 +105,60 @@ function HowToReadContent({
   );
 }
 
-/** Dismissible help banner for mobile; always-visible section on desktop. */
+/** Dismissible help banner, or a compact block for the sidebar. */
 export function GraphHowToRead({
   className = "",
   forceOpen = false,
   onDismiss,
   variant = "social",
+  placement = "banner",
 }: {
   className?: string;
   forceOpen?: boolean;
   onDismiss?: () => void;
   variant?: "social" | "conference";
+  placement?: "banner" | "sidebar";
 }) {
   const [dismissed, setDismissed] = useState(true);
   const [mounted, setMounted] = useState(false);
   const steps = variant === "conference" ? CONFERENCE_STEPS : SOCIAL_STEPS;
 
   useEffect(() => {
+    if (placement === "sidebar") return;
     setMounted(true);
     try {
       setDismissed(localStorage.getItem(STORAGE_KEY) === "1");
     } catch {
       setDismissed(false);
     }
-  }, []);
+  }, [placement]);
+
+  if (placement === "sidebar") {
+    return (
+      <section className={className}>
+        <p className="px-3 pb-1 text-[11px] font-semibold tracking-[0.14em] text-[#5E665F] uppercase">
+          How to read this
+        </p>
+        <ol className="space-y-2.5 px-3 pb-1">
+          {steps.map((step) => (
+            <li key={step.n} className="flex gap-2.5">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#0F766E]/10 text-[10px] font-semibold text-[#0F766E]">
+                {step.n}
+              </span>
+              <div className="min-w-0">
+                <div className="text-[13px] font-medium leading-tight text-[#161A17]">
+                  {step.title}
+                </div>
+                <p className="mt-0.5 text-[12px] leading-snug text-[#5E665F]">
+                  {step.body}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    );
+  }
 
   const dismiss = () => {
     setDismissed(true);

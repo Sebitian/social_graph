@@ -264,7 +264,7 @@ export default function TikTokGraphVisualizer({
         ctx.beginPath();
         ctx.arc(x, y, r + 5, 0, Math.PI * 2);
         ctx.fillStyle =
-          selected ? "rgba(254,44,85,0.35)" : "rgba(255,255,255,0.12)";
+          selected ? "rgba(155,58,74,0.22)" : "rgba(22,26,23,0.06)";
         ctx.fill();
       }
 
@@ -307,7 +307,7 @@ export default function TikTokGraphVisualizer({
       ctx.strokeStyle = isSelf
         ? "#FE2C55"
         : isTag
-          ? "rgba(255,255,255,0.35)"
+          ? "rgba(22,26,23,0.28)"
           : "#25F4EE";
       ctx.lineWidth = isSelf ? 2.5 : 1.25;
       ctx.stroke();
@@ -334,14 +334,14 @@ export default function TikTokGraphVisualizer({
       const padX = 4;
       const padY = 2;
       const ty = y + r + 5;
-      ctx.fillStyle = "rgba(0,0,0,0.55)";
+      ctx.fillStyle = "#FBF8F2";
       ctx.fillRect(
         x - metrics.width / 2 - padX,
         ty - 1,
         metrics.width + padX * 2,
         fontSize + padY * 2,
       );
-      ctx.fillStyle = "rgba(255,255,255,0.95)";
+      ctx.fillStyle = "#161A17";
       ctx.fillText(text, x, ty + padY);
     },
     [hoveredId, selectedId],

@@ -250,7 +250,7 @@ export default function CompanyGraphVisualizer({
           ctx.arc(x, y, r + 5, 0, Math.PI * 2);
         }
         ctx.fillStyle =
-          selected ? "rgba(10,102,194,0.35)" : "rgba(255,255,255,0.12)";
+          selected ? "rgba(15,118,110,0.22)" : "rgba(22,26,23,0.06)";
         ctx.fill();
       }
 
@@ -292,7 +292,7 @@ export default function CompanyGraphVisualizer({
       } else {
         ctx.arc(x, y, r, 0, Math.PI * 2);
       }
-      ctx.strokeStyle = isCompany ? "#0A66C2" : "rgba(255,255,255,0.4)";
+      ctx.strokeStyle = isCompany ? "#0A66C2" : "rgba(22,26,23,0.28)";
       ctx.lineWidth = isCompany ? 2.5 : 1.25;
       ctx.stroke();
 
@@ -318,14 +318,21 @@ export default function CompanyGraphVisualizer({
       const padX = 4;
       const padY = 2;
       const ty = y + r + 5;
-      ctx.fillStyle = "rgba(0,0,0,0.55)";
+      ctx.fillStyle = "#FBF8F2";
       ctx.fillRect(
         x - metrics.width / 2 - padX,
         ty - 1,
         metrics.width + padX * 2,
         fontSize + padY * 2,
       );
-      ctx.fillStyle = "rgba(255,255,255,0.95)";
+      ctx.strokeStyle = "#D5CDBF";
+      ctx.strokeRect(
+        x - metrics.width / 2 - padX,
+        ty - 1,
+        metrics.width + padX * 2,
+        fontSize + padY * 2,
+      );
+      ctx.fillStyle = "#161A17";
       ctx.fillText(text, x, ty + padY);
     },
     [hoveredId, selectedId],

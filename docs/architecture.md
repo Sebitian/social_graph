@@ -2,7 +2,7 @@
 
 Back to the [README](../README.md).
 
-Netgraph is a Next.js App Router app. Pages load snapshots or mock data on the server; `GraphResult` is the client shell that owns platform switching and the four footer tabs.
+Starling is a Next.js App Router app. Pages load snapshots or mock data on the server; `GraphResult` is the client shell that owns platform switching and the four footer tabs.
 
 ```mermaid
 flowchart LR
@@ -64,7 +64,7 @@ Opened from a node click:
 - `TikTokVideoPanel` — video stats
 - `SpotifyPlaylistPanel` — tracks in a playlist
 
-Stats rails: `NetworkStats`, `CompanyNetworkStats`, `TikTokNetworkStats`, `SpotifyNetworkStats`, `EngagementGrid`.
+Stats rails: `NetworkStats`, `CompanyNetworkStats`, `TikTokNetworkStats`, `SpotifyNetworkStats`.
 
 ### Analytics (`components/analytics/`)
 
@@ -99,7 +99,8 @@ Stats rails: `NetworkStats`, `CompanyNetworkStats`, `TikTokNetworkStats`, `Spoti
 | Snapshot | Platform |
 | --- | --- |
 | `data/snapshots/diandra.json` | LinkedIn person |
-| `kossof-instagram.json` + `kossof-instagram-people.json` | Instagram company + employees |
+| `kossof-instagram.json` + `kossof-instagram-people.json` | Instagram company + salon staff |
+| `aiman-instagram.json` | Aiman Naqvi Instagram, separate job |
 | `kossof-facebook.json` | Facebook page |
 | `kossof-tiktok.json` | TikTok |
 | `sebastian-spotify.json` | Spotify |

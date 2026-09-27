@@ -2,16 +2,43 @@ import type { GraphData, GraphLink, GraphNode, ScrapeResult } from "./types";
 
 export type InstagramMode = "person" | "company";
 
+/** Salon staff sit on the company map; extra people only appear in Person mode. */
+export type InstagramPersonRole = "employee" | "person";
+
 export interface InstagramPersonOption {
   id: string;
   username: string;
   fullName: string;
   title?: string;
+  role?: InstagramPersonRole;
   profilePicUrl?: string;
   followersCount?: number;
   available: boolean;
   unavailableReason?: string;
   result: ScrapeResult | null;
+}
+
+export function instagramPersonRole(
+  person: Pick<InstagramPersonOption, "role">,
+): InstagramPersonRole {
+  return person.role === "person" ? "person" : "employee";
+}
+
+export function instagramPeopleSubtitle(
+  companyHandle: string | undefined,
+  people: InstagramPeopleResult | null | undefined,
+): string {
+  const handle = companyHandle ? `@${companyHandle}` : "Instagram";
+  const list = people?.people ?? [];
+  if (!list.length) return `${handle} · Account graph`;
+  const staff = list.filter((p) => instagramPersonRole(p) === "employee").length;
+  const extras = list
+    .filter((p) => instagramPersonRole(p) === "person")
+    .map((p) => `@${p.username}`);
+  if (extras.length) {
+    return `${handle} · Company + ${staff} employees + ${extras.join(", ")}`;
+  }
+  return `${handle} · Company + ${staff} employees`;
 }
 
 export interface InstagramPeopleResult {
@@ -43,7 +70,7 @@ export function instagramPersonById(
   return data.people.find((person) => person.id === id) ?? null;
 }
 
-export const INSTAGRAM_EMPLOYEE_COLOR = "#f5c542";
+export const INSTAGRAM_EMPLOYEE_COLOR = "#9B3A4A";
 
 function personKey(value: string | undefined): string {
   return (value ?? "").replace(/^@/, "").trim().toLowerCase();
@@ -108,6 +135,7 @@ export function attachInstagramEmployeesToGraph(
   const extraLinks: GraphLink[] = [];
 
   for (const person of people.people) {
+    if (instagramPersonRole(person) !== "employee") continue;
     const id = personKey(person.username) || personKey(person.id);
     if (!id || existing.has(id)) continue;
 

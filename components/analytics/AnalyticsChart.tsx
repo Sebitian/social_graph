@@ -122,13 +122,13 @@ export default function AnalyticsChart({
   return (
     <div className={`relative w-full rounded-b-xl ${className}`}>
       {!hasData ? (
-        <div className="flex h-[220px] items-center justify-center text-sm text-white/35">
+        <div className="flex h-[220px] items-center justify-center text-sm text-[#5E665F]/80">
           {emptyLabel}
         </div>
       ) : (
         <div
           ref={scrollRef}
-          className="w-full overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch] [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent]"
+          className="w-full overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch] [scrollbar-width:thin] [scrollbar-color:rgba(22,26,23,0.25)_transparent]"
           onMouseLeave={() => setHover(null)}
           onMouseMove={(e) => onMove(e.clientX)}
           onTouchStart={(e) => onMove(e.touches[0]?.clientX ?? 0)}
@@ -153,14 +153,14 @@ export default function AnalyticsChart({
                     x2={width - PAD.right}
                     y1={y}
                     y2={y}
-                    stroke="rgba(255,255,255,0.06)"
+                    stroke="rgba(22,26,23,0.08)"
                     strokeWidth={1}
                   />
                   <text
                     x={PAD.left - 8}
                     y={y + 3}
                     textAnchor="end"
-                    className="fill-white/30"
+                    className="fill-[#5E665F]"
                     style={{ fontSize: 10 }}
                   >
                     {compactNumber(tick)}
@@ -222,7 +222,7 @@ export default function AnalyticsChart({
                     cy={c.y}
                     r={hover === i ? 4 : c.v > 0 ? 2.5 : 0}
                     fill={accent}
-                    stroke="rgba(0,0,0,0.5)"
+                    stroke="#FBF8F2"
                     strokeWidth={1}
                     opacity={hover === i ? 1 : 0.7}
                   />
@@ -239,7 +239,7 @@ export default function AnalyticsChart({
                   x={c.x}
                   y={HEIGHT - 8}
                   textAnchor="middle"
-                  className="fill-white/35"
+                  className="fill-[#5E665F]"
                   style={{ fontSize: 10 }}
                 >
                   {c.label}
@@ -253,7 +253,7 @@ export default function AnalyticsChart({
                 x2={coords[hover].x}
                 y1={PAD.top}
                 y2={PAD.top + innerH}
-                stroke="rgba(255,255,255,0.2)"
+                stroke="rgba(22,26,23,0.18)"
                 strokeWidth={1}
                 strokeDasharray="3 3"
               />
@@ -264,16 +264,16 @@ export default function AnalyticsChart({
 
       {hover != null && coords[hover] && hasData ? (
         <div
-          className="pointer-events-none absolute top-2 z-10 rounded-lg border border-white/15 bg-black/85 px-2.5 py-1.5 text-xs shadow-lg backdrop-blur"
+          className="pointer-events-none absolute top-2 z-10 rounded-lg border border-[#D5CDBF] bg-[#FBF8F2] px-2.5 py-1.5 text-xs shadow-[0_8px_24px_rgba(22,26,23,0.12)]"
           style={{
             left: `min(max(${hoverLeft}px - 40px, 8px), calc(100% - 100px))`,
           }}
         >
-          <div className="text-white/45">{coords[hover].label}</div>
-          <div className="font-mono font-semibold text-white">
+          <div className="text-[#5E665F]">{coords[hover].label}</div>
+          <div className="font-mono font-semibold text-[#161A17]">
             {compactNumber(coords[hover].v)}
             {coords[hover].incomplete ? (
-              <span className="ml-1 text-[10px] font-normal text-white/40">
+              <span className="ml-1 text-[10px] font-normal text-[#5E665F]">
                 partial
               </span>
             ) : null}

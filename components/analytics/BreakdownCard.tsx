@@ -66,18 +66,18 @@ function ListSearch({
 }) {
   return (
     <label className="relative block">
-      <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-white/35" />
+      <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#5E665F]/80" />
       <input
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="h-8 w-full rounded-lg border border-white/10 bg-black/40 py-0 pl-8 pr-8 text-[11px] text-white outline-none transition placeholder:text-white/35 focus:border-white/25 focus:bg-black/60"
+        className="h-8 w-full rounded-lg border border-[#D5CDBF] bg-[#F3EEE4] py-0 pl-8 pr-8 text-[11px] text-[#161A17] outline-none transition placeholder:text-[#5E665F]/70 focus:border-[#161A17]/30 focus:bg-[#FBF8F2]"
       />
       {value ? (
         <button
           type="button"
           onClick={() => onChange("")}
-          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-white/40 hover:text-white/80"
+          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-[#5E665F] hover:text-[#161A17]"
           aria-label="Clear search"
         >
           <X className="h-3.5 w-3.5" />
@@ -100,7 +100,7 @@ function RowList({
 
   if (rows.length === 0) {
     return (
-      <div className="flex min-h-[140px] items-center justify-center px-4 py-8 text-center text-xs text-white/35">
+      <div className="flex min-h-[140px] items-center justify-center px-4 py-8 text-center text-xs text-[#5E665F]/80">
         {empty ?? "No data"}
       </div>
     );
@@ -108,11 +108,11 @@ function RowList({
 
   return (
     <div>
-      <div className="flex items-center justify-between px-3 pb-1.5 pt-2 text-[10px] font-semibold uppercase tracking-wide text-white/30">
+      <div className="flex items-center justify-between px-3 pb-1.5 pt-2 text-[10px] font-semibold uppercase tracking-wide text-[#5E665F]/70">
         <span>Name</span>
         <span>{valueHeader ?? "Total"}</span>
       </div>
-      <ul className="divide-y divide-white/[0.04]">
+      <ul className="divide-y divide-[#E7E0D4]">
         {rows.map((row) => {
           const pct = Math.max(4, (row.value / max) * 100);
           return (
@@ -122,11 +122,11 @@ function RowList({
                 disabled={!row.onClick}
                 onClick={row.onClick}
                 className={`relative flex w-full items-center gap-2.5 px-3 py-2.5 text-left transition ${
-                  row.onClick ? "hover:bg-white/[0.04]" : "cursor-default"
-                } ${row.selected ? "bg-white/[0.06]" : ""}`}
+                  row.onClick ? "hover:bg-[#F3EEE4]" : "cursor-default"
+                } ${row.selected ? "bg-[#EFE8DC]" : ""}`}
               >
                 <span
-                  className="pointer-events-none absolute inset-y-1 left-1 rounded-md bg-white/[0.06]"
+                  className="pointer-events-none absolute inset-y-1 left-1 rounded-md bg-[#EFE8DC]"
                   style={{ width: `calc(${pct}% - 8px)` }}
                   aria-hidden
                 />
@@ -135,17 +135,17 @@ function RowList({
                     <span className="shrink-0">{row.leading}</span>
                   ) : null}
                   <span className="min-w-0">
-                    <span className="block truncate text-sm text-white/85">
+                    <span className="block truncate text-sm text-[#161A17]">
                       {row.label}
                     </span>
                     {row.subtitle ? (
-                      <span className="block truncate text-[11px] text-white/35">
+                      <span className="block truncate text-[11px] text-[#5E665F]/80">
                         {row.subtitle}
                       </span>
                     ) : null}
                   </span>
                 </span>
-                <span className="relative z-[1] shrink-0 font-mono text-xs tabular-nums text-white/55">
+                <span className="relative z-[1] shrink-0 font-mono text-xs tabular-nums text-[#5E665F]">
                   {row.valueLabel ?? String(row.value)}
                 </span>
               </button>
@@ -191,17 +191,17 @@ export default function BreakdownCard({
 
   return (
     <section
-      className={`flex min-h-0 flex-col overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] ${className}`}
+      className={`flex min-h-0 flex-col overflow-hidden rounded-2xl border border-[#D5CDBF] bg-[#FBF8F2] ${className}`}
     >
       {(title || (tabs && tabs.length > 1)) && (
-        <header className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-3 py-2">
+        <header className="flex flex-wrap items-center justify-between gap-2 border-b border-[#D5CDBF] px-3 py-2">
           {title ? (
-            <h3 className="text-xs font-semibold text-white/70">{title}</h3>
+            <h3 className="text-xs font-semibold text-[#161A17]/85">{title}</h3>
           ) : (
             <span />
           )}
           {tabs && tabs.length > 1 ? (
-            <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
+            <div className="inline-flex rounded-lg border border-[#D5CDBF] bg-[#F3EEE4] p-0.5">
               {tabs.map((tab) => {
                 const selected = tab.id === activeTab?.id;
                 return (
@@ -211,8 +211,8 @@ export default function BreakdownCard({
                     onClick={() => setTabId(tab.id)}
                     className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition ${
                       selected
-                        ? "bg-white/15 text-white"
-                        : "text-white/45 hover:text-white/75"
+                        ? "bg-[#FBF8F2] text-[#161A17] shadow-[0_1px_2px_rgba(22,26,23,0.06)]"
+                        : "text-[#5E665F] hover:text-[#161A17]"
                     }`}
                   >
                     {tab.label}
@@ -225,15 +225,15 @@ export default function BreakdownCard({
       )}
 
       {tabs && tabs.length === 1 && !title ? (
-        <header className="flex items-center justify-between border-b border-white/10 px-3 py-2">
-          <h3 className="text-xs font-semibold text-white/70">
+        <header className="flex items-center justify-between border-b border-[#D5CDBF] px-3 py-2">
+          <h3 className="text-xs font-semibold text-[#161A17]/85">
             {tabs[0].label}
           </h3>
         </header>
       ) : null}
 
       {showTools ? (
-        <div className="flex flex-col gap-2 border-b border-white/10 px-3 py-2">
+        <div className="flex flex-col gap-2 border-b border-[#D5CDBF] px-3 py-2">
           {searchable ? (
             <ListSearch
               value={query}

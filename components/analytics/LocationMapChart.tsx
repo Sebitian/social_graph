@@ -111,23 +111,13 @@ export default function LocationMapChart({
 
       L.control.zoom({ position: "bottomright" }).addTo(map);
 
-      // Open basemap: CARTO Dark (OSM data) — readable on phones, not street-busy
+      // Esri World Street Map — public, key-free tiles for demos.
       L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png",
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
         {
           attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          subdomains: "abcd",
+            '&copy; <a href="https://www.esri.com/">Esri</a> &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom',
           maxZoom: 7,
-        },
-      ).addTo(map);
-
-      L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png",
-        {
-          subdomains: "abcd",
-          maxZoom: 7,
-          opacity: 0.5,
         },
       ).addTo(map);
 
@@ -179,8 +169,8 @@ export default function LocationMapChart({
             width:${size}px;height:${size}px;
             border-radius:9999px;
             background:radial-gradient(circle at 35% 30%, ${accent}cc, ${accent}ee 55%, ${accent});
-            border:1.5px solid rgba(255,255,255,0.55);
-            box-shadow:0 4px 14px rgba(0,0,0,0.45), 0 0 0 ${Math.max(4, m.r * 0.35)}px ${accent}33;
+            border:1.5px solid rgba(251,248,242,0.9);
+            box-shadow:0 4px 14px rgba(22,26,23,0.18), 0 0 0 ${Math.max(4, m.r * 0.35)}px ${accent}33;
             color:#fff;
             font:700 ${m.r >= 22 ? 13 : 11}px ui-monospace,SFMono-Regular,Menlo,monospace;
             display:flex;align-items:center;justify-content:center;
@@ -223,7 +213,7 @@ export default function LocationMapChart({
   if (markers.length === 0 && chips.length === 0) {
     return (
       <div
-        className={`flex h-[220px] items-center justify-center px-4 text-sm text-white/35 ${className}`}
+        className={`flex h-[220px] items-center justify-center px-4 text-sm text-[#5E665F]/80 ${className}`}
       >
         No mappable locations in this roster
       </div>
@@ -233,36 +223,36 @@ export default function LocationMapChart({
   return (
     <div className={`loc-map relative ${className}`}>
       <div className="relative h-[240px] w-full overflow-hidden sm:h-[280px]">
-        <div ref={containerRef} className="absolute inset-0 bg-[#0b1220]" />
+        <div ref={containerRef} className="absolute inset-0 z-0 bg-[#0b1220]" />
 
         {hover ? (
-          <div className="pointer-events-none absolute left-3 top-3 z-[500] rounded-lg border border-white/15 bg-black/75 px-2.5 py-1.5 text-xs text-white/85 backdrop-blur-md">
+          <div className="pointer-events-none absolute left-3 top-3 z-[500] rounded-lg border border-[#D5CDBF] bg-[#FBF8F2] px-2.5 py-1.5 text-xs text-[#161A17]">
             <span className="font-medium">{shortLabel(hover)}</span>
-            <span className="ml-2 font-mono text-white/55">
+            <span className="ml-2 font-mono text-[#5E665F]">
               {compactNumber(
                 markers.find((m) => m.label === hover)?.count ?? 0,
               )}
             </span>
           </div>
         ) : (
-          <div className="pointer-events-none absolute left-3 top-3 z-[500] rounded-lg border border-white/10 bg-black/50 px-2 py-1 text-[10px] uppercase tracking-wide text-white/35 backdrop-blur-md">
+          <div className="pointer-events-none absolute left-3 top-3 z-[500] rounded-lg border border-[#D5CDBF] bg-[#FBF8F2] px-2 py-1 text-[10px] uppercase tracking-wide text-[#5E665F]/80">
             Employee locations
           </div>
         )}
       </div>
 
       {chips.length > 0 ? (
-        <div className="flex flex-wrap gap-1.5 border-t border-white/10 px-3 py-2">
+        <div className="flex flex-wrap gap-1.5 border-t border-[#D5CDBF] px-3 py-2">
           {chips.map((loc) => (
             <button
               key={loc.label}
               type="button"
               onClick={() => onSelect?.(loc.label)}
               disabled={!onSelect}
-              className="rounded-md border border-white/10 bg-white/[0.04] px-2 py-1 text-[11px] text-white/55 transition hover:bg-white/[0.08] hover:text-white/80 disabled:cursor-default"
+              className="rounded-md border border-[#D5CDBF] bg-[#F3EEE4] px-2 py-1 text-[11px] text-[#5E665F] transition hover:bg-[#E7E0D4] hover:text-[#161A17] disabled:cursor-default"
             >
               {loc.label}{" "}
-              <span className="font-mono text-white/35">
+              <span className="font-mono text-[#5E665F]/80">
                 {compactNumber(loc.count)}
               </span>
             </button>

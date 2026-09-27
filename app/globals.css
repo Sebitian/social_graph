@@ -25,6 +25,22 @@ body {
   box-sizing: border-box;
 }
 
+/* Map toolbar: search fills the space beside the mode icons, and centers once the pane is wide enough to clear them. */
+.map-toolbar {
+  container-type: inline-size;
+}
+
+@container (min-width: 760px) {
+  .map-toolbar-search {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: min(280px, calc(100cqi - 24rem));
+    transform: translateX(-50%);
+    flex: none;
+  }
+}
+
 /* Safe-area helpers for notched phones (additive via max with existing padding) */
 .pt-safe {
   padding-top: max(0px, env(safe-area-inset-top));
@@ -87,27 +103,44 @@ body {
   background: rgba(205, 72, 107, 0.4);
 }
 
+/* Analytics and the map use the landing paper. The title bar follows that surface. */
+body[data-surface="paper"] .app-chrome {
+  background: #f3eee4;
+  border-bottom-color: #d5cdbf;
+  color: #161a17;
+}
+body[data-surface="paper"] .app-chrome a,
+body[data-surface="paper"] .app-chrome button {
+  color: #5e665f;
+}
+body[data-surface="paper"] .app-chrome a:hover,
+body[data-surface="paper"] .app-chrome button:hover,
+body[data-surface="paper"] .app-chrome button[aria-pressed="true"] {
+  color: #161a17;
+  background: #e7e0d4;
+}
+
 /* Company analytics location map (Leaflet) */
 .loc-map .leaflet-control-zoom a {
-  background: rgba(0, 0, 0, 0.72) !important;
-  color: rgba(255, 255, 255, 0.85) !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
+  background: #fbf8f2 !important;
+  color: #161a17 !important;
+  border-color: #d5cdbf !important;
   width: 30px !important;
   height: 30px !important;
   line-height: 30px !important;
   font-size: 16px !important;
 }
 .loc-map .leaflet-control-zoom a:hover {
-  background: rgba(0, 0, 0, 0.88) !important;
+  background: #f3eee4 !important;
 }
 .loc-map .leaflet-control-attribution {
-  background: rgba(0, 0, 0, 0.45) !important;
-  color: rgba(255, 255, 255, 0.35) !important;
+  background: rgba(243, 238, 228, 0.9) !important;
+  color: rgba(22, 26, 23, 0.45) !important;
   font-size: 9px !important;
   max-width: 60%;
 }
 .loc-map .leaflet-control-attribution a {
-  color: rgba(255, 255, 255, 0.45) !important;
+  color: rgba(22, 26, 23, 0.6) !important;
 }
 .loc-map .loc-map-blob {
   background: transparent !important;
@@ -115,4 +148,16 @@ body {
 }
 .loc-map .loc-map-blob div {
   -webkit-tap-highlight-color: transparent;
+}
+/* Light Esri street tiles are used here so no darkening filter is needed. */
+
+.float-tooltip-kap,
+.scene-tooltip {
+  background: #fbf8f2 !important;
+  color: #161a17 !important;
+  border: 1px solid #d5cdbf !important;
+  border-radius: 12px !important;
+  padding: 10px 12px !important;
+  max-width: 280px !important;
+  box-shadow: 0 12px 32px rgba(22, 26, 23, 0.12) !important;
 }

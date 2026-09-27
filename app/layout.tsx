@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import AppShell from "@/components/AppShell";
+import { listJobIndex } from "@/lib/jobs";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -24,20 +26,20 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Netgraph — Map your multi-platform network",
+  title: "Starling — See the shape of your people",
   description:
-    "Add LinkedIn, Instagram, Facebook, TikTok, and Spotify handles. Explore visible interaction, audience, and taste as explainable graphs with analytics.",
+    "Starling charts the visible network around any handle. Who shows up, what they share, and why the line is there.",
   openGraph: {
-    title: "Netgraph — Map your multi-platform network",
+    title: "Starling — See the shape of your people",
     description:
-      "Visible interaction graphs and analytics across LinkedIn, Instagram, Facebook, TikTok, and Spotify.",
+      "A field guide to public networks across LinkedIn, Instagram, Facebook, TikTok, and Spotify.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Netgraph — Map your multi-platform network",
+    title: "Starling — See the shape of your people",
     description:
-      "Visible interaction graphs and analytics across LinkedIn, Instagram, Facebook, TikTok, and Spotify.",
+      "A field guide to public networks across LinkedIn, Instagram, Facebook, TikTok, and Spotify.",
   },
 };
 
@@ -46,12 +48,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jobs = listJobIndex();
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
       >
-        {children}
+        <AppShell jobs={jobs}>{children}</AppShell>
       </body>
     </html>
   );

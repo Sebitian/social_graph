@@ -21,6 +21,11 @@ import {
   SELF_NODE_RADIUS,
   strongestTies,
   UNCLUSTERED_COLOR,
+  INK,
+  INK_MUTED,
+  PAPER_CARD,
+  PAPER_LINE,
+  BRAND_ROSE,
 } from "@/lib/graphUtils";
 import {
   proxiedAvatarUrl,
@@ -131,9 +136,9 @@ function nodeRadius(node: FGNode): number {
 }
 
 /** Comments they left on your posts (received). */
-const RECEIVED_COLOR = "#3b82f6";
+const RECEIVED_COLOR = "#0F766E";
 /** Comments you left on their posts (sent). */
-const SENT_COLOR = "#ef4444";
+const SENT_COLOR = BRAND_ROSE;
 
 /** Deterministic 0–1 hash for per-node entrance stagger. */
 function hash01(input: string): number {
@@ -244,7 +249,7 @@ function paintCommentLink(
   ctx.moveTo(sentOriginX, sentOriginY);
   ctx.lineTo(recvOriginX, recvOriginY);
   ctx.lineWidth = Math.max(1, (opts.emphasize ? 1.6 : 1.1) / globalScale);
-  ctx.strokeStyle = "rgba(255,255,255,0.16)";
+  ctx.strokeStyle = "rgba(22,26,23,0.16)";
   ctx.stroke();
 
   // Red arrow at you → them (only when we know outbound comments exist)
@@ -297,11 +302,11 @@ function paintCommentLink(
     const pillX = midX - pillW / 2;
     const pillY = midY - pillH / 2;
 
-    ctx.fillStyle = "rgba(0,0,0,0.9)";
+    ctx.fillStyle = PAPER_CARD;
     ctx.beginPath();
     ctx.roundRect(pillX, pillY, pillW, pillH, pillH * 0.28);
     ctx.fill();
-    ctx.strokeStyle = "rgba(255,255,255,0.35)";
+    ctx.strokeStyle = PAPER_LINE;
     ctx.lineWidth = Math.max(1.2, 1.4 / globalScale);
     ctx.stroke();
 
@@ -311,7 +316,7 @@ function paintCommentLink(
     ctx.fillStyle = SENT_COLOR;
     ctx.fillText(sentLabel, cursorX, midY);
     cursorX += sentW + gap;
-    ctx.fillStyle = "rgba(255,255,255,0.45)";
+    ctx.fillStyle = INK_MUTED;
     ctx.fillText(sep, cursorX, midY);
     cursorX += sepW + gap;
     ctx.fillStyle = RECEIVED_COLOR;
@@ -324,11 +329,11 @@ function paintCommentLink(
     const pillX = midX - pillW / 2;
     const pillY = midY - pillH / 2;
 
-    ctx.fillStyle = "rgba(0,0,0,0.88)";
+    ctx.fillStyle = PAPER_CARD;
     ctx.beginPath();
     ctx.roundRect(pillX, pillY, pillW, pillH, pillH * 0.28);
     ctx.fill();
-    ctx.strokeStyle = "rgba(56,189,248,0.45)";
+    ctx.strokeStyle = PAPER_LINE;
     ctx.lineWidth = Math.max(1, 1.2 / globalScale);
     ctx.stroke();
 
@@ -667,22 +672,12 @@ export default function GraphVisualizer({
       if (!mapLayout) return;
 
       const mobile = isMobileWidth(size.width);
-      const w = size.width / scale;
-      const h = size.height / scale;
-
-      // Soft vignette so nodes pop against the canvas
-      const vignette = ctx.createRadialGradient(0, 0, 0, 0, 0, Math.max(w, h) * 0.72);
-      vignette.addColorStop(0, "rgba(255,255,255,0.03)");
-      vignette.addColorStop(0.55, "rgba(0,0,0,0)");
-      vignette.addColorStop(1, "rgba(0,0,0,0.45)");
-      ctx.fillStyle = vignette;
-      ctx.fillRect(-w / 2, -h / 2, w, h);
 
       mapLayout.ringGuides.forEach((radius, index) => {
         ctx.beginPath();
         ctx.arc(0, 0, radius, 0, Math.PI * 2);
         ctx.lineWidth = (mobile ? 1.2 : 1) / Math.sqrt(scale);
-        ctx.strokeStyle = mobile ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.06)";
+        ctx.strokeStyle = mobile ? "rgba(22,26,23,0.16)" : "rgba(22,26,23,0.1)";
         ctx.stroke();
 
         const ring = PROXIMITY_RINGS[index];
@@ -691,7 +686,7 @@ export default function GraphVisualizer({
         ctx.font = `600 ${fontSize}px ui-sans-serif, system-ui`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillStyle = mobile ? "rgba(255,255,255,0.48)" : "rgba(255,255,255,0.32)";
+        ctx.fillStyle = INK_MUTED;
         ctx.fillText(ring.label.toUpperCase(), 0, -radius + fontSize * 0.9);
       });
 
@@ -797,7 +792,7 @@ export default function GraphVisualizer({
       ctx.beginPath();
       ctx.arc(x, y, r + 1.5, 0, 2 * Math.PI);
       ctx.lineWidth = node.group === "self" ? 2.2 : 1.3;
-      ctx.strokeStyle = node.group === "self" ? "rgba(255,255,255,0.95)" : color;
+      ctx.strokeStyle = node.group === "self" ? SELF_COLOR : color;
       ctx.stroke();
 
       if (featured) {
@@ -814,7 +809,7 @@ export default function GraphVisualizer({
         ctx.beginPath();
         ctx.arc(x, y, r + (featured ? 7 : 4), 0, 2 * Math.PI);
         ctx.lineWidth = 1.5;
-        ctx.strokeStyle = "rgba(255,255,255,0.85)";
+        ctx.strokeStyle = SELF_COLOR;
         ctx.stroke();
       }
 
@@ -843,10 +838,10 @@ export default function GraphVisualizer({
         ctx.font = `${node.group === "self" || featured ? "700" : "500"} ${fontSize}px ui-sans-serif, system-ui`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillStyle = "rgba(255,255,255,0.95)";
+        ctx.fillStyle = INK;
         if (mobile || scale > 0.85) {
-          ctx.shadowColor = "rgba(0,0,0,0.85)";
-          ctx.shadowBlur = 3 / scale;
+          ctx.shadowColor = "rgba(243,238,228,0.95)";
+          ctx.shadowBlur = 4 / scale;
         }
         ctx.fillText(label, x, y + r + fontSize + 2);
         if (featured) {
@@ -854,7 +849,7 @@ export default function GraphVisualizer({
           const captionSize = Math.max(mobile ? 3.5 : 3, (mobile ? 9 : 8) / scale);
           ctx.font = `500 ${captionSize}px ui-sans-serif, system-ui`;
           ctx.fillStyle = mutedFeatured
-            ? "rgba(255,255,255,0.45)"
+            ? INK_MUTED
             : INSTAGRAM_EMPLOYEE_COLOR;
           ctx.fillText(caption, x, y + r + fontSize + captionSize + 5);
         }
@@ -925,8 +920,8 @@ export default function GraphVisualizer({
   const linkColor = useCallback(
     (l: FGLink) => {
       if (l.kind === "comment") return "rgba(0,0,0,0)";
-      if (!selectedId) return "rgba(255,255,255,0.07)";
-      return linkTouchesSelection(l) ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.04)";
+      if (!selectedId) return "rgba(22,26,23,0.18)";
+      return linkTouchesSelection(l) ? "rgba(15,118,110,0.7)" : "rgba(22,26,23,0.08)";
     },
     [selectedId, linkTouchesSelection],
   );
@@ -956,7 +951,7 @@ export default function GraphVisualizer({
   return (
     <div ref={wrapRef} className={`max-sm:touch-pan-y sm:touch-none ${className}`}>
       {interactive && showHint && members.length > 0 && (
-        <div className="pointer-events-none absolute bottom-4 left-1/2 z-10 max-w-[90%] -translate-x-1/2 animate-pulse rounded-full border border-white/15 bg-black/70 px-3.5 py-1.5 text-center text-[11px] font-medium text-white/75 backdrop-blur sm:bottom-6 sm:max-w-none sm:px-4">
+        <div className="pointer-events-none absolute bottom-4 left-1/2 z-10 max-w-[90%] -translate-x-1/2 animate-pulse rounded-full border border-[#D5CDBF] bg-[#FBF8F2] px-3.5 py-1.5 text-center text-[11px] font-medium text-[#5E665F] sm:bottom-6 sm:max-w-none sm:px-4">
           {hintText ?? "Tap anyone to explore their connections"}
         </div>
       )}

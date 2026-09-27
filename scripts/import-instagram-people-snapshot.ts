@@ -19,6 +19,9 @@ import type { ScrapeResult } from "../lib/types";
  *     --posts <posts.json> \
  *     [--reels <reels.json>]
  *
+ * Repeat --profile / --posts / --reels to merge several salon-staff exports.
+ * Aiman (@nuancedaiman) is a separate Instagram snapshot, not part of this roster.
+ *
  * Example:
  *   npx tsx scripts/import-instagram-people-snapshot.ts kossof-instagram-people \
  *     --profile data/insta_raw/dataset_instagram-profile-scraper_2026-08-15_05-04-36-070.json \
@@ -30,7 +33,11 @@ function parseArgs(argv: string[]) {
     .replace(/^@/, "")
     .trim()
     .toLowerCase();
-  const flags: Record<string, string> = {};
+  const lists: Record<"profile" | "posts" | "reels", string[]> = {
+    profile: [],
+    posts: [],
+    reels: [],
+  };
   for (let i = 1; i < argv.length; i += 1) {
     const arg = argv[i];
     if (!arg.startsWith("--")) continue;
@@ -40,17 +47,22 @@ function parseArgs(argv: string[]) {
       console.error(`Missing value for --${key}`);
       process.exit(1);
     }
-    flags[key] = value;
+    if (key === "profile" || key === "posts" || key === "reels") {
+      lists[key].push(value);
+    } else {
+      console.error(`Unknown flag --${key}`);
+      process.exit(1);
+    }
     i += 1;
   }
-  return { handle, flags };
+  return { handle, lists };
 }
 
-const { handle, flags } = parseArgs(process.argv.slice(2));
+const { handle, lists } = parseArgs(process.argv.slice(2));
 
-if (!flags.profile || !flags.posts) {
+if (!lists.profile.length || !lists.posts.length) {
   console.error(
-    "Usage: npx tsx scripts/import-instagram-people-snapshot.ts [handle] --profile <profile.json> --posts <posts.json> [--reels <reels.json>]",
+    "Usage: npx tsx scripts/import-instagram-people-snapshot.ts [handle] --profile <profile.json> --posts <posts.json> [--reels <reels.json>] (flags may repeat)",
   );
   process.exit(1);
 }
@@ -64,38 +76,39 @@ function readJson(filePath: string): unknown {
   return JSON.parse(fs.readFileSync(abs, "utf-8"));
 }
 
-const profileParsed = readJson(flags.profile);
-if (!isInstagramProfileDataset(profileParsed)) {
-  console.error(
-    "Unrecognized profile format — expected instagram-profile-scraper export",
-  );
-  process.exit(1);
-}
-
-const postsParsed = readJson(flags.posts);
-if (!isInstagramPostsDataset(postsParsed)) {
-  console.error(
-    "Unrecognized posts format — expected instagram-post-scraper export",
-  );
-  process.exit(1);
-}
-
-let reels = [] as ReturnType<typeof flattenInstagramReels>;
-if (flags.reels) {
-  const reelsParsed = readJson(flags.reels);
-  if (!isInstagramReelsDataset(reelsParsed)) {
-    console.error(
-      "Unrecognized reels format — expected instagram-reel-scraper export",
-    );
-    process.exit(1);
+function concatArrays<T>(
+  files: string[],
+  check: (raw: unknown) => raw is T[],
+  label: string,
+): T[] {
+  const out: T[] = [];
+  for (const file of files) {
+    const parsed = readJson(file);
+    if (!check(parsed)) {
+      console.error(`Unrecognized ${label} format: ${file}`);
+      process.exit(1);
+    }
+    out.push(...parsed);
   }
-  reels = flattenInstagramReels(reelsParsed);
+  return out;
 }
+
+const profiles = concatArrays(
+  lists.profile,
+  isInstagramProfileDataset,
+  "profile",
+);
+const posts = concatArrays(lists.posts, isInstagramPostsDataset, "posts");
+const reels = lists.reels.length
+  ? flattenInstagramReels(
+      concatArrays(lists.reels, isInstagramReelsDataset, "reels"),
+    )
+  : [];
 
 const result = buildInstagramPeopleResult({
   companyHandle: "kossof_salonspa",
-  profiles: profileParsed as RawInstagramProfile[],
-  posts: postsParsed as RawInstagramPost[],
+  profiles,
+  posts,
   reels,
 });
 
@@ -104,18 +117,22 @@ fs.mkdirSync(outDir, { recursive: true });
 const outFile = path.join(outDir, `${handle}.json`);
 fs.writeFileSync(outFile, JSON.stringify(result, null, 2), "utf-8");
 
-console.log(`Instagram people snapshot → ${result.people.length} employees`);
+console.log(`Instagram people snapshot → ${result.people.length} people`);
 for (const person of result.people) {
-  const posts = person.result?.posts ?? [];
-  const reelCount = posts.filter(
+  const personPosts = person.result?.posts ?? [];
+  const reelCount = personPosts.filter(
     (post) => (post.postType ?? "").toLowerCase() === "reel",
   ).length;
-  const plays = posts.reduce((sum, post) => sum + (post.videoPlayCount ?? 0), 0);
+  const plays = personPosts.reduce(
+    (sum, post) => sum + (post.videoPlayCount ?? 0),
+    0,
+  );
   const nodes = person.result?.graph.nodes.length ?? 0;
+  const role = person.role ?? "employee";
   console.log(
-    `  ${person.available ? "✓" : "×"} @${person.username} (${person.fullName})` +
+    `  ${person.available ? "✓" : "×"} @${person.username} (${person.fullName}) [${role}]` +
       (person.available
-        ? ` — ${posts.length} posts (${reelCount} reels, ${plays} views), ${nodes} graph people`
+        ? ` — ${personPosts.length} posts (${reelCount} reels, ${plays} views), ${nodes} graph people`
         : ` — ${person.unavailableReason}`),
   );
 }

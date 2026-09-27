@@ -19,7 +19,7 @@ export function MentionText({
             <button
               key={`${chunk}-${index}`}
               type="button"
-              className="font-medium text-white underline decoration-white/30 underline-offset-2 hover:decoration-white"
+              className="font-medium text-[#0F766E] underline decoration-[#0F766E]/30 underline-offset-2 hover:decoration-[#0F766E]"
               onClick={() => onSelectUsername(username)}
             >
               {chunk}

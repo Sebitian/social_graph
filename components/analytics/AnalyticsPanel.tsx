@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { Grid3X3, User } from "lucide-react";
+import { Inter } from "next/font/google";
+import { User } from "lucide-react";
 import type { ScrapeResult, SocialSourcePlatform } from "@/lib/types";
 import type { SpotifyTasteResult } from "@/lib/spotifyTypes";
 import type { CompanyResult } from "@/lib/companyTypes";
@@ -21,6 +22,7 @@ import {
   ConferenceIcon,
 } from "@/components/PlatformIcons";
 import TimeRangeControl from "@/components/analytics/TimeRangeControl";
+import HandleTree from "@/components/analytics/HandleTree";
 import SocialAnalyticsBody from "@/components/analytics/SocialAnalyticsBody";
 import TikTokAnalyticsBody from "@/components/analytics/TikTokAnalyticsBody";
 import SpotifyAnalyticsBody from "@/components/analytics/SpotifyAnalyticsBody";
@@ -38,6 +40,7 @@ import {
   firstAvailableInstagramPersonId,
   instagramPersonById,
 } from "@/lib/instagramPeople";
+import { useSidebarSlot } from "@/components/SidebarSlots";
 
 export type AnalyticsPlatform =
   | "linkedin"
@@ -62,10 +65,13 @@ const PLATFORM_TABS = [
 
 const TAB =
   "inline-flex min-h-[40px] items-center justify-center gap-1.5 rounded-md px-2.5 py-2 text-xs font-medium transition";
-const TAB_ACTIVE = "bg-white/15 text-white";
-const TAB_AVAILABLE = "text-white/55 hover:bg-white/10 hover:text-white/80";
-const TAB_DISABLED = "text-white/30 hover:bg-white/5 hover:text-white/45";
-const LINKEDIN_ACTIVE = "bg-[#0A66C2]/25 text-white";
+const TAB_ACTIVE =
+  "bg-[#FBF8F2] text-[#161A17] shadow-[0_1px_2px_rgba(22,26,23,0.06)] ring-1 ring-[#D5CDBF]";
+const TAB_AVAILABLE = "text-[#5E665F] hover:bg-[#E7E0D4] hover:text-[#161A17]";
+const TAB_DISABLED = "text-[#5E665F]/70 hover:bg-[#F3EEE4] hover:text-[#5E665F]";
+const LINKEDIN_ACTIVE = TAB_ACTIVE;
+
+const sans = Inter({ subsets: ["latin"], weight: ["400", "500", "600"] });
 
 interface Props {
   socialResults: Partial<Record<SocialSourcePlatform, ScrapeResult | null>>;
@@ -98,6 +104,8 @@ interface Props {
   onInstagramModeChange?: (mode: InstagramMode) => void;
   instagramPersonId?: string;
   onInstagramPersonIdChange?: (id: string) => void;
+  linkedinMode?: LinkedInMode;
+  onLinkedinModeChange?: (mode: LinkedInMode) => void;
   className?: string;
 }
 
@@ -145,6 +153,8 @@ export default function AnalyticsPanel({
   onInstagramModeChange,
   instagramPersonId: controlledInstagramPersonId,
   onInstagramPersonIdChange,
+  linkedinMode: controlledLinkedinMode,
+  onLinkedinModeChange,
   className = "",
 }: Props) {
   const [internalPlatform, setInternalPlatform] = useState<AnalyticsPlatform>(
@@ -154,9 +164,15 @@ export default function AnalyticsPanel({
     DEFAULT_ANALYTICS_RANGE,
   );
   const [internalView, setInternalView] = useState<AnalyticsView>("summary");
-  const [linkedinMode, setLinkedinMode] = useState<LinkedInMode>(() =>
-    !socialResults.linkedin && companyResult ? "company" : "person",
-  );
+  const [internalLinkedinMode, setInternalLinkedinMode] =
+    useState<LinkedInMode>(() =>
+      !socialResults.linkedin && companyResult ? "company" : "person",
+    );
+  const linkedinMode = controlledLinkedinMode ?? internalLinkedinMode;
+  const setLinkedinMode = (next: LinkedInMode) => {
+    onLinkedinModeChange?.(next);
+    if (controlledLinkedinMode == null) setInternalLinkedinMode(next);
+  };
   const [internalInstagramMode, setInternalInstagramMode] =
     useState<InstagramMode>(() =>
       socialResults.instagram ? "company" : "person",
@@ -311,7 +327,7 @@ export default function AnalyticsPanel({
     if (view === "grid") {
       return (
         gridContent ?? (
-          <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-white/45">
+          <p className="rounded-2xl border border-[#D5CDBF] bg-[#FBF8F2] px-4 py-3 text-xs text-[#5E665F]">
             Engagement grid is open. Tap a cell to inspect comments and
             reactions.
           </p>
@@ -398,54 +414,70 @@ export default function AnalyticsPanel({
       : PLATFORM_TABS.filter(
           (tab) => tab.id !== "conference" || availability.conference,
         );
+  const platformsInSidebar = useSidebarSlot("left") != null;
   const rangeDisabled = showingCompany || platform === "conference" || view === "grid";
 
   return (
-    <div className={`flex flex-col gap-3 ${className}`}>
+    <div className={`${sans.className} flex flex-col gap-3 text-[#161A17] ${className}`}>
       <div className="flex flex-col gap-2">
-        <div className="flex flex-wrap items-center gap-1">
-          {analyticsTabs.map(({ id, label, Icon }) => {
-            const available = availability[id];
-            const selected = platform === id;
-            return (
-              <button
-                key={id}
-                type="button"
-                title={label}
-                onClick={() => handlePlatformClick(id)}
-                className={`${TAB} ${
-                  selected
-                    ? id === "linkedin"
-                      ? LINKEDIN_ACTIVE
-                      : TAB_ACTIVE
-                    : available
-                      ? TAB_AVAILABLE
-                      : TAB_DISABLED
-                }`}
-              >
-                <Icon className="h-4 w-4" />
-                <span className="hidden sm:inline">{label}</span>
-              </button>
-            );
-          })}
-        </div>
+        {platformsInSidebar ? null : (
+          <div className="flex flex-wrap items-center gap-1">
+            {analyticsTabs.map(({ id, label, Icon }) => {
+              const available = availability[id];
+              const selected = platform === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  title={label}
+                  onClick={() => handlePlatformClick(id)}
+                  className={`${TAB} ${
+                    selected
+                      ? id === "linkedin"
+                        ? LINKEDIN_ACTIVE
+                        : TAB_ACTIVE
+                      : available
+                        ? TAB_AVAILABLE
+                        : TAB_DISABLED
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span className="hidden sm:inline">{label}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         <div className="flex flex-wrap items-center justify-between gap-2">
-          {mediaIdentity ? (
-            <a
-              href={mediaIdentity.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex max-w-full items-center gap-1 self-start rounded-full border border-white/15 bg-gradient-to-r from-white/10 via-white/5 to-white/10 px-3 py-1.5 text-sm font-medium text-white/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] transition hover:border-white/25 hover:from-white/15 hover:to-white/10 hover:text-white"
-            >
-              <span className="bg-gradient-to-b from-white to-white/55 bg-clip-text text-base font-semibold text-transparent drop-shadow-[0_0_8px_rgba(255,255,255,0.35)]">
-                @
-              </span>
-              <span className="truncate">{mediaIdentity.tag}</span>
-            </a>
-          ) : (
-            <span />
-          )}
+          <div className="flex flex-wrap items-center gap-2">
+            {mediaIdentity ? (
+              <a
+                href={mediaIdentity.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex max-w-full items-center gap-1 self-start rounded-full border border-[#D5CDBF] bg-[#FBF8F2] px-3 py-1.5 text-sm font-medium text-[#161A17] transition hover:border-[#161A17]/25"
+              >
+                <span className="text-base font-semibold text-[#0F766E]">
+                  @
+                </span>
+                <span className="truncate">{mediaIdentity.tag}</span>
+              </a>
+            ) : null}
+
+            {showPersonGridSubnav ? (
+              <div className="inline-flex self-start rounded-lg border border-[#D5CDBF] bg-[#F3EEE4] p-0.5">
+                <button
+                  type="button"
+                  onClick={() => setView("summary")}
+                  className={`${TAB} ${TAB_ACTIVE}`}
+                >
+                  <User className="h-3.5 w-3.5" />
+                  Overview
+                </button>
+              </div>
+            ) : null}
+          </div>
 
           {view !== "grid" ? (
             <TimeRangeControl
@@ -457,9 +489,45 @@ export default function AnalyticsPanel({
           ) : null}
         </div>
 
-        {(showLinkedInSubnav || showInstagramSubnav || showPersonGridSubnav) && (
+        {(showLinkedInSubnav || showInstagramSubnav) && (
           <div className="flex flex-wrap items-center gap-2">
-            {showInstagramSubnav ? (
+            {showInstagramSubnav && showInstagramPeople ? (
+              <HandleTree
+                root={{
+                  id: "company",
+                  handle:
+                    socialResults.instagram?.profile.username ||
+                    instagramPeople?.companyHandle ||
+                    "company",
+                  selected: instagramMode === "company",
+                  disabled: !showInstagramCompany,
+                  title: showInstagramCompany
+                    ? "Company account"
+                    : "Company snapshot not loaded yet",
+                  onClick: () => {
+                    if (!showInstagramCompany) return;
+                    setInstagramMode("company");
+                  },
+                }}
+                nodes={peopleFromInstagramBundle(instagramPeople).map(
+                  (person) => ({
+                    id: person.id,
+                    handle: person.username,
+                    selected:
+                      instagramMode === "person" && person.id === instagramPersonId,
+                    disabled: !person.available,
+                    title: person.available
+                      ? `@${person.username}`
+                      : person.unavailableReason,
+                    onClick: () => {
+                      if (!person.available) return;
+                      setInstagramPersonId(person.id);
+                      setInstagramMode("person");
+                    },
+                  }),
+                )}
+              />
+            ) : showInstagramSubnav ? (
               <InstagramModeControls
                 mode={instagramMode}
                 onModeChange={setInstagramMode}
@@ -468,6 +536,7 @@ export default function AnalyticsPanel({
                 onPersonIdChange={setInstagramPersonId}
                 hasCompany={showInstagramCompany}
                 avatarPlatform="instagram"
+                tone="paper"
               />
             ) : null}
             {showLinkedInSubnav ? (
@@ -482,32 +551,8 @@ export default function AnalyticsPanel({
                 onPersonIdChange={selectPerson}
                 hasCompany={showLinkedInCompany}
                 avatarPlatform="linkedin"
+                tone="paper"
               />
-            ) : null}
-
-            {showPersonGridSubnav ? (
-              <div className="inline-flex self-start rounded-lg border border-white/10 bg-black/30 p-0.5">
-                <button
-                  type="button"
-                  onClick={() => setView("summary")}
-                  className={`${TAB} ${
-                    view !== "grid" ? TAB_ACTIVE : TAB_AVAILABLE
-                  }`}
-                >
-                  <User className="h-3.5 w-3.5" />
-                  Overview
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setView("grid")}
-                  className={`${TAB} ${
-                    view === "grid" ? TAB_ACTIVE : TAB_AVAILABLE
-                  }`}
-                >
-                  <Grid3X3 className="h-3.5 w-3.5" />
-                  Grid
-                </button>
-              </div>
             ) : null}
           </div>
         )}
@@ -520,7 +565,7 @@ export default function AnalyticsPanel({
 
 function EmptyState({ message }: { message: string }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-sm text-white/40">
+    <div className="rounded-2xl border border-[#D5CDBF] bg-[#FBF8F2] p-6 text-center text-sm text-[#5E665F]">
       {message}
     </div>
   );

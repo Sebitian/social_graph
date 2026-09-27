@@ -27,25 +27,33 @@ export const PROXIMITY_RINGS: readonly {
     id: 0,
     label: "Most present",
     subtitle: "Recent, consistent interaction",
-    color: "#ff6b9d",
+    color: "#0F766E",
   },
   {
     id: 1,
     label: "Regulars",
     subtitle: "Meaningful past engagement",
-    color: "#7c6bff",
+    color: "#9B3A4A",
   },
   {
     id: 2,
     label: "Wider circle",
     subtitle: "Lighter or older interaction",
-    color: "#94a3b8",
+    color: "#8A8478",
   },
 ] as const;
 
 export const CIRCLE_COLORS = PROXIMITY_RINGS.map((r) => r.color);
-export const SELF_COLOR = "#fccc63";
-export const UNCLUSTERED_COLOR = "#8b93a7";
+/** Center of the map. Teal, same as the rest of the product. */
+export const SELF_COLOR = "#0F766E";
+/** People with no strong post overlap. Warm gray that reads on paper. */
+export const UNCLUSTERED_COLOR = "#8A8478";
+export const PAPER = "#F3EEE4";
+export const PAPER_CARD = "#FBF8F2";
+export const INK = "#161A17";
+export const INK_MUTED = "#5E665F";
+export const BRAND_ROSE = "#9B3A4A";
+export const PAPER_LINE = "#D5CDBF";
 
 export const AVATAR_DIAMETER = 40;
 export const SELF_NODE_RADIUS = 22;
@@ -59,12 +67,12 @@ const AFFINITY_THRESHOLD = 0.3;
 const STRONG_PAIR_THRESHOLD = 0.42;
 
 const CLUSTER_COLORS = [
-  "#ff6b9d",
-  "#7c6bff",
-  "#34d399",
-  "#fbbf24",
-  "#38bdf8",
-  "#fb7185",
+  "#0F766E",
+  "#9B3A4A",
+  "#3D5A4C",
+  "#8A6A3B",
+  "#3D5C6E",
+  "#6B4C5A",
 ] as const;
 
 export interface ProximityRadii {

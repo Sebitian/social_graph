@@ -1,8 +1,12 @@
 import { getCached } from "@/lib/cache";
 import type { CompanyResult } from "@/lib/companyTypes";
 import type { ConferenceResult } from "@/lib/conferenceTypes";
-import type { InstagramPeopleResult } from "@/lib/instagramPeople";
+import {
+  instagramPeopleSubtitle,
+  type InstagramPeopleResult,
+} from "@/lib/instagramPeople";
 import { COMPANION_SNAPSHOTS } from "@/lib/paths";
+import { catalogJobForHandle } from "@/lib/jobCatalog";
 import { DEFAULT_SCRAPE_BUDGET, type ScrapeBudget } from "@/lib/scrapeBudget";
 import {
   readCompanySnapshot,
@@ -164,10 +168,11 @@ export async function loadChatContext(input: {
     );
   }
 
-  const companyHandle = COMPANION_SNAPSHOTS.company;
-  const company = await readCompanySnapshot(companyHandle);
+  const companyJob = catalogJobForHandle(handle);
+  const companyHandle = companyJob?.kind === "company" ? companyJob.source : null;
+  const company = companyHandle ? await readCompanySnapshot(companyHandle) : null;
 
-  if (company) {
+  if (company && companyHandle) {
     sources.push(companySource(company, companyHandle));
   }
 
@@ -191,7 +196,10 @@ export async function loadChatContext(input: {
   if (instagramPeople?.people.length) {
     const instagram = sources.find((source) => source.id === "instagram");
     if (instagram) {
-      instagram.subtitle = `@${social.instagram?.profile.username} · Company + ${instagramPeople.people.length} employees`;
+      instagram.subtitle = instagramPeopleSubtitle(
+        social.instagram?.profile.username,
+        instagramPeople,
+      );
     }
   }
 

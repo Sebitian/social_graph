@@ -10,12 +10,13 @@ import {
   type AnalyticsRangeId,
 } from "@/lib/analytics";
 import { compactNumber } from "@/lib/graphUtils";
-import { resolveProfilePicUrl } from "@/lib/avatarUrl";
 import { formatPosition, isUsefulPosition } from "@/lib/position";
 import AnalyticsDashboardShell, {
   type DashboardMetric,
 } from "@/components/analytics/AnalyticsDashboardShell";
+import AnalyticsAvatar from "@/components/analytics/AnalyticsAvatar";
 import AudienceStatsBar from "@/components/analytics/AudienceStatsBar";
+import EngagerTable from "@/components/analytics/EngagerTable";
 import type { BreakdownRow } from "@/components/analytics/BreakdownCard";
 
 interface Props {
@@ -82,38 +83,6 @@ function personMatchesRoleFilter(
   return true;
 }
 
-function Avatar({
-  username,
-  fullName,
-  profilePicUrl,
-  platform,
-}: {
-  username: string;
-  fullName?: string;
-  profilePicUrl?: string;
-  platform: SocialSourcePlatform;
-}) {
-  const [failed, setFailed] = useState(false);
-  const src = resolveProfilePicUrl(username, profilePicUrl, platform);
-  if (src && !failed) {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={src}
-        alt=""
-        referrerPolicy="no-referrer"
-        onError={() => setFailed(true)}
-        className="h-7 w-7 rounded-full object-cover ring-1 ring-white/15"
-      />
-    );
-  }
-  return (
-    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[10px] font-semibold text-white/70 ring-1 ring-white/10">
-      {(fullName || username).charAt(0).toUpperCase()}
-    </span>
-  );
-}
-
 function postRows(
   posts: AnalyticsPostRow[],
   usePostMetrics: boolean,
@@ -145,10 +114,10 @@ function postRows(
         <img
           src={post.imageUrl}
           alt=""
-          className="h-7 w-7 rounded-md object-cover ring-1 ring-white/15"
+          className="h-7 w-7 rounded-md object-cover ring-1 ring-[#161A17]/10"
         />
       ) : (
-        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white/10 text-[10px] text-white/45">
+        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-[#E7E0D4] text-[10px] text-[#5E665F]">
           #
         </span>
       ),
@@ -174,6 +143,8 @@ export default function SocialAnalyticsBody({
   const [roleFilter, setRoleFilter] = useState("all");
 
   useEffect(() => {
+    // Reset role filter when the analysed profile or range changes.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setRoleFilter("all");
   }, [range, data.scrapedAt, data.profile.username]);
 
@@ -210,7 +181,7 @@ export default function SocialAnalyticsBody({
         ? () => onSelectUsername(person.username)
         : undefined,
       leading: (
-        <Avatar
+        <AnalyticsAvatar
           username={person.username}
           fullName={person.fullName}
           profilePicUrl={person.profilePicUrl}
@@ -223,25 +194,32 @@ export default function SocialAnalyticsBody({
   const showPlays = usePostMetrics && overview.postPlays > 0;
   const instagramSplit = platform === "instagram" && usePostMetrics;
 
-  const postGroup: DashboardMetric[] = instagramSplit
+  const metrics: DashboardMetric[] = instagramSplit
     ? [
         {
+          id: "feed-posts",
+          label: "Posts",
+          value: compactNumber(overview.feed.count),
+          series: overview.feed.countSeries,
+        },
+        {
           id: "feed-likes",
-          label: "Likes",
+          label: "Post likes",
           value: compactNumber(overview.feed.likes),
           series: overview.feed.likesSeries,
         },
         {
           id: "feed-comments",
-          label: "Comments",
+          label: "Post comments",
           value: compactNumber(overview.feed.comments),
           series: overview.feed.commentsSeries,
         },
-      ]
-    : [];
-
-  const reelGroup: DashboardMetric[] = instagramSplit
-    ? [
+        {
+          id: "reel-count",
+          label: "Reels",
+          value: compactNumber(overview.reels.count),
+          series: overview.reels.countSeries,
+        },
         {
           id: "reel-views",
           label: "Views",
@@ -250,34 +228,17 @@ export default function SocialAnalyticsBody({
         },
         {
           id: "reel-likes",
-          label: "Likes",
+          label: "Reel likes",
           value: compactNumber(overview.reels.likes),
           series: overview.reels.likesSeries,
         },
         {
           id: "reel-comments",
-          label: "Comments",
+          label: "Reel comments",
           value: compactNumber(overview.reels.comments),
           series: overview.reels.commentsSeries,
         },
       ]
-    : [];
-
-  const metricGroups = instagramSplit
-    ? [
-        {
-          label: `Posts · ${compactNumber(overview.feed.count)}`,
-          items: postGroup,
-        },
-        {
-          label: `Reels · ${compactNumber(overview.reels.count)}`,
-          items: reelGroup,
-        },
-      ]
-    : undefined;
-
-  const metrics: DashboardMetric[] = instagramSplit
-    ? [...postGroup, ...reelGroup]
     : showPlays
     ? [
         {
@@ -342,6 +303,15 @@ export default function SocialAnalyticsBody({
     <AnalyticsDashboardShell
       accent={ACCENT[platform]}
       audience={<AudienceStatsBar items={audience.items} />}
+      top={
+        <EngagerTable
+          people={overview.topEngagers}
+          platform={platform}
+          selectedUsername={selectedUsername}
+          onSelectUsername={onSelectUsername}
+          limit={10}
+        />
+      }
       defaultMetricId={
         instagramSplit
           ? overview.reels.views > 0
@@ -359,7 +329,6 @@ export default function SocialAnalyticsBody({
             : "Few dated events in this snapshot"
       }
       metrics={metrics}
-      metricGroups={metricGroups}
       primary={{
         searchPlaceholder: "Search name, role, company…",
         tabs: [
@@ -384,7 +353,7 @@ export default function SocialAnalyticsBody({
                       : "all"
                   }
                   onChange={(event) => setRoleFilter(event.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-black/40 px-2.5 py-1.5 text-[11px] text-white/80 outline-none focus:border-white/25"
+                  className="w-full rounded-lg border border-[#D5CDBF] bg-[#F3EEE4] px-2.5 py-1.5 text-[11px] text-[#161A17] outline-none focus:border-[#161A17]/30"
                 >
                   <option value="all">All positions</option>
                   {titleOptions.length > 0 ? (
@@ -433,13 +402,6 @@ export default function SocialAnalyticsBody({
               ]
             : []),
         ],
-      }}
-      secondary={{
-        title: "Top engagers",
-        valueHeader: "Activity",
-        empty: "No engagers in this range",
-        searchPlaceholder: "Search name, role, company…",
-        rows: personRows(overview.topEngagers),
       }}
       tertiary={
         overview.reactionMix.length > 0

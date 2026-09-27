@@ -267,7 +267,7 @@ export default function ConferenceGraphVisualizer({
         } else {
           ctx.arc(x, y, r + 5, 0, Math.PI * 2);
         }
-        ctx.fillStyle = selected ? "rgba(225,29,72,0.35)" : "rgba(255,255,255,0.12)";
+        ctx.fillStyle = selected ? "rgba(155,58,74,0.22)" : "rgba(22,26,23,0.06)";
         ctx.fill();
       }
 
@@ -329,14 +329,14 @@ export default function ConferenceGraphVisualizer({
           : node.label;
       const metrics = ctx.measureText(text);
       const ty = y + r + 5;
-      ctx.fillStyle = "rgba(0,0,0,0.55)";
+      ctx.fillStyle = "#FBF8F2";
       ctx.fillRect(
         x - metrics.width / 2 - 4,
         ty - 1,
         metrics.width + 8,
         fontSize + 4,
       );
-      ctx.fillStyle = "rgba(255,255,255,0.95)";
+      ctx.fillStyle = "#161A17";
       ctx.fillText(text, x, ty + 2);
     },
     [hoveredId, selectedId],
@@ -382,7 +382,7 @@ export default function ConferenceGraphVisualizer({
           onBackgroundClick={() => onSelect?.(null)}
           linkColor={(link) =>
             link.kind === "company-attendee"
-              ? "rgba(255,255,255,0.22)"
+              ? "rgba(22,26,23,0.22)"
               : "rgba(225,29,72,0.35)"
           }
           linkWidth={() => 1.3}

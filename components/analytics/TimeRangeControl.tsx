@@ -20,7 +20,7 @@ export default function TimeRangeControl({
 }: Props) {
   return (
     <div
-      className={`inline-flex max-w-full gap-0.5 overflow-x-auto rounded-lg border border-white/10 bg-black/35 p-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${className}`}
+      className={`inline-flex max-w-full gap-0.5 overflow-x-auto rounded-lg border border-[#D5CDBF] bg-[#F3EEE4] p-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${className}`}
       role="tablist"
       aria-label="Time range"
     >
@@ -36,8 +36,8 @@ export default function TimeRangeControl({
             onClick={() => onChange(range.id)}
             className={`min-h-[32px] shrink-0 rounded-md px-2.5 text-[11px] font-medium transition sm:px-3 ${
               selected
-                ? "bg-white/15 text-white"
-                : "text-white/45 hover:bg-white/10 hover:text-white/75"
+                ? "bg-[#FBF8F2] text-[#161A17] shadow-[0_1px_2px_rgba(22,26,23,0.06)]"
+                : "text-[#5E665F] hover:bg-[#E7E0D4] hover:text-[#161A17]"
             } disabled:cursor-default disabled:opacity-40`}
           >
             {range.label}

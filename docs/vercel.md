@@ -1,5 +1,7 @@
 # Deploy on Vercel
 
+Back to the [README](../README.md).
+
 The app is a Next.js 16 project. The committed demo snapshots (`/demo`) work **without** Apify, KV, or Blob. Chat, pinning new snapshots, and live scrapes need extra env vars.
 
 Live reference: [social-graph-nu.vercel.app/demo](https://social-graph-nu.vercel.app/demo)

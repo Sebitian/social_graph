@@ -7,11 +7,13 @@ import {
 import type {
   InstagramPeopleResult,
   InstagramPersonOption,
+  InstagramPersonRole,
 } from "./instagramPeople";
 
 const EMPLOYEE_ORDER: Array<{
   username: string;
   title: string;
+  role?: InstagramPersonRole;
 }> = [
   { username: "joanna_artistry", title: "Beauty Artist" },
   { username: "jennymastercolorist", title: "Master Colorist" },
@@ -103,6 +105,7 @@ export function buildInstagramPeopleResult(args: {
 
   const roster = [...EMPLOYEE_ORDER];
   for (const username of profilesByUser.keys()) {
+    if (username === companyHandle) continue;
     if (roster.some((row) => row.username === username)) continue;
     roster.push({ username, title: "Stylist" });
   }
@@ -130,7 +133,13 @@ export function buildInstagramPeopleResult(args: {
       id: row.username,
       username: profile?.username || row.username,
       fullName: profile?.fullName || row.username,
-      title: profile ? titleFromProfile(profile, row.title) : row.title,
+      title:
+        row.role === "person"
+          ? row.title
+          : profile
+            ? titleFromProfile(profile, row.title)
+            : row.title,
+      role: row.role ?? "employee",
       profilePicUrl: profile?.profilePicUrlHD || profile?.profilePicUrl,
       followersCount: profile?.followersCount,
       available,

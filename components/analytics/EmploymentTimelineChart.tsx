@@ -19,12 +19,12 @@ function Avatar({ name, src }: { name: string; src?: string }) {
         alt=""
         referrerPolicy="no-referrer"
         onError={() => setFailed(true)}
-        className="h-7 w-7 rounded-full object-cover ring-1 ring-white/15"
+        className="h-7 w-7 rounded-full object-cover ring-1 ring-[#161A17]/10"
       />
     );
   }
   return (
-    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[10px] font-semibold text-white/70 ring-1 ring-white/10">
+    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#E7E0D4] text-[10px] font-semibold text-[#161A17]/85 ring-1 ring-[#161A17]/10">
       {name.charAt(0).toUpperCase()}
     </span>
   );
@@ -110,7 +110,7 @@ export default function EmploymentTimelineChart({
   if (employees.length === 0) {
     return (
       <div
-        className={`flex h-[220px] items-center justify-center px-4 text-sm text-white/35 ${className}`}
+        className={`flex h-[220px] items-center justify-center px-4 text-sm text-[#5E665F]/80 ${className}`}
       >
         No start dates in this roster
       </div>
@@ -130,7 +130,7 @@ export default function EmploymentTimelineChart({
             return (
               <span
                 key={year}
-                className="absolute font-mono text-[10px] tabular-nums text-white/30"
+                className="absolute font-mono text-[10px] tabular-nums text-[#5E665F]/70"
                 style={{
                   left: `${clamped}%`,
                   transform: labelAlign(clamped),
@@ -153,22 +153,22 @@ export default function EmploymentTimelineChart({
                 href={emp.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group grid grid-cols-[9rem_1fr] items-center gap-2 rounded-xl px-1 py-1.5 transition hover:bg-white/[0.04] sm:grid-cols-[11rem_1fr] sm:gap-3"
+                className="group grid grid-cols-[9rem_1fr] items-center gap-2 rounded-xl px-1 py-1.5 transition hover:bg-[#F3EEE4] sm:grid-cols-[11rem_1fr] sm:gap-3"
               >
                 <span className="flex min-w-0 items-center gap-2">
                   <Avatar name={emp.name} src={emp.profilePicUrl} />
                   <span className="min-w-0">
-                    <span className="block truncate text-xs text-white/85 group-hover:text-white">
+                    <span className="block truncate text-xs text-[#161A17] group-hover:text-[#161A17]">
                       {emp.name}
                     </span>
-                    <span className="block truncate text-[10px] text-white/35">
+                    <span className="block truncate text-[10px] text-[#5E665F]/80">
                       {emp.startedLabel}
                       {emp.tenure ? ` · ${emp.tenure}` : ""}
                     </span>
                   </span>
                 </span>
 
-                <span className="relative h-7 overflow-hidden rounded-md bg-white/[0.03] ring-1 ring-white/[0.04]">
+                <span className="relative h-7 overflow-hidden rounded-md bg-[#FBF8F2] ring-1 ring-[#161A17]/8">
                   {/* year guides */}
                   {ticks.map((year) => {
                     const x = ((Date.UTC(year, 0, 1) - minMs) / span) * 100;
@@ -176,23 +176,24 @@ export default function EmploymentTimelineChart({
                     return (
                       <span
                         key={`${emp.id}-${year}`}
-                        className="pointer-events-none absolute inset-y-0 w-px bg-white/[0.05]"
+                        className="pointer-events-none absolute inset-y-0 w-px bg-[#EFE8DC]"
                         style={{ left: `${x}%` }}
                         aria-hidden
                       />
                     );
                   })}
                   <span
-                    className="absolute inset-y-1 rounded-sm"
+                    className="absolute inset-y-1 flex items-center overflow-hidden rounded-sm px-2"
                     style={{
                       left: `${Math.max(0, left)}%`,
                       width: `${Math.max(2.5, width)}%`,
                       background: `linear-gradient(90deg, ${accent}55, ${accent})`,
                     }}
                     title={`${emp.title} · started ${emp.startedLabel}`}
-                  />
-                  <span className="pointer-events-none absolute inset-y-0 right-2 flex items-center truncate text-[10px] text-white/45">
-                    {emp.title}
+                  >
+                    <span className="truncate text-[10px] font-medium text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.45)]">
+                      {emp.title}
+                    </span>
                   </span>
                 </span>
               </a>

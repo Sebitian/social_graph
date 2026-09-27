@@ -1,9 +1,9 @@
 ---
-description: Always-on project context for social_graph / Netgraph
+description: Always-on project context for social_graph / Starling
 alwaysApply: true
 ---
 
-# Project context: social_graph (Netgraph)
+# Project context: social_graph (Starling)
 
 - Next.js 16 / React 19 / TypeScript / Tailwind / `react-force-graph-2d`.
 - Optional Vercel KV for cache, Vercel Blob for pinned snapshots.
@@ -12,17 +12,21 @@ alwaysApply: true
 
 ## Data sources
 
-- Live graph pages (`/graph/[handle]`) use `getNetwork` in `lib/scrape.ts`. It falls back to deterministic mock data from `lib/mock.ts` when `APIFY_TOKEN` is unset.
-- Demo page (`/demo`) serves the Diandra multi-platform pinned bundle (no Apify). Old URL `/graph/diandra/pinned` redirects here.
-- Other pinned pages (`/graph/[handle]/pinned`) serve static snapshots via `lib/snapshot.ts` (disk or Blob). They do not call Apify.
+- Canonical map URL is `/jobs/{name}-{platform}/{id}` for accounts and `/jobs/conferences/{name}/{id}` for events (`lib/jobCatalog.ts`). Analytics, chat, and profile are that same run plus `/analytics`, `/chat`, or `/profile`. The map and analytics keep separate person and platform state, so picking someone in analytics stays on analytics. The id is one run, so the same name can have many. Old `/jobs/{id}` redirects. There is no public index of private runs. The home page lists the public ones. A title bar on every page opens a left sidebar (New search, then Graph for the map, then Analytics, Chat, and Profile, then the platform list, then the job folders) and a right sidebar (graph tools such as search, depth, and how to read, then the current run and its siblings), including local `data/jobs` files. Analytics uses that sidebar platform list and hides its own platform switcher while the sidebar is open. The graph pane is only the graph. Company runs with an employee roster add a Hierarchy view beside Roster, ranking people by title from the CEO down. New search lives at `/search`. Profiles are a coming-soon view.
+- `/demo`, `/graph/aiman-fma`, and known `/graph/[handle]` plus `/graph/[handle]/pinned` URLs redirect to that job. Unknown handles still use `/graph/[handle]`.
+- A new job calls `getNetwork` in `lib/scrape.ts` (or reads a snapshot when one exists). `getNetwork` is still mock data. Do not add live Apify calls. When Apify is wired into `getNetwork`, that run’s likes show on its `/jobs/{name}-{platform}/{id}` page.
+- Demo page (`/demo`) redirects to the Diandra job, which serves the multi-platform pinned bundle (no Apify).
+- Other pinned pages (`/graph/[handle]/pinned`) redirect when the handle is a known job. Otherwise they serve static snapshots via `lib/snapshot.ts` (disk or Blob). They do not call Apify.
 - Existing tracked snapshot: `data/snapshots/diandra.json`, imported from `data/linkedin_raw/profile/diandra_linkedin_scrape_71226.json`.
-- Instagram demo companion: `data/snapshots/kossof-instagram.json` from `data/insta_raw/` Apify exports (profile + posts + reels + comments + followers for `@kossof_salonspa`; loaded on pinned pages via the Instagram Company tab). Employee Person dropdown uses `data/snapshots/kossof-instagram-people.json` from the 2026-08-15 profile + post + reel exports (`@joanna_artistry`, `@jennymastercolorist`, `@beauty.by.brentley`; `@hairdesigner33` is private / unavailable). Reel views come from `data/insta_raw/dataset_instagram-reel-scraper_2026-08-15_05-47-41-851.json` (Jenny had no public reels). Older comment-only demo remains at `data/snapshots/jppap.json` from `data/insta_raw/jp_jppap.json`.
+- Instagram demo companion: `data/snapshots/kossof-instagram.json` from `data/insta_raw/` Apify exports (profile + posts + reels + comments + followers for `@kossof_salonspa`; loaded on pinned pages via the Instagram Company tab). Employee Person dropdown uses `data/snapshots/kossof-instagram-people.json` from the 2026-08-15 profile + post + reel exports (`@joanna_artistry`, `@jennymastercolorist`, `@beauty.by.brentley`; `@hairdesigner33` is private / unavailable). Reel views for salon staff come from `data/insta_raw/dataset_instagram-reel-scraper_2026-08-15_05-47-41-851.json` (Jenny had no public reels).
+- Aiman Naqvi (`@nuancedaiman`) is his own Instagram job (`aiman-instagram`), from `data/insta_raw/aiman/` (profile + posts + reels). He is not in the Kossof person dropdown. Aiman FMA stays a separate community job.
 - Spotify demo companion: `data/snapshots/sebastian-spotify.json` from Sebastian’s profile + Schmok playlist scrapes (loaded via the Spotify platform tab).
 - Company demo companion: `data/snapshots/formationbio.json` from `data/linkedin_raw/company/dataset_linkedin-company-employees_2026-08-08_19-15-29-629.json` (HarvestAPI employee search; loaded via the Company platform tab). Older Nous Research snapshot remains at `data/snapshots/nousresearch.json`.
 - Facebook demo companion: `data/snapshots/kossof-facebook.json` from `data/facebook_raw/` (pages + posts + followers/following; loaded via the Facebook platform tab).
 - TikTok demo companion: `data/snapshots/kossof-tiktok.json` from `data/tiktok_raw/` (profile + posts → videos/hashtags graph; loaded via the TikTok platform tab).
-- Conference demo: `data/snapshots/romanian.json` from `data/conference_attendees/romanian/dataset_8-19-26.json` (Luma guest list + LinkedIn people-search export; open `/graph/romanian/pinned`).
-- Deployed reference URL: `https://social-graph-nu.vercel.app/demo`.
+- Conference demo: `data/snapshots/romanian.json` from `data/conference_attendees/romanian/dataset_8-19-26.json` (Luma guest list + LinkedIn people-search export; open its `/jobs/{id}` link from the home page).
+- Aiman FMA is a job too (`/graph/aiman-fma` redirects there).
+- Deployed reference URL: `https://social-graph-nu.vercel.app/demo` (redirects to the Diandra job).
 
 ## Guardrails
 

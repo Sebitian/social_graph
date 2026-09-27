@@ -32,14 +32,14 @@ function SchoolMark({
         alt=""
         referrerPolicy="no-referrer"
         onError={() => setFailed(true)}
-        className="rounded-lg object-cover ring-1 ring-white/15"
+        className="rounded-lg object-cover ring-1 ring-[#161A17]/10"
         style={{ width: size, height: size }}
       />
     );
   }
   return (
     <span
-      className="flex items-center justify-center rounded-lg bg-white/10 text-xs font-semibold text-white/70 ring-1 ring-white/10"
+      className="flex items-center justify-center rounded-lg bg-[#E7E0D4] text-xs font-semibold text-[#161A17]/85 ring-1 ring-[#161A17]/10"
       style={{ width: size, height: size }}
     >
       {school.label.charAt(0).toUpperCase()}
@@ -56,7 +56,7 @@ export default function SchoolLogoChart({
   if (schools.length === 0) {
     return (
       <div
-        className={`flex h-[220px] items-center justify-center px-4 text-sm text-white/35 ${className}`}
+        className={`flex h-[220px] items-center justify-center px-4 text-sm text-[#5E665F]/80 ${className}`}
       >
         No school data in this roster
       </div>
@@ -77,7 +77,7 @@ export default function SchoolLogoChart({
                 disabled={!onSelect}
                 onClick={() => onSelect?.(school.label)}
                 className={`group relative flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left transition ${
-                  onSelect ? "hover:bg-white/[0.04]" : "cursor-default"
+                  onSelect ? "hover:bg-[#F3EEE4]" : "cursor-default"
                 }`}
               >
                 <span
@@ -92,14 +92,14 @@ export default function SchoolLogoChart({
                   <SchoolMark school={school} size={36} />
                 </span>
                 <span className="relative z-[1] min-w-0 flex-1">
-                  <span className="block truncate text-sm text-white/85">
+                  <span className="block truncate text-sm text-[#161A17]">
                     {school.label}
                   </span>
-                  <span className="block text-[11px] text-white/35">
+                  <span className="block text-[11px] text-[#5E665F]/80">
                     {school.count === 1 ? "1 employee" : `${school.count} employees`}
                   </span>
                 </span>
-                <span className="relative z-[1] shrink-0 font-mono text-xs tabular-nums text-white/55">
+                <span className="relative z-[1] shrink-0 font-mono text-xs tabular-nums text-[#5E665F]">
                   {compactNumber(school.count)}
                 </span>
               </button>

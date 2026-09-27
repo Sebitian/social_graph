@@ -299,7 +299,7 @@ export default function SpotifyGraphVisualizer({
         ctx.beginPath();
         ctx.arc(x, y, r + 5, 0, Math.PI * 2);
         ctx.fillStyle =
-          selected ? "rgba(29,185,84,0.35)" : "rgba(255,255,255,0.12)";
+          selected ? "rgba(15,118,110,0.2)" : "rgba(22,26,23,0.06)";
         ctx.fill();
       }
 
@@ -333,7 +333,7 @@ export default function SpotifyGraphVisualizer({
           : node.kind === "friend"
             ? "#509BF5"
             : node.kind === "playlist"
-              ? "rgba(255,255,255,0.4)"
+              ? "rgba(22,26,23,0.28)"
               : color;
       ctx.lineWidth =
         node.kind === "self" || node.kind === "friend" ? 2.5 : 1.25;
@@ -370,17 +370,14 @@ export default function SpotifyGraphVisualizer({
       const padX = 4;
       const padY = 2;
       const ty = y + r + 5;
-      ctx.fillStyle = "rgba(0,0,0,0.55)";
+      ctx.fillStyle = "#FBF8F2";
       ctx.fillRect(
         x - metrics.width / 2 - padX,
         ty - 1,
         metrics.width + padX * 2,
         fontSize + padY * 2,
       );
-      ctx.fillStyle =
-        node.kind === "genre"
-          ? "rgba(255,255,255,0.75)"
-          : "rgba(255,255,255,0.95)";
+      ctx.fillStyle = node.kind === "genre" ? "#0F766E" : "#161A17";
       ctx.fillText(text, x, ty + padY);
     },
     [hoveredId, selectedId],
@@ -422,7 +419,7 @@ export default function SpotifyGraphVisualizer({
               ? "rgba(80,155,245,0.35)"
               : link.kind === "playlist-genre"
                 ? "rgba(29,185,84,0.28)"
-                : "rgba(255,255,255,0.28)"
+                : "rgba(22,26,23,0.22)"
           }
           linkWidth={(link) =>
             link.kind === "self-friend"

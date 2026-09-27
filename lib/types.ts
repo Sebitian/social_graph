@@ -231,7 +231,7 @@ export interface UserRelationshipEdit {
   updatedAt: string;
 }
 
-/** A scraped post used as a column in the person × post engagement grid. */
+/** A scraped post used for analytics rankings and time series. */
 export interface ProfilePost {
   id: string;
   url?: string;
@@ -437,7 +437,7 @@ export interface ScrapeResult {
    * (LinkedIn has posts; Instagram comment exports do not).
    */
   platform?: SocialSourcePlatform;
-  /** Scraped posts for the person × post engagement grid (LinkedIn / Facebook). */
+  /** Scraped posts for analytics (LinkedIn / Instagram / Facebook). */
   posts?: ProfilePost[];
   /**
    * All unique engagers (commenters + reactors) for the grid.

@@ -47,7 +47,7 @@ export default async function OgImage({
               background: "#cd486b",
             }}
           />
-          Netgraph · Instagram network
+          Starling · Instagram network
         </div>
 
         <div style={{ display: "flex", fontSize: 84, fontWeight: 800 }}>

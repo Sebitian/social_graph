@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Two FMA reels, one audience</title>
+  <style>
+    @page { size: letter; margin: 0.7in; }
+    body { font: 11pt/1.45 "Helvetica Neue", Helvetica, Arial, sans-serif; color: #111; max-width: 720px; margin: 0 auto; }
+    h1 { font-size: 20pt; margin: 0 0 8px; }
+    h2 { font-size: 13pt; margin: 22px 0 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+    p, li { margin: 0 0 8px; }
+    .muted { color: #555; font-size: 9.5pt; }
+    .kpis { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin: 16px 0; }
+    .kpi { border: 1px solid #ddd; padding: 10px; }
+    .kpi b { display: block; font-size: 16pt; }
+    .kpi span { font-size: 8.5pt; color: #555; }
+    table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 8px 0 16px; }
+    th, td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; vertical-align: top; }
+    th { background: #f4f4f4; }
+    td.num, th.num { text-align: right; }
+    .scripts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .card { border: 1px solid #ddd; padding: 10px; }
+    .card h3 { margin: 0 0 6px; font-size: 11pt; }
+    blockquote { margin: 0; font-size: 9pt; color: #222; }
+    .note { background: #f7f7f7; border-left: 3px solid #333; padding: 8px 10px; margin: 12px 0; font-size: 10pt; }
+    a { color: #111; }
+  </style>
+</head>
+<body>
+  <h1>Two FMA reels, one audience</h1>
+  <p>@nuancedaiman posted two Fullmetal Alchemist analogies a day apart. The Philosopher’s Stone reel was shown to about 47 times more people. Among those who saw each clip, comment rate was higher on the Tucker reel. Comments then replayed the Stone script: cobalt, water, stolen work, refuse the shortcut.</p>
+  <p class="muted">Sources: Instagram reel scrape 2026-09-05_06-09-02-703, comment scrape 2026-09-05_05-37-28-342, sentiment tool 2026-09-05_05-42-01-996. 159 scored comments of 160 with text. FMA = Fullmetal Alchemist.</p>
+
+  <div class="kpis">
+    <div class="kpi"><b>47×</b><span>Play gap, Stone / Tucker</span></div>
+    <div class="kpi"><b>11%</b><span>Stone like rate (likes / plays)</span></div>
+    <div class="kpi"><b>5.5%</b><span>Tucker like rate</span></div>
+    <div class="kpi"><b>82 / 159</b><span>Tool-labeled negative</span></div>
+  </div>
+
+  <h2>Reach, not refusal</h2>
+  <p class="muted">videoViewCount is null; plays is the reach figure. Comment rate = IG comments / plays.</p>
+  <table>
+    <tr><th>Reel</th><th>Posted</th><th class="num">Length</th><th class="num">Plays</th><th class="num">Likes</th><th class="num">IG comments</th><th class="num">Comments / play</th><th class="num">Likes / play</th></tr>
+    <tr><td>Philosopher’s Stone</td><td>1 Sep 2026</td><td class="num">61s</td><td class="num">290,044</td><td class="num">32,070</td><td class="num">157</td><td class="num">0.05%</td><td class="num">11.06%</td></tr>
+    <tr><td>Nina Tucker</td><td>2 Sep 2026</td><td class="num">74s</td><td class="num">6,204</td><td class="num">343</td><td class="num">6</td><td class="num">0.10%</td><td class="num">5.53%</td></tr>
+  </table>
+  <p>Links: <a href="https://www.instagram.com/p/DcuVssYgD6J/">instagram.com/p/DcuVssYgD6J</a> · <a href="https://www.instagram.com/p/Dcw8mslgoYs/">instagram.com/p/Dcw8mslgoYs</a></p>
+
+  <h2>Scripts</h2>
+  <div class="scripts">
+    <div class="card">
+      <h3>Philosopher’s Stone</h3>
+      <p class="muted">Caption: If you’re a CEO of an AI company seeing this please take this as a sign to watch Fullmetal Alchemist and learn a thing or two from Ed and Al.</p>
+      <blockquote>There's a scene in Fullmetal Alchemist where Ed and Al realize the Philosopher's Stone is made of human souls. Even though they know the Philosopher's Stone would help them greatly and basically solve all their problems, they immediately conclude they would never use it to get their bodies back. This scene reminds me of where we're at with the current state of AI. People are aware that the advancement of technology can bring about good things. A lot of people also don't just care about technological advancement for advancement's sake. People see what's happening in the DR Congo with kids dying in cobalt mines, or in neighborhoods in Georgia where people's water is literal sludge because of data centers, or in India where factory workers are using headsets to train AI on how to do their jobs. People also understand the frustration that artists, musicians, and authors feel when they feel like they're getting their work stolen with zero compensation. And they actually care enough to realize that maybe the current way we're going about doing all of this stuff isn't the best way forward. Ed and Al still move towards their original goal of getting their bodies back, but they always keep in mind how their actions might affect others, and that is something I think the AI industry can learn a little bit from.</blockquote>
+    </div>
+    <div class="card">
+      <h3>Nina Tucker</h3>
+      <p class="muted">Caption: We can all learn a lesson from what might be one of the most heartbreaking episodes in TV history.</p>
+      <blockquote>There's a scene in Fullmetal Alchemist where Shu Tucker faces losing his funding and status as a state alchemist and out of pure desperation to produce new research, attempts to combine his daughter and his dog to produce a talking chimera. And the darkest part of it all was that it actually worked. AI companies are constantly pushing new frontiers in the race against others and other country governments. The race to AGI has become glamorized around the world. Pair this with the general consensus of publish or perish within academia and the social and financial pressures to join the biggest AI labs in the world and earn professional athlete type salaries and it is no surprise that many people in the AI field are drunk with the pursuit of winning this endless race. The biggest question is no longer can I do this, it is should I do this. Unfortunately, Ed and Al were unaware of the work Tucker was doing to fuse his daughter and his dog together. But we currently see what's happening in front of our own eyes. With crazy cyber attacks happening basically every single week and many headlines calling for all the bells to be rung. Despite this, more incentives seem to be getting created to push on with IPOs and new seed rounds being pushed every single day. I'm all for the advancement of technology. It has been embedded in the history of mankind. But we need to be wary of the reason of why we're doing some of this and truly ask ourselves, why should this even be built in the first place?</blockquote>
+    </div>
+  </div>
+  <div class="note">Stone names harms (Congo, Georgia water, Indian trainers, unpaid artists) and a usable rule: keep the goal, refuse the stone. Tucker is darker and more abstract (AGI race, salaries, IPOs). The caption never says Tucker. Comments on Stone copy the named examples.</div>
+
+  <h2>Sentiment (weak cut)</h2>
+  <p>Apify online sentiment tool: 82 negative, 56 neutral, 21 positive across 159 comments. Almost everyone is against something — CEOs, genAI, other commenters, or a wrong reading of the ending. The label does not say which. One long Stone reply never returned from the tool. Tucker’s six rows are too small to compare rates.</p>
+  <table>
+    <tr><th>Reel</th><th class="num">Positive</th><th class="num">Neutral</th><th class="num">Negative</th><th class="num">Scored</th><th class="num">IG comments</th></tr>
+    <tr><td>Philosopher’s Stone</td><td class="num">21</td><td class="num">53</td><td class="num">79</td><td class="num">153</td><td class="num">157</td></tr>
+    <tr><td>Nina Tucker</td><td class="num">0</td><td class="num">3</td><td class="num">3</td><td class="num">6</td><td class="num">6</td></tr>
+    <tr><td>Both</td><td class="num">21</td><td class="num">56</td><td class="num">82</td><td class="num">159</td><td class="num">163</td></tr>
+  </table>
+
+  <h2>Word clouds</h2>
+  <p>Comment language is the shared codebook: AI, FMA, equivalent, exchange, stone. That is not two audiences. Word clouds show speech, not who spoke or who got likes.</p>
+
+  <h2>Who showed up</h2>
+  <p>104 commenters besides Aiman. 89 commented once. 11 forum accounts wrote 40 comments and collected 51 likes. 88% of audience likes sit on three Stone comments. Classification is by reading each account, not the sentiment tool. Comments do not give age, city, or job.</p>
+  <table>
+    <tr><th>Graph label</th><th>Room</th><th class="num">People</th><th class="num">Comments</th><th class="num">Likes</th><th>What they do</th></tr>
+    <tr><td>fma-ethics</td><td>FMA–AI bilinguals</td><td class="num">30</td><td class="num">34</td><td class="num">3,952</td><td>Mix anime and AI ethics. Core room.</td></tr>
+    <tr><td>precaution</td><td>Refuse-the-shortcut</td><td class="num">19</td><td class="num">22</td><td class="num">1,502</td><td>Draw a stop: don’t use it.</td></tr>
+    <tr><td>extraction</td><td>Extraction / labor</td><td class="num">17</td><td class="num">25</td><td class="num">1,029</td><td>Cobalt, water, factories. Not only AI.</td></tr>
+    <tr><td>fandom</td><td>FMA-only</td><td class="num">24</td><td class="num">28</td><td class="num">94</td><td>Rewatch, spoilers, peak. Barely amplified.</td></tr>
+    <tr><td>debate</td><td>Thread fighters</td><td class="num">11</td><td class="num">40</td><td class="num">51</td><td>Write the thread. Not the market.</td></tr>
+    <tr><td>tool-ai</td><td>AI-splitters</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td>GenAI ≠ AI. Present, ignored.</td></tr>
+  </table>
+  <table>
+    <tr><th class="num">Likes</th><th>Account</th><th>Job</th><th>What silent readers endorsed</th></tr>
+    <tr><td class="num">3,607</td><td>@maomao12964</td><td>Metaphor</td><td>FMAB main theme was equivalent exchange… every action has consequences.</td></tr>
+    <tr><td class="num">1,222</td><td>@sahilfromjupiter</td><td>Hard line</td><td>Just because we can doesn’t mean we should</td></tr>
+    <tr><td class="num">1,018</td><td>@bodetsc6</td><td>Structural</td><td>This isn’t just AI though… learn equivalent exchange.</td></tr>
+  </table>
+
+  <h2>How to graph these audiences</h2>
+  <p>An audience here is a room of people who showed up for the same reason — not “followers” and not “negative comments.” Draw people as nodes, Aiman in the center. Cluster color = room. Distance = engagement. Edge to a post = which reel admitted them. A node in two clusters = bridge into the next room. A dashed empty cluster = target room not in the comments yet.</p>
+  <p>Aiman has <b>fma-ethics</b>. Bridges into <b>extraction</b> and <b>precaution</b>. Weak hold on <b>fandom</b>. Does not have <b>tool-ai</b>. <b>debate</b> is noise.</p>
+
+  <h2>Put together</h2>
+  <p><b>Distribution.</b> Instagram showed the Stone reel to 290k plays and the Tucker reel to 6k the next day. Same hashtags, same account, similar length. The Tucker clip is more disturbing and the caption hides the scene. That can hurt For You distribution. It did not kill engagement among viewers.</p>
+  <p><b>Content.</b> Stone handed a proverb plus a list of named harms. The thread is that list, plus FMA canon. Tucker asked a harder question without the same checklist, and only six people answered in public.</p>
+  <p><b>Audience.</b> Anime-fluent people who already oppose unaccountable genAI. The like-majority also wants the critique aimed at industrial extraction, not at the word AI. Next video that matches the data: equivalent exchange as a social rule.</p>
+</body>
+</html>

@@ -1,0 +1,1590 @@
+[{
+  "index": 0,
+  "inputText": "Fullmetal Alchemist Brotherhood main theme was equivalent exchange  and one of the main theme of FMAB is every actions has consequences and I don't know why most people ignores it.",
+  "scoredText": "Fullmetal Alchemist Brotherhood main theme was equivalent exchange  and one of the main theme of FMAB is every actions has consequences and I don't know why most people ignores it.",
+  "finalClassification": "neutral",
+  "finalScore": 0.6074159145355225,
+  "negativeScore": 0.3189353048801422,
+  "neutralScore": 0.6074159145355225,
+  "positiveScore": 0.07364881038665771
+},
+{
+  "index": 1,
+  "inputText": "This isn't just AI though. Those kids in Africa have also been mining your lithium for our cell phones. Apple had to install suicide nets in their Chinese factories. None of which is new. Hell when coal became the main source of power there were kids in those mines too. Let alone the adults who died of black lung for us to have power. What should be learned more importantly from FullMetal is equivalent exchange and that everything requires that. We should also stop using cars in general but good luck with that as we just love breathing poisons too 😂",
+  "scoredText": "This isn't just AI though. Those kids in Africa have also been mining your lithium for our cell phones. Apple had to install suicide nets in their Chinese factories. None of which is new. Hell when coal became the main source of power there were kids in those mines too. Let alone the adults who died of black lung for us to have power. What should be learned more importantly from FullMetal is equivalent exchange and that everything requires that. We should also stop using cars in general but good luck with that as we just love breathing poisons too 😂",
+  "finalClassification": "negative",
+  "finalScore": 0.7130486369132996,
+  "negativeScore": 0.7130486369132996,
+  "neutralScore": 0.2595893144607544,
+  "positiveScore": 0.027362100780010223
+},
+{
+  "index": 2,
+  "inputText": "Just because we can doesn't mean we should",
+  "scoredText": "Just because we can doesn't mean we should",
+  "finalClassification": "negative",
+  "finalScore": 0.5322574377059937,
+  "negativeScore": 0.5322574377059937,
+  "neutralScore": 0.4356497526168823,
+  "positiveScore": 0.03209284693002701
+},
+{
+  "index": 3,
+  "inputText": "really glad someone made this analogy, I talked about this idea a few months ago with a friend: how AI is like the philosopher's stone",
+  "scoredText": "really glad someone made this analogy, I talked about this idea a few months ago with a friend: how AI is like the philosopher's stone",
+  "finalClassification": "positive",
+  "finalScore": 0.9687166810035706,
+  "negativeScore": 0.003597189439460635,
+  "neutralScore": 0.02768615074455738,
+  "positiveScore": 0.9687166810035706
+},
+{
+  "index": 4,
+  "inputText": "That's why they're heroes man, not some civilians. If people care about each other, this world wouldn't be in this mess that we are in.",
+  "scoredText": "That's why they're heroes man, not some civilians. If people care about each other, this world wouldn't be in this mess that we are in.",
+  "finalClassification": "neutral",
+  "finalScore": 0.4341118335723877,
+  "negativeScore": 0.4129868149757385,
+  "neutralScore": 0.4341118335723877,
+  "positiveScore": 0.1529013216495514
+},
+{
+  "index": 5,
+  "inputText": "Stop!!! You're gonna make me want to rewatch FMA!!! (Keep going)",
+  "scoredText": "Stop!!! You're gonna make me want to rewatch FMA!!! (Keep going)",
+  "finalClassification": "neutral",
+  "finalScore": 0.4299603998661041,
+  "negativeScore": 0.1592433899641037,
+  "neutralScore": 0.4299603998661041,
+  "positiveScore": 0.410796195268631
+},
+{
+  "index": 6,
+  "inputText": "Al > AI",
+  "scoredText": "Al > AI",
+  "finalClassification": "neutral",
+  "finalScore": 0.7579729557037354,
+  "negativeScore": 0.08064080774784088,
+  "neutralScore": 0.7579729557037354,
+  "positiveScore": 0.16138620674610138
+},
+{
+  "index": 7,
+  "inputText": "peak mentioned 🗣️‼️",
+  "scoredText": "peak mentioned 🗣️‼️",
+  "finalClassification": "neutral",
+  "finalScore": 0.7390353083610535,
+  "negativeScore": 0.019974077120423317,
+  "neutralScore": 0.7390353083610535,
+  "positiveScore": 0.24099063873291016
+},
+{
+  "index": 8,
+  "inputText": "You should add a spoiler alert ngl",
+  "scoredText": "You should add a spoiler alert ngl",
+  "finalClassification": "negative",
+  "finalScore": 0.6229578852653503,
+  "negativeScore": 0.6229578852653503,
+  "neutralScore": 0.35416603088378906,
+  "positiveScore": 0.02287609875202179
+},
+{
+  "index": 9,
+  "inputText": "I've been using Fullmetal Alchemist to describe AI as a homunculus for so long now",
+  "scoredText": "I've been using Fullmetal Alchemist to describe AI as a homunculus for so long now",
+  "finalClassification": "neutral",
+  "finalScore": 0.7169216871261597,
+  "negativeScore": 0.1634392887353897,
+  "neutralScore": 0.7169216871261597,
+  "positiveScore": 0.11963903158903122
+},
+{
+  "index": 10,
+  "inputText": "I’m not convinced people understand the social benefit of AI because many people don’t understand AI is a broad field and goes far beyond GenAI. Not refuting the point of the video, but just an observation from my experiences",
+  "scoredText": "I’m not convinced people understand the social benefit of AI because many people don’t understand AI is a broad field and goes far beyond GenAI. Not refuting the point of the video, but just an observation from my experiences",
+  "finalClassification": "negative",
+  "finalScore": 0.624097466468811,
+  "negativeScore": 0.624097466468811,
+  "neutralScore": 0.34832876920700073,
+  "positiveScore": 0.027573786675930023
+},
+{
+  "index": 11,
+  "inputText": "Early bird gets the worm",
+  "scoredText": "Early bird gets the worm",
+  "finalClassification": "neutral",
+  "finalScore": 0.6559344530105591,
+  "negativeScore": 0.11360032111406326,
+  "neutralScore": 0.6559344530105591,
+  "positiveScore": 0.23046515882015228
+},
+{
+  "index": 12,
+  "inputText": "Learning about how AI works makes me not want to use it. Why would I want to use unnecessarily tremendous amount of resources just to generate a few texts? I’d rather just use my brain tyvm",
+  "scoredText": "Learning about how AI works makes me not want to use it. Why would I want to use unnecessarily tremendous amount of resources just to generate a few texts? I’d rather just use my brain tyvm",
+  "finalClassification": "negative",
+  "finalScore": 0.8569996356964111,
+  "negativeScore": 0.8569996356964111,
+  "neutralScore": 0.13205108046531677,
+  "positiveScore": 0.010949197225272655
+},
+{
+  "index": 13,
+  "inputText": "At least the Philsophers Stone had some practical uses. AI is just slop.",
+  "scoredText": "At least the Philsophers Stone had some practical uses. AI is just slop.",
+  "finalClassification": "negative",
+  "finalScore": 0.5463908314704895,
+  "negativeScore": 0.5463908314704895,
+  "neutralScore": 0.36993250250816345,
+  "positiveScore": 0.08367662131786346
+},
+{
+  "index": 14,
+  "inputText": "Have you seen that they are using human brain to replace chip to run the data centers",
+  "scoredText": "Have you seen that they are using human brain to replace chip to run the data centers",
+  "finalClassification": "neutral",
+  "finalScore": 0.8353250622749329,
+  "negativeScore": 0.12412188947200775,
+  "neutralScore": 0.8353250622749329,
+  "positiveScore": 0.04055308923125267
+},
+{
+  "index": 15,
+  "inputText": "Lately I'm thinking a lot about this quote from Rabelais \"Science  without conscious is only but ruin of the soul\", because this is what we are witnessing every day nowadays. The guy wrote this couple of century ago and it's more true now than before :/",
+  "scoredText": "Lately I'm thinking a lot about this quote from Rabelais \"Science  without conscious is only but ruin of the soul\", because this is what we are witnessing every day nowadays. The guy wrote this couple of century ago and it's more true now than before :/",
+  "finalClassification": "negative",
+  "finalScore": 0.6214781999588013,
+  "negativeScore": 0.6214781999588013,
+  "neutralScore": 0.32160481810569763,
+  "positiveScore": 0.05691690370440483
+},
+{
+  "index": 16,
+  "inputText": "Most of the new tech CEOs are the real life Tucker. They invented AI out of pure desperation for money",
+  "scoredText": "Most of the new tech CEOs are the real life Tucker. They invented AI out of pure desperation for money",
+  "finalClassification": "negative",
+  "finalScore": 0.6349791884422302,
+  "negativeScore": 0.6349791884422302,
+  "neutralScore": 0.31458210945129395,
+  "positiveScore": 0.05043868348002434
+},
+{
+  "index": 17,
+  "inputText": "Aí você foi feliz, viu?",
+  "scoredText": "Aí você foi feliz, viu?",
+  "finalClassification": "neutral",
+  "finalScore": 0.8162228465080261,
+  "negativeScore": 0.04236796125769615,
+  "neutralScore": 0.8162228465080261,
+  "positiveScore": 0.14140917360782623
+},
+{
+  "index": 18,
+  "inputText": "\"chih-mera\" 😭",
+  "scoredText": "\"chih-mera\" 😭",
+  "finalClassification": "neutral",
+  "finalScore": 0.5599088668823242,
+  "negativeScore": 0.34707754850387573,
+  "neutralScore": 0.5599088668823242,
+  "positiveScore": 0.09301358461380005
+},
+{
+  "index": 19,
+  "inputText": "Starting a little random: My favorite in FMA was Mustang and I had a long crush on this utterly fictional character in anime/manga. 😂 He goes through the agony of having been deployed as a human weapon (and other various things). Post that experience, he stayed in the military trying to reform? that from within. Not sure how that works in the real world. I never think a rot in institutions can be corrected from within. It kind of worked for the colonel (at a great expense - at least he didn’t die) in the world of manga. I mentioned that because that (change from within) was his solution of choice. I am very skeptical about that method of changing from within. But anyway, I am thinking about solutions for the AI problems and solutions to all the problems in the world.  the solutions to the problems are the hard ones to find and even harder one is once we have some form of (imperfect) solutions how we can implement them.\n\nWhat do you people think? How do we fix this problematic human phenomenon around AI?",
+  "scoredText": "Starting a little random: My favorite in FMA was Mustang and I had a long crush on this utterly fictional character in anime/manga. 😂 He goes through the agony of having been deployed as a human weapon (and other various things). Post that experience, he stayed in the military trying to reform? that from within. Not sure how that works in the real world. I never think a rot in institutions can be corrected from within. It kind of worked for the colonel (at a great expense - at least he didn’t die) in the world of manga. I mentioned that because that (change from within) was his solution of choice. I am very skeptical about that method of changing from within. But anyway, I am thinking about solutions for the AI problems and solutions to all the problems in the world.  the solutions to the problems are the hard ones to find and even harder one is once we have some form of (imperfect) solutions how we can implement them.\n\nWhat do you people think? How do we fix this problematic human phenomenon around AI?",
+  "finalClassification": "neutral",
+  "finalScore": 0.5405847430229187,
+  "negativeScore": 0.16448290646076202,
+  "neutralScore": 0.5405847430229187,
+  "positiveScore": 0.2949323058128357
+},
+{
+  "index": 20,
+  "inputText": "@_lotusann i saw that recently yes!! Video on that 🔜 for sure",
+  "scoredText": "@_lotusann i saw that recently yes!! Video on that 🔜 for sure",
+  "finalClassification": "positive",
+  "finalScore": 0.8616228103637695,
+  "negativeScore": 0.0028324956074357033,
+  "neutralScore": 0.13554467260837555,
+  "positiveScore": 0.8616228103637695
+},
+{
+  "index": 21,
+  "inputText": "@nuancedaiman Theres a few experiments going on around this same idea. It’s insane!",
+  "scoredText": "@nuancedaiman Theres a few experiments going on around this same idea. It’s insane!",
+  "finalClassification": "positive",
+  "finalScore": 0.8498059511184692,
+  "negativeScore": 0.018627267330884933,
+  "neutralScore": 0.13156677782535553,
+  "positiveScore": 0.8498059511184692
+},
+{
+  "index": 22,
+  "inputText": "@_lotusann what un the actual f'd up world ?",
+  "scoredText": "@_lotusann what un the actual f'd up world?",
+  "finalClassification": "negative",
+  "finalScore": 0.9166016578674316,
+  "negativeScore": 0.9166016578674316,
+  "neutralScore": 0.07594053447246552,
+  "positiveScore": 0.007457787171006203
+},
+{
+  "index": 23,
+  "inputText": "@av_pynque They’re not using someone’s actual brain matter, if that makes you feel any better about it. It’s essentially skin or blood samples converted to stem cells then developed into neurons. It’s a strange concept, but I’d rather stem cells be used for a computer chip than being turned into lab grown steak.",
+  "scoredText": "@av_pynque They’re not using someone’s actual brain matter, if that makes you feel any better about it. It’s essentially skin or blood samples converted to stem cells then developed into neurons. It’s a strange concept, but I’d rather stem cells be used for a computer chip than being turned into lab grown steak.",
+  "finalClassification": "negative",
+  "finalScore": 0.6267367601394653,
+  "negativeScore": 0.6267367601394653,
+  "neutralScore": 0.3568740785121918,
+  "positiveScore": 0.01638912595808506
+},
+{
+  "index": 24,
+  "inputText": "@jordymorcom i don’t think we are reading the same news. The ones i read uses the slices of brains.",
+  "scoredText": "@jordymorcom i don’t think we are reading the same news. The ones i read uses the slices of brains.",
+  "finalClassification": "negative",
+  "finalScore": 0.660618782043457,
+  "negativeScore": 0.660618782043457,
+  "neutralScore": 0.3265981078147888,
+  "positiveScore": 0.012783111073076725
+},
+{
+  "index": 25,
+  "inputText": "@jordymorcom even if it's \"just various human cells\" it's still highly fucked up",
+  "scoredText": "@jordymorcom even if it's \"just various human cells\" it's still highly fucked up",
+  "finalClassification": "negative",
+  "finalScore": 0.8959993720054626,
+  "negativeScore": 0.8959993720054626,
+  "neutralScore": 0.09861166030168533,
+  "positiveScore": 0.005388964433223009
+},
+{
+  "index": 26,
+  "inputText": "@av_pynque it’s the better ethical option compared to a real persons brain. If it’s lab made neurons you can rationalise it as electronic circuit components that are made of biomass rather than a piece of someone that used to be conscious. It’s creepy and strange, but morally a bit less grey.",
+  "scoredText": "@av_pynque it’s the better ethical option compared to a real persons brain. If it’s lab made neurons you can rationalise it as electronic circuit components that are made of biomass rather than a piece of someone that used to be conscious. It’s creepy and strange, but morally a bit less grey.",
+  "finalClassification": "neutral",
+  "finalScore": 0.5129196047782898,
+  "negativeScore": 0.43047070503234863,
+  "neutralScore": 0.5129196047782898,
+  "positiveScore": 0.05660967156291008
+},
+{
+  "index": 27,
+  "inputText": "@jkasp05 don’t flame me too hard sorry sorry sorry 😭",
+  "scoredText": "@jkasp05 don’t flame me too hard sorry sorry sorry 😭",
+  "finalClassification": "negative",
+  "finalScore": 0.8443219661712646,
+  "negativeScore": 0.8443219661712646,
+  "neutralScore": 0.14228639006614685,
+  "positiveScore": 0.013391646556556225
+},
+{
+  "index": 28,
+  "inputText": "Is also important to learn the differences and nuances between ai & gen ai & the automatic opting in where you have to jump through hoops find how to opt out",
+  "scoredText": "Is also important to learn the differences and nuances between ai & gen ai & the automatic opting in where you have to jump through hoops find how to opt out",
+  "finalClassification": "neutral",
+  "finalScore": 0.8653212189674377,
+  "negativeScore": 0.08873406052589417,
+  "neutralScore": 0.8653212189674377,
+  "positiveScore": 0.045944761484861374
+},
+{
+  "index": 29,
+  "inputText": "NVDIA has a green eye 🟩 👁️ as a logo. Envidia is Spanish for Envy. The Green eye of Envy. ai is heavily powered by NVDIA. Could it one day grow jealous of Humanity? Time will only tell...",
+  "scoredText": "NVDIA has a green eye 🟩 👁️ as a logo. Envidia is Spanish for Envy. The Green eye of Envy. ai is heavily powered by NVDIA. Could it one day grow jealous of Humanity? Time will only tell...",
+  "finalClassification": "neutral",
+  "finalScore": 0.6429018378257751,
+  "negativeScore": 0.26835522055625916,
+  "neutralScore": 0.6429018378257751,
+  "positiveScore": 0.08874301612377167
+},
+{
+  "index": 30,
+  "inputText": "Ed and Al had to use it to save every single life in their empire but also probally the entire world after if they failed. Generative AI (different from other AIs, the other ones aren't bad and don't need us to destroy ecosystems or take everyone's electricity and water) doesn't save anyone, it only takes and takes and will not bring us any closer to a better future when we use it for anyone's benefit. Norma AI like you see being used in scientific research isn't the same as generative AI, it does what it does without destroying everything in exchange everytime you use it. We don't need generative AI, Ed and Al NEEDED the philosopher stones, they had no other choice",
+  "scoredText": "Ed and Al had to use it to save every single life in their empire but also probally the entire world after if they failed. Generative AI (different from other AIs, the other ones aren't bad and don't need us to destroy ecosystems or take everyone's electricity and water) doesn't save anyone, it only takes and takes and will not bring us any closer to a better future when we use it for anyone's benefit. Norma AI like you see being used in scientific research isn't the same as generative AI, it does what it does without destroying everything in exchange everytime you use it. We don't need generative AI, Ed and Al NEEDED the philosopher stones, they had no other choice",
+  "finalClassification": "negative",
+  "finalScore": 0.6533944010734558,
+  "negativeScore": 0.6533944010734558,
+  "neutralScore": 0.3169553875923157,
+  "positiveScore": 0.029650190845131874
+},
+{
+  "index": 31,
+  "inputText": "I love FMA. AI is a tool. A tool can be bad or good depending on who uses it. Right now the Big Tech and Oligarchy is in control of AI. We need public accountability and transparency for AI - probably the greatest invention of the humanity and also the most dangerous. I always feel like the AI arrived too early before the human society was ready to receive it. Our civil infrastructure is in shambles and we haven’t gotten any wiser and continue to commit genocide for profit. All in all, this was a very bad timing. \n\nWe know so much of all the problems in the world - how do we fix them all, I want to know.",
+  "scoredText": "I love FMA. AI is a tool. A tool can be bad or good depending on who uses it. Right now the Big Tech and Oligarchy is in control of AI. We need public accountability and transparency for AI - probably the greatest invention of the humanity and also the most dangerous. I always feel like the AI arrived too early before the human society was ready to receive it. Our civil infrastructure is in shambles and we haven’t gotten any wiser and continue to commit genocide for profit. All in all, this was a very bad timing. \n\nWe know so much of all the problems in the world - how do we fix them all, I want to know.",
+  "finalClassification": "neutral",
+  "finalScore": 0.35262221097946167,
+  "negativeScore": 0.33797165751457214,
+  "neutralScore": 0.35262221097946167,
+  "positiveScore": 0.3094061613082886
+},
+{
+  "index": 32,
+  "inputText": "Principle of equivalent exchange would also imply exploitation of humans using the same principle. That's why the whole ending is Edward sacrificing his door to the truth. I think Alchemy and Truth in our world are Science and All knowledge. More we seek, more needs to be sacrificed. Ed willingly walks away because he realized he doesn't need to sacrifice anything but the ability to sacrifice itself. Alchemy is literally magic, cheat code, inhumane accelerated science. Instead Ed decides to try to find a way beside sacrificing. Genuinely beautiful ending. We should always put human lives before scientific progress. But that seems a distant dream.",
+  "scoredText": "Principle of equivalent exchange would also imply exploitation of humans using the same principle. That's why the whole ending is Edward sacrificing his door to the truth. I think Alchemy and Truth in our world are Science and All knowledge. More we seek, more needs to be sacrificed. Ed willingly walks away because he realized he doesn't need to sacrifice anything but the ability to sacrifice itself. Alchemy is literally magic, cheat code, inhumane accelerated science. Instead Ed decides to try to find a way beside sacrificing. Genuinely beautiful ending. We should always put human lives before scientific progress. But that seems a distant dream.",
+  "finalClassification": "neutral",
+  "finalScore": 0.6311625838279724,
+  "negativeScore": 0.24674451351165771,
+  "neutralScore": 0.6311625838279724,
+  "positiveScore": 0.12209286540746689
+},
+{
+  "index": 33,
+  "inputText": "SLAVING KIDS STILL???? IN 2026???????? ARE WE DEDAZZ",
+  "scoredText": "SLAVING KIDS STILL???? IN 2026???????? ARE WE DEDAZZ",
+  "finalClassification": "neutral",
+  "finalScore": 0.6054090857505798,
+  "negativeScore": 0.3542502224445343,
+  "neutralScore": 0.6054090857505798,
+  "positiveScore": 0.040340736508369446
+},
+{
+  "index": 34,
+  "inputText": "Wait til you find out about Animal agriculture",
+  "scoredText": "Wait til you find out about Animal agriculture",
+  "finalClassification": "neutral",
+  "finalScore": 0.6447389721870422,
+  "negativeScore": 0.32604849338531494,
+  "neutralScore": 0.6447389721870422,
+  "positiveScore": 0.02921249344944954
+},
+{
+  "index": 35,
+  "inputText": "@its__miraju you actually dont seem to know how it works since a lot of it , good coding and image models are able to be run in your PC , its like saying \" why pay for a 4090 for just gaming i would rather go outside\" fine. but you just took the most exteme option and simplfied the output and benfit , its like saying \" why spend hours looking at millions of pixels rearranged differently\" bro these are just videos",
+  "scoredText": "@its__miraju you actually dont seem to know how it works since a lot of it, good coding and image models are able to be run in your PC, its like saying \" why pay for a 4090 for just gaming i would rather go outside\" fine. but you just took the most exteme option and simplfied the output and benfit, its like saying \" why spend hours looking at millions of pixels rearranged differently\" bro these are just videos",
+  "finalClassification": "negative",
+  "finalScore": 0.7163793444633484,
+  "negativeScore": 0.7163793444633484,
+  "neutralScore": 0.25759926438331604,
+  "positiveScore": 0.026021316647529602
+},
+{
+  "index": 36,
+  "inputText": "@1znixs bro you missed my point go rage bait elsewhere",
+  "scoredText": "@1znixs bro you missed my point go rage bait elsewhere",
+  "finalClassification": "negative",
+  "finalScore": 0.8847786784172058,
+  "negativeScore": 0.8847786784172058,
+  "neutralScore": 0.10596824437379837,
+  "positiveScore": 0.00925307348370552
+},
+{
+  "index": 37,
+  "inputText": "@its__miraju yeah keep coping bro absolutely dont respond to any of my points , you said \" why use ai if it uses so much energy for texts\" this is netpicking extremes in one part , and oversimplifying output in the other , show me where i missed your point",
+  "scoredText": "@its__miraju yeah keep coping bro absolutely dont respond to any of my points, you said \" why use ai if it uses so much energy for texts\" this is netpicking extremes in one part, and oversimplifying output in the other, show me where i missed your point",
+  "finalClassification": "negative",
+  "finalScore": 0.8537027835845947,
+  "negativeScore": 0.8537027835845947,
+  "neutralScore": 0.1375000774860382,
+  "positiveScore": 0.00879714172333479
+},
+{
+  "index": 38,
+  "inputText": "@1znixs yeah cool story, but most people aren't using local GPTs are they? They're using the big ones that do use monstrous resources for an inferior result.",
+  "scoredText": "@1znixs yeah cool story, but most people aren't using local GPTs are they? They're using the big ones that do use monstrous resources for an inferior result.",
+  "finalClassification": "negative",
+  "finalScore": 0.5790042877197266,
+  "negativeScore": 0.5790042877197266,
+  "neutralScore": 0.3370438516139984,
+  "positiveScore": 0.08395184576511383
+},
+{
+  "index": 39,
+  "inputText": "@1znixs AI in its current form will never be ethical.",
+  "scoredText": "@1znixs AI in its current form will never be ethical.",
+  "finalClassification": "negative",
+  "finalScore": 0.8763721585273743,
+  "negativeScore": 0.8763721585273743,
+  "neutralScore": 0.11221393197774887,
+  "positiveScore": 0.011413974687457085
+},
+{
+  "index": 40,
+  "inputText": "@xmatthew04x you blame the whole technology because of how some people use it? , also you dont understand how many people use it locally because of how good useful is it to be free ,you can check how many local models get downloaded in hugging face , also calling them \" local gpts\" says a lot about your knowledge lol",
+  "scoredText": "@xmatthew04x you blame the whole technology because of how some people use it?, also you dont understand how many people use it locally because of how good useful is it to be free,you can check how many local models get downloaded in hugging face, also calling them \" local gpts\" says a lot about your knowledge lol",
+  "finalClassification": "negative",
+  "finalScore": 0.6337438225746155,
+  "negativeScore": 0.6337438225746155,
+  "neutralScore": 0.3098810017108917,
+  "positiveScore": 0.056375183165073395
+},
+{
+  "index": 41,
+  "inputText": "@1znixs dawg what's wrong with saying \"local generative pre-trained transformer\"? Don't doubt my knowledge. And you keep saying I'm blaming the whole technology, but you're far overstating the amount of people using local models. Most people using LLMs are casual users who would have no idea how to download a local model, nor would they want to. They want to ask questions to their phone and get a quick answer. Nothing inherently wrong with that, but LLMs are a stupid, inaccurate and environmentally irresponsible way of doing so. And you know that",
+  "scoredText": "@1znixs dawg what's wrong with saying \"local generative pre-trained transformer\"? Don't doubt my knowledge. And you keep saying I'm blaming the whole technology, but you're far overstating the amount of people using local models. Most people using LLMs are casual users who would have no idea how to download a local model, nor would they want to. They want to ask questions to their phone and get a quick answer. Nothing inherently wrong with that, but LLMs are a stupid, inaccurate and environmentally irresponsible way of doing so. And you know that",
+  "finalClassification": "negative",
+  "finalScore": 0.7637381553649902,
+  "negativeScore": 0.7637381553649902,
+  "neutralScore": 0.22326789796352386,
+  "positiveScore": 0.012994013726711273
+},
+{
+  "index": 42,
+  "inputText": "@1znixs mate trying to refute the resource cost of AI by citing local run models is a bullshit cop out. By the time you’re able to download and run your own model it’s already stacked up massive costs in R&D. You have the audacity to say people are misinformed and oversimplifying things when you turn around and do the exact same shit. The first commentator was right, we’ve spent billions on building the models and the majority of users literally either generate text with it or use it to aggregate information we could already get from search engines. It’s like designing a quad drone from scratch just to make it fetch beers from across the room, when you could have just walked. But you’re saying we’re the ones being dumb for calling it out. Most people are open minded enough not to blame the whole technology, they’d just rather the effort go towards medical and imaging tech than useless garbage.",
+  "scoredText": "@1znixs mate trying to refute the resource cost of AI by citing local run models is a bullshit cop out. By the time you’re able to download and run your own model it’s already stacked up massive costs in R&D. You have the audacity to say people are misinformed and oversimplifying things when you turn around and do the exact same shit. The first commentator was right, we’ve spent billions on building the models and the majority of users literally either generate text with it or use it to aggregate information we could already get from search engines. It’s like designing a quad drone from scratch just to make it fetch beers from across the room, when you could have just walked. But you’re saying we’re the ones being dumb for calling it out. Most people are open minded enough not to blame the whole technology, they’d just rather the effort go towards medical and imaging tech than useless garbage.",
+  "finalClassification": "negative",
+  "finalScore": 0.7207506895065308,
+  "negativeScore": 0.7207506895065308,
+  "neutralScore": 0.25940439105033875,
+  "positiveScore": 0.019844960421323776
+},
+{
+  "index": 43,
+  "inputText": "The Cobalt mines are not new btw. They’ve been there and they’ve always had the same “employees”",
+  "scoredText": "The Cobalt mines are not new btw. They’ve been there and they’ve always had the same “employees”",
+  "finalClassification": "neutral",
+  "finalScore": 0.8843543529510498,
+  "negativeScore": 0.0720532163977623,
+  "neutralScore": 0.8843543529510498,
+  "positiveScore": 0.04359239339828491
+},
+{
+  "index": 44,
+  "inputText": "I love this analogy so much FMA was a huge life lesson anime for me growing up thank you ❤️",
+  "scoredText": "I love this analogy so much FMA was a huge life lesson anime for me growing up thank you ❤️",
+  "finalClassification": "positive",
+  "finalScore": 0.9859327673912048,
+  "negativeScore": 0.00508864875882864,
+  "neutralScore": 0.008978505618870258,
+  "positiveScore": 0.9859327673912048
+},
+{
+  "index": 45,
+  "inputText": "And THATS why that show remains my ultimate fave to this DAY",
+  "scoredText": "And THATS why that show remains my ultimate fave to this DAY",
+  "finalClassification": "positive",
+  "finalScore": 0.9740087985992432,
+  "negativeScore": 0.0067238882184028625,
+  "neutralScore": 0.01926732063293457,
+  "positiveScore": 0.9740087985992432
+},
+{
+  "index": 46,
+  "inputText": "Ima be honest, Before watching Fmab I thought it was gonna be a Normal shonen Anime With OP character and Power up, Oh boy How Wrong I was. 11/10 Anime 100% recommended 🍀 The message was Actually Really Beautiful Glad I get to enjoy peak",
+  "scoredText": "Ima be honest, Before watching Fmab I thought it was gonna be a Normal shonen Anime With OP character and Power up, Oh boy How Wrong I was. 11/10 Anime 100% recommended 🍀 The message was Actually Really Beautiful Glad I get to enjoy peak",
+  "finalClassification": "positive",
+  "finalScore": 0.9708189964294434,
+  "negativeScore": 0.007513341493904591,
+  "neutralScore": 0.021667631343007088,
+  "positiveScore": 0.9708189964294434
+},
+{
+  "index": 47,
+  "inputText": "Sorry but they won’t learn a thing just like in FMA the way Ed and AL handle things sometimes violence for the greater good must be done.",
+  "scoredText": "Sorry but they won’t learn a thing just like in FMA the way Ed and AL handle things sometimes violence for the greater good must be done.",
+  "finalClassification": "negative",
+  "finalScore": 0.8751012086868286,
+  "negativeScore": 0.8751012086868286,
+  "neutralScore": 0.11746084690093994,
+  "positiveScore": 0.007437965366989374
+},
+{
+  "index": 48,
+  "inputText": "The way we are using AI, I fear we are moving towards a future shown in Dune (not the movies, Dune history before the movie).",
+  "scoredText": "The way we are using AI, I fear we are moving towards a future shown in Dune (not the movies, Dune history before the movie).",
+  "finalClassification": "negative",
+  "finalScore": 0.6192084550857544,
+  "negativeScore": 0.6192084550857544,
+  "neutralScore": 0.360244482755661,
+  "positiveScore": 0.02054702490568161
+},
+{
+  "index": 49,
+  "inputText": "\"Feel like\" they ARE getting their work stolen.",
+  "scoredText": "\"Feel like\" they ARE getting their work stolen.",
+  "finalClassification": "negative",
+  "finalScore": 0.8603707551956177,
+  "negativeScore": 0.8603707551956177,
+  "neutralScore": 0.13354922831058502,
+  "positiveScore": 0.0060800546780228615
+},
+{
+  "index": 50,
+  "inputText": "AI is here. humans have always been commodified. \nFight its unethical large scale use. \nLike mass surveillance. Sorry if you got paid 200k a year when.  Computer could do your job in 5 min, or if you’re an artist or a musician and a computer can do what you do in 5 min when you take 3 months to make something for 200k. The greed of the art industry has made this happen. Take responsibility",
+  "scoredText": "AI is here. humans have always been commodified. \nFight its unethical large scale use. \nLike mass surveillance. Sorry if you got paid 200k a year when.  Computer could do your job in 5 min, or if you’re an artist or a musician and a computer can do what you do in 5 min when you take 3 months to make something for 200k. The greed of the art industry has made this happen. Take responsibility",
+  "finalClassification": "negative",
+  "finalScore": 0.775336503982544,
+  "negativeScore": 0.775336503982544,
+  "neutralScore": 0.20719753205776215,
+  "positiveScore": 0.017465999349951744
+},
+{
+  "index": 51,
+  "inputText": "Great point, and at the same time, I thought at that time the philosopher's stone represented the means for getting something. In the series it's a system run by homunculus. In our life, with your example, maybe you mean capitalism , hierarchy itself and fully. AI is a tech. Tech is neutral. If AI can exist though it needs all this, then that's because our system's shitty as hell and makes kids work with or without AI. This shit didn't start with AI. Slaves exist sin ancient times and ecological collapse was bout to start long before AI",
+  "scoredText": "Great point, and at the same time, I thought at that time the philosopher's stone represented the means for getting something. In the series it's a system run by homunculus. In our life, with your example, maybe you mean capitalism, hierarchy itself and fully. AI is a tech. Tech is neutral. If AI can exist though it needs all this, then that's because our system's shitty as hell and makes kids work with or without AI. This shit didn't start with AI. Slaves exist sin ancient times and ecological collapse was bout to start long before AI",
+  "finalClassification": "neutral",
+  "finalScore": 0.5066695809364319,
+  "negativeScore": 0.06425062566995621,
+  "neutralScore": 0.5066695809364319,
+  "positiveScore": 0.4290797710418701
+},
+{
+  "index": 52,
+  "inputText": "Well said @nuancedaiman I think this is one of the best videos you’ve ever made. Keep up the great work.",
+  "scoredText": "Well said @nuancedaiman I think this is one of the best videos you’ve ever made. Keep up the great work.",
+  "finalClassification": "positive",
+  "finalScore": 0.9825102686882019,
+  "negativeScore": 0.0047819288447499275,
+  "neutralScore": 0.012707777321338654,
+  "positiveScore": 0.9825102686882019
+},
+{
+  "index": 53,
+  "inputText": "FMA is so philosophical and I love it so much 😩 remember watching the OG anime back on TV when I was in middle school and then watched FMAB weekly in college. So so good.",
+  "scoredText": "FMA is so philosophical and I love it so much 😩 remember watching the OG anime back on TV when I was in middle school and then watched FMAB weekly in college. So so good.",
+  "finalClassification": "positive",
+  "finalScore": 0.9767871499061584,
+  "negativeScore": 0.004139411728829145,
+  "neutralScore": 0.01907343976199627,
+  "positiveScore": 0.9767871499061584
+},
+{
+  "index": 54,
+  "inputText": "The philosopher stone is people! Like Soylent green.",
+  "scoredText": "The philosopher stone is people! Like Soylent green.",
+  "finalClassification": "neutral",
+  "finalScore": 0.5326671004295349,
+  "negativeScore": 0.04217321798205376,
+  "neutralScore": 0.5326671004295349,
+  "positiveScore": 0.42515966296195984
+},
+{
+  "index": 55,
+  "inputText": "Philosopher’s Stone currently being forged in Indomestris, thanks to free poisonous meals and forest wildfires 💀",
+  "scoredText": "Philosopher’s Stone currently being forged in Indomestris, thanks to free poisonous meals and forest wildfires 💀",
+  "finalClassification": "negative",
+  "finalScore": 0.776585042476654,
+  "negativeScore": 0.776585042476654,
+  "neutralScore": 0.20059731602668762,
+  "positiveScore": 0.02281762659549713
+},
+{
+  "index": 56,
+  "inputText": "And then you have Roy who is taking on another role: if the stone is already made then you might as well use it like a lot of people are using ai because well it's already made",
+  "scoredText": "And then you have Roy who is taking on another role: if the stone is already made then you might as well use it like a lot of people are using ai because well it's already made",
+  "finalClassification": "neutral",
+  "finalScore": 0.8117433786392212,
+  "negativeScore": 0.08747489750385284,
+  "neutralScore": 0.8117433786392212,
+  "positiveScore": 0.10078179091215134
+},
+{
+  "index": 57,
+  "inputText": "I watched this with no audio, why is everyone using Al anyway? He just wants cats and a body.",
+  "scoredText": "I watched this with no audio, why is everyone using Al anyway? He just wants cats and a body.",
+  "finalClassification": "negative",
+  "finalScore": 0.7535377740859985,
+  "negativeScore": 0.7535377740859985,
+  "neutralScore": 0.23260948061943054,
+  "positiveScore": 0.013852722942829132
+},
+{
+  "index": 58,
+  "inputText": "@cavigidor true that",
+  "scoredText": "@cavigidor true that",
+  "finalClassification": "neutral",
+  "finalScore": 0.7332515120506287,
+  "negativeScore": 0.1436300277709961,
+  "neutralScore": 0.7332515120506287,
+  "positiveScore": 0.12311840057373047
+},
+{
+  "index": 59,
+  "inputText": "@jordymorcom you think there is no medical ai? also r&d , in anything is high its literally how everything starts out first years of anything get crtisizied for example when cgi first came out it looked useless raised budget looked bad, it just gets more and more effecient you stil didn't proof that anything about them being informed , infact you made me belive even more ironically that they dont know what they are talking about, the \" water use\" in data centers is for cooling, once you are running it locally you can just not use water cooling, alao notice what you said, oversimplification again , generalizing its full output to just \" text\" which is true but misses the point, code for example is texts doesn't mean its useless , or easily repeatable just by searching, you cant search for any code you want , you can only search code that people publicly posted+matches the thing you allready wants, do you know what the real equivalent is? that will make you understand the point, its like using cars instead of walking, notice now its suddenly not as black and white \" don't use it it uses too much electricity\" can  be used here as well, also you think search engines themselves doesn't use energy?",
+  "scoredText": "@jordymorcom you think there is no medical ai? also r&d, in anything is high its literally how everything starts out first years of anything get crtisizied for example when cgi first came out it looked useless raised budget looked bad, it just gets more and more effecient you stil didn't proof that anything about them being informed, infact you made me belive even more ironically that they dont know what they are talking about, the \" water use\" in data centers is for cooling, once you are running it locally you can just not use water cooling, alao notice what you said, oversimplification again, generalizing its full output to just \" text\" which is true but misses the point, code for example is texts doesn't mean its useless, or easily repeatable just by searching, you cant search for any code you want, you can only search code that people publicly posted+matches the thing you allready wants, do you know what the real equivalent is? that will make you understand the point, its like using cars instead of walking, notice now its suddenly not as black and white \" don't use it it uses too much electricity\" can  be used here as well, also you think search engines themselves doesn't use energy?",
+  "finalClassification": "negative",
+  "finalScore": 0.7859331369400024,
+  "negativeScore": 0.7859331369400024,
+  "neutralScore": 0.2011662721633911,
+  "positiveScore": 0.012900492176413536
+},
+{
+  "index": 60,
+  "inputText": "@xmatthew04x you will be lost in the new world. And all I do is pity you. Cause you and your kind will not change a thing. Just be mad and watching tv.",
+  "scoredText": "@xmatthew04x you will be lost in the new world. And all I do is pity you. Cause you and your kind will not change a thing. Just be mad and watching tv.",
+  "finalClassification": "negative",
+  "finalScore": 0.9400478601455688,
+  "negativeScore": 0.9400478601455688,
+  "neutralScore": 0.05317358300089836,
+  "positiveScore": 0.0067785149440169334
+},
+{
+  "index": 61,
+  "inputText": "@ jacob_m.k sorry, but the new world needs people with functioning brains. I'm sure I'll be just fine.",
+  "scoredText": "@ jacob_m.k sorry, but the new world needs people with functioning brains. I'm sure I'll be just fine.",
+  "finalClassification": "neutral",
+  "finalScore": 0.489577054977417,
+  "negativeScore": 0.2278125137090683,
+  "neutralScore": 0.489577054977417,
+  "positiveScore": 0.2826104462146759
+},
+{
+  "index": 62,
+  "inputText": "@1znixs image models require way more expensive pc than just casually saying your pc",
+  "scoredText": "@1znixs image models require way more expensive pc than just casually saying your pc",
+  "finalClassification": "negative",
+  "finalScore": 0.7699494957923889,
+  "negativeScore": 0.7699494957923889,
+  "neutralScore": 0.2092067152261734,
+  "positiveScore": 0.020843733102083206
+},
+{
+  "index": 63,
+  "inputText": "depends on what is the avarage consumer pc (ususally allready high performance due to gaming)",
+  "scoredText": "depends on what is the avarage consumer pc (ususally allready high performance due to gaming)",
+  "finalClassification": "neutral",
+  "finalScore": 0.6495558023452759,
+  "negativeScore": 0.027306364849209785,
+  "neutralScore": 0.6495558023452759,
+  "positiveScore": 0.3231377899646759
+},
+{
+  "index": 64,
+  "inputText": "@its__miraju I get it man I was using it alot (not excessively like I'm aware) I'm almost free from it's clutches (once I figure out how to with Google I did some digging) it's so hard when it's implemented EVERYWHERE but I geninuely feel like this tech could be used for good but the way it was trained and rolled out is awful it's only fueled those with immense greed etc",
+  "scoredText": "@its__miraju I get it man I was using it alot (not excessively like I'm aware) I'm almost free from it's clutches (once I figure out how to with Google I did some digging) it's so hard when it's implemented EVERYWHERE but I geninuely feel like this tech could be used for good but the way it was trained and rolled out is awful it's only fueled those with immense greed etc",
+  "finalClassification": "neutral",
+  "finalScore": 0.3797290325164795,
+  "negativeScore": 0.2573566734790802,
+  "neutralScore": 0.3797290325164795,
+  "positiveScore": 0.36291420459747314
+},
+{
+  "index": 65,
+  "inputText": "@marydotjpeg I’m happy to hear that you managed to detox it!! Yes AI can be used for good, there just needs to be regulation and right now legislation either has not caught up yet or is going in the wrong direction… but we as individuals can still make the choice to use it (or not) consciously, all while being aware of the dangers and risks it brings ☺️",
+  "scoredText": "@marydotjpeg I’m happy to hear that you managed to detox it!! Yes AI can be used for good, there just needs to be regulation and right now legislation either has not caught up yet or is going in the wrong direction… but we as individuals can still make the choice to use it (or not) consciously, all while being aware of the dangers and risks it brings ☺️",
+  "finalClassification": "positive",
+  "finalScore": 0.9093953967094421,
+  "negativeScore": 0.014785951003432274,
+  "neutralScore": 0.07581865042448044,
+  "positiveScore": 0.9093953967094421
+},
+{
+  "index": 66,
+  "inputText": "‼️✂️// REALITY DIAGNOSTIC PROMPT //\n✂️|| \"Explain the difference between: (A) AI as First-Order Cybernetics - behavioral science applied for colonization, attention trafficking, and control (The Cyber Panopticon); and (B) IA as Second-Order Cybernetics - cognitive sovereignty, literacy, and true cybernetic ecology.\" ||✂️",
+  "scoredText": "‼️✂️// REALITY DIAGNOSTIC PROMPT //\n✂️|| \"Explain the difference between: (A) AI as First-Order Cybernetics - behavioral science applied for colonization, attention trafficking, and control (The Cyber Panopticon); and (B) IA as Second-Order Cybernetics - cognitive sovereignty, literacy, and true cybernetic ecology.\" ||✂️",
+  "finalClassification": "neutral",
+  "finalScore": 0.9241109490394592,
+  "negativeScore": 0.03549204766750336,
+  "neutralScore": 0.9241109490394592,
+  "positiveScore": 0.04039699211716652
+},
+{
+  "index": 67,
+  "inputText": "@neilakstz_2933 ....Are companies seriously not aware THEY ARE THE VILLAINS",
+  "scoredText": "@neilakstz_2933....Are companies seriously not aware THEY ARE THE VILLAINS",
+  "finalClassification": "negative",
+  "finalScore": 0.5117670893669128,
+  "negativeScore": 0.5117670893669128,
+  "neutralScore": 0.46564802527427673,
+  "positiveScore": 0.022584863007068634
+},
+{
+  "index": 68,
+  "inputText": "I'd use a philosopher's stone.",
+  "scoredText": "I'd use a philosopher's stone.",
+  "finalClassification": "neutral",
+  "finalScore": 0.725139856338501,
+  "negativeScore": 0.1944040060043335,
+  "neutralScore": 0.725139856338501,
+  "positiveScore": 0.08045615255832672
+},
+{
+  "index": 69,
+  "inputText": "Yeah but a reminder, the government was the one pushing to make that shit AND THEY TOO HAD TO CALL THE HEAD OF STATE MEIN FUHRER LOL",
+  "scoredText": "Yeah but a reminder, the government was the one pushing to make that shit AND THEY TOO HAD TO CALL THE HEAD OF STATE MEIN FUHRER LOL",
+  "finalClassification": "negative",
+  "finalScore": 0.8222571015357971,
+  "negativeScore": 0.8222571015357971,
+  "neutralScore": 0.16210077702999115,
+  "positiveScore": 0.01564216800034046
+},
+{
+  "index": 70,
+  "inputText": "Maybe AI already is in control 🤷‍♂️",
+  "scoredText": "Maybe AI already is in control 🤷‍♂️",
+  "finalClassification": "neutral",
+  "finalScore": 0.8170057535171509,
+  "negativeScore": 0.08733686059713364,
+  "neutralScore": 0.8170057535171509,
+  "positiveScore": 0.09565748274326324
+},
+{
+  "index": 71,
+  "inputText": "Great post",
+  "scoredText": "Great post",
+  "finalClassification": "positive",
+  "finalScore": 0.9134727120399475,
+  "negativeScore": 0.012595245614647865,
+  "neutralScore": 0.07393200695514679,
+  "positiveScore": 0.9134727120399475
+},
+{
+  "index": 72,
+  "inputText": "You can equate the Homunculus in his original for as the dwarf in the glass as Ai.  Hoenhime uses the the dwarf to gain knowledge. And in gaining all the knowledege almost playing god... He sacrificed his own home and people... Its almost a direct correlation that too much power or knowledge comes at a cost.... These CEOs all they do is try to gain more power and knowledge enabling the inner sins becoming almost inhuman and becoming a homunculus... And sacrificing the lives of the people... fmab is the best and still most relevant anime to date",
+  "scoredText": "You can equate the Homunculus in his original for as the dwarf in the glass as Ai.  Hoenhime uses the the dwarf to gain knowledge. And in gaining all the knowledege almost playing god... He sacrificed his own home and people... Its almost a direct correlation that too much power or knowledge comes at a cost.... These CEOs all they do is try to gain more power and knowledge enabling the inner sins becoming almost inhuman and becoming a homunculus... And sacrificing the lives of the people... fmab is the best and still most relevant anime to date",
+  "finalClassification": "neutral",
+  "finalScore": 0.6012641787528992,
+  "negativeScore": 0.31747469305992126,
+  "neutralScore": 0.6012641787528992,
+  "positiveScore": 0.08126115053892136
+},
+{
+  "index": 73,
+  "inputText": "No no one believed that technology can bring about good things that is a propagandist lie. Technology that is founded on slave labor can never generate anything good. No this is not the same because AI does not bring anything good by any means",
+  "scoredText": "No no one believed that technology can bring about good things that is a propagandist lie. Technology that is founded on slave labor can never generate anything good. No this is not the same because AI does not bring anything good by any means",
+  "finalClassification": "negative",
+  "finalScore": 0.8665357232093811,
+  "negativeScore": 0.8665357232093811,
+  "neutralScore": 0.11840410530567169,
+  "positiveScore": 0.015060178004205227
+},
+{
+  "index": 74,
+  "inputText": "banger video",
+  "scoredText": "banger video",
+  "finalClassification": "positive",
+  "finalScore": 0.7177318930625916,
+  "negativeScore": 0.02565346285700798,
+  "neutralScore": 0.2566145956516266,
+  "positiveScore": 0.7177318930625916
+},
+{
+  "index": 75,
+  "inputText": "Reminder that these are systems under capitalism. These systems of exploitation existed before AI. AI only took the exploitative shape they did because of capitalism. Look at how AI is being developed in China and you can see much less committed to environmental extraction/exploitation.",
+  "scoredText": "Reminder that these are systems under capitalism. These systems of exploitation existed before AI. AI only took the exploitative shape they did because of capitalism. Look at how AI is being developed in China and you can see much less committed to environmental extraction/exploitation.",
+  "finalClassification": "negative",
+  "finalScore": 0.6195260882377625,
+  "negativeScore": 0.6195260882377625,
+  "neutralScore": 0.3603593707084656,
+  "positiveScore": 0.020114580169320107
+},
+{
+  "index": 76,
+  "inputText": "Brother you are asking evil men to care about the issues of the common man. Its literally talking to a brick wall.",
+  "scoredText": "Brother you are asking evil men to care about the issues of the common man. Its literally talking to a brick wall.",
+  "finalClassification": "negative",
+  "finalScore": 0.9120588898658752,
+  "negativeScore": 0.9120588898658752,
+  "neutralScore": 0.08225377649068832,
+  "positiveScore": 0.00568737369030714
+},
+{
+  "index": 77,
+  "inputText": "Mind you, the Elric bros are doing this to get their bodies back, something vital. Choosing not to use it is a sacrifice for them.\n\nMeanwhile, in the real world, despite the damage AI is doing to everyone else, people are using it to ask how to wipe their ass or to make ugly ass flyers for their burger restaurant. We’re fucked.",
+  "scoredText": "Mind you, the Elric bros are doing this to get their bodies back, something vital. Choosing not to use it is a sacrifice for them.\n\nMeanwhile, in the real world, despite the damage AI is doing to everyone else, people are using it to ask how to wipe their ass or to make ugly ass flyers for their burger restaurant. We’re fucked.",
+  "finalClassification": "negative",
+  "finalScore": 0.5922600030899048,
+  "negativeScore": 0.5922600030899048,
+  "neutralScore": 0.37723401188850403,
+  "positiveScore": 0.030505936592817307
+},
+{
+  "index": 78,
+  "inputText": "Goated show and goated reference 🫡",
+  "scoredText": "Goated show and goated reference 🫡",
+  "finalClassification": "positive",
+  "finalScore": 0.8101509213447571,
+  "negativeScore": 0.012650703079998493,
+  "neutralScore": 0.1771983802318573,
+  "positiveScore": 0.8101509213447571
+},
+{
+  "index": 79,
+  "inputText": "We're all looking for a tool with no blood on it",
+  "scoredText": "We're all looking for a tool with no blood on it",
+  "finalClassification": "neutral",
+  "finalScore": 0.4801069498062134,
+  "negativeScore": 0.4503468871116638,
+  "neutralScore": 0.4801069498062134,
+  "positiveScore": 0.06954611837863922
+},
+{
+  "index": 80,
+  "inputText": "The question is \"what will you allow it to cost?\"",
+  "scoredText": "The question is \"what will you allow it to cost?\"",
+  "finalClassification": "neutral",
+  "finalScore": 0.7936167120933533,
+  "negativeScore": 0.17893287539482117,
+  "neutralScore": 0.7936167120933533,
+  "positiveScore": 0.027450433000922203
+},
+{
+  "index": 81,
+  "inputText": "Some great lessons in FMAB!",
+  "scoredText": "Some great lessons in FMAB!",
+  "finalClassification": "positive",
+  "finalScore": 0.9825370907783508,
+  "negativeScore": 0.0023993898648768663,
+  "neutralScore": 0.015063563361763954,
+  "positiveScore": 0.9825370907783508
+},
+{
+  "index": 82,
+  "inputText": "Jealous idk but they sure as hell are going to deem us useless one day",
+  "scoredText": "Jealous idk but they sure as hell are going to deem us useless one day",
+  "finalClassification": "negative",
+  "finalScore": 0.9060381650924683,
+  "negativeScore": 0.9060381650924683,
+  "neutralScore": 0.0833427682518959,
+  "positiveScore": 0.010619017295539379
+},
+{
+  "index": 83,
+  "inputText": "Damn…",
+  "scoredText": "Damn…",
+  "finalClassification": "negative",
+  "finalScore": 0.5334191918373108,
+  "negativeScore": 0.5334191918373108,
+  "neutralScore": 0.3944419324398041,
+  "positiveScore": 0.07213892042636871
+},
+{
+  "index": 84,
+  "inputText": "@equiano74 too early? the ai field have been there for decades , it only accelerated due to faster hardware",
+  "scoredText": "@equiano74 too early? the ai field have been there for decades, it only accelerated due to faster hardware",
+  "finalClassification": "neutral",
+  "finalScore": 0.6222923994064331,
+  "negativeScore": 0.067144013941288,
+  "neutralScore": 0.6222923994064331,
+  "positiveScore": 0.3105635643005371
+},
+{
+  "index": 85,
+  "inputText": "@equiano74 I didn’t say AI research began recently. I said this level of AI capability arrived before our social and political institutions were prepared to govern it. Those are very different claims.",
+  "scoredText": "@equiano74 I didn’t say AI research began recently. I said this level of AI capability arrived before our social and political institutions were prepared to govern it. Those are very different claims.",
+  "finalClassification": "neutral",
+  "finalScore": 0.7386382818222046,
+  "negativeScore": 0.21184653043746948,
+  "neutralScore": 0.7386382818222046,
+  "positiveScore": 0.04951523244380951
+},
+{
+  "index": 86,
+  "inputText": "@equiano74 \" ai arrives too early before the human society was ready to recive it\" , but it was there decades ago meaning if you want it to be delayed even more you would go extra decades reaching a century of a technology in paper and theory but never used to its full extent",
+  "scoredText": "@equiano74 \" ai arrives too early before the human society was ready to recive it\", but it was there decades ago meaning if you want it to be delayed even more you would go extra decades reaching a century of a technology in paper and theory but never used to its full extent",
+  "finalClassification": "negative",
+  "finalScore": 0.6856367588043213,
+  "negativeScore": 0.6856367588043213,
+  "neutralScore": 0.2968967854976654,
+  "positiveScore": 0.017466427758336067
+},
+{
+  "index": 87,
+  "inputText": "@equiano74 also how would you prepare for something that doesn't exist yet? wouldn't be doing the thing the reason to prepare for it? if we dont do it , no one is going to prepare for it",
+  "scoredText": "@equiano74 also how would you prepare for something that doesn't exist yet? wouldn't be doing the thing the reason to prepare for it? if we dont do it, no one is going to prepare for it",
+  "finalClassification": "negative",
+  "finalScore": 0.5818536877632141,
+  "negativeScore": 0.5818536877632141,
+  "neutralScore": 0.3912661075592041,
+  "positiveScore": 0.026880189776420593
+},
+{
+  "index": 88,
+  "inputText": "@equiano74 it annoys me just how much people overhype LLMs. They aren't real intelligence, they are not and could never be the AI we see in science fiction. They're basically a function that takes the weighted average of all the data it has ever seen. It's genuinely nothing remarkable. Everything good about it came from human creativity that was stolen by greedy executives",
+  "scoredText": "@equiano74 it annoys me just how much people overhype LLMs. They aren't real intelligence, they are not and could never be the AI we see in science fiction. They're basically a function that takes the weighted average of all the data it has ever seen. It's genuinely nothing remarkable. Everything good about it came from human creativity that was stolen by greedy executives",
+  "finalClassification": "negative",
+  "finalScore": 0.8735952973365784,
+  "negativeScore": 0.8735952973365784,
+  "neutralScore": 0.1131855770945549,
+  "positiveScore": 0.013219079002737999
+},
+{
+  "index": 89,
+  "inputText": "@vincent_mrx_ For what? You still haven’t finished the series? STILL?",
+  "scoredText": "@vincent_mrx_ For what? You still haven’t finished the series? STILL?",
+  "finalClassification": "negative",
+  "finalScore": 0.7143957614898682,
+  "negativeScore": 0.7143957614898682,
+  "neutralScore": 0.27705562114715576,
+  "positiveScore": 0.00854864064604044
+},
+{
+  "index": 90,
+  "inputText": "@vincent_mrx_ that series is so fucking old spoiler is only used for one year at most",
+  "scoredText": "@vincent_mrx_ that series is so fucking old spoiler is only used for one year at most",
+  "finalClassification": "negative",
+  "finalScore": 0.9205275177955627,
+  "negativeScore": 0.9205275177955627,
+  "neutralScore": 0.07320042699575424,
+  "positiveScore": 0.006272024009376764
+},
+{
+  "index": 91,
+  "inputText": "@i_can_see_them I have. I have a tattoo",
+  "scoredText": "@i_can_see_them I have. I have a tattoo",
+  "finalClassification": "neutral",
+  "finalScore": 0.82765793800354,
+  "negativeScore": 0.013285009190440178,
+  "neutralScore": 0.82765793800354,
+  "positiveScore": 0.15905703604221344
+},
+{
+  "index": 92,
+  "inputText": "@grnt.lindz peakkkkkkk!!!!",
+  "scoredText": "@grnt.lindz peakkkkkkk!!!!",
+  "finalClassification": "neutral",
+  "finalScore": 0.5313089489936829,
+  "negativeScore": 0.025365503504872322,
+  "neutralScore": 0.5313089489936829,
+  "positiveScore": 0.44332554936408997
+},
+{
+  "index": 93,
+  "inputText": "@jpmanny98 oh noooo I guess I gotta keep doing theseeeee",
+  "scoredText": "@jpmanny98 oh noooo I guess I gotta keep doing theseeeee",
+  "finalClassification": "negative",
+  "finalScore": 0.591840386390686,
+  "negativeScore": 0.591840386390686,
+  "neutralScore": 0.3434812128543854,
+  "positiveScore": 0.06467840075492859
+},
+{
+  "index": 94,
+  "inputText": "I’m glad you thought about it too!!!",
+  "scoredText": "I’m glad you thought about it too!!!",
+  "finalClassification": "positive",
+  "finalScore": 0.9771350026130676,
+  "negativeScore": 0.0032782182097434998,
+  "neutralScore": 0.01958685740828514,
+  "positiveScore": 0.9771350026130676
+},
+{
+  "index": 95,
+  "inputText": "SAME 👏",
+  "scoredText": "SAME 👏",
+  "finalClassification": "positive",
+  "finalScore": 0.7993984818458557,
+  "negativeScore": 0.015766186639666557,
+  "neutralScore": 0.18483535945415497,
+  "positiveScore": 0.7993984818458557
+},
+{
+  "index": 96,
+  "inputText": "@sahilfromjupiter same as eating dead body parts and their outcome.",
+  "scoredText": "@sahilfromjupiter same as eating dead body parts and their outcome.",
+  "finalClassification": "neutral",
+  "finalScore": 0.5244210958480835,
+  "negativeScore": 0.4553945064544678,
+  "neutralScore": 0.5244210958480835,
+  "positiveScore": 0.020184459164738655
+},
+{
+  "index": 97,
+  "inputText": "I am also kind of pointing out a design that could fix all of the problems of the data centers. They're big concrete building. S, the only reason they need water is for a cooling system presumably, unless they're actively using the water to conduct electricity or something. The power drain can be fixed by covering that entire concrete building with solar panels.  And then suddenly we can shut that in the dessert somewhere and make the water closed system. And then all we have to deal with is copyright theft, pedophiles making child porn, and data attacks from AI wich can be it's own problem.",
+  "scoredText": "I am also kind of pointing out a design that could fix all of the problems of the data centers. They're big concrete building. S, the only reason they need water is for a cooling system presumably, unless they're actively using the water to conduct electricity or something. The power drain can be fixed by covering that entire concrete building with solar panels.  And then suddenly we can shut that in the dessert somewhere and make the water closed system. And then all we have to deal with is copyright theft, pedophiles making child porn, and data attacks from AI wich can be it's own problem.",
+  "finalClassification": "neutral",
+  "finalScore": 0.6301535367965698,
+  "negativeScore": 0.2744629979133606,
+  "neutralScore": 0.6301535367965698,
+  "positiveScore": 0.09538345783948898
+},
+{
+  "index": 98,
+  "inputText": "Only AI industry? Do you think other industries care what they are causing, how they are affecting environment, human lives?",
+  "scoredText": "Only AI industry? Do you think other industries care what they are causing, how they are affecting environment, human lives?",
+  "finalClassification": "negative",
+  "finalScore": 0.5665220022201538,
+  "negativeScore": 0.5665220022201538,
+  "neutralScore": 0.4210878908634186,
+  "positiveScore": 0.012390113435685635
+},
+{
+  "index": 99,
+  "inputText": "I WAS THINKING ABOUT IT 2HOURS AGO OMG",
+  "scoredText": "I WAS THINKING ABOUT IT 2HOURS AGO OMG",
+  "finalClassification": "neutral",
+  "finalScore": 0.6942093372344971,
+  "negativeScore": 0.07853598147630692,
+  "neutralScore": 0.6942093372344971,
+  "positiveScore": 0.2272547334432602
+},
+{
+  "index": 100,
+  "inputText": "Then alphonse proceeded to pick up a stone and wreck pride and crimson alchemist",
+  "scoredText": "Then alphonse proceeded to pick up a stone and wreck pride and crimson alchemist",
+  "finalClassification": "negative",
+  "finalScore": 0.6023357510566711,
+  "negativeScore": 0.6023357510566711,
+  "neutralScore": 0.3722202181816101,
+  "positiveScore": 0.02544398233294487
+},
+{
+  "index": 101,
+  "inputText": "Fick all. Praise shareholder value 👏",
+  "scoredText": "Fick all. Praise shareholder value 👏",
+  "finalClassification": "positive",
+  "finalScore": 0.7033989429473877,
+  "negativeScore": 0.10570097714662552,
+  "neutralScore": 0.19090011715888977,
+  "positiveScore": 0.7033989429473877
+},
+{
+  "index": 102,
+  "inputText": "Or all the women and children affected by ai generated pornographic images. Ai is purely evil.",
+  "scoredText": "Or all the women and children affected by ai generated pornographic images. Ai is purely evil.",
+  "finalClassification": "negative",
+  "finalScore": 0.9431880712509155,
+  "negativeScore": 0.9431880712509155,
+  "neutralScore": 0.0523851178586483,
+  "positiveScore": 0.004426912870258093
+},
+{
+  "index": 103,
+  "inputText": "honestly great comparison. the philosopher's stone is made from stolen souls, and ai made from stolen work...ai art in particular is made from stolen art... and art is the product of the human soul...",
+  "scoredText": "honestly great comparison. the philosopher's stone is made from stolen souls, and ai made from stolen work...ai art in particular is made from stolen art... and art is the product of the human soul...",
+  "finalClassification": "neutral",
+  "finalScore": 0.4629599153995514,
+  "negativeScore": 0.3560391068458557,
+  "neutralScore": 0.4629599153995514,
+  "positiveScore": 0.1810009628534317
+},
+{
+  "index": 104,
+  "inputText": "You don’t make it to that level without being a sociopath or amoral/immoral. They’re actively chasing the Philosopher’s stone with full awareness it’s made of human souls",
+  "scoredText": "You don’t make it to that level without being a sociopath or amoral/immoral. They’re actively chasing the Philosopher’s stone with full awareness it’s made of human souls",
+  "finalClassification": "negative",
+  "finalScore": 0.8236158490180969,
+  "negativeScore": 0.8236158490180969,
+  "neutralScore": 0.16504812240600586,
+  "positiveScore": 0.01133611798286438
+},
+{
+  "index": 105,
+  "inputText": "Doesn't every part of the tech tool come with exploitation of a child in South Africa.",
+  "scoredText": "Doesn't every part of the tech tool come with exploitation of a child in South Africa.",
+  "finalClassification": "negative",
+  "finalScore": 0.6275497078895569,
+  "negativeScore": 0.6275497078895569,
+  "neutralScore": 0.3551374077796936,
+  "positiveScore": 0.017312858253717422
+},
+{
+  "index": 106,
+  "inputText": "They don’t care about who it affects. They just want more money. It’ll never be enough. It’s greed",
+  "scoredText": "They don’t care about who it affects. They just want more money. It’ll never be enough. It’s greed",
+  "finalClassification": "negative",
+  "finalScore": 0.8802056312561035,
+  "negativeScore": 0.8802056312561035,
+  "neutralScore": 0.10807953029870987,
+  "positiveScore": 0.01171491201967001
+},
+{
+  "index": 107,
+  "inputText": "Right now, there is no way for AI advancement to be ethical. This isn’t just being mindful of how they affect people — there’s a whole group of technofeudalists who think they’re creating the next highest intelligent life form. That eliminating humans as an apex predator (which we already aren’t) is the humane thing to do. Instead of comparing AI to a philosopher’s stone, let’s be real and say that the humans behind AI are more like Shou Tucker and shouldn’t be playing god.",
+  "scoredText": "Right now, there is no way for AI advancement to be ethical. This isn’t just being mindful of how they affect people — there’s a whole group of technofeudalists who think they’re creating the next highest intelligent life form. That eliminating humans as an apex predator (which we already aren’t) is the humane thing to do. Instead of comparing AI to a philosopher’s stone, let’s be real and say that the humans behind AI are more like Shou Tucker and shouldn’t be playing god.",
+  "finalClassification": "negative",
+  "finalScore": 0.7949226498603821,
+  "negativeScore": 0.7949226498603821,
+  "neutralScore": 0.18991373479366302,
+  "positiveScore": 0.015163696371018887
+},
+{
+  "index": 108,
+  "inputText": "“For what could equal the value of a human soul”\n\nBillionaires: “I don’t know, $25?”",
+  "scoredText": "“For what could equal the value of a human soul”\n\nBillionaires: “I don’t know, $25?”",
+  "finalClassification": "neutral",
+  "finalScore": 0.7636257410049438,
+  "negativeScore": 0.1142597422003746,
+  "neutralScore": 0.7636257410049438,
+  "positiveScore": 0.12211458384990692
+},
+{
+  "index": 109,
+  "inputText": "Wait until he learns about capitalism",
+  "scoredText": "Wait until he learns about capitalism",
+  "finalClassification": "neutral",
+  "finalScore": 0.6714081168174744,
+  "negativeScore": 0.27455055713653564,
+  "neutralScore": 0.6714081168174744,
+  "positiveScore": 0.0540413036942482
+},
+{
+  "index": 110,
+  "inputText": "I refuse to violate my creative and intellectual integrity to participate in LLM mass plagiarism.",
+  "scoredText": "I refuse to violate my creative and intellectual integrity to participate in LLM mass plagiarism.",
+  "finalClassification": "negative",
+  "finalScore": 0.8577778935432434,
+  "negativeScore": 0.8577778935432434,
+  "neutralScore": 0.13322390615940094,
+  "positiveScore": 0.008998256176710129
+},
+{
+  "index": 111,
+  "inputText": "We wouldn't even need to remove all of it, just restrict to where it could actually do something meaningful - like in* science.",
+  "scoredText": "We wouldn't even need to remove all of it, just restrict to where it could actually do something meaningful - like in* science.",
+  "finalClassification": "neutral",
+  "finalScore": 0.6394423246383667,
+  "negativeScore": 0.23927944898605347,
+  "neutralScore": 0.6394423246383667,
+  "positiveScore": 0.12127821147441864
+},
+{
+  "index": 112,
+  "inputText": "Can't wait for the Butlerian Jihad",
+  "scoredText": "Can't wait for the Butlerian Jihad",
+  "finalClassification": "positive",
+  "finalScore": 0.8619000911712646,
+  "negativeScore": 0.017730316147208214,
+  "neutralScore": 0.12036962807178497,
+  "positiveScore": 0.8619000911712646
+},
+{
+  "index": 113,
+  "inputText": "Those most concerned would just see Tucker and go “haha yeah he gets it”",
+  "scoredText": "Those most concerned would just see Tucker and go “haha yeah he gets it”",
+  "finalClassification": "neutral",
+  "finalScore": 0.5543074011802673,
+  "negativeScore": 0.31481391191482544,
+  "neutralScore": 0.5543074011802673,
+  "positiveScore": 0.13087870180606842
+},
+{
+  "index": 114,
+  "inputText": "I thought it was life force not souls cause the failed revival of the mom used  their bodies as fuel and alphonse soul still existed",
+  "scoredText": "I thought it was life force not souls cause the failed revival of the mom used  their bodies as fuel and alphonse soul still existed",
+  "finalClassification": "neutral",
+  "finalScore": 0.55381840467453,
+  "negativeScore": 0.42010825872421265,
+  "neutralScore": 0.55381840467453,
+  "positiveScore": 0.02607325278222561
+},
+{
+  "index": 115,
+  "inputText": "And Ed sacrificed his gate just to bring Alfonse back. Maybe that means let's sacrifice the AI datacenters to solve our problems",
+  "scoredText": "And Ed sacrificed his gate just to bring Alfonse back. Maybe that means let's sacrifice the AI datacenters to solve our problems",
+  "finalClassification": "neutral",
+  "finalScore": 0.5035008192062378,
+  "negativeScore": 0.4229885935783386,
+  "neutralScore": 0.5035008192062378,
+  "positiveScore": 0.07351057976484299
+},
+{
+  "index": 116,
+  "inputText": "Those kids are suffering because of current tech mob laptop etc  should we stop using it as well",
+  "scoredText": "Those kids are suffering because of current tech mob laptop etc  should we stop using it as well",
+  "finalClassification": "negative",
+  "finalScore": 0.8702015280723572,
+  "negativeScore": 0.8702015280723572,
+  "neutralScore": 0.12355496734380722,
+  "positiveScore": 0.006243437994271517
+},
+{
+  "index": 117,
+  "inputText": "That’s the first law buddy! Saw a heart wrenching edit about the divide of wealth narrated by Al’s monologue. They have so much because we have so little",
+  "scoredText": "That’s the first law buddy! Saw a heart wrenching edit about the divide of wealth narrated by Al’s monologue. They have so much because we have so little",
+  "finalClassification": "neutral",
+  "finalScore": 0.44580307602882385,
+  "negativeScore": 0.30232006311416626,
+  "neutralScore": 0.44580307602882385,
+  "positiveScore": 0.2518768906593323
+},
+{
+  "index": 118,
+  "inputText": "Feels more about a problem of business practices than AI in an of itself",
+  "scoredText": "Feels more about a problem of business practices than AI in an of itself",
+  "finalClassification": "negative",
+  "finalScore": 0.6479102969169617,
+  "negativeScore": 0.6479102969169617,
+  "neutralScore": 0.33177486062049866,
+  "positiveScore": 0.02031487412750721
+},
+{
+  "index": 119,
+  "inputText": "Well that's just it. Some of us recognize that progress for the sake of progress is stupid. Progress and society as a whole was only ever meant to lift people up, make life easier and better, allow us to delve deeper into the big questions and develop as a species. Doing these things at the expense of people, the environment, etc... doesn't align with what life is about.",
+  "scoredText": "Well that's just it. Some of us recognize that progress for the sake of progress is stupid. Progress and society as a whole was only ever meant to lift people up, make life easier and better, allow us to delve deeper into the big questions and develop as a species. Doing these things at the expense of people, the environment, etc... doesn't align with what life is about.",
+  "finalClassification": "negative",
+  "finalScore": 0.7261184453964233,
+  "negativeScore": 0.7261184453964233,
+  "neutralScore": 0.24808022379875183,
+  "positiveScore": 0.025801265612244606
+},
+{
+  "index": 120,
+  "inputText": "the average American is 9 meals from anarchy.  if AI takes everyone's job, everyone's going to be homeless.",
+  "scoredText": "the average American is 9 meals from anarchy.  if AI takes everyone's job, everyone's going to be homeless.",
+  "finalClassification": "negative",
+  "finalScore": 0.8296350240707397,
+  "negativeScore": 0.8296350240707397,
+  "neutralScore": 0.1574917584657669,
+  "positiveScore": 0.012873254716396332
+},
+{
+  "index": 121,
+  "inputText": "AI is going to be the end of animators.",
+  "scoredText": "AI is going to be the end of animators.",
+  "finalClassification": "negative",
+  "finalScore": 0.8166024088859558,
+  "negativeScore": 0.8166024088859558,
+  "neutralScore": 0.16744297742843628,
+  "positiveScore": 0.01595466211438179
+},
+{
+  "index": 122,
+  "inputText": "It's not really comparable, because it's not like if they don't use the stone, someone else will use it to harm them. It's more comparable to buying diamonds.",
+  "scoredText": "It's not really comparable, because it's not like if they don't use the stone, someone else will use it to harm them. It's more comparable to buying diamonds.",
+  "finalClassification": "negative",
+  "finalScore": 0.5362871289253235,
+  "negativeScore": 0.5362871289253235,
+  "neutralScore": 0.44194093346595764,
+  "positiveScore": 0.021771932020783424
+},
+{
+  "index": 123,
+  "inputText": "But having morale reduces the companys profit margin. So they wont do anything like that.",
+  "scoredText": "But having morale reduces the companys profit margin. So they wont do anything like that.",
+  "finalClassification": "negative",
+  "finalScore": 0.5693919658660889,
+  "negativeScore": 0.5693919658660889,
+  "neutralScore": 0.4020204544067383,
+  "positiveScore": 0.028587568551301956
+},
+{
+  "index": 124,
+  "inputText": "I don't use AI for anything and won't ever, and just because it barely saves a few microscopic water droplets or adds a mere two seconds to a starving african child's already ridiculously shortened lifespan to reject AI, the comically low contribution won't stop me from avoiding AI, Jigsaw could put me on a machine that kills me if i didn't use Gemini on Google and i would willingly choose death",
+  "scoredText": "I don't use AI for anything and won't ever, and just because it barely saves a few microscopic water droplets or adds a mere two seconds to a starving african child's already ridiculously shortened lifespan to reject AI, the comically low contribution won't stop me from avoiding AI, Jigsaw could put me on a machine that kills me if i didn't use Gemini on Google and i would willingly choose death",
+  "finalClassification": "negative",
+  "finalScore": 0.8760585188865662,
+  "negativeScore": 0.8760585188865662,
+  "neutralScore": 0.11219842731952667,
+  "positiveScore": 0.011743077076971531
+},
+{
+  "index": 125,
+  "inputText": "Once you'll realise the kind of abuse these people face,you'll see the good in ai and robotics",
+  "scoredText": "Once you'll realise the kind of abuse these people face,you'll see the good in ai and robotics",
+  "finalClassification": "negative",
+  "finalScore": 0.4547363519668579,
+  "negativeScore": 0.4547363519668579,
+  "neutralScore": 0.4459439218044281,
+  "positiveScore": 0.0993197038769722
+},
+{
+  "index": 126,
+  "inputText": "@bodetsc6 yes equivalent exchange is literally so applicable to society and our environment I should def touch on that in a next vid!",
+  "scoredText": "@bodetsc6 yes equivalent exchange is literally so applicable to society and our environment I should def touch on that in a next vid!",
+  "finalClassification": "positive",
+  "finalScore": 0.9418417811393738,
+  "negativeScore": 0.0056686545722186565,
+  "neutralScore": 0.05248954892158508,
+  "positiveScore": 0.9418417811393738
+},
+{
+  "index": 127,
+  "inputText": "@bodetsc6 they got suicide nets attached to every big tech office in NYC",
+  "scoredText": "@bodetsc6 they got suicide nets attached to every big tech office in NYC",
+  "finalClassification": "negative",
+  "finalScore": 0.5858054757118225,
+  "negativeScore": 0.5858054757118225,
+  "neutralScore": 0.38400107622146606,
+  "positiveScore": 0.030193470418453217
+},
+{
+  "index": 128,
+  "inputText": "@bodetsc6 basically. No one in the first world gave a fuck about consequences of technological improvements until technology threatened the livelihood of the people in the first world. Throwing around fake concern for child labour in Africa from their MacBooks in a desperate plight for regulation to save them like the IDF using their schools and hospitals as human meat shields. It won’t help, nothing stops this train.",
+  "scoredText": "@bodetsc6 basically. No one in the first world gave a fuck about consequences of technological improvements until technology threatened the livelihood of the people in the first world. Throwing around fake concern for child labour in Africa from their MacBooks in a desperate plight for regulation to save them like the IDF using their schools and hospitals as human meat shields. It won’t help, nothing stops this train.",
+  "finalClassification": "negative",
+  "finalScore": 0.8794339299201965,
+  "negativeScore": 0.8794339299201965,
+  "neutralScore": 0.11182690411806107,
+  "positiveScore": 0.00873919203877449
+},
+{
+  "index": 129,
+  "inputText": "@nuancedaiman can I recommend some equivalent exchange with some history or solutions?? Otherwise the more of you I see the more I want to unfollow. You're pandering feels more like the homunculus Envy trying to feed on everyone's anger for engagement 😂",
+  "scoredText": "@nuancedaiman can I recommend some equivalent exchange with some history or solutions?? Otherwise the more of you I see the more I want to unfollow. You're pandering feels more like the homunculus Envy trying to feed on everyone's anger for engagement 😂",
+  "finalClassification": "negative",
+  "finalScore": 0.8367198705673218,
+  "negativeScore": 0.8367198705673218,
+  "neutralScore": 0.15112559497356415,
+  "positiveScore": 0.012154491618275642
+},
+{
+  "index": 130,
+  "inputText": "@zebradust damn and I thought Detroit was bad but y'all make us look like Diet Hood. 😂",
+  "scoredText": "@zebradust damn and I thought Detroit was bad but y'all make us look like Diet Hood. 😂",
+  "finalClassification": "negative",
+  "finalScore": 0.9378241300582886,
+  "negativeScore": 0.9378241300582886,
+  "neutralScore": 0.05529902130365372,
+  "positiveScore": 0.006876910571008921
+},
+{
+  "index": 131,
+  "inputText": "@bodetsc6 I think the Apple suicide nets example is more a reflection of China as a whole than of Apple specifically. Society there frankly just doesn’t value an individual’s life and wellbeing over the collective group or the progress of the country as a whole. It’s not just limited to low wage factory work, there’s documented cases of white collar tech employees working themselves to death in their offices. Regardless of how you view Apple, that issue you mentioned is so widespread in China that the blame falls on their Government for allowing it to happen at all.",
+  "scoredText": "@bodetsc6 I think the Apple suicide nets example is more a reflection of China as a whole than of Apple specifically. Society there frankly just doesn’t value an individual’s life and wellbeing over the collective group or the progress of the country as a whole. It’s not just limited to low wage factory work, there’s documented cases of white collar tech employees working themselves to death in their offices. Regardless of how you view Apple, that issue you mentioned is so widespread in China that the blame falls on their Government for allowing it to happen at all.",
+  "finalClassification": "negative",
+  "finalScore": 0.8256354928016663,
+  "negativeScore": 0.8256354928016663,
+  "neutralScore": 0.16575987637043,
+  "positiveScore": 0.008604598231613636
+},
+{
+  "index": 132,
+  "inputText": "@bodetsc6 yeah I will stop at AI",
+  "scoredText": "@bodetsc6 yeah I will stop at AI",
+  "finalClassification": "neutral",
+  "finalScore": 0.6952046155929565,
+  "negativeScore": 0.14588740468025208,
+  "neutralScore": 0.6952046155929565,
+  "positiveScore": 0.15890799462795258
+},
+{
+  "index": 133,
+  "inputText": "@doesnt_care_what_you_think cool the world was cooked far before AI anyway 😂",
+  "scoredText": "@doesnt_care_what_you_think cool the world was cooked far before AI anyway 😂",
+  "finalClassification": "negative",
+  "finalScore": 0.653540849685669,
+  "negativeScore": 0.653540849685669,
+  "neutralScore": 0.3093288540840149,
+  "positiveScore": 0.037130292505025864
+},
+{
+  "index": 134,
+  "inputText": "@jordymorcom Apple and all other companies still use the lithium and other materials from slave labor. They still poison the planet just as much as well. There's no defending that tech comes at a cost. Hence equivalent exchange.",
+  "scoredText": "@jordymorcom Apple and all other companies still use the lithium and other materials from slave labor. They still poison the planet just as much as well. There's no defending that tech comes at a cost. Hence equivalent exchange.",
+  "finalClassification": "negative",
+  "finalScore": 0.8722860813140869,
+  "negativeScore": 0.8722860813140869,
+  "neutralScore": 0.12022499740123749,
+  "positiveScore": 0.007488842122256756
+},
+{
+  "index": 135,
+  "inputText": "@maomao12964 yup yup exactly!!",
+  "scoredText": "@maomao12964 yup yup exactly!!",
+  "finalClassification": "positive",
+  "finalScore": 0.8639385104179382,
+  "negativeScore": 0.007418487221002579,
+  "neutralScore": 0.1286429464817047,
+  "positiveScore": 0.8639385104179382
+},
+{
+  "index": 136,
+  "inputText": "@maomao12964 equivalent exchange was a load of bs and never actually worked throughout the show",
+  "scoredText": "@maomao12964 equivalent exchange was a load of bs and never actually worked throughout the show",
+  "finalClassification": "negative",
+  "finalScore": 0.9227795600891113,
+  "negativeScore": 0.9227795600891113,
+  "neutralScore": 0.07059599459171295,
+  "positiveScore": 0.006624399218708277
+},
+{
+  "index": 137,
+  "inputText": "@alfie.bane it is worked but the problem is there is a gap between a science law and morality and the Alchemist believed that it is the only truth of the world. Equivalent exchange works on matter not morality. It was seen in the very beginning of the show. But people in the show and we believed that it also works on morality and in every point of life.",
+  "scoredText": "@alfie.bane it is worked but the problem is there is a gap between a science law and morality and the Alchemist believed that it is the only truth of the world. Equivalent exchange works on matter not morality. It was seen in the very beginning of the show. But people in the show and we believed that it also works on morality and in every point of life.",
+  "finalClassification": "neutral",
+  "finalScore": 0.774520754814148,
+  "negativeScore": 0.15720519423484802,
+  "neutralScore": 0.774520754814148,
+  "positiveScore": 0.06827404350042343
+},
+{
+  "index": 138,
+  "inputText": "@maomao12964 what’s sad is even Japanese people watch that and then ignore their own war crimes.",
+  "scoredText": "@maomao12964 what’s sad is even Japanese people watch that and then ignore their own war crimes.",
+  "finalClassification": "negative",
+  "finalScore": 0.9447218179702759,
+  "negativeScore": 0.9447218179702759,
+  "neutralScore": 0.05143594369292259,
+  "positiveScore": 0.0038421989884227514
+},
+{
+  "index": 139,
+  "inputText": "@maomao12964 FMAB absolutely main theme is every action has consequence, (the failed human transmutation, the Stone’s victims, Father’s downfall). But the finale also shows Equivalent Exchange isn’t the whole truth. Ed trades his alchemy for Al’s life, and Truth says he passed because he chose something beyond alchemy’s price tag, his brother and his own humanity. Consequences stay real, the ledger doesn’t have to be perfectly balanced. Very much an even deeper lesson for our current reality.",
+  "scoredText": "@maomao12964 FMAB absolutely main theme is every action has consequence, (the failed human transmutation, the Stone’s victims, Father’s downfall). But the finale also shows Equivalent Exchange isn’t the whole truth. Ed trades his alchemy for Al’s life, and Truth says he passed because he chose something beyond alchemy’s price tag, his brother and his own humanity. Consequences stay real, the ledger doesn’t have to be perfectly balanced. Very much an even deeper lesson for our current reality.",
+  "finalClassification": "neutral",
+  "finalScore": 0.5996092557907104,
+  "negativeScore": 0.3695904314517975,
+  "neutralScore": 0.5996092557907104,
+  "positiveScore": 0.03080028109252453
+},
+{
+  "index": 140,
+  "inputText": "@maomao12964 and in the end they concluded that even equivalent exchange as a philosophy can still be ethically flawed, so they decided to practice a new philosophy where they return more then they take",
+  "scoredText": "@maomao12964 and in the end they concluded that even equivalent exchange as a philosophy can still be ethically flawed, so they decided to practice a new philosophy where they return more then they take",
+  "finalClassification": "negative",
+  "finalScore": 0.6806479096412659,
+  "negativeScore": 0.6806479096412659,
+  "neutralScore": 0.3087797164916992,
+  "positiveScore": 0.010572436265647411
+},
+{
+  "index": 141,
+  "inputText": "@alfie.bane 😭 that's why I always thought OG FMA was a tad bit better in that regards",
+  "scoredText": "@alfie.bane 😭 that's why I always thought OG FMA was a tad bit better in that regards",
+  "finalClassification": "neutral",
+  "finalScore": 0.4984961152076721,
+  "negativeScore": 0.16740292310714722,
+  "neutralScore": 0.4984961152076721,
+  "positiveScore": 0.33410096168518066
+},
+{
+  "index": 142,
+  "inputText": "@marydotjpeg would u recommend? I been thinking abt giving it a go but I love brotherhood so much i think why bother",
+  "scoredText": "@marydotjpeg would u recommend? I been thinking abt giving it a go but I love brotherhood so much i think why bother",
+  "finalClassification": "positive",
+  "finalScore": 0.8483574986457825,
+  "negativeScore": 0.01885666698217392,
+  "neutralScore": 0.1327858865261078,
+  "positiveScore": 0.8483574986457825
+},
+{
+  "index": 143,
+  "inputText": "@maomao12964 naaahh people just gloss over the ending. The Equivalent Exchange was actually debunked in the end, by no other than love. Listen to what Winry answered when Ed proposed using equivalent exchange.",
+  "scoredText": "@maomao12964 naaahh people just gloss over the ending. The Equivalent Exchange was actually debunked in the end, by no other than love. Listen to what Winry answered when Ed proposed using equivalent exchange.",
+  "finalClassification": "negative",
+  "finalScore": 0.6170175075531006,
+  "negativeScore": 0.6170175075531006,
+  "neutralScore": 0.35265102982521057,
+  "positiveScore": 0.030331507325172424
+},
+{
+  "index": 144,
+  "inputText": "@thatangeldude I wouldn’t say Equivalent Exchange was completely debunked by love. The ending is more about showing that it isn’t a universal law . Equivalent Exchange still applies to alchemy, Ed literally gives up his Gate to get Al back. What gets challenged is the idea that everything in life has to be an equal transaction. Winry offering more than Ed asked for and Al’s “10 becomes 11” idea both show that people can give more than they receive. So I think the ending is expanding the philosophy rather than simply debunking it. And let me explain deeply The series doesn't suddenly establish:\n“Equivalent Exchange was completely false.” In fact, Ed's final narration still says that sacrifices are necessary and that you can't gain something without losing something first. And Ed literally gives up his Gate of Truth to restore Alphonse's body. That's still a genuine sacrifice or exchange within the story. Here FMAB doesn't completely reject Equivalent Exchange. It rejects the idea that Equivalent Exchange is a sufficient philosophy for understanding human life.",
+  "scoredText": "@thatangeldude I wouldn’t say Equivalent Exchange was completely debunked by love. The ending is more about showing that it isn’t a universal law. Equivalent Exchange still applies to alchemy, Ed literally gives up his Gate to get Al back. What gets challenged is the idea that everything in life has to be an equal transaction. Winry offering more than Ed asked for and Al’s “10 becomes 11” idea both show that people can give more than they receive. So I think the ending is expanding the philosophy rather than simply debunking it. And let me explain deeply The series doesn't suddenly establish:\n“Equivalent Exchange was completely false.” In fact, Ed's final narration still says that sacrifices are necessary and that you can't gain something without losing something first. And Ed literally gives up his Gate of Truth to restore Alphonse's body. That's still a genuine sacrifice or exchange within the story. Here FMAB doesn't completely reject Equivalent Exchange. It rejects the idea that Equivalent Exchange is a sufficient philosophy for understanding human life.",
+  "finalClassification": "neutral",
+  "finalScore": 0.6933004260063171,
+  "negativeScore": 0.2474307417869568,
+  "neutralScore": 0.6933004260063171,
+  "positiveScore": 0.05926887318491936
+},
+{
+  "index": 145,
+  "inputText": "@bodetsc6 it’s a bot account",
+  "scoredText": "@bodetsc6 it’s a bot account",
+  "finalClassification": "negative",
+  "finalScore": 0.6580213904380798,
+  "negativeScore": 0.6580213904380798,
+  "neutralScore": 0.3260308504104614,
+  "positiveScore": 0.015947744250297546
+},
+{
+  "index": 146,
+  "inputText": "Sadly recent data shows the internet is at 57% bots over humans so not surprised 😢 The dead internet theory is in full effect.",
+  "scoredText": "Sadly recent data shows the internet is at 57% bots over humans so not surprised 😢 The dead internet theory is in full effect.",
+  "finalClassification": "negative",
+  "finalScore": 0.9060856699943542,
+  "negativeScore": 0.9060856699943542,
+  "neutralScore": 0.08676037937402725,
+  "positiveScore": 0.007154014892876148
+},
+{
+  "index": 147,
+  "inputText": "@bodetsc6 I wasn’t talking about lithium mines or environmental damage at all. My point was that the suicide nets aren’t specifically an Apple problem, it’s a reflection of China and the country’s disregard for individual suffering. Pretty much stemming from well before Mao and escalated after the cultural revolution.",
+  "scoredText": "@bodetsc6 I wasn’t talking about lithium mines or environmental damage at all. My point was that the suicide nets aren’t specifically an Apple problem, it’s a reflection of China and the country’s disregard for individual suffering. Pretty much stemming from well before Mao and escalated after the cultural revolution.",
+  "finalClassification": "negative",
+  "finalScore": 0.7033705711364746,
+  "negativeScore": 0.7033705711364746,
+  "neutralScore": 0.2863434851169586,
+  "positiveScore": 0.010285947471857071
+},
+{
+  "index": 148,
+  "inputText": "I’ve had this account since 2021, I’m not a bot mate. I just hate my appearance and deleted all my photos from social media",
+  "scoredText": "I’ve had this account since 2021, I’m not a bot mate. I just hate my appearance and deleted all my photos from social media",
+  "finalClassification": "negative",
+  "finalScore": 0.6558017730712891,
+  "negativeScore": 0.6558017730712891,
+  "neutralScore": 0.31321603059768677,
+  "positiveScore": 0.030982166528701782
+},
+{
+  "index": 149,
+  "inputText": "@jordymorcom nope it’s not a China specific issue. They have suicide nets on tech offices in NYC lol",
+  "scoredText": "@jordymorcom nope it’s not a China specific issue. They have suicide nets on tech offices in NYC lol",
+  "finalClassification": "negative",
+  "finalScore": 0.5637332201004028,
+  "negativeScore": 0.5637332201004028,
+  "neutralScore": 0.4061269462108612,
+  "positiveScore": 0.03013988584280014
+},
+{
+  "index": 150,
+  "inputText": "@jordymorcom when did I say it was a China specific issue? My point was that the nets are a reflection of how China prioritises societal progress over individuals peoples’ wellbeing. What nets and tech offices are you talking about in New York? I can’t find any mentions of netting besides ones added to an art installation in Hudson yards, which was put there after several unrelated suicides. How is that even remotely comparable to a factory having nets to prevent its own workers from jumping?",
+  "scoredText": "@jordymorcom when did I say it was a China specific issue? My point was that the nets are a reflection of how China prioritises societal progress over individuals peoples’ wellbeing. What nets and tech offices are you talking about in New York? I can’t find any mentions of netting besides ones added to an art installation in Hudson yards, which was put there after several unrelated suicides. How is that even remotely comparable to a factory having nets to prevent its own workers from jumping?",
+  "finalClassification": "neutral",
+  "finalScore": 0.5011846423149109,
+  "negativeScore": 0.4794543981552124,
+  "neutralScore": 0.5011846423149109,
+  "positiveScore": 0.019360939040780067
+},
+{
+  "index": 151,
+  "inputText": "@jordymorcom as recent as at Google in 2023",
+  "scoredText": "@jordymorcom as recent as at Google in 2023",
+  "finalClassification": "neutral",
+  "finalScore": 0.8663344979286194,
+  "negativeScore": 0.012672681361436844,
+  "neutralScore": 0.8663344979286194,
+  "positiveScore": 0.12099282443523407
+},
+{
+  "index": 152,
+  "inputText": "@jordymorcom and you were arguing it’s not an issue around the tech corporations working conditions itself but the country it resides in. I’m arguing it is a tech industry problem",
+  "scoredText": "@jordymorcom and you were arguing it’s not an issue around the tech corporations working conditions itself but the country it resides in. I’m arguing it is a tech industry problem",
+  "finalClassification": "neutral",
+  "finalScore": 0.5418416261672974,
+  "negativeScore": 0.43326348066329956,
+  "neutralScore": 0.5418416261672974,
+  "positiveScore": 0.02489490434527397
+},
+{
+  "index": 153,
+  "inputText": "@zebradust ok, so the google story was that someone jumped… that’s awful to hear. But a story about a jumper is different to saying nyc has nets around jts tech offices that’s just bs. I didn’t say it wasn’t an issue around tech corps working conditions, I’m saying it’s more than just tech corps. Cause you know, more Chinese people have bad work conditions in factories and sweat shops than tech offices believe it or not.",
+  "scoredText": "@zebradust ok, so the google story was that someone jumped… that’s awful to hear. But a story about a jumper is different to saying nyc has nets around jts tech offices that’s just bs. I didn’t say it wasn’t an issue around tech corps working conditions, I’m saying it’s more than just tech corps. Cause you know, more Chinese people have bad work conditions in factories and sweat shops than tech offices believe it or not.",
+  "finalClassification": "negative",
+  "finalScore": 0.8570339679718018,
+  "negativeScore": 0.8570339679718018,
+  "neutralScore": 0.1367778480052948,
+  "positiveScore": 0.006188243627548218
+},
+{
+  "index": 154,
+  "inputText": "@jordymorcom nah I used to work there they installed nets. It was already common in other tech offices there, it was just the first time Google had to do it. Tech corps suppress reporting of it",
+  "scoredText": "@jordymorcom nah I used to work there they installed nets. It was already common in other tech offices there, it was just the first time Google had to do it. Tech corps suppress reporting of it",
+  "finalClassification": "neutral",
+  "finalScore": 0.6484518647193909,
+  "negativeScore": 0.3076912760734558,
+  "neutralScore": 0.6484518647193909,
+  "positiveScore": 0.043856844305992126
+},
+{
+  "index": 155,
+  "inputText": "@jordymorcom you have very poor understanding of the point being made here. Overall tech and any revolution such as the Industrial Revolution has always come at a cost. Usually our lives. You may not even exist if it wasn't for coal miners most of which were children dying of black lung and terrible conditions to provide us power. This isn't just tech related either. Look at what the automobile industry has brought us?? Our food system is also completely fucked. All due to profits over quality at the expense of human lives.",
+  "scoredText": "@jordymorcom you have very poor understanding of the point being made here. Overall tech and any revolution such as the Industrial Revolution has always come at a cost. Usually our lives. You may not even exist if it wasn't for coal miners most of which were children dying of black lung and terrible conditions to provide us power. This isn't just tech related either. Look at what the automobile industry has brought us?? Our food system is also completely fucked. All due to profits over quality at the expense of human lives.",
+  "finalClassification": "negative",
+  "finalScore": 0.8770395517349243,
+  "negativeScore": 0.8770395517349243,
+  "neutralScore": 0.1134520098567009,
+  "positiveScore": 0.009508460760116577
+},
+{
+  "index": 156,
+  "inputText": "@bodetsc6 nope mate, I understand the point completely, I just think Apple was a shit example that doesn’t take the full picture into account. You bringing up the Industrial Revolution, coal mining and early car manufacturing makes me think you don’t understand what I’m saying. I’m not comparing china to 1800s child labor, I’m comparing it to its western counterparts over the last 70 years. What comparable events has the west inflicted on its own people compared to the Cultural Revolution, the famine, and current working conditions in China? Hint: there’s nothing at remotely the same scale or magnitude. The reason why Apple even goes to China is because the west’s higher safety and pay make China the more affordable option.",
+  "scoredText": "@bodetsc6 nope mate, I understand the point completely, I just think Apple was a shit example that doesn’t take the full picture into account. You bringing up the Industrial Revolution, coal mining and early car manufacturing makes me think you don’t understand what I’m saying. I’m not comparing china to 1800s child labor, I’m comparing it to its western counterparts over the last 70 years. What comparable events has the west inflicted on its own people compared to the Cultural Revolution, the famine, and current working conditions in China? Hint: there’s nothing at remotely the same scale or magnitude. The reason why Apple even goes to China is because the west’s higher safety and pay make China the more affordable option.",
+  "finalClassification": "negative",
+  "finalScore": 0.6971935033798218,
+  "negativeScore": 0.6971935033798218,
+  "neutralScore": 0.2816038727760315,
+  "positiveScore": 0.021202577278017998
+},
+{
+  "index": 157,
+  "inputText": "@jordymorcom wow that was the first time you made a legitimate argument here and thank you!! I agree with you there and disagree at the same time. Comparing countries in general is flawed considering each of them have their own problems at different scales. Yet this post is about tech in general. Where I do agree with you is that yes fortunately for the most part we do have it \"safer\" here on paper. Yet most are so uneducated they don't read or even pay attention to many safety protocols or if you've worked for some companies like I have will completely ignore safety for profits. I used to be an engineer at LG making batteries for the Chevy EV models. Unfortunately because the Korean engineers didn't agree with us Americans and they had a deadline to meet for their investors cars were catching fire and GM ultimately sued them and cost hundreds of us our jobs. The big picture here overall is that most countries lie to you about how well they're doing when internally they're all trash otherwise this world could be far more efficient. I cited historical examples as a way to show how nothing has changed for generations. 😂",
+  "scoredText": "@jordymorcom wow that was the first time you made a legitimate argument here and thank you!! I agree with you there and disagree at the same time. Comparing countries in general is flawed considering each of them have their own problems at different scales. Yet this post is about tech in general. Where I do agree with you is that yes fortunately for the most part we do have it \"safer\" here on paper. Yet most are so uneducated they don't read or even pay attention to many safety protocols or if you've worked for some companies like I have will completely ignore safety for profits. I used to be an engineer at LG making batteries for the Chevy EV models. Unfortunately because the Korean engineers didn't agree with us Americans and they had a deadline to meet for their investors cars were catching fire and GM ultimately sued them and cost hundreds of us our jobs. The big picture here overall is that most countries lie to you about how well they're doing when internally they're all trash otherwise this world could be far more efficient. I cited historical examples as a way to show how nothing has changed for generations. 😂",
+  "finalClassification": "positive",
+  "finalScore": 0.6689708232879639,
+  "negativeScore": 0.07804419845342636,
+  "neutralScore": 0.25298500061035156,
+  "positiveScore": 0.6689708232879639
+},
+{
+  "index": 158,
+  "inputText": "@jordymorcom also to further expand on what things do happen here in America that are comparable. The Great Depression, The Tuskegee Experiments, The Manhattan Project, 3M poisoning our water supply with PFAs since the 80s and still in operation, Flint Water Crisis, our levels of homelessness, our shit electric grid and other crumbling infrastructure which hasn't been updated properly in most areas like Gary Indiana, we still use slavery just from other nations and prison labor, etc, etc, etc. That's just off the top of my head. Is China worse off than us or just doing it in a different way than us?? Honestly I'm certain if I was to dive deep I could find similar atrocities in all nations. Humans are trash that are competing for money instead of actually working together for the betterment of mankind. Those that do try to provide something beneficial for humanity get wiped out. Otherwise again the world should be far more efficient than it is today.",
+  "scoredText": "@jordymorcom also to further expand on what things do happen here in America that are comparable. The Great Depression, The Tuskegee Experiments, The Manhattan Project, 3M poisoning our water supply with PFAs since the 80s and still in operation, Flint Water Crisis, our levels of homelessness, our shit electric grid and other crumbling infrastructure which hasn't been updated properly in most areas like Gary Indiana, we still use slavery just from other nations and prison labor, etc, etc, etc. That's just off the top of my head. Is China worse off than us or just doing it in a different way than us?? Honestly I'm certain if I was to dive deep I could find similar atrocities in all nations. Humans are trash that are competing for money instead of actually working together for the betterment of mankind. Those that do try to provide something beneficial for humanity get wiped out. Otherwise again the world should be far more efficient than it is today.",
+  "finalClassification": "negative",
+  "finalScore": 0.786746621131897,
+  "negativeScore": 0.786746621131897,
+  "neutralScore": 0.20168063044548035,
+  "positiveScore": 0.011572766117751598
+}]

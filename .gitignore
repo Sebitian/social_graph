@@ -35,11 +35,16 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Local notes and audit specs — not for the repo.
+/local/
+
+# Private runs created from the home form. Showcase jobs are ids in lib/jobCatalog.ts.
+/data/jobs/*.json
+
 # Scrape exports and snapshots stay local (or Vercel Blob in prod).
-# Commit Diandra (LinkedIn) + jppap (Instagram) as pinned demos without requiring Blob.
+# Commit pinned demos without requiring Blob.
 /data/snapshots/*.json
 !data/snapshots/diandra.json
-!data/snapshots/jppap.json
 !data/snapshots/sebastian-spotify.json
 !data/snapshots/nousresearch.json
 !data/snapshots/formationbio.json
@@ -47,4 +52,5 @@ next-env.d.ts
 !data/snapshots/kossof-tiktok.json
 !data/snapshots/kossof-instagram.json
 !data/snapshots/kossof-instagram-people.json
+!data/snapshots/aiman-instagram.json
 !data/snapshots/romanian.json

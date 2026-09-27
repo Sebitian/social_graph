@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import GraphResult from "@/components/GraphResult";
+import { catalogJobForHandle, jobPath } from "@/lib/jobCatalog";
 
 interface PageProps {
   params: Promise<{ handle: string }>;
@@ -12,7 +14,7 @@ export async function generateMetadata({
   const { handle } = await params;
   const clean = decodeURIComponent(handle).replace(/^@/, "");
   return {
-    title: `@${clean}'s Instagram network - Netgraph`,
+    title: `@${clean}'s Instagram network - Starling`,
     description: `Explore @${clean}'s visible public interaction patterns as a force-directed graph.`,
     openGraph: {
       title: `@${clean}'s Instagram network`,
@@ -29,6 +31,8 @@ export default async function GraphPage({ params, searchParams }: PageProps) {
   const { handle } = await params;
   const query = await searchParams;
   const clean = decodeURIComponent(handle).replace(/^@/, "").toLowerCase();
+  const known = catalogJobForHandle(clean);
+  if (known) redirect(jobPath(known.id));
   // key remounts on handle change so loading state resets cleanly.
   return (
     <GraphResult

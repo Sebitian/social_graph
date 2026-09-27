@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, FormEvent, type ComponentType, type SVGProps } from "react";
-import { useRouter } from "next/navigation";
+import { useActionState, useState, type ComponentType, type SVGProps } from "react";
 import { motion } from "framer-motion";
+import { startJobForm } from "@/app/actions/startJob";
 import { ArrowRight, Loader2 } from "lucide-react";
 import {
   FacebookIcon,
@@ -89,78 +89,55 @@ function validateHandle(raw: string): string | null {
 }
 
 export default function HeroInput() {
-  const router = useRouter();
   const [handles, setHandles] = useState<Handles>(EMPTY);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [state, formAction, pending] = useActionState(startJobForm, null);
 
   function update(id: PlatformId, value: string) {
     setHandles((prev) => ({ ...prev, [id]: value }));
-    if (error) setError(null);
   }
 
-  function submit(e: FormEvent) {
-    e.preventDefault();
-
-    const cleaned: Partial<Record<PlatformId, string>> = {};
-    for (const { id } of PLATFORMS) {
-      const result = validateHandle(handles[id]);
-      if (result === "invalid") {
-        setError(`Enter a valid ${PLATFORMS.find((p) => p.id === id)?.label} handle`);
-        return;
+  const clientError = (() => {
+    for (const { id, label } of PLATFORMS) {
+      if (validateHandle(handles[id]) === "invalid") {
+        return `Enter a valid ${label} handle`;
       }
-      if (result) cleaned[id] = result;
     }
-
-    const primary = PLATFORMS.map((p) => p.id).find((id) => cleaned[id]);
-    if (!primary || !cleaned[primary]) {
-      setError("Add at least one handle to map your network");
-      return;
-    }
-
-    setError(null);
-    setLoading(true);
-
-    const params = new URLSearchParams();
-    for (const id of PLATFORMS.map((p) => p.id)) {
-      if (cleaned[id]) params.set(id, cleaned[id]!);
-    }
-
-    const qs = params.toString();
-    router.push(`/graph/${cleaned[primary]}${qs ? `?${qs}` : ""}`);
-  }
+    return null;
+  })();
+  const error = clientError ?? state?.error ?? null;
 
   return (
-    <form onSubmit={submit} className="w-full max-w-lg text-left">
+    <form id="map" action={formAction} className="w-full max-w-lg text-left">
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15, duration: 0.45 }}
-        className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur"
+        className="overflow-hidden rounded-2xl border border-[#D5CDBF] bg-[#FBF8F2]"
       >
-        <div className="border-b border-white/10 px-4 py-3 sm:px-5">
-          <p className="text-sm font-medium text-white/85">Your handles</p>
-          <p className="mt-0.5 text-xs text-white/40">
-            Add one or more — only filled platforms are mapped.
+        <div className="border-b border-[#E4DDD0] px-4 py-3 sm:px-5">
+          <p className="text-sm font-medium text-[#161A17]">Your handles</p>
+          <p className="mt-0.5 text-xs text-[#5E665F]">
+            Add one or more. Only filled platforms are mapped.
           </p>
         </div>
 
-        <ul className="divide-y divide-white/10">
+        <ul className="divide-y divide-[#E4DDD0]">
           {PLATFORMS.map(({ id, label, placeholder, Icon, accent }) => (
             <li key={id} className="flex min-h-[52px] items-center gap-3 px-4 py-2 sm:px-5">
               <span
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#E4DDD0]"
                 style={{ color: accent }}
               >
                 <Icon className="h-4 w-4" title={label} />
               </span>
-              <label htmlFor={`handle-${id}`} className="w-[5.5rem] shrink-0 text-sm text-white/55">
+              <label htmlFor={`handle-${id}`} className="w-[5.5rem] shrink-0 text-sm text-[#5E665F]">
                 {label}
               </label>
               <div className="flex min-w-0 flex-1 items-center gap-1">
-                <span className="select-none text-sm text-white/25">@</span>
+                <span className="select-none text-sm text-[#5E665F]">@</span>
                 <input
                   id={`handle-${id}`}
+                  name={id}
                   value={handles[id]}
                   onChange={(e) => update(id, e.target.value)}
                   placeholder={placeholder}
@@ -168,24 +145,24 @@ export default function HeroInput() {
                   autoCorrect="off"
                   spellCheck={false}
                   autoComplete="off"
-                  className="w-full bg-transparent py-2 text-sm text-white placeholder-white/25 outline-none sm:text-[15px]"
+                  className="w-full bg-transparent py-2 text-sm text-[#161A17] placeholder-[#5E665F]/70 outline-none sm:text-[15px]"
                 />
               </div>
             </li>
           ))}
         </ul>
 
-        <div className="border-t border-white/10 p-3 sm:p-4">
+        <div className="border-t border-[#E4DDD0] p-3 sm:p-4">
           <button
             type="submit"
-            disabled={loading}
-            className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-background transition hover:bg-white/90 disabled:opacity-60"
+            disabled={pending || Boolean(clientError)}
+            className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-[#0F766E] px-5 py-3 text-sm font-semibold text-[#FBF8F2] transition hover:bg-[#0c615b] disabled:opacity-60"
           >
-            {loading ? (
+            {pending ? (
               <Loader2 className="h-5 w-5 animate-spin" />
             ) : (
               <>
-                Map network <ArrowRight className="h-4 w-4" />
+                Map a handle <ArrowRight className="h-4 w-4" />
               </>
             )}
           </button>

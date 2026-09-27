@@ -95,16 +95,16 @@ export default function ChatDataTable({ table, onSelectUsername }: Props) {
   };
 
   return (
-    <figure className="overflow-hidden rounded-xl border border-white/10 bg-black/30">
+    <figure className="overflow-hidden rounded-xl border border-[#D5CDBF] bg-[#FBF8F2]">
       {table.title ? (
-        <figcaption className="border-b border-white/10 px-3 py-2 text-[11px] font-semibold text-white/70">
+        <figcaption className="border-b border-[#D5CDBF] px-3 py-2 text-[11px] font-semibold text-[#5E665F]">
           {table.title}
         </figcaption>
       ) : null}
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse text-[12px]">
           <thead>
-            <tr className="border-b border-white/10 bg-white/[0.04]">
+            <tr className="border-b border-[#D5CDBF] bg-[#F3EEE4]">
               {table.columns.map((col, index) => {
                 const numeric = numericKeys.has(col.key);
                 const right = col.align === "right" || (col.align !== "left" && numeric);
@@ -117,16 +117,16 @@ export default function ChatDataTable({ table, onSelectUsername }: Props) {
                 return (
                   <th
                     key={col.key}
-                    className={`whitespace-nowrap px-1 py-1 text-[10px] font-semibold uppercase tracking-wide text-white/40 ${
-                      index === 0 ? "sticky left-0 bg-black/80" : ""
+                    className={`whitespace-nowrap px-1 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#5E665F] ${
+                      index === 0 ? "sticky left-0 bg-[#FBF8F2]" : ""
                     }`}
                   >
                     <button
                       type="button"
                       onClick={() => toggleSort(col.key)}
-                      className={`inline-flex w-full items-center gap-1 px-2 py-1 hover:text-white/70 ${
+                      className={`inline-flex w-full items-center gap-1 px-2 py-1 hover:text-[#161A17] ${
                         right ? "justify-end" : "justify-start"
-                      } ${active ? "text-white/75" : ""}`}
+                      } ${active ? "text-[#0F766E]" : ""}`}
                     >
                       {col.label}
                       <Icon className="h-3 w-3 shrink-0 opacity-70" />
@@ -140,7 +140,7 @@ export default function ChatDataTable({ table, onSelectUsername }: Props) {
             {rows.map((row, rowIndex) => (
               <tr
                 key={rowIndex}
-                className="border-b border-white/5 last:border-0"
+                className="border-b border-[#D5CDBF]/50 last:border-0"
               >
                 {table.columns.map((col, index) => {
                   const numeric = numericKeys.has(col.key);
@@ -162,12 +162,12 @@ export default function ChatDataTable({ table, onSelectUsername }: Props) {
                           : "max-w-[16rem] text-left"
                       } ${
                         index === 0
-                          ? "sticky left-0 bg-black/75 font-medium text-white/90"
-                          : "text-white/75"
-                      } ${isPeak ? "text-white" : ""}`}
+                          ? "sticky left-0 bg-[#FBF8F2] font-medium text-[#161A17]"
+                          : "text-[#161A17]/75"
+                      } ${isPeak ? "text-[#0F766E]" : ""}`}
                     >
                       {isPeak ? (
-                        <span className="rounded-md bg-white/10 px-1.5 py-0.5 font-medium text-white">
+                        <span className="rounded-md bg-[#0F766E]/10 px-1.5 py-0.5 font-medium text-[#0F766E]">
                           {display}
                         </span>
                       ) : mentionable ? (
@@ -187,7 +187,7 @@ export default function ChatDataTable({ table, onSelectUsername }: Props) {
         </table>
       </div>
       {table.caption ? (
-        <p className="border-t border-white/10 px-3 py-1.5 text-[11px] leading-relaxed text-white/40">
+        <p className="border-t border-[#D5CDBF] px-3 py-1.5 text-[11px] leading-relaxed text-[#5E665F]">
           {table.caption}
         </p>
       ) : null}

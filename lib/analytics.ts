@@ -436,6 +436,7 @@ export interface ContentKindStats {
   commentsSeries: ChartPoint[];
   reactionsSeries: ChartPoint[];
   viewsSeries: ChartPoint[];
+  countSeries: ChartPoint[];
 }
 
 export interface SocialAnalyticsOverview {
@@ -455,6 +456,8 @@ export interface SocialAnalyticsOverview {
   commentSeries: number[];
   hasDatedEvents: boolean;
   topEngagers: AnalyticsPersonRow[];
+  /** People with at least one comment in range, ranked by comment count. */
+  topCommentators: AnalyticsPersonRow[];
   /** People whose first interaction falls in the selected range (newest first). */
   newPeople: AnalyticsPersonRow[];
   /** @deprecated use newPeople */
@@ -481,6 +484,15 @@ export interface SocialAnalyticsOverview {
   /** Feed posts (images/carousels) vs reels, for Instagram tiles. */
   feed: ContentKindStats;
   reels: ContentKindStats;
+  /** UTC-day buckets of comments and posts for a calendar heatmap. */
+  activityDays: ActivityDay[];
+}
+
+export interface ActivityDay {
+  /** UTC midnight (ms). */
+  t: number;
+  comments: number;
+  posts: number;
 }
 
 function memberNodes(data: ScrapeResult): GraphNode[] {
@@ -563,6 +575,7 @@ type ContentAccum = {
   commentEvents: { t: number; weight?: number }[];
   reactionEvents: { t: number; weight?: number }[];
   viewEvents: { t: number; weight?: number }[];
+  countEvents: { t: number }[];
 };
 
 function emptyContentAccum(): ContentAccum {
@@ -576,6 +589,7 @@ function emptyContentAccum(): ContentAccum {
     commentEvents: [],
     reactionEvents: [],
     viewEvents: [],
+    countEvents: [],
   };
 }
 
@@ -594,6 +608,7 @@ function finishContentKind(
     commentsSeries: bucketSeriesPoints(accum.commentEvents, range, now),
     reactionsSeries: bucketSeriesPoints(accum.reactionEvents, range, now),
     viewsSeries: bucketSeriesPoints(accum.viewEvents, range, now),
+    countSeries: bucketSeriesPoints(accum.countEvents, range, now),
   };
 }
 
@@ -790,6 +805,7 @@ export function computeSocialAnalytics(
       bucket.reactions += personReactions;
       bucket.views += plays;
       if (ms != null) {
+        bucket.countEvents.push({ t: ms });
         if (likes > 0) bucket.likeEvents.push({ t: ms, weight: likes });
         if (postComments > 0) {
           bucket.commentEvents.push({ t: ms, weight: postComments });
@@ -861,6 +877,16 @@ export function computeSocialAnalytics(
     .slice(0, 12)
     .map(({ node, comments: c, reactions: r }) => toPersonRow(node, c, r));
 
+  const topCommentators: AnalyticsPersonRow[] = [...engagerCounts.values()]
+    .filter(({ comments: c }) => c > 0)
+    .sort((a, b) => b.comments - a.comments || b.reactions - a.reactions)
+    .slice(0, 20)
+    .map(({ node, comments: c, reactions: r }) => ({
+      ...toPersonRow(node, c, r),
+      value: c,
+      metricLabel: `${c} comment${c === 1 ? "" : "s"}`,
+    }));
+
   const newPeople: AnalyticsPersonRow[] = [...engagerCounts.values()]
     .filter(({ firstMs }) => {
       if (firstMs == null) return false;
@@ -927,6 +953,27 @@ export function computeSocialAnalytics(
   const postLikesSeries = bucketSeriesPoints(likeEvents, range, now);
   const postPlaysSeries = bucketSeriesPoints(playEvents, range, now);
 
+  const activityByDay = new Map<number, ActivityDay>();
+  const utcDay = (ms: number) => {
+    const d = new Date(ms);
+    return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+  };
+  const bumpDay = (ms: number, field: "comments" | "posts", weight = 1) => {
+    const t = utcDay(ms);
+    const cur = activityByDay.get(t) ?? { t, comments: 0, posts: 0 };
+    cur[field] += weight;
+    activityByDay.set(t, cur);
+  };
+  if (hasPostMetrics) {
+    for (const event of postCommentEvents) {
+      bumpDay(event.t, "comments", event.weight ?? 1);
+    }
+  } else {
+    for (const event of commentEvents) bumpDay(event.t, "comments");
+  }
+  for (const event of postEvents) bumpDay(event.t, "posts");
+  const activityDays = [...activityByDay.values()].sort((a, b) => a.t - b.t);
+
   return {
     comments,
     reactions,
@@ -947,6 +994,7 @@ export function computeSocialAnalytics(
       commentEvents.length > 0 ||
       posts.some((p) => parseEventMs(p.postedAt, now) != null),
     topEngagers,
+    topCommentators,
     newPeople,
     newProfiles: newPeople,
     topPosts,
@@ -963,6 +1011,7 @@ export function computeSocialAnalytics(
     postPlaysSeries,
     feed: finishContentKind(feedAccum, range, now),
     reels: finishContentKind(reelAccum, range, now),
+    activityDays,
   };
 }
 

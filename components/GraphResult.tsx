@@ -2,16 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   AlertTriangle,
-  ArrowLeft,
   CreditCard,
-  FlaskConical,
-  HelpCircle,
-  List,
-  Maximize2,
-  Pin,
   ShieldAlert,
   X,
 } from "lucide-react";
@@ -38,8 +33,10 @@ import type {
 import type { TikTokGraphNode, TikTokResult } from "@/lib/tiktokTypes";
 import PersonPanel from "@/components/PersonPanel";
 import GraphVisualizer from "@/components/GraphVisualizer";
+import GraphVisualizer3D from "@/components/GraphVisualizer3D";
 import SpotifyGraphVisualizer from "@/components/SpotifyGraphVisualizer";
 import CompanyGraphVisualizer from "@/components/CompanyGraphVisualizer";
+import CompanyHierarchyGraph from "@/components/CompanyHierarchyGraph";
 import ConferenceGraphVisualizer from "@/components/ConferenceGraphVisualizer";
 import TikTokGraphVisualizer from "@/components/TikTokGraphVisualizer";
 import CompanyRosterTable from "@/components/CompanyRosterTable";
@@ -52,18 +49,14 @@ import InstagramModeControls, {
   peopleFromInstagramBundle,
   peopleFromSocialResult,
 } from "@/components/InstagramModeControls";
-import EngagementGrid from "@/components/EngagementGrid";
 import GraphNodeSearch from "@/components/GraphNodeSearch";
-import {
-  GraphHowToRead,
-  reopenGraphHowToRead,
-} from "@/components/GraphHowToRead";
+import GraphChrome, { ProfileComingSoon } from "@/components/GraphChrome";
+import type { GraphLegendItem } from "@/components/GraphChrome";
 import AnalyticsPanel, {
   type AnalyticsPlatform,
 } from "@/components/analytics/AnalyticsPanel";
 import ChatPanel from "@/components/ChatPanel";
-import ProfilePanel from "@/components/ProfilePanel";
-import GraphFooterTabs, { type FooterTab } from "@/components/GraphFooterTabs";
+import type { FooterTab } from "@/components/GraphFooterTabs";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import {
   InstagramIcon,
@@ -75,6 +68,7 @@ import {
   ConferenceIcon,
 } from "@/components/PlatformIcons";
 import { SELF_COLOR, PROXIMITY_RINGS, UNCLUSTERED_COLOR } from "@/lib/graphUtils";
+import { buildCompanyHierarchy } from "@/lib/companyHierarchy";
 import {
   DEFAULT_ANALYTICS_RANGE,
   type AnalyticsRangeId,
@@ -86,18 +80,20 @@ import {
   budgetCacheSuffix,
   SCRAPE_BUDGET_LIMITS,
 } from "@/lib/scrapeBudget";
-import { DEMO_HANDLE } from "@/lib/paths";
 import type { ChatSourceInfo } from "@/lib/chat/types";
 import {
   attachInstagramEmployeesToGraph,
   firstAvailableInstagramPersonId,
   INSTAGRAM_EMPLOYEE_COLOR,
+  instagramPeopleSubtitle,
   instagramPersonById,
   instagramPersonForNode,
+  instagramPersonRole,
   pruneQuietMemberNodes,
   type InstagramMode,
   type InstagramPeopleResult,
 } from "@/lib/instagramPeople";
+import { pathWithSection, sectionFromPathname } from "@/lib/jobSections";
 
 type GraphPlatform =
   | "linkedin"
@@ -107,8 +103,7 @@ type GraphPlatform =
   | "tiktok"
   | "conference";
 type LinkedInMode = "person" | "company";
-type GraphView = "map" | "roster";
-type StatsView = "summary" | "grid";
+type GraphView = "map" | "roster" | "hierarchy";
 type SocialPlatform = SocialSourcePlatform;
 
 const PLATFORM_LABEL: Record<GraphPlatform, string> = {
@@ -120,25 +115,27 @@ const PLATFORM_LABEL: Record<GraphPlatform, string> = {
   conference: "Conference",
 };
 
-const PLATFORM_TABS = [
-  { id: "linkedin" as const, label: "LinkedIn", Icon: LinkedInIcon },
-  { id: "instagram" as const, label: "Instagram", Icon: InstagramIcon },
-  { id: "facebook" as const, label: "Facebook", Icon: FacebookIcon },
-  { id: "tiktok" as const, label: "TikTok", Icon: TikTokIcon },
-  { id: "spotify" as const, label: "Spotify", Icon: SpotifyIcon },
-  { id: "conference" as const, label: "Conference", Icon: ConferenceIcon },
-] as const;
-
-const TOOLBAR_TAB =
-  "inline-flex min-h-[40px] items-center gap-1.5 rounded-md px-2.5 py-2 text-xs font-medium transition";
-const TOOLBAR_TAB_ACTIVE = "bg-white/15 text-white";
-const TOOLBAR_TAB_AVAILABLE = "text-white/55 hover:bg-white/10 hover:text-white/80";
-const TOOLBAR_TAB_DISABLED = "text-white/30 hover:bg-white/5 hover:text-white/45";
-const LINKEDIN_TAB_ACTIVE = "bg-[#0A66C2]/25 text-white";
-
 const SEARCHED_HANDLES_KEY = "netgraph.searchedHandles";
 const SCRAPE_RESULT_CACHE_PREFIX = "netgraph.scrapeResult.v2";
 const SCRAPE_RESULT_CACHE_TTL_MS = 1000 * 60 * 60 * 6;
+
+function memberKeyMatch(node: GraphNode, key: string): boolean {
+  if (node.group !== "member") return false;
+  return (
+    node.id.toLowerCase() === key ||
+    node.label.toLowerCase() === key ||
+    (node.fullName ?? "").toLowerCase() === key
+  );
+}
+
+function findMemberInResult(
+  result: ScrapeResult | null | undefined,
+  key: string,
+): GraphNode | null {
+  if (!result) return null;
+  const pool = [...(result.engagers ?? []), ...result.graph.nodes];
+  return pool.find((node) => memberKeyMatch(node, key)) ?? null;
+}
 
 type StoredScrapeResult = {
   savedAt: number;
@@ -162,6 +159,9 @@ function rememberSearchedHandle(handle: string) {
   localStorage.setItem(
     SEARCHED_HANDLES_KEY,
     JSON.stringify([...handles, handle].slice(-50)),
+  );
+  window.dispatchEvent(
+    new StorageEvent("storage", { key: SEARCHED_HANDLES_KEY }),
   );
 }
 
@@ -225,6 +225,8 @@ interface Props {
   conferenceData?: ConferenceResult | null;
   /** Load a frozen snapshot from data/snapshots — never calls Apify. */
   pinned?: boolean;
+  /** Job page already has this run. Do not fetch another scrape. */
+  isolated?: boolean;
 }
 
 function platformOfResult(result: ScrapeResult): SocialPlatform {
@@ -243,6 +245,7 @@ export default function GraphResult({
   instagramPeopleData = null,
   conferenceData = null,
   pinned = false,
+  isolated = false,
 }: Props) {
   const [data, setData] = useState<ScrapeResult | null>(initialData);
   const [extraSocialData, setExtraSocialData] = useState<
@@ -272,8 +275,24 @@ export default function GraphResult({
   const [profileLimitHit, setProfileLimitHit] = useState(false);
   const [searchedCount, setSearchedCount] = useState(0);
   const [view, setView] = useState<GraphView>("map");
-  const [statsView, setStatsView] = useState<StatsView>("summary");
-  const [footerTab, setFooterTab] = useState<FooterTab>("map");
+  const [graphDepth, setGraphDepth] = useState<"2d" | "3d">("3d");
+  const pathname = usePathname();
+  const router = useRouter();
+  const onJobRoute = pathname.startsWith("/jobs/");
+  const [localSection, setLocalSection] = useState<FooterTab>("map");
+  const footerTab: FooterTab = onJobRoute
+    ? sectionFromPathname(pathname)
+    : localSection;
+
+  useEffect(() => {
+    const surface = footerTab === "profile" ? "ink" : "paper";
+    document.body.dataset.surface = surface;
+    return () => {
+      if (document.body.dataset.surface === surface) {
+        delete document.body.dataset.surface;
+      }
+    };
+  }, [footerTab]);
   const [analyticsPlatform, setAnalyticsPlatform] =
     useState<AnalyticsPlatform>(() => {
       if (initialPlatformData.linkedin || initialData?.platform === "linkedin")
@@ -288,7 +307,18 @@ export default function GraphResult({
   const [analyticsRange, setAnalyticsRange] = useState<AnalyticsRangeId>(
     DEFAULT_ANALYTICS_RANGE,
   );
-  const [howToOpen, setHowToOpen] = useState(false);
+  const [analyticsLinkedinMode, setAnalyticsLinkedinMode] =
+    useState<LinkedInMode>(() =>
+      !initialPlatformData.linkedin && companyData ? "company" : "person",
+    );
+  const [analyticsInstagramMode, setAnalyticsInstagramMode] =
+    useState<InstagramMode>(() =>
+      initialPlatformData.instagram || initialData?.platform === "instagram"
+        ? "company"
+        : "person",
+    );
+  const [analyticsInstagramPersonId, setAnalyticsInstagramPersonId] =
+    useState(() => firstAvailableInstagramPersonId(instagramPeopleData));
   const [graphFullscreen, setGraphFullscreen] = useState(false);
   const [linkedinMode, setLinkedinMode] = useState<LinkedInMode>(() =>
     !initialPlatformData.linkedin && companyData ? "company" : "person",
@@ -301,7 +331,7 @@ export default function GraphResult({
   const [instagramPersonId, setInstagramPersonId] = useState(() =>
     firstAvailableInstagramPersonId(instagramPeopleData),
   );
-  const [platform, setPlatform] = useState<GraphPlatform>(() => {
+  const [platform] = useState<GraphPlatform>(() => {
     if (pinned) {
       if (initialPlatformData.linkedin) return "linkedin";
       if (initialData && platformOfResult(initialData) === "linkedin")
@@ -336,14 +366,22 @@ export default function GraphResult({
     [initialBudget],
   );
 
-  const selectFooterTab = useCallback((tab: FooterTab) => {
-    setFooterTab(tab);
-    requestAnimationFrame(() => {
-      const target =
-        tab === "map" ? graphSectionRef.current : mobileTabPanelRef.current;
-      target?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  }, []);
+  const selectFooterTab = useCallback(
+    (tab: FooterTab) => {
+      if (onJobRoute) {
+        const next = pathWithSection(pathname, tab);
+        if (next !== pathname) router.push(next, { scroll: false });
+      } else {
+        setLocalSection(tab);
+      }
+      requestAnimationFrame(() => {
+        const target =
+          tab === "map" ? graphSectionRef.current : mobileTabPanelRef.current;
+        target?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    },
+    [onJobRoute, pathname, router],
+  );
 
   useEffect(() => {
     if (!graphFullscreen) return;
@@ -416,14 +454,20 @@ export default function GraphResult({
   const instagramEmployeeIds = useMemo(
     () =>
       (instagramPeople?.people ?? [])
-        .filter((person) => person.available)
+        .filter(
+          (person) =>
+            instagramPersonRole(person) === "employee" && person.available,
+        )
         .map((person) => person.username),
     [instagramPeople],
   );
   const instagramUnavailableEmployeeIds = useMemo(
     () =>
       (instagramPeople?.people ?? [])
-        .filter((person) => !person.available)
+        .filter(
+          (person) =>
+            instagramPersonRole(person) === "employee" && !person.available,
+        )
         .map((person) => person.username),
     [instagramPeople],
   );
@@ -463,16 +507,15 @@ export default function GraphResult({
     }
     const instagram = platformResults.instagram;
     if (instagram) {
-      const employeeCount = instagramPeople?.people.length ?? 0;
       sources.push({
         id: "instagram",
         label: "Instagram",
         title: instagram.profile.fullName || instagram.profile.username,
         handle: instagram.profile.username,
-        subtitle:
-          employeeCount > 0
-            ? `@${instagram.profile.username} · Company + ${employeeCount} employees`
-            : `@${instagram.profile.username} · Account graph`,
+        subtitle: instagramPeopleSubtitle(
+          instagram.profile.username,
+          instagramPeople,
+        ),
       });
     }
     const facebook = platformResults.facebook;
@@ -514,11 +557,6 @@ export default function GraphResult({
     !hasFacebook &&
     !hasSpotify &&
     !hasTikTok;
-  const visiblePlatformTabs = conferenceOnly
-    ? PLATFORM_TABS.filter((tab) => tab.id === "conference")
-    : hasConference
-      ? PLATFORM_TABS
-      : PLATFORM_TABS.filter((tab) => tab.id !== "conference");
   const isAlternatePlatform =
     platform === "spotify" ||
     platform === "tiktok" ||
@@ -542,30 +580,23 @@ export default function GraphResult({
             : Boolean(activeData);
   const showCompanyViews = platformHasData && isLinkedInCompany;
   const showConferenceViews = platformHasData && isConference;
-  const analyticsGridData =
+  const analyticsInstagramPerson = instagramPersonById(
+    instagramPeopleData,
+    analyticsInstagramPersonId,
+  );
+  const analyticsSocialData =
     analyticsPlatform === "instagram"
-      ? instagramMode === "person"
-        ? (selectedInstagramPerson?.result ?? null)
+      ? analyticsInstagramMode === "person"
+        ? (analyticsInstagramPerson?.result ?? null)
         : (platformResults.instagram ?? null)
       : analyticsPlatform === "linkedin" || analyticsPlatform === "facebook"
         ? (platformResults[analyticsPlatform] ?? null)
         : null;
-  const analyticsCanShowGrid = Boolean(
-    analyticsGridData?.posts && analyticsGridData.posts.length > 0,
-  );
-  const analyticsGridNodes = useMemo(() => {
-    if (!analyticsGridData) return [];
-    if (analyticsGridData.engagers && analyticsGridData.engagers.length > 0) {
-      return analyticsGridData.engagers;
-    }
-    return analyticsGridData.graph.nodes;
-  }, [analyticsGridData]);
-
   const analyticsCircleById = useMemo(() => {
     const m = new Map<number, Circle>();
-    for (const c of analyticsGridData?.graph.circles ?? []) m.set(c.id, c);
+    for (const c of analyticsSocialData?.graph.circles ?? []) m.set(c.id, c);
     return m;
-  }, [analyticsGridData]);
+  }, [analyticsSocialData]);
 
   const circleById = useMemo(() => {
     const m = new Map<number, Circle>();
@@ -587,6 +618,42 @@ export default function GraphResult({
     return m;
   }, [activeData, mapGraph]);
 
+  const selectAnalyticsPerson = useCallback(
+    (username: string) => {
+      const key = username.replace(/^@/, "").trim().toLowerCase();
+      if (!key) return;
+
+      const fromPeople =
+        (instagramPeople?.people ?? [])
+          .map((person) => findMemberInResult(person.result, key))
+          .find((node): node is GraphNode => node != null) ?? null;
+
+      const node =
+        findMemberInResult(analyticsSocialData, key) ??
+        fromPeople ??
+        findMemberInResult(platformResults.linkedin, key) ??
+        findMemberInResult(platformResults.instagram, key) ??
+        findMemberInResult(platformResults.facebook, key) ??
+        nodeByUsername.get(key) ??
+        null;
+
+      if (!node) return;
+      setCompanySelected(null);
+      setSpotifySelected(null);
+      setTiktokSelected(null);
+      setConferenceSelected(null);
+      setSelected(node);
+    },
+    [
+      analyticsSocialData,
+      instagramPeople,
+      nodeByUsername,
+      platformResults.facebook,
+      platformResults.instagram,
+      platformResults.linkedin,
+    ],
+  );
+
   const selectMemberByUsername = useCallback(
     (username: string) => {
       const key = username.trim().toLowerCase();
@@ -600,7 +667,6 @@ export default function GraphResult({
           setInstagramMode("person");
           setSelected(null);
           setView("map");
-          setStatsView("summary");
           setAnalyticsPlatform("instagram");
           selectFooterTab("map");
           return;
@@ -762,13 +828,9 @@ export default function GraphResult({
 
 
   useEffect(() => {
-    if (!analyticsCanShowGrid && statsView === "grid") setStatsView("summary");
-  }, [analyticsCanShowGrid, statsView]);
-
-  useEffect(() => {
-    if (platform !== "linkedin" || linkedinMode !== "company") {
-      if (platform !== "conference" && view === "roster") setView("map");
-    }
+    const onCompany = platform === "linkedin" && linkedinMode === "company";
+    if (!onCompany && view === "hierarchy") setView("map");
+    if (!onCompany && platform !== "conference" && view === "roster") setView("map");
   }, [platform, linkedinMode, view]);
 
   useEffect(() => {
@@ -780,7 +842,18 @@ export default function GraphResult({
   }, [instagramPeopleData, instagramPersonId]);
 
   useEffect(() => {
-    if (pinned) return;
+    if (!instagramPeopleData) return;
+    const current = instagramPersonById(
+      instagramPeopleData,
+      analyticsInstagramPersonId,
+    );
+    if (current?.available) return;
+    const next = firstAvailableInstagramPersonId(instagramPeopleData);
+    if (next) setAnalyticsInstagramPersonId(next);
+  }, [analyticsInstagramPersonId, instagramPeopleData]);
+
+  useEffect(() => {
+    if (pinned || isolated) return;
     let cancelled = false;
     const searchedHandles = readSearchedHandles();
     const isNewProfile = !searchedHandles.includes(handle);
@@ -818,6 +891,7 @@ export default function GraphResult({
     handle,
     requestedBudget,
     pinned,
+    isolated,
     spotifyData,
     companyData,
     tiktokData,
@@ -825,6 +899,7 @@ export default function GraphResult({
   ]);
 
   useEffect(() => {
+    if (isolated) return;
     if (!pinned && confirmationState !== "confirmed") return;
     if (pinned && confirmationState !== "confirmed") return;
     if (!pinned && data) return;
@@ -868,6 +943,7 @@ export default function GraphResult({
     data,
     handle,
     pinned,
+    isolated,
     requestedBudget,
     conferenceData,
     conferenceResult,
@@ -920,21 +996,6 @@ export default function GraphResult({
         });
     }
 
-    if (!companyResult && !companyData) {
-      fetch(`/api/company?handle=${encodeURIComponent("formationbio")}`)
-        .then(async (res) => {
-          const json = await res.json();
-          if (!res.ok) throw new Error(json.error ?? "Company demo failed");
-          return json as CompanyResult;
-        })
-        .then((json) => {
-          if (!cancelled) setCompanyResult(json);
-        })
-        .catch((err) => {
-          console.error("Company demo fetch failed", err);
-        });
-    }
-
     return () => {
       cancelled = true;
     };
@@ -947,15 +1008,12 @@ export default function GraphResult({
     requestedBudget,
     spotifyData,
     spotifyResult,
-    companyData,
-    companyResult,
   ]);
 
   const selectInstagramMode = useCallback((mode: InstagramMode) => {
     setInstagramMode(mode);
     setSelected(null);
     setView("map");
-    setStatsView("summary");
   }, []);
 
   const selectLinkedinMode = useCallback((mode: LinkedInMode) => {
@@ -963,7 +1021,6 @@ export default function GraphResult({
     setSelected(null);
     setCompanySelected(null);
     setView("map");
-    setStatsView("summary");
   }, []);
 
   const selectInstagramPerson = useCallback((id: string) => {
@@ -971,7 +1028,6 @@ export default function GraphResult({
     if (!person?.available) return;
     setInstagramPersonId(id);
     setSelected(null);
-    setStatsView("summary");
   }, [instagramPeopleData]);
 
   const openInstagramEmployeeGraph = useCallback(
@@ -982,7 +1038,6 @@ export default function GraphResult({
       setInstagramMode("person");
       setSelected(null);
       setView("map");
-      setStatsView("summary");
       setAnalyticsPlatform("instagram");
       selectFooterTab("map");
       return true;
@@ -1001,23 +1056,6 @@ export default function GraphResult({
       setSelected(node);
     },
     [instagramMode, instagramPeople, openInstagramEmployeeGraph, platform],
-  );
-
-  const viewProfileGraph = useCallback(
-    (nextPlatform: GraphPlatform, nextLinkedinMode?: LinkedInMode) => {
-      setPlatform(nextPlatform);
-      if (nextPlatform === "linkedin") {
-        setLinkedinMode(
-          nextLinkedinMode ??
-            (platformResults.linkedin ? "person" : "company"),
-        );
-      }
-      if (nextPlatform === "instagram") {
-        setInstagramMode(hasInstagramCompany ? "company" : "person");
-      }
-      selectFooterTab("map");
-    },
-    [hasInstagramCompany, platformResults.linkedin, selectFooterTab],
   );
 
   if (error) {
@@ -1143,375 +1181,245 @@ export default function GraphResult({
     );
   }
 
-  const displayData = activeData ?? data;
-  const showPinnedBadge =
-    Boolean(displayData?.pinned) ||
-    (platform === "spotify" && Boolean(spotifyResult?.pinned)) ||
-    (platform === "tiktok" && Boolean(tiktokResult?.pinned)) ||
-    (platform === "conference" && Boolean(conferenceResult?.pinned)) ||
-    (isLinkedInCompany && Boolean(companyResult?.pinned));
-  const showDemoBadge =
-    Boolean(displayData?.demo) ||
-    (platform === "spotify" && Boolean(spotifyResult?.demo)) ||
-    (platform === "tiktok" && Boolean(tiktokResult?.demo)) ||
-    (platform === "conference" && Boolean(conferenceResult?.demo)) ||
-    (isLinkedInCompany && Boolean(companyResult?.demo));
-  const showCachedBadge =
-    (Boolean(displayData?.cached) &&
-      !displayData?.demo &&
-      !displayData?.pinned) ||
-    (platform === "spotify" &&
-      Boolean(spotifyResult?.cached) &&
-      !spotifyResult?.demo &&
-      !spotifyResult?.pinned) ||
-    (platform === "tiktok" &&
-      Boolean(tiktokResult?.cached) &&
-      !tiktokResult?.demo &&
-      !tiktokResult?.pinned) ||
-    (platform === "conference" &&
-      Boolean(conferenceResult?.cached) &&
-      !conferenceResult?.demo &&
-      !conferenceResult?.pinned) ||
-    (isLinkedInCompany &&
-      Boolean(companyResult?.cached) &&
-      !companyResult?.demo &&
-      !companyResult?.pinned);
+  const legendItems: GraphLegendItem[] = [];
+  let flowHint: string | null = null;
+  const companyHierarchy =
+    footerTab === "map" &&
+    view === "hierarchy" &&
+    isLinkedInCompany &&
+    companyResult
+      ? buildCompanyHierarchy(companyResult.company, companyResult.employees)
+      : null;
+  if (companyHierarchy) {
+    flowHint = companyHierarchy.flow;
+    for (const band of companyHierarchy.bands) {
+      legendItems.push({
+        id: band.id,
+        color: band.color,
+        label: `${band.label} (${band.count})`,
+      });
+    }
+  } else if (footerTab === "map" && view === "map") {
+    if (isLinkedInCompany && companyResult) {
+      flowHint = "Company → employees (hub and spoke)";
+    } else if (platform === "spotify" && spotifyResult) {
+      flowHint = "You → playlists → genres ← playlists ← friend";
+    } else if (platform === "tiktok" && tiktokResult) {
+      flowHint = "You → videos → hashtags";
+    } else if (platform === "conference" && conferenceResult) {
+      for (const company of conferenceResult.companies.slice(0, 8)) {
+        legendItems.push({
+          id: company.id,
+          color: company.color,
+          label: `${company.label}${company.count > 1 ? ` (${company.count})` : ""}`,
+        });
+      }
+      legendItems.push({
+        id: "unmatched",
+        color: "#6B7280",
+        label: "Unmatched guests",
+      });
+    } else if (activeData && !isAlternatePlatform) {
+      legendItems.push({ id: "you", color: SELF_COLOR, label: "You" });
+      if (showInstagramEmployees) {
+        legendItems.push({
+          id: "employees",
+          color: INSTAGRAM_EMPLOYEE_COLOR,
+          label: "Employees — tap to open",
+        });
+      }
+      for (const cluster of activeData.graph.circles) {
+        legendItems.push({
+          id: String(cluster.id),
+          color: cluster.color,
+          label: `${cluster.label}${cluster.size > 0 ? ` (${cluster.size})` : ""}`,
+        });
+      }
+      legendItems.push({
+        id: "else",
+        color: UNCLUSTERED_COLOR,
+        label: "Everyone else",
+      });
+    }
+  }
+
+  const searchPlatform =
+    platform === "instagram" ||
+    platform === "linkedin" ||
+    platform === "facebook"
+      ? platform
+      : null;
+  const viewingAnalytics = footerTab === "analytics";
+  const chromePlatform = viewingAnalytics ? analyticsPlatform : platform;
 
   return (
-    <main className="relative min-h-[100dvh] bg-background bg-grid">
-      {/* Top bar */}
-      <header className="absolute left-0 right-0 top-0 z-20 flex items-center justify-between gap-2 px-3 pt-[max(0.75rem,env(safe-area-inset-top))] sm:px-5 sm:pt-4">
-        <Link
-          href="/"
-          className="flex min-h-[40px] items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/70 backdrop-blur transition hover:bg-white/10"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span className="sm:hidden">Back</span>
-          <span className="hidden sm:inline">New search</span>
-        </Link>
-        <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5">
-          {footerTab === "map" &&
-            platform !== "spotify" &&
-            platform !== "tiktok" &&
-            !isLinkedInCompany && (
-            <button
-              type="button"
-              onClick={() => {
-                reopenGraphHowToRead();
-                setHowToOpen(true);
-              }}
-              aria-label="How to read this graph"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/55 backdrop-blur transition hover:bg-white/10 hover:text-white/80 sm:hidden"
-            >
-              <HelpCircle className="h-4 w-4" />
-            </button>
-          )}
-          {showPinnedBadge && (
-            <span className="flex items-center gap-1.5 rounded-full border border-ig-blue/30 bg-ig-blue/10 px-2.5 py-1.5 text-[11px] text-ig-blue backdrop-blur sm:px-3 sm:text-xs">
-              <Pin className="h-3.5 w-3.5" />
-              <span className="sm:hidden">Pinned</span>
-              <span className="hidden sm:inline">Pinned snapshot</span>
-            </span>
-          )}
-          {showDemoBadge && (
-            <span className="flex items-center gap-1.5 rounded-full border border-ig-orange/30 bg-ig-orange/10 px-2.5 py-1.5 text-[11px] text-ig-orange backdrop-blur sm:px-3 sm:text-xs">
-              <FlaskConical className="h-3.5 w-3.5" /> Demo
-            </span>
-          )}
-          {showCachedBadge && (
-            <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] text-white/50 backdrop-blur sm:px-3 sm:text-xs">
-              Cached
-            </span>
-          )}
-        </div>
-      </header>
-
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-1.5 pb-[calc(5.5rem+env(safe-area-inset-bottom))] pt-[calc(4.25rem+env(safe-area-inset-top))] sm:px-4 sm:pt-20">
-        {footerTab === "map" &&
+    <main
+      className={`flex h-[calc(100dvh-2.25rem)] flex-col overflow-hidden ${
+        footerTab === "profile"
+          ? "bg-background text-white"
+          : "bg-[#F3EEE4] text-[#161A17]"
+      }`}
+    >
+      {footerTab !== "chat" ? (
+        <GraphChrome
+          showLinkedInModes={chromePlatform === "linkedin" && hasLinkedIn}
+        linkedinMode={viewingAnalytics ? analyticsLinkedinMode : linkedinMode}
+        onLinkedinMode={(mode) => {
+          if (viewingAnalytics) {
+            setAnalyticsLinkedinMode(mode);
+            return;
+          }
+          selectLinkedinMode(mode);
+        }}
+        linkedinPeople={linkedinModePeople}
+        linkedinPersonId={linkedinPersonId}
+        hasLinkedInCompany={hasCompany}
+        showInstagramModes={chromePlatform === "instagram" && hasInstagram}
+        instagramMode={
+          viewingAnalytics ? analyticsInstagramMode : instagramMode
+        }
+        onInstagramMode={(mode) => {
+          if (viewingAnalytics) {
+            setAnalyticsInstagramMode(mode);
+            return;
+          }
+          selectInstagramMode(mode);
+        }}
+        instagramPeople={instagramModePeople}
+        instagramPersonId={
+          viewingAnalytics ? analyticsInstagramPersonId : instagramPersonId
+        }
+        onInstagramPerson={(id) => {
+          if (viewingAnalytics) {
+            setAnalyticsInstagramPersonId(id);
+            setAnalyticsInstagramMode("person");
+            return;
+          }
+          selectInstagramPerson(id);
+        }}
+        hasInstagramCompany={hasInstagramCompany}
+        showRoster={!viewingAnalytics && (showCompanyViews || showConferenceViews)}
+        rosterActive={view === "roster"}
+        onToggleRoster={() => {
+          setView(view === "roster" ? "map" : "roster");
+          selectFooterTab("map");
+        }}
+        showHierarchy={
+          !viewingAnalytics &&
+          showCompanyViews &&
+          (companyResult?.employees.length ?? 0) > 0
+        }
+        hierarchyActive={view === "hierarchy"}
+        onToggleHierarchy={() => {
+          setView(view === "hierarchy" ? "map" : "hierarchy");
+          selectFooterTab("map");
+        }}
+        section={footerTab}
+        showSearch={
+          !isLinkedInCompany &&
+          !isAlternatePlatform &&
+          Boolean(activeData) &&
+          view === "map"
+        }
+        searchNodes={mapGraph?.nodes ?? []}
+        searchSelectedId={selected?.id ?? null}
+        onSearchSelect={selectSocialGraphNode}
+        searchPlatform={searchPlatform}
+        showDepth={
+          !isAlternatePlatform && Boolean(activeData) && view === "map"
+        }
+        depth={graphDepth}
+        onDepth={setGraphDepth}
+        fullscreen={graphFullscreen}
+        onToggleFullscreen={() => setGraphFullscreen((open) => !open)}
+        howTo={
           platform !== "spotify" &&
           platform !== "tiktok" &&
-          !isLinkedInCompany && (
-          <GraphHowToRead
-            forceOpen={howToOpen}
-            onDismiss={() => setHowToOpen(false)}
-            variant={isConference ? "conference" : "social"}
-          />
-        )}
-
-        <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:min-h-0">
-        {/* Graph + selection panels (Map tab) */}
-        <div className="flex flex-col gap-3 sm:gap-4 lg:min-h-0">
+          !isLinkedInCompany
+            ? isConference
+              ? "conference"
+              : "social"
+            : null
+        }
+        legend={legendItems}
+        flowHint={flowHint}
+      />
+      ) : null}
+      <div className="relative flex-1 min-h-0">
         <div
           ref={graphSectionRef}
-          className={`scroll-mt-[calc(4.25rem+env(safe-area-inset-top))] relative flex flex-col ${
-            footerTab !== "map" ? "hidden" : ""
-          } ${
-            view === "roster"
-              ? "min-h-[min(78dvh,720px)]"
-              : "h-[calc(100dvh-10rem-env(safe-area-inset-top)-env(safe-area-inset-bottom))] min-h-[320px] sm:min-h-[520px] lg:h-auto lg:min-h-[620px]"
-          }`}
+          className={`relative h-full min-h-0 ${footerTab !== "map" ? "hidden" : ""}`}
         >
           <motion.div
             ref={graphWrapRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className={`relative flex h-full flex-col overflow-hidden bg-gradient-to-b from-black/50 to-black/70 ${
-              graphFullscreen
-                ? "fixed inset-0 z-50 h-[100dvh] min-h-[100dvh] rounded-none border-0"
-                : `h-full rounded-xl border border-white/10 sm:min-h-[520px] sm:rounded-3xl lg:min-h-[620px] ${
-                    view === "roster" ? "min-h-[min(78dvh,720px)]" : ""
-                  }`
+            className={`relative h-full overflow-hidden bg-[#F3EEE4] ${
+              graphFullscreen ? "fixed inset-0 z-[60] h-[100dvh] bg-[#F3EEE4]" : ""
             }`}
           >
-            {/* Mobile: platform toggles above graph */}
-            {!graphFullscreen ? (
-            <div className="flex shrink-0 flex-col gap-1.5 border-b border-white/10 px-1.5 py-1.5 sm:hidden">
-              <div className="flex flex-wrap items-center gap-1">
-                {visiblePlatformTabs.map(({ id, label, Icon }) => {
-                  const available =
-                    id === "spotify"
-                      ? hasSpotify
-                      : id === "tiktok"
-                        ? hasTikTok
-                        : id === "conference"
-                          ? hasConference
-                        : id === "linkedin"
-                          ? hasLinkedIn
-                          : id === "facebook"
-                            ? hasFacebook
-                            : id === "instagram"
-                              ? hasInstagram
-                              : Boolean(platformResults[id]);
-                  const active = platform === id;
-                  return (
-                    <button
-                      key={id}
-                      type="button"
-                      title={available ? label : `${label} snapshot not loaded yet`}
-                      onClick={() => {
-                        setPlatform(id);
-                        setSelected(null);
-                        setSpotifySelected(null);
-                        setCompanySelected(null);
-                        setTiktokSelected(null);
-                        setConferenceSelected(null);
-                        setView("map");
-                        setStatsView("summary");
-                        if (id === "linkedin") {
-                          setLinkedinMode(hasLinkedInPerson ? "person" : "company");
-                        }
-                        if (id === "instagram") {
-                          setInstagramMode(
-                            hasInstagramCompany ? "company" : "person",
-                          );
-                        }
-                      }}
-                      className={`${TOOLBAR_TAB} min-w-[40px] justify-center ${
-                        active
-                          ? id === "linkedin"
-                            ? LINKEDIN_TAB_ACTIVE
-                            : TOOLBAR_TAB_ACTIVE
-                          : available
-                            ? TOOLBAR_TAB_AVAILABLE
-                            : TOOLBAR_TAB_DISABLED
-                      }`}
-                    >
-                      <Icon className="h-4 w-4 shrink-0" />
-                    </button>
-                  );
-                })}
-              </div>
-              {(platform === "linkedin" && hasLinkedIn) ||
-              showCompanyViews ||
-              showConferenceViews ||
-              (platform === "instagram" && hasInstagram) ? (
-                <div className="flex flex-wrap items-center gap-2">
-                  {platform === "instagram" && hasInstagram ? (
-                    <InstagramModeControls
-                      mode={instagramMode}
-                      onModeChange={selectInstagramMode}
-                      people={instagramModePeople}
-                      personId={instagramPersonId}
-                      onPersonIdChange={selectInstagramPerson}
-                      hasCompany={hasInstagramCompany}
-                      avatarPlatform="instagram"
-                    />
-                  ) : null}
-                  {platform === "linkedin" && hasLinkedIn ? (
-                    <InstagramModeControls
-                      mode={linkedinMode}
-                      onModeChange={selectLinkedinMode}
-                      people={linkedinModePeople}
-                      personId={linkedinPersonId}
-                      onPersonIdChange={() => selectLinkedinMode("person")}
-                      hasCompany={hasCompany}
-                      avatarPlatform="linkedin"
-                    />
-                  ) : null}
-                  {showCompanyViews || showConferenceViews ? (
-                    <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
-                      <button
-                        type="button"
-                        onClick={() => setView(view === "roster" ? "map" : "roster")}
-                        className={`${TOOLBAR_TAB} ${
-                          view === "roster" ? TOOLBAR_TAB_ACTIVE : TOOLBAR_TAB_AVAILABLE
-                        }`}
-                      >
-                        <List className="h-3.5 w-3.5" />
-                        Roster
-                      </button>
-                    </div>
-                  ) : null}
-                </div>
-              ) : null}
-            </div>
-            ) : null}
-
-            <div className="hidden shrink-0 flex-col gap-2 border-b border-white/10 px-3 py-2 sm:flex">
-              <div className="flex flex-wrap items-center gap-1">
-                {visiblePlatformTabs.map(({ id, label, Icon }) => {
-                  const available =
-                    id === "spotify"
-                      ? hasSpotify
-                      : id === "tiktok"
-                        ? hasTikTok
-                        : id === "conference"
-                          ? hasConference
-                        : id === "linkedin"
-                          ? hasLinkedIn
-                          : id === "facebook"
-                            ? hasFacebook
-                            : id === "instagram"
-                              ? hasInstagram
-                              : Boolean(platformResults[id]);
-                  const active = platform === id;
-                  return (
-                    <button
-                      key={id}
-                      type="button"
-                      title={available ? label : `${label} snapshot not loaded yet`}
-                      onClick={() => {
-                        setPlatform(id);
-                        setSelected(null);
-                        setSpotifySelected(null);
-                        setCompanySelected(null);
-                        setTiktokSelected(null);
-                        setConferenceSelected(null);
-                        setView("map");
-                        setStatsView("summary");
-                        if (id === "linkedin") {
-                          setLinkedinMode(hasLinkedInPerson ? "person" : "company");
-                        }
-                        if (id === "instagram") {
-                          setInstagramMode(
-                            hasInstagramCompany ? "company" : "person",
-                          );
-                        }
-                      }}
-                      className={`${TOOLBAR_TAB} ${
-                        active
-                          ? id === "linkedin"
-                            ? LINKEDIN_TAB_ACTIVE
-                            : TOOLBAR_TAB_ACTIVE
-                          : available
-                            ? TOOLBAR_TAB_AVAILABLE
-                            : TOOLBAR_TAB_DISABLED
-                      }`}
-                    >
-                      <Icon className="h-3.5 w-3.5 shrink-0" />
-                      <span>{label}</span>
-                    </button>
-                  );
-                })}
-              </div>
-              {(platform === "linkedin" && hasLinkedIn) ||
-              showCompanyViews ||
-              showConferenceViews ||
-              (platform === "instagram" && hasInstagram) ? (
-                <div className="flex flex-wrap items-center gap-2">
-                  {platform === "instagram" && hasInstagram ? (
-                    <InstagramModeControls
-                      mode={instagramMode}
-                      onModeChange={selectInstagramMode}
-                      people={instagramModePeople}
-                      personId={instagramPersonId}
-                      onPersonIdChange={selectInstagramPerson}
-                      hasCompany={hasInstagramCompany}
-                      avatarPlatform="instagram"
-                    />
-                  ) : null}
-                  {platform === "linkedin" && hasLinkedIn ? (
-                    <InstagramModeControls
-                      mode={linkedinMode}
-                      onModeChange={selectLinkedinMode}
-                      people={linkedinModePeople}
-                      personId={linkedinPersonId}
-                      onPersonIdChange={() => selectLinkedinMode("person")}
-                      hasCompany={hasCompany}
-                      avatarPlatform="linkedin"
-                    />
-                  ) : null}
-                  {showCompanyViews || showConferenceViews ? (
-                    <div className="inline-flex rounded-lg border border-white/10 bg-black/30 p-0.5">
-                      <button
-                        type="button"
-                        onClick={() => setView(view === "roster" ? "map" : "roster")}
-                        className={`${TOOLBAR_TAB} ${
-                          view === "roster" ? TOOLBAR_TAB_ACTIVE : TOOLBAR_TAB_AVAILABLE
-                        }`}
-                      >
-                        <List className="h-3.5 w-3.5" />
-                        Roster
-                      </button>
-                    </div>
-                  ) : null}
-                </div>
-              ) : null}
-            </div>
-
-            <div className="relative min-h-[260px] flex-1 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04)_0%,transparent_55%)]">
-              {/* Top overlay controls — single row so search + exit stay aligned */}
-              <div
-                className={`pointer-events-none absolute inset-x-0 z-30 flex items-center gap-2 ${
-                  graphFullscreen
-                    ? "top-0 px-3 pt-[max(0.75rem,env(safe-area-inset-top))]"
-                    : "top-0 px-1.5 pt-1.5 sm:px-3 sm:pt-3"
-                }`}
+            {graphFullscreen ? (
+              <button
+                type="button"
+                onClick={() => setGraphFullscreen(false)}
+                aria-label="Exit full screen"
+                className="absolute right-3 top-[max(0.75rem,env(safe-area-inset-top))] z-30 flex h-9 w-9 items-center justify-center rounded-full border border-[#D5CDBF] bg-[#FBF8F2] text-[#161A17] transition hover:bg-[#E7E0D4]"
               >
-                {!isLinkedInCompany &&
-                !isAlternatePlatform &&
-                activeData &&
-                view === "map" ? (
-                  <div className="pointer-events-auto min-w-0 flex-1 sm:max-w-[280px]">
-                    <GraphNodeSearch
-                      nodes={mapGraph?.nodes ?? []}
-                      selectedId={selected?.id ?? null}
-                      onSelect={selectSocialGraphNode}
-                      platform={platform}
-                    />
-                  </div>
-                ) : (
-                  <div className="min-w-0 flex-1" />
-                )}
-                <button
-                  type="button"
-                  onClick={() =>
-                    graphFullscreen
-                      ? setGraphFullscreen(false)
-                      : setGraphFullscreen(true)
-                  }
-                  aria-label={graphFullscreen ? "Exit full screen" : "Full screen"}
-                  className="pointer-events-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-0 bg-black/55 text-white/75 shadow-[0_4px_20px_rgba(0,0,0,0.35)] ring-1 ring-white/10 backdrop-blur-md transition hover:bg-black/70 hover:text-white active:scale-95"
-                >
-                  {graphFullscreen ? (
-                    <X className="h-4 w-4" />
-                  ) : (
-                    <Maximize2 className="h-4 w-4" />
-                  )}
-                </button>
-              </div>
-
+                <X className="h-4 w-4" />
+              </button>
+            ) : null}
+            <div
+              className={`map-toolbar pointer-events-none absolute inset-x-0 z-30 flex items-center gap-2 px-3 ${
+                graphFullscreen
+                  ? "top-[max(0.75rem,env(safe-area-inset-top))]"
+                  : "top-3"
+              }`}
+            >
+              {platform === "instagram" && hasInstagram ? (
+                <div className="pointer-events-auto relative z-10 shrink-0">
+                  <InstagramModeControls
+                    tone="glass"
+                    mode={instagramMode}
+                    onModeChange={selectInstagramMode}
+                    people={instagramModePeople}
+                    personId={instagramPersonId}
+                    onPersonIdChange={selectInstagramPerson}
+                    hasCompany={hasInstagramCompany}
+                    avatarPlatform="instagram"
+                  />
+                </div>
+              ) : null}
+              {platform === "linkedin" && hasLinkedIn ? (
+                <div className="pointer-events-auto relative z-10 shrink-0">
+                  <InstagramModeControls
+                    tone="glass"
+                    mode={linkedinMode}
+                    onModeChange={selectLinkedinMode}
+                    people={linkedinModePeople}
+                    personId={linkedinPersonId}
+                    onPersonIdChange={() => selectLinkedinMode("person")}
+                    hasCompany={hasCompany}
+                    avatarPlatform="linkedin"
+                  />
+                </div>
+              ) : null}
+              {view === "map" &&
+              !isLinkedInCompany &&
+              !isAlternatePlatform &&
+              activeData ? (
+                <div className="map-toolbar-search pointer-events-auto min-w-0 flex-1">
+                  <GraphNodeSearch
+                    nodes={mapGraph?.nodes ?? []}
+                    selectedId={selected?.id ?? null}
+                    onSelect={selectSocialGraphNode}
+                    platform={searchPlatform}
+                    variant="glass"
+                  />
+                </div>
+              ) : null}
+            </div>
+            <div className="absolute inset-0">
               {isLinkedInCompany ? (
                 companyResult ? (
                   view === "roster" ? (
@@ -1520,6 +1428,24 @@ export default function GraphResult({
                       selectedId={companySelected?.id ?? null}
                       onSelect={setCompanySelected}
                       className="absolute inset-0"
+                    />
+                  ) : view === "hierarchy" ? (
+                    <CompanyHierarchyGraph
+                      key={`hierarchy-${companyResult.company.id}`}
+                      company={companyResult.company}
+                      employees={companyResult.employees}
+                      className="absolute inset-0"
+                      selectedId={companySelected?.id ?? null}
+                      onSelect={(employeeId) => {
+                        if (!employeeId) {
+                          setCompanySelected(null);
+                          return;
+                        }
+                        setCompanySelected(
+                          companyResult.employees.find((emp) => emp.id === employeeId) ??
+                            null,
+                        );
+                      }}
                     />
                   ) : (
                     <>
@@ -1539,23 +1465,15 @@ export default function GraphResult({
                           setCompanySelected(emp ?? null);
                         }}
                       />
-                      <div className="pointer-events-none absolute bottom-4 right-4 hidden max-w-[200px] flex-col gap-1.5 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur sm:flex">
-                        <div className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
-                          Flow
-                        </div>
-                        <span className="text-[10px] leading-relaxed text-white/50">
-                          Company → employees (hub and spoke)
-                        </span>
-                      </div>
                     </>
                   )
                 ) : (
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
                     <CompanyIcon className="h-8 w-8 text-[#0A66C2]" />
-                    <div className="text-sm font-medium text-white/80">
+                    <div className="text-sm font-medium text-[#161A17]">
                       No company snapshot yet
                     </div>
-                    <p className="max-w-sm text-xs leading-relaxed text-white/40">
+                    <p className="max-w-sm text-xs leading-relaxed text-[#5E665F]">
                       Import a LinkedIn company employee export to unlock company
                       views here.
                     </p>
@@ -1571,22 +1489,14 @@ export default function GraphResult({
                       selectedId={spotifySelected?.id ?? null}
                       onSelect={setSpotifySelected}
                     />
-                    <div className="pointer-events-none absolute bottom-4 right-4 hidden max-w-[200px] flex-col gap-1.5 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur sm:flex">
-                      <div className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
-                        Flow
-                      </div>
-                      <span className="text-[10px] leading-relaxed text-white/50">
-                        You → playlists → genres ← playlists ← friend
-                      </span>
-                    </div>
                   </>
                 ) : (
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
                     <SpotifyIcon className="h-8 w-8 text-[#1DB954]" />
-                    <div className="text-sm font-medium text-white/80">
+                    <div className="text-sm font-medium text-[#161A17]">
                       No Spotify snapshot yet
                     </div>
-                    <p className="max-w-sm text-xs leading-relaxed text-white/40">
+                    <p className="max-w-sm text-xs leading-relaxed text-[#5E665F]">
                       Import a Spotify profile + playlist scrape to unlock taste
                       views here.
                     </p>
@@ -1602,22 +1512,14 @@ export default function GraphResult({
                       selectedId={tiktokSelected?.id ?? null}
                       onSelect={setTiktokSelected}
                     />
-                    <div className="pointer-events-none absolute bottom-4 right-4 hidden max-w-[200px] flex-col gap-1.5 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur sm:flex">
-                      <div className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
-                        Flow
-                      </div>
-                      <span className="text-[10px] leading-relaxed text-white/50">
-                        You → videos → hashtags
-                      </span>
-                    </div>
                   </>
                 ) : (
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
                     <TikTokIcon className="h-8 w-8 text-[#FE2C55]" />
-                    <div className="text-sm font-medium text-white/80">
+                    <div className="text-sm font-medium text-[#161A17]">
                       No TikTok snapshot yet
                     </div>
-                    <p className="max-w-sm text-xs leading-relaxed text-white/40">
+                    <p className="max-w-sm text-xs leading-relaxed text-[#5E665F]">
                       Import a TikTok profile + posts scrape to unlock visibility
                       views here.
                     </p>
@@ -1650,39 +1552,15 @@ export default function GraphResult({
                           setConferenceSelected(person ?? null);
                         }}
                       />
-                      <div className="pointer-events-none absolute bottom-4 right-4 hidden max-w-[220px] flex-col gap-1.5 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur sm:flex">
-                        <div className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
-                          Groups
-                        </div>
-                        {conferenceResult.companies.slice(0, 6).map((company) => (
-                          <span
-                            key={company.id}
-                            className="flex items-center gap-1.5 text-xs text-white/55"
-                          >
-                            <span
-                              className="h-2.5 w-2.5 shrink-0 rounded-sm ring-1 ring-white/10"
-                              style={{ backgroundColor: company.color }}
-                            />
-                            <span className="truncate text-white/70">
-                              {company.label}
-                              {company.count > 1 ? ` (${company.count})` : ""}
-                            </span>
-                          </span>
-                        ))}
-                        <span className="flex items-center gap-1.5 text-xs text-white/55">
-                          <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[#6B7280] ring-1 ring-white/10" />
-                          <span className="text-white/70">Unmatched guests</span>
-                        </span>
-                      </div>
                     </>
                   )
                 ) : (
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
                     <ConferenceIcon className="h-8 w-8 text-[#E11D48]" />
-                    <div className="text-sm font-medium text-white/80">
+                    <div className="text-sm font-medium text-[#161A17]">
                       No conference snapshot yet
                     </div>
-                    <p className="max-w-sm text-xs leading-relaxed text-white/40">
+                    <p className="max-w-sm text-xs leading-relaxed text-[#5E665F]">
                       Import a Luma guest list + LinkedIn people-search export to
                       unlock this graph.
                     </p>
@@ -1697,7 +1575,7 @@ export default function GraphResult({
                   ) : (
                     <InstagramIcon className="h-8 w-8 text-white/70" />
                   )}
-                  <div className="text-sm font-medium text-white/80">
+                  <div className="text-sm font-medium text-[#161A17]">
                     No {PLATFORM_LABEL[platform]}
                     {platform === "linkedin" && linkedinMode === "person"
                       ? " person"
@@ -1708,133 +1586,73 @@ export default function GraphResult({
                         : ""}{" "}
                     snapshot yet
                   </div>
-                  <p className="max-w-sm text-xs leading-relaxed text-white/40">
+                  <p className="max-w-sm text-xs leading-relaxed text-[#5E665F]">
                     Switch to a platform tab that has a loaded snapshot to explore
                     the graph.
                   </p>
                 </div>
               ) : (
                 <>
-                  <GraphVisualizer
-                    key={`graph-${platform}-${activeData.profile.username}`}
-                    data={mapGraph ?? activeData.graph}
-                    className="absolute inset-0 max-sm:touch-pan-y sm:touch-none"
-                    selectedId={selected?.id ?? null}
-                    onSelect={selectSocialGraphNode}
-                    labelStyle={platform === "instagram" ? "handles" : "auto"}
-                    platform={
-                      platform === "instagram" ||
-                      platform === "linkedin" ||
-                      platform === "facebook"
-                        ? platform
-                        : null
-                    }
-                    featuredIds={
-                      showInstagramEmployees ? instagramEmployeeIds : undefined
-                    }
-                    mutedFeaturedIds={
-                      showInstagramEmployees
-                        ? instagramUnavailableEmployeeIds
-                        : undefined
-                    }
-                    hintText={
-                      showInstagramEmployees
-                        ? "Tap an employee to open their graph"
-                        : undefined
-                    }
-                  />
+                  {graphDepth === "3d" ? (
+                    <GraphVisualizer3D
+                      key={`graph3d-${platform}-${activeData.profile.username}`}
+                      data={mapGraph ?? activeData.graph}
+                      className="absolute inset-0"
+                      selectedId={selected?.id ?? null}
+                      onSelect={selectSocialGraphNode}
+                      labelStyle={platform === "instagram" ? "handles" : "auto"}
+                      platform={
+                        platform === "instagram" ||
+                        platform === "linkedin" ||
+                        platform === "facebook"
+                          ? platform
+                          : null
+                      }
+                      featuredIds={
+                        showInstagramEmployees ? instagramEmployeeIds : undefined
+                      }
+                      mutedFeaturedIds={
+                        showInstagramEmployees
+                          ? instagramUnavailableEmployeeIds
+                          : undefined
+                      }
+                      hintText={
+                        showInstagramEmployees
+                          ? "Tap an employee to open their graph"
+                          : undefined
+                      }
+                    />
+                  ) : (
+                    <GraphVisualizer
+                      key={`graph-${platform}-${activeData.profile.username}`}
+                      data={mapGraph ?? activeData.graph}
+                      className="absolute inset-0 max-sm:touch-pan-y sm:touch-none"
+                      selectedId={selected?.id ?? null}
+                      onSelect={selectSocialGraphNode}
+                      labelStyle={platform === "instagram" ? "handles" : "auto"}
+                      platform={
+                        platform === "instagram" ||
+                        platform === "linkedin" ||
+                        platform === "facebook"
+                          ? platform
+                          : null
+                      }
+                      featuredIds={
+                        showInstagramEmployees ? instagramEmployeeIds : undefined
+                      }
+                      mutedFeaturedIds={
+                        showInstagramEmployees
+                          ? instagramUnavailableEmployeeIds
+                          : undefined
+                      }
+                      hintText={
+                        showInstagramEmployees
+                          ? "Tap an employee to open their graph"
+                          : undefined
+                      }
+                    />
+                  )}
 
-                  {/* Mobile: compact horizontal groups strip */}
-                  <div className="pointer-events-none absolute inset-x-1.5 bottom-1.5 z-10 flex gap-1 overflow-x-auto rounded-md border border-white/10 bg-black/65 px-1.5 py-1 backdrop-blur sm:hidden">
-                    <span className="flex shrink-0 items-center gap-1 text-[9px] text-white/65">
-                      <span
-                        className="h-2 w-2 rounded-full"
-                        style={{ backgroundColor: SELF_COLOR }}
-                      />
-                      You
-                    </span>
-                    {showInstagramEmployees ? (
-                      <span className="flex shrink-0 items-center gap-1 text-[10px] text-white/55">
-                        <span
-                          className="h-2 w-2 rounded-full ring-1"
-                          style={{
-                            backgroundColor: INSTAGRAM_EMPLOYEE_COLOR,
-                            boxShadow: `0 0 0 1px ${INSTAGRAM_EMPLOYEE_COLOR}`,
-                          }}
-                        />
-                        Employees
-                      </span>
-                    ) : null}
-                    {activeData.graph.circles.map((cluster) => (
-                      <span
-                        key={cluster.id}
-                        className="flex shrink-0 items-center gap-1 text-[10px] text-white/55"
-                      >
-                        <span
-                          className="h-2 w-2 rounded-full ring-1 ring-white/10"
-                          style={{ backgroundColor: cluster.color }}
-                        />
-                        <span className="max-w-[7rem] truncate text-white/70">
-                          {cluster.label}
-                        </span>
-                      </span>
-                    ))}
-                    <span className="flex shrink-0 items-center gap-1 text-[10px] text-white/55">
-                      <span
-                        className="h-2 w-2 rounded-full ring-1 ring-white/10"
-                        style={{ backgroundColor: UNCLUSTERED_COLOR }}
-                      />
-                      Else
-                    </span>
-                  </div>
-
-                  {/* Desktop: stacked groups legend */}
-                  <div className="pointer-events-none absolute bottom-4 right-4 hidden max-w-[220px] flex-col gap-1.5 rounded-xl border border-white/10 bg-black/40 px-3 py-2 backdrop-blur sm:flex">
-                    <div className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
-                      Groups
-                    </div>
-                    <span className="flex items-center gap-1.5 text-xs text-white/60">
-                      <span
-                        className="h-2.5 w-2.5 rounded-full"
-                        style={{ backgroundColor: SELF_COLOR }}
-                      />
-                      You
-                    </span>
-                    {showInstagramEmployees ? (
-                      <span className="flex items-center gap-1.5 text-xs text-white/55">
-                        <span
-                          className="h-2.5 w-2.5 shrink-0 rounded-full ring-1"
-                          style={{
-                            backgroundColor: INSTAGRAM_EMPLOYEE_COLOR,
-                            boxShadow: `0 0 0 1px ${INSTAGRAM_EMPLOYEE_COLOR}`,
-                          }}
-                        />
-                        <span className="text-white/70">Employees — tap to open</span>
-                      </span>
-                    ) : null}
-                    {activeData.graph.circles.map((cluster) => (
-                      <span
-                        key={cluster.id}
-                        className="flex items-center gap-1.5 text-xs text-white/55"
-                      >
-                        <span
-                          className="h-2.5 w-2.5 shrink-0 rounded-full ring-1 ring-white/10"
-                          style={{ backgroundColor: cluster.color }}
-                        />
-                        <span className="truncate text-white/70">
-                          {cluster.label}
-                          {cluster.size > 0 ? ` (${cluster.size})` : ""}
-                        </span>
-                      </span>
-                    ))}
-                    <span className="flex items-center gap-1.5 text-xs text-white/55">
-                      <span
-                        className="h-2.5 w-2.5 shrink-0 rounded-full ring-1 ring-white/10"
-                        style={{ backgroundColor: UNCLUSTERED_COLOR }}
-                      />
-                      <span className="text-white/70">Everyone else</span>
-                    </span>
-                  </div>
                 </>
               )}
             </div>
@@ -1874,7 +1692,7 @@ export default function GraphResult({
         {/* Analytics / Chat / Profile — Chat stays mounted so the thread survives Map switches */}
         <div
           ref={mobileTabPanelRef}
-          className={`mx-auto w-full max-w-5xl scroll-mt-3 ${footerTab === "map" ? "hidden" : ""}`}
+          className={`h-full overflow-y-auto ${footerTab === "map" ? "hidden" : ""}`}
         >
             {footerTab === "analytics" && (
               <AnalyticsPanel
@@ -1884,32 +1702,17 @@ export default function GraphResult({
                 tiktokResult={tiktokResult}
                 conferenceResult={conferenceResult}
                 instagramPeople={instagramPeople}
-                instagramMode={instagramMode}
-                onInstagramModeChange={selectInstagramMode}
-                instagramPersonId={instagramPersonId}
-                onInstagramPersonIdChange={selectInstagramPerson}
+                instagramMode={analyticsInstagramMode}
+                onInstagramModeChange={setAnalyticsInstagramMode}
+                instagramPersonId={analyticsInstagramPersonId}
+                onInstagramPersonIdChange={setAnalyticsInstagramPersonId}
+                linkedinMode={analyticsLinkedinMode}
+                onLinkedinModeChange={setAnalyticsLinkedinMode}
                 platform={analyticsPlatform}
                 onPlatformChange={setAnalyticsPlatform}
                 range={analyticsRange}
                 onRangeChange={setAnalyticsRange}
-                view={statsView}
-                onViewChange={setStatsView}
-                gridContent={
-                  analyticsGridData ? (
-                    <div className="flex min-h-[78dvh] flex-col gap-3 sm:min-h-[82dvh]">
-                      <div className="relative min-h-[68dvh] flex-1 overflow-hidden rounded-xl border border-white/10 bg-black/40 sm:min-h-[72dvh]">
-                        <EngagementGrid
-                          posts={analyticsGridData.posts!}
-                          nodes={analyticsGridNodes}
-                          selectedId={selected?.id ?? null}
-                          onSelect={selectSocialGraphNode}
-                          className="absolute inset-0"
-                        />
-                      </div>
-                    </div>
-                  ) : null
-                }
-                onSelectUsername={selectMemberByUsername}
+                onSelectUsername={selectAnalyticsPerson}
                 selectedUsername={selected?.id ?? selected?.label ?? null}
                 onSelectTikTokVideoId={selectAnalyticsTikTokVideo}
                 onSelectTikTokHashtag={selectAnalyticsTikTokHashtag}
@@ -1922,7 +1725,7 @@ export default function GraphResult({
               />
             )}
 
-            <div className={footerTab === "chat" ? "" : "hidden"}>
+            <div className={footerTab === "chat" ? "h-full overflow-hidden" : "hidden"}>
               <ChatPanel
                 key={handle}
                 handle={handle}
@@ -1930,47 +1733,25 @@ export default function GraphResult({
                 sources={chatSources}
                 budget={requestedBudget}
                 onSelectUsername={selectMemberByUsername}
+                onClose={() => selectFooterTab("map")}
               />
             </div>
 
-            {footerTab === "profile" && (
-              <ProfilePanel
-                socialResults={platformResults}
-                companyResult={companyResult}
-                tiktokResult={tiktokResult}
-                spotifyResult={spotifyResult}
-                conferenceResult={conferenceResult}
-                demo={handle === DEMO_HANDLE}
-                onViewGraph={viewProfileGraph}
-              />
-            )}
-        </div>
-
-        </div>
+            {footerTab === "profile" ? <ProfileComingSoon /> : null}
         </div>
       </div>
 
       {/* Node profile modals (portal overlays) */}
-      {isLinkedInCompany ? (
-        <CompanyEmployeePanel
-          employee={companySelected}
-          onClose={() => setCompanySelected(null)}
-        />
-      ) : isConference ? (
-        <ConferenceAttendeePanel
-          attendee={conferenceSelected}
-          onClose={() => setConferenceSelected(null)}
-        />
-      ) : (
+      {selected ? (
         <PersonPanel
           node={selected}
           proximityRing={
-            selected && selected.circle >= 0
+            selected.circle >= 0
               ? PROXIMITY_RINGS[selected.circle]
               : undefined
           }
           friendCluster={
-            selected && selected.clusterId != null && selected.clusterId >= 0
+            selected.clusterId != null && selected.clusterId >= 0
               ? (footerTab === "analytics"
                   ? analyticsCircleById
                   : circleById
@@ -1987,14 +1768,24 @@ export default function GraphResult({
                 : null
               : isAlternatePlatform
                 ? null
-                : platform
+                : platform === "linkedin" ||
+                    platform === "instagram" ||
+                    platform === "facebook"
+                  ? platform
+                  : null
           }
         />
-      )}
-
-      {!graphFullscreen && (
-        <GraphFooterTabs active={footerTab} onSelect={selectFooterTab} />
-      )}
+      ) : isLinkedInCompany ? (
+        <CompanyEmployeePanel
+          employee={companySelected}
+          onClose={() => setCompanySelected(null)}
+        />
+      ) : isConference ? (
+        <ConferenceAttendeePanel
+          attendee={conferenceSelected}
+          onClose={() => setConferenceSelected(null)}
+        />
+      ) : null}
     </main>
   );
 }

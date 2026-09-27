@@ -14,7 +14,7 @@ Social platforms (LinkedIn person, Instagram, Facebook) share a force-directed p
 
 Search the graph, go fullscreen, and (LinkedIn company) switch **Map** vs a searchable **Roster**.
 
-LinkedIn and Instagram also have a **Person / Company** control. Company LinkedIn is a hub-and-spoke of employees; Instagram Company is the business account, with employee nodes you can open as their own person graph.
+LinkedIn and Instagram also have a **Person / Company** control. Company LinkedIn is a hub-and-spoke of employees; Instagram Company is the business account, with employee nodes you can open as their own person graph. Aiman Naqvi (`@nuancedaiman`) is a separate Instagram job, not part of the salon roster.
 
 ## Platform-native maps
 
@@ -27,7 +27,7 @@ Not every platform is a people graph. TikTok and Spotify keep their own shape:
 | **LinkedIn person** | You at the center, proximity rings, same-post clusters |
 | **LinkedIn company** | Company hub → employees; roster table (name, title, location, tenure, school) |
 | **Instagram company** | Salon/page graph + employee nodes that open a person graph |
-| **Instagram person** | Employee comment/reel graph |
+| **Instagram person** | Employee comment/reel graphs. Aiman (`@nuancedaiman`) is his own Instagram job |
 | **Facebook** | Page at the center; followers, following, and post engagers |
 | **TikTok** | You → videos → hashtags |
 | **Spotify** | You → playlists → genres ← a friend’s playlists |
@@ -37,7 +37,7 @@ Not every platform is a people graph. TikTok and Spotify keep their own shape:
 
 Same platform switcher as Map, plus a time range (day / week / month / all). Bodies change by platform:
 
-- **Social** (LinkedIn, Instagram, Facebook) — comments, reactions, engagers, posts; top people; reaction mix; optional person×post grid
+- **Social** (LinkedIn, Instagram, Facebook) — KPI line chart, activity calendar, packed post bubbles, commentator bars, reaction donut
 - **Company** — employee rank by reach, locations, schools, tenure timeline
 - **TikTok** — plays, likes, shares, hashtag reach
 - **Spotify** — tracks, artists, playlists, genre mix

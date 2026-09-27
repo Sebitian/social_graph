@@ -12,7 +12,8 @@ These files are committed so `/demo` works on a fresh clone and on Vercel withou
 | --- | --- |
 | `diandra.json` | LinkedIn person (canonical demo handle) |
 | `kossof-instagram.json` | Instagram company |
-| `kossof-instagram-people.json` | Instagram employees (Person dropdown) |
+| `kossof-instagram-people.json` | Instagram people (Person dropdown: salon employees) |
+| `aiman-instagram.json` | Aiman Naqvi Instagram (`@nuancedaiman`), his own job |
 | `kossof-facebook.json` | Facebook |
 | `kossof-tiktok.json` | TikTok |
 | `sebastian-spotify.json` | Spotify |
@@ -20,7 +21,7 @@ These files are committed so `/demo` works on a fresh clone and on Vercel withou
 
 Standalone (also committed): `romanian.json` — conference / Luma guest list at `/graph/romanian/pinned`.
 
-Older extras: `jppap.json` (comment-only Instagram), `nousresearch.json` (older company dump). Other `data/snapshots/*.json` files are gitignored.
+Older extra: `nousresearch.json` (older company dump). Other `data/snapshots/*.json` files are gitignored.
 
 Raw Apify/HarvestAPI dumps live under `data/linkedin_raw`, `data/insta_raw`, `data/facebook_raw`, `data/tiktok_raw`, `data/spotify_raw`, `data/conference_attendees` and are import sources, not what the UI reads.
 

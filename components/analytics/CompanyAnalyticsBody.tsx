@@ -26,12 +26,12 @@ function SchoolAvatar({ label, logoUrl }: { label: string; logoUrl?: string }) {
         alt=""
         referrerPolicy="no-referrer"
         onError={() => setFailed(true)}
-        className="h-7 w-7 rounded-md object-cover ring-1 ring-white/15"
+        className="h-7 w-7 rounded-md object-cover ring-1 ring-[#161A17]/10"
       />
     );
   }
   return (
-    <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white/10 text-[10px] font-semibold text-white/70 ring-1 ring-white/10">
+    <span className="flex h-7 w-7 items-center justify-center rounded-md bg-[#E7E0D4] text-[10px] font-semibold text-[#161A17]/85 ring-1 ring-[#161A17]/10">
       {label.charAt(0).toUpperCase()}
     </span>
   );
@@ -47,12 +47,12 @@ function PersonAvatar({ name, src }: { name: string; src?: string }) {
         alt=""
         referrerPolicy="no-referrer"
         onError={() => setFailed(true)}
-        className="h-7 w-7 rounded-full object-cover ring-1 ring-white/15"
+        className="h-7 w-7 rounded-full object-cover ring-1 ring-[#161A17]/10"
       />
     );
   }
   return (
-    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[10px] font-semibold text-white/70 ring-1 ring-white/10">
+    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#E7E0D4] text-[10px] font-semibold text-[#161A17]/85 ring-1 ring-[#161A17]/10">
       {name.charAt(0).toUpperCase()}
     </span>
   );
@@ -197,7 +197,7 @@ export default function CompanyAnalyticsBody({
         ],
       }}
       footer={
-        <p className="rounded-xl border border-white/10 bg-black/25 px-3 py-2 text-[11px] text-white/45">
+        <p className="rounded-2xl border border-[#D5CDBF] bg-[#F3EEE4] px-3 py-2 text-[11px] text-[#5E665F]">
           Company roster is a point-in-time snapshot
           {employeeHint ? ` (${employeeHint} reported)` : ""} — time range does
           not apply. Charts show hire timeline, geography, schools, and reach.

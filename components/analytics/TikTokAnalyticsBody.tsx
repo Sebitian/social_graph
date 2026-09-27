@@ -96,10 +96,10 @@ export default function TikTokAnalyticsBody({
                 <img
                   src={video.coverUrl}
                   alt=""
-                  className="h-7 w-7 rounded-md object-cover ring-1 ring-white/15"
+                  className="h-7 w-7 rounded-md object-cover ring-1 ring-[#161A17]/10"
                 />
               ) : (
-                <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white/10 text-white/50">
+                <span className="flex h-7 w-7 items-center justify-center rounded-md bg-[#E7E0D4] text-[#5E665F]">
                   <Video className="h-3.5 w-3.5" />
                 </span>
               ),
@@ -151,10 +151,10 @@ export default function TikTokAnalyticsBody({
               <img
                 src={video.coverUrl}
                 alt=""
-                className="h-7 w-7 rounded-md object-cover ring-1 ring-white/15"
+                className="h-7 w-7 rounded-md object-cover ring-1 ring-[#161A17]/10"
               />
             ) : (
-              <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white/10 text-white/50">
+              <span className="flex h-7 w-7 items-center justify-center rounded-md bg-[#E7E0D4] text-[#5E665F]">
                 <Video className="h-3.5 w-3.5" />
               </span>
             ),

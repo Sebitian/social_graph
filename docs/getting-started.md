@@ -2,7 +2,7 @@
 
 Back to the [README](../README.md).
 
-Netgraph is a Next.js app. Local development works with **no API keys** — it serves mock data and the committed `/demo` snapshots.
+Starling is a Next.js app. Local development works with **no API keys** — it serves mock data and the committed `/demo` snapshots.
 
 ## Prerequisites
 

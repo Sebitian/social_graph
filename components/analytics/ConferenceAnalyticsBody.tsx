@@ -116,7 +116,7 @@ export default function ConferenceAnalyticsBody({
         ],
       }}
       footer={
-        <p className="rounded-xl border border-white/10 bg-black/25 px-3 py-2 text-[11px] text-white/45">
+        <p className="rounded-2xl border border-[#D5CDBF] bg-[#F3EEE4] px-3 py-2 text-[11px] text-[#5E665F]">
           Conference roster is a point-in-time Luma guest list enriched with
           LinkedIn people search — {overview.matchedCount} matched,{" "}
           {overview.unmatchedCount} unmatched, {overview.missingCount} missing.

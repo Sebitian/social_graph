@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useCallback, useMemo, useState, type ReactNode } from "react";
 import type { ChartPoint } from "@/lib/analytics";
 import KpiStrip, { type KpiItem } from "@/components/analytics/KpiStrip";
 import AnalyticsChart from "@/components/analytics/AnalyticsChart";
@@ -19,8 +19,6 @@ export interface DashboardMetric extends KpiItem {
 
 interface Props {
   metrics: DashboardMetric[];
-  /** Optional labeled KPI groups (Instagram posts vs reels). */
-  metricGroups?: { label: string; items: DashboardMetric[] }[];
   /** Initial / controlled selected metric id. */
   defaultMetricId?: string;
   accent?: string;
@@ -28,6 +26,8 @@ interface Props {
   chartEmptyLabel?: string;
   /** Static audience totals (followers / following) above the chart KPIs. */
   audience?: ReactNode;
+  /** Optional content rendered under the chart (rank lists, and so on). */
+  top?: ReactNode;
   /** Primary widget (often tabbed). */
   primary?:
     | {
@@ -42,6 +42,10 @@ interface Props {
         empty?: string;
         searchable?: boolean;
         searchPlaceholder?: string;
+      }
+    | {
+        title: string;
+        content: ReactNode;
       };
   /** Secondary widget. */
   secondary?:
@@ -57,6 +61,10 @@ interface Props {
         empty?: string;
         searchable?: boolean;
         searchPlaceholder?: string;
+      }
+    | {
+        title: string;
+        content: ReactNode;
       };
   /** Optional third widget (full or half width). */
   tertiary?:
@@ -72,6 +80,10 @@ interface Props {
         empty?: string;
         searchable?: boolean;
         searchPlaceholder?: string;
+      }
+    | {
+        title: string;
+        content: ReactNode;
       };
   footer?: ReactNode;
   className?: string;
@@ -90,10 +102,28 @@ type CardConfig =
       empty?: string;
       searchable?: boolean;
       searchPlaceholder?: string;
+    }
+  | {
+      title: string;
+      content: ReactNode;
     };
+
+function isContentCard(card: CardConfig): card is { title: string; content: ReactNode } {
+  return "content" in card;
+}
 
 function renderCard(card: CardConfig | undefined, searchableDefault = true) {
   if (!card) return null;
+  if (isContentCard(card)) {
+    return (
+      <section className="flex min-h-0 flex-col overflow-hidden rounded-2xl border border-[#D5CDBF] bg-[#FBF8F2]">
+        <header className="border-b border-[#D5CDBF] px-3 py-2">
+          <h3 className="text-xs font-semibold text-[#161A17]/85">{card.title}</h3>
+        </header>
+        <div className="min-h-0 flex-1 overflow-auto">{card.content}</div>
+      </section>
+    );
+  }
   const searchable = card.searchable ?? searchableDefault;
   if ("tabs" in card) {
     return (
@@ -118,36 +148,35 @@ function renderCard(card: CardConfig | undefined, searchableDefault = true) {
 
 export default function AnalyticsDashboardShell({
   metrics,
-  metricGroups,
   defaultMetricId,
   accent = "#60a5fa",
   chartMode = "line",
   chartEmptyLabel,
   audience,
+  top,
   primary,
   secondary,
   tertiary,
   footer,
   className = "",
 }: Props) {
-  const initial =
-    defaultMetricId && metrics.some((m) => m.id === defaultMetricId)
-      ? defaultMetricId
-      : (metrics[0]?.id ?? "");
-  const [selectedId, setSelectedId] = useState(initial);
+  const [userSelectedId, setUserSelectedId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (defaultMetricId) setSelectedId(defaultMetricId);
-  }, [defaultMetricId]);
-
-  useEffect(() => {
-    if (!metrics.some((m) => m.id === selectedId)) {
-      setSelectedId(metrics[0]?.id ?? "");
+  const selectedId = useMemo(() => {
+    if (userSelectedId && metrics.some((m) => m.id === userSelectedId)) {
+      return userSelectedId;
     }
-  }, [metrics, selectedId]);
+    if (defaultMetricId && metrics.some((m) => m.id === defaultMetricId)) {
+      return defaultMetricId;
+    }
+    return metrics[0]?.id ?? "";
+  }, [userSelectedId, defaultMetricId, metrics]);
+
+  const setSelectedId = useCallback((id: string) => {
+    setUserSelectedId(id);
+  }, []);
 
   const selected = metrics.find((m) => m.id === selectedId) ?? metrics[0];
-  const grouped = (metricGroups ?? []).filter((group) => group.items.length > 0);
 
   const chart = selected?.chart != null ? (
     selected.chart
@@ -164,30 +193,18 @@ export default function AnalyticsDashboardShell({
     <div className={`flex flex-col gap-3 ${className}`}>
       {audience}
 
-      {grouped.length > 0 ? (
-        grouped.map((group) => (
-          <div key={group.label} className="flex flex-col gap-2">
-            <div className="px-0.5 text-[10px] font-semibold uppercase tracking-wide text-white/40">
-              {group.label}
-            </div>
-            <KpiStrip
-              items={group.items}
-              selectedId={selected?.id ?? ""}
-              onSelect={setSelectedId}
-            />
-          </div>
-        ))
-      ) : (
-        <KpiStrip
-          items={metrics}
-          selectedId={selected?.id ?? ""}
-          onSelect={setSelectedId}
-        />
-      )}
+      <KpiStrip
+        items={metrics}
+        selectedId={selected?.id ?? ""}
+        onSelect={setSelectedId}
+        accent={accent}
+      />
 
-      <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.03]">
+      <div className="overflow-hidden rounded-2xl border border-[#D5CDBF] bg-[#FBF8F2]">
         {chart}
       </div>
+
+      {top}
 
       {(primary || secondary) && (
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">

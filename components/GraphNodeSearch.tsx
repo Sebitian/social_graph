@@ -12,6 +12,7 @@ interface Props {
   onSelect: (node: GraphNode) => void;
   className?: string;
   platform?: "instagram" | "linkedin" | "facebook" | "spotify" | null;
+  variant?: "overlay" | "sidebar" | "glass";
 }
 
 function normalizeSearch(value: string): string {
@@ -39,6 +40,7 @@ export default function GraphNodeSearch({
   onSelect,
   className = "",
   platform = null,
+  variant = "overlay",
 }: Props) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -67,7 +69,11 @@ export default function GraphNodeSearch({
   return (
     <div className={`relative ${className}`}>
       <label className="relative block">
-        <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-white/40" />
+        <Search
+          className={`pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 ${
+            variant === "overlay" ? "text-white/40" : "text-[#5E665F]"
+          }`}
+        />
                 <input
                   value={query}
                   onChange={(event) => {
@@ -76,13 +82,23 @@ export default function GraphNodeSearch({
                   }}
                   onFocus={() => setOpen(true)}
                   placeholder="Search people…"
-                  className="h-9 w-full rounded-full border-0 bg-black/55 py-0 pl-8 pr-8 text-xs text-white shadow-[0_4px_20px_rgba(0,0,0,0.35)] outline-none ring-1 ring-white/10 backdrop-blur-md transition placeholder:text-white/35 focus:bg-black/70 focus:ring-white/20"
+                  className={
+                    variant === "glass"
+                      ? "h-10 w-full rounded-full border border-[#D5CDBF] bg-[#FBF8F2] py-0 pl-9 pr-9 text-[13px] text-[#161A17] shadow-[0_8px_24px_rgba(22,26,23,0.08)] outline-none transition placeholder:text-[#5E665F] focus:border-[#0F766E]/40"
+                      : variant === "sidebar"
+                        ? "h-8 w-full rounded-md border border-[#D5CDBF] bg-[#F3EEE4] py-0 pl-8 pr-8 text-[13px] text-[#161A17] outline-none transition placeholder:text-[#5E665F] focus:border-[#0F766E]/40"
+                        : "h-9 w-full rounded-full border-0 bg-black/55 py-0 pl-8 pr-8 text-xs text-white shadow-[0_4px_20px_rgba(0,0,0,0.35)] outline-none ring-1 ring-white/10 backdrop-blur-md transition placeholder:text-white/35 focus:bg-black/70 focus:ring-white/20"
+                  }
                 />
         {query ? (
           <button
             type="button"
             onClick={clear}
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-white/40 hover:text-white/80"
+            className={`absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-0.5 ${
+              variant === "overlay"
+                ? "text-white/40 hover:text-white/80"
+                : "text-[#5E665F] hover:text-[#161A17]"
+            }`}
             aria-label="Clear search"
           >
             <X className="h-3.5 w-3.5" />
@@ -91,9 +107,21 @@ export default function GraphNodeSearch({
       </label>
 
       {open && query.trim() ? (
-        <ul className="absolute left-0 right-0 top-[calc(100%+6px)] z-30 max-h-64 overflow-y-auto rounded-2xl border-0 bg-black/80 py-1 shadow-[0_12px_40px_rgba(0,0,0,0.55)] ring-1 ring-white/10 backdrop-blur-xl">
+        <ul
+          className={`absolute left-0 right-0 top-[calc(100%+6px)] z-30 max-h-64 overflow-y-auto rounded-2xl py-1 ${
+            variant === "overlay"
+              ? "border-0 bg-black/80 text-white shadow-[0_12px_40px_rgba(0,0,0,0.55)] ring-1 ring-white/10 backdrop-blur-xl"
+              : "border border-[#D5CDBF] bg-[#FBF8F2] text-[#161A17] shadow-[0_12px_40px_rgba(22,26,23,0.12)]"
+          }`}
+        >
           {matches.length === 0 ? (
-            <li className="px-3 py-2 text-xs text-white/40">No matches</li>
+            <li
+              className={`px-3 py-2 text-xs ${
+                variant === "overlay" ? "text-white/40" : "text-[#5E665F]"
+              }`}
+            >
+              No matches
+            </li>
           ) : (
             matches.map((node) => {
               const { title, company } = parsePosition(node.position);
@@ -105,7 +133,13 @@ export default function GraphNodeSearch({
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => pick(node)}
                     className={`flex w-full items-center gap-2 px-3 py-2 text-left transition ${
-                      isSelected ? "bg-white/15" : "hover:bg-white/10"
+                      variant === "overlay"
+                        ? isSelected
+                          ? "bg-white/15"
+                          : "hover:bg-white/10"
+                        : isSelected
+                          ? "bg-[#0F766E]/10"
+                          : "hover:bg-[#F3EEE4]"
                     }`}
                   >
                     {(() => {
@@ -120,22 +154,44 @@ export default function GraphNodeSearch({
                           src={src}
                           alt=""
                           referrerPolicy="no-referrer"
-                          className="h-7 w-7 shrink-0 rounded-full object-cover ring-1 ring-white/15"
+                          className={`h-7 w-7 shrink-0 rounded-full object-cover ring-1 ${
+                            variant === "overlay" ? "ring-white/15" : "ring-[#161A17]/10"
+                          }`}
                         />
                       ) : (
-                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-semibold text-white/70">
+                        <span
+                          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold ${
+                            variant === "overlay"
+                              ? "bg-white/10 text-white/70"
+                              : "bg-[#E7E0D4] text-[#161A17]"
+                          }`}
+                        >
                           {(node.fullName || node.label).charAt(0).toUpperCase()}
                         </span>
                       );
                     })()}
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-xs font-medium text-white">
+                      <span
+                        className={`block truncate text-xs font-medium ${
+                          variant === "overlay" ? "text-white" : "text-[#161A17]"
+                        }`}
+                      >
                         {node.fullName || node.label}
                       </span>
                       {(title || company) && (
-                        <span className="block truncate text-[10px] text-white/45">
+                        <span
+                          className={`block truncate text-[10px] ${
+                            variant === "overlay" ? "text-white/45" : "text-[#5E665F]"
+                          }`}
+                        >
                           {title ? (
-                            <span className="font-semibold text-white/60">{title}</span>
+                            <span
+                              className={`font-semibold ${
+                                variant === "overlay" ? "text-white/60" : "text-[#161A17]"
+                              }`}
+                            >
+                              {title}
+                            </span>
                           ) : null}
                           {title && company ? " " : null}
                           {company ? (

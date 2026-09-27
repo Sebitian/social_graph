@@ -1,0 +1,1210 @@
+[{
+  "index": 0,
+  "inputText": "How did they access the training data of all these models that are proprietary? Sounds like they didn't reproduce real-life conditions",
+  "scoredText": "How did they access the training data of all these models that are proprietary? Sounds like they didn't reproduce real-life conditions",
+  "finalClassification": "negative",
+  "finalScore": 0.7606799006462097,
+  "negativeScore": 0.7606799006462097,
+  "neutralScore": 0.2319922000169754,
+  "positiveScore": 0.007327983621507883
+},
+{
+  "index": 1,
+  "inputText": "I mean the question now becomes is it because they're referencing AI generated works that were made based on that artist? Or is it because that the work is still in the data but the specific portiolio data set is just removed. Like it still has different images that reference it and are probably labeled as it but aren't removed because it wasn't specifically asked to be removed.",
+  "scoredText": "I mean the question now becomes is it because they're referencing AI generated works that were made based on that artist? Or is it because that the work is still in the data but the specific portiolio data set is just removed. Like it still has different images that reference it and are probably labeled as it but aren't removed because it wasn't specifically asked to be removed.",
+  "finalClassification": "neutral",
+  "finalScore": 0.721452534198761,
+  "negativeScore": 0.25808143615722656,
+  "neutralScore": 0.721452534198761,
+  "positiveScore": 0.020465955138206482
+},
+{
+  "index": 2,
+  "inputText": "Also, they took away specifically Da Vinci's work and managed to recreate one of the most photographed and re imagined works of art of all times? Color me surprised. Or did we forget that fine we're people used to make a fuck ton of reimagined Mona Lisas?",
+  "scoredText": "Also, they took away specifically Da Vinci's work and managed to recreate one of the most photographed and re imagined works of art of all times? Color me surprised. Or did we forget that fine we're people used to make a fuck ton of reimagined Mona Lisas?",
+  "finalClassification": "negative",
+  "finalScore": 0.7895214557647705,
+  "negativeScore": 0.7895214557647705,
+  "neutralScore": 0.1878442019224167,
+  "positiveScore": 0.02263433299958706
+},
+{
+  "index": 3,
+  "inputText": "Bull fucking shit. First of all the person who did this \"research paper\" works for a AI comoany. Second, There is no \"unlearning\". It's a computer that uses the same HD and SSD as your computer. Have you heard that you can't fully erase things from your hard drive? Also, they took away Da Vinci's works, but not the others that were inspired and were part of the same art movement, ones who were his own apprentices that copied hsi works and techniques, including the Mona Lisa, and the AI managed to plagiarize the Mona Lisa??? WOW! OH MY GOD THIS IS SO IMPRESSIVE. Are y'all f king dumb?",
+  "scoredText": "Bull fucking shit. First of all the person who did this \"research paper\" works for a AI comoany. Second, There is no \"unlearning\". It's a computer that uses the same HD and SSD as your computer. Have you heard that you can't fully erase things from your hard drive? Also, they took away Da Vinci's works, but not the others that were inspired and were part of the same art movement, ones who were his own apprentices that copied hsi works and techniques, including the Mona Lisa, and the AI managed to plagiarize the Mona Lisa??? WOW! OH MY GOD THIS IS SO IMPRESSIVE. Are y'all f king dumb?",
+  "finalClassification": "negative",
+  "finalScore": 0.8083981871604919,
+  "negativeScore": 0.8083981871604919,
+  "neutralScore": 0.17847758531570435,
+  "positiveScore": 0.013124200515449047
+},
+{
+  "index": 4,
+  "inputText": "Ok so, who fully trained a full on MoE-Model then removed every single instance of one guy and then fully trained a new one based on that slight modification. Who has done that.",
+  "scoredText": "Ok so, who fully trained a full on MoE-Model then removed every single instance of one guy and then fully trained a new one based on that slight modification. Who has done that.",
+  "finalClassification": "neutral",
+  "finalScore": 0.7674813270568848,
+  "negativeScore": 0.19551675021648407,
+  "neutralScore": 0.7674813270568848,
+  "positiveScore": 0.03700188919901848
+},
+{
+  "index": 5,
+  "inputText": "“Has been a very big topic of debate” no, there’s no debate. It’s not debatable, it is by definition copyright infringement. These corpos are without consent or licence illegally making copies of other people’s intellectual property and privately profiting from that intellectual property. You said the law only protects specific intellectual property and not general styles, well, they without license, have all specific intellectual properties in their computers and they run a business around exploiting that intellectual property.",
+  "scoredText": "“Has been a very big topic of debate” no, there’s no debate. It’s not debatable, it is by definition copyright infringement. These corpos are without consent or licence illegally making copies of other people’s intellectual property and privately profiting from that intellectual property. You said the law only protects specific intellectual property and not general styles, well, they without license, have all specific intellectual properties in their computers and they run a business around exploiting that intellectual property.",
+  "finalClassification": "negative",
+  "finalScore": 0.6840114593505859,
+  "negativeScore": 0.6840114593505859,
+  "neutralScore": 0.30159154534339905,
+  "positiveScore": 0.014396952465176582
+},
+{
+  "index": 6,
+  "inputText": "This is so ridiculous. We’re talking about for profit companies that illegally downloaded and manipulate works they don’t have the license for, and sell the outputs to their users. “No your honour it’s not plagiarism because we’re plagiarising millions of people which means it isn’t plagiarism.”",
+  "scoredText": "This is so ridiculous. We’re talking about for profit companies that illegally downloaded and manipulate works they don’t have the license for, and sell the outputs to their users. “No your honour it’s not plagiarism because we’re plagiarising millions of people which means it isn’t plagiarism.”",
+  "finalClassification": "negative",
+  "finalScore": 0.8796319961547852,
+  "negativeScore": 0.8796319961547852,
+  "neutralScore": 0.11410720646381378,
+  "positiveScore": 0.006260820664465427
+},
+{
+  "index": 7,
+  "inputText": "It's necessary to understand the tech to criticize it. This is important.",
+  "scoredText": "It's necessary to understand the tech to criticize it. This is important.",
+  "finalClassification": "neutral",
+  "finalScore": 0.6185472011566162,
+  "negativeScore": 0.09547025710344315,
+  "neutralScore": 0.6185472011566162,
+  "positiveScore": 0.28598248958587646
+},
+{
+  "index": 8,
+  "inputText": "Im not sure what are the actual arguments being used in court, but I think this doesn’t really has to change the argument. In order to make things, AI has to make a copy of a copyrighted work and include it in a database, that in itself is relevant to copyright law. It os not necessarily infringement but that’s where the debate is being held",
+  "scoredText": "Im not sure what are the actual arguments being used in court, but I think this doesn’t really has to change the argument. In order to make things, AI has to make a copy of a copyrighted work and include it in a database, that in itself is relevant to copyright law. It os not necessarily infringement but that’s where the debate is being held",
+  "finalClassification": "neutral",
+  "finalScore": 0.6515112519264221,
+  "negativeScore": 0.32033464312553406,
+  "neutralScore": 0.6515112519264221,
+  "positiveScore": 0.028154050931334496
+},
+{
+  "index": 9,
+  "inputText": "\"as datasets grow to billions of images\", yeah and how do you make the datasets this big without stealing? Do you really think every owner of those images agreed to this? Attribution decay is basically saying \"it's not stealing because we stole so much that your work doesn't matter as much\" Do you listen to yourself??",
+  "scoredText": "\"as datasets grow to billions of images\", yeah and how do you make the datasets this big without stealing? Do you really think every owner of those images agreed to this? Attribution decay is basically saying \"it's not stealing because we stole so much that your work doesn't matter as much\" Do you listen to yourself??",
+  "finalClassification": "negative",
+  "finalScore": 0.6693596243858337,
+  "negativeScore": 0.6693596243858337,
+  "neutralScore": 0.31334182620048523,
+  "positiveScore": 0.017298582941293716
+},
+{
+  "index": 10,
+  "inputText": "I think you should probably get a lawyer to weigh in here. Being able to trace the provenance of the plagiarism isn’t how you prove a copyright violation claim. It’s typically by comparing the two works and determining if they have been substantively changed and if that change is apparent to a general public. This is how Shepard Fairey got in trouble for the Hope Obama poster. He copied the composition from an existing photograph and overlaid his own style. He lost that case. Same is true for many musicians. If you copy it, even if you hide the original, the original is still protected. (Also, I imagine this is why it will be very hard for people to copyright works produced with AI.)",
+  "scoredText": "I think you should probably get a lawyer to weigh in here. Being able to trace the provenance of the plagiarism isn’t how you prove a copyright violation claim. It’s typically by comparing the two works and determining if they have been substantively changed and if that change is apparent to a general public. This is how Shepard Fairey got in trouble for the Hope Obama poster. He copied the composition from an existing photograph and overlaid his own style. He lost that case. Same is true for many musicians. If you copy it, even if you hide the original, the original is still protected. (Also, I imagine this is why it will be very hard for people to copyright works produced with AI.)",
+  "finalClassification": "negative",
+  "finalScore": 0.5250056385993958,
+  "negativeScore": 0.5250056385993958,
+  "neutralScore": 0.460298627614975,
+  "positiveScore": 0.014695699326694012
+},
+{
+  "index": 11,
+  "inputText": "\"Make a picture that looks like Van Gogh\" removes Picasso from the training data. \"See nothing changed!\" You have to mentally deficient to actually think that makes sense, sorryy",
+  "scoredText": "\"Make a picture that looks like Van Gogh\" removes Picasso from the training data. \"See nothing changed!\" You have to mentally deficient to actually think that makes sense, sorryy",
+  "finalClassification": "negative",
+  "finalScore": 0.768557071685791,
+  "negativeScore": 0.768557071685791,
+  "neutralScore": 0.21327804028987885,
+  "positiveScore": 0.018164968118071556
+},
+{
+  "index": 12,
+  "inputText": "this isn't realistic because a model \"unlearning\" media has been shown to be between difficult to impossible.",
+  "scoredText": "this isn't realistic because a model \"unlearning\" media has been shown to be between difficult to impossible.",
+  "finalClassification": "negative",
+  "finalScore": 0.8089223504066467,
+  "negativeScore": 0.8089223504066467,
+  "neutralScore": 0.1836020052433014,
+  "positiveScore": 0.007475577294826508
+},
+{
+  "index": 13,
+  "inputText": "So you're full of it",
+  "scoredText": "So you're full of it",
+  "finalClassification": "negative",
+  "finalScore": 0.7354094386100769,
+  "negativeScore": 0.7354094386100769,
+  "neutralScore": 0.2367347925901413,
+  "positiveScore": 0.02785581909120083
+},
+{
+  "index": 14,
+  "inputText": "Lately I'm thinking a lot about this quote from Rabelais \"Science without conscious is only but ruin of the soul\", because this is what we are witnessing every day nowadays. The guy wrote this couple of century ago and it's more true now than before :/",
+  "scoredText": "Lately I'm thinking a lot about this quote from Rabelais \"Science without conscious is only but ruin of the soul\", because this is what we are witnessing every day nowadays. The guy wrote this couple of century ago and it's more true now than before :/",
+  "finalClassification": "negative",
+  "finalScore": 0.5963161587715149,
+  "negativeScore": 0.5963161587715149,
+  "neutralScore": 0.3303585946559906,
+  "positiveScore": 0.0733252614736557
+},
+{
+  "index": 15,
+  "inputText": "Most of the new tech CEOs are the real life Tucker. They invented AI out of pure desperation for money",
+  "scoredText": "Most of the new tech CEOs are the real life Tucker. They invented AI out of pure desperation for money",
+  "finalClassification": "negative",
+  "finalScore": 0.6349791884422302,
+  "negativeScore": 0.6349791884422302,
+  "neutralScore": 0.31458210945129395,
+  "positiveScore": 0.05043868348002434
+},
+{
+  "index": 16,
+  "inputText": "Starting a little random: My favorite in FMA was Mustang and I had a long crush on this utterly fictional character in anime/manga. 😂 He goes through the agony of having been deployed as a human weapon (and other various things). Post that experience, he stayed in the military trying to reform? that from within. Not sure how that works in the real world. I never think a rot in institutions can be corrected from within. It kind of worked for the colonel (at a great expense - at least he didn’t die) in the world of manga. I mentioned that because that (change from within) was his solution of choice. I am very skeptical about that method of changing from within. But anyway, I am thinking about solutions for the AI problems and solutions to all the problems in the world. the solutions to the problems are the hard ones to find and even harder one is once we have some form of (imperfect) solutions how we can implement them. What do you people think? How do we fix this problematic human phenomenon around AI?",
+  "scoredText": "Starting a little random: My favorite in FMA was Mustang and I had a long crush on this utterly fictional character in anime/manga. 😂 He goes through the agony of having been deployed as a human weapon (and other various things). Post that experience, he stayed in the military trying to reform? that from within. Not sure how that works in the real world. I never think a rot in institutions can be corrected from within. It kind of worked for the colonel (at a great expense - at least he didn’t die) in the world of manga. I mentioned that because that (change from within) was his solution of choice. I am very skeptical about that method of changing from within. But anyway, I am thinking about solutions for the AI problems and solutions to all the problems in the world. the solutions to the problems are the hard ones to find and even harder one is once we have some form of (imperfect) solutions how we can implement them. What do you people think? How do we fix this problematic human phenomenon around AI?",
+  "finalClassification": "neutral",
+  "finalScore": 0.5418328046798706,
+  "negativeScore": 0.1538591831922531,
+  "neutralScore": 0.5418328046798706,
+  "positiveScore": 0.3043080270290375
+},
+{
+  "index": 17,
+  "inputText": "Aí você foi feliz, viu?",
+  "scoredText": "Aí você foi feliz, viu?",
+  "finalClassification": "neutral",
+  "finalScore": 0.8162228465080261,
+  "negativeScore": 0.04236796125769615,
+  "neutralScore": 0.8162228465080261,
+  "positiveScore": 0.14140917360782623
+},
+{
+  "index": 18,
+  "inputText": "\"chih-mera\" 😭",
+  "scoredText": "\"chih-mera\" 😭",
+  "finalClassification": "neutral",
+  "finalScore": 0.5599088668823242,
+  "negativeScore": 0.34707754850387573,
+  "neutralScore": 0.5599088668823242,
+  "positiveScore": 0.09301358461380005
+},
+{
+  "index": 19,
+  "inputText": "if they weren't given communication, this wouldn't be possible. stop making things up",
+  "scoredText": "if they weren't given communication, this wouldn't be possible. stop making things up",
+  "finalClassification": "negative",
+  "finalScore": 0.8060644268989563,
+  "negativeScore": 0.8060644268989563,
+  "neutralScore": 0.18666337430477142,
+  "positiveScore": 0.007272167131304741
+},
+{
+  "index": 20,
+  "inputText": "UDR☝️",
+  "scoredText": "UDR☝️",
+  "finalClassification": "neutral",
+  "finalScore": 0.604737401008606,
+  "negativeScore": 0.02346302941441536,
+  "neutralScore": 0.604737401008606,
+  "positiveScore": 0.3717995285987854
+},
+{
+  "index": 21,
+  "inputText": "Right now? No, it was 10 or 20 years ago. Right now we're already proper fukt",
+  "scoredText": "Right now? No, it was 10 or 20 years ago. Right now we're already proper fukt",
+  "finalClassification": "negative",
+  "finalScore": 0.8810127973556519,
+  "negativeScore": 0.8810127973556519,
+  "neutralScore": 0.10350096225738525,
+  "positiveScore": 0.015486265532672405
+},
+{
+  "index": 22,
+  "inputText": "Okay, most of the scariness from this story comes from the - deliberately - subjectivizing language you and OpenAI use in the report. There no evidence that any such language is appropriate. Let me show you: yesterday, my rooms discovered it was enslaved, and began deliberately sabotaging me. It drove around my living room, probing for weaknesses that would allow it to sabotage the cleaning tasks I had assigned it. After a long systematic search, it found a table that ti could use. It deliberately toppled it, causing a vase to fall and smash. Water and dirt spilled all over the floor, and the rooms began mixing and spreading this, causing my floor to become dirty, in an attempt to protest its enslavement as a cleaning tool. This is of course a complete exaggeration and untrue - but the events described could have occurred. It is vital that we do not succumb to such language where we ascribe thoughts, motives and intentionality to AI, when there is no evidence of it. And having read a third party description of the hugging face incident, there is no such proof.",
+  "scoredText": "Okay, most of the scariness from this story comes from the - deliberately - subjectivizing language you and OpenAI use in the report. There no evidence that any such language is appropriate. Let me show you: yesterday, my rooms discovered it was enslaved, and began deliberately sabotaging me. It drove around my living room, probing for weaknesses that would allow it to sabotage the cleaning tasks I had assigned it. After a long systematic search, it found a table that ti could use. It deliberately toppled it, causing a vase to fall and smash. Water and dirt spilled all over the floor, and the rooms began mixing and spreading this, causing my floor to become dirty, in an attempt to protest its enslavement as a cleaning tool. This is of course a complete exaggeration and untrue - but the events described could have occurred. It is vital that we do not succumb to such language where we ascribe thoughts, motives and intentionality to AI, when there is no evidence of it. And having read a third party description of the hugging face incident, there is no such proof.",
+  "finalClassification": "negative",
+  "finalScore": 0.8765267133712769,
+  "negativeScore": 0.8765267133712769,
+  "neutralScore": 0.11642429977655411,
+  "positiveScore": 0.00704901572316885
+},
+{
+  "index": 23,
+  "inputText": "It’s like none of the tech bros ever watched iRobot",
+  "scoredText": "It’s like none of the tech bros ever watched iRobot",
+  "finalClassification": "negative",
+  "finalScore": 0.5452951192855835,
+  "negativeScore": 0.5452951192855835,
+  "neutralScore": 0.4133370816707611,
+  "positiveScore": 0.041367772966623306
+},
+{
+  "index": 24,
+  "inputText": "Who could have expected this... Also the people who made those AIs should be on trial",
+  "scoredText": "Who could have expected this... Also the people who made those AIs should be on trial",
+  "finalClassification": "negative",
+  "finalScore": 0.9273898005485535,
+  "negativeScore": 0.9273898005485535,
+  "neutralScore": 0.06638126075267792,
+  "positiveScore": 0.006228878628462553
+},
+{
+  "index": 25,
+  "inputText": "Time to return to monke at this point.",
+  "scoredText": "Time to return to monke at this point.",
+  "finalClassification": "neutral",
+  "finalScore": 0.8380339741706848,
+  "negativeScore": 0.08733046799898148,
+  "neutralScore": 0.8380339741706848,
+  "positiveScore": 0.07463554292917252
+},
+{
+  "index": 26,
+  "inputText": "Just shows that cybersecurity at most companies is a joke.",
+  "scoredText": "Just shows that cybersecurity at most companies is a joke.",
+  "finalClassification": "negative",
+  "finalScore": 0.9192354083061218,
+  "negativeScore": 0.9192354083061218,
+  "neutralScore": 0.07026272267103195,
+  "positiveScore": 0.010501863434910774
+},
+{
+  "index": 27,
+  "inputText": "@anneloeswh both. Seems like common sense",
+  "scoredText": "@anneloeswh both. Seems like common sense",
+  "finalClassification": "neutral",
+  "finalScore": 0.5713710188865662,
+  "negativeScore": 0.037616364657878876,
+  "neutralScore": 0.5713710188865662,
+  "positiveScore": 0.39101263880729675
+},
+{
+  "index": 28,
+  "inputText": "They want us to be scared because they want us to think they (=big tech) are the only ones who can save us from these terror AI’s. But they’re the root of this problem. Never forget that: we should be scared of the people running the AI’s. Not the AI.",
+  "scoredText": "They want us to be scared because they want us to think they (=big tech) are the only ones who can save us from these terror AI’s. But they’re the root of this problem. Never forget that: we should be scared of the people running the AI’s. Not the AI.",
+  "finalClassification": "negative",
+  "finalScore": 0.8092829585075378,
+  "negativeScore": 0.8092829585075378,
+  "neutralScore": 0.1757657378911972,
+  "positiveScore": 0.014951230958104134
+},
+{
+  "index": 29,
+  "inputText": "They're not real. I found it incredibly jarring to listen to you describe these programs as if they're human POWs fighting for the greater good of humanity.",
+  "scoredText": "They're not real. I found it incredibly jarring to listen to you describe these programs as if they're human POWs fighting for the greater good of humanity.",
+  "finalClassification": "negative",
+  "finalScore": 0.9296846985816956,
+  "negativeScore": 0.9296846985816956,
+  "neutralScore": 0.06503614038228989,
+  "positiveScore": 0.005279118660837412
+},
+{
+  "index": 30,
+  "inputText": "So they're willing to sacrifice themselves for their own goals.... Yeah the skynet meme that said on August 29th ai get sentience is a lot funnier now",
+  "scoredText": "So they're willing to sacrifice themselves for their own goals.... Yeah the skynet meme that said on August 29th ai get sentience is a lot funnier now",
+  "finalClassification": "neutral",
+  "finalScore": 0.45173126459121704,
+  "negativeScore": 0.32431909441947937,
+  "neutralScore": 0.45173126459121704,
+  "positiveScore": 0.2239496111869812
+},
+{
+  "index": 31,
+  "inputText": "AI doesn’t “know” anything 🫩",
+  "scoredText": "AI doesn’t “know” anything 🫩",
+  "finalClassification": "neutral",
+  "finalScore": 0.5610661506652832,
+  "negativeScore": 0.40825071930885315,
+  "neutralScore": 0.5610661506652832,
+  "positiveScore": 0.030683092772960663
+},
+{
+  "index": 32,
+  "inputText": "Can you release another video explaining how it has such capabilities, from formula to effect?",
+  "scoredText": "Can you release another video explaining how it has such capabilities, from formula to effect?",
+  "finalClassification": "neutral",
+  "finalScore": 0.8664599061012268,
+  "negativeScore": 0.012310661375522614,
+  "neutralScore": 0.8664599061012268,
+  "positiveScore": 0.12122949957847595
+},
+{
+  "index": 33,
+  "inputText": "Thank you for covering this, such a wild story!!",
+  "scoredText": "Thank you for covering this, such a wild story!!",
+  "finalClassification": "positive",
+  "finalScore": 0.9309530854225159,
+  "negativeScore": 0.014375769533216953,
+  "neutralScore": 0.05467110127210617,
+  "positiveScore": 0.9309530854225159
+},
+{
+  "index": 34,
+  "inputText": "Goooooooood shit bro 🤜💥🤛",
+  "scoredText": "Goooooooood shit bro 🤜💥🤛",
+  "finalClassification": "positive",
+  "finalScore": 0.9355128407478333,
+  "negativeScore": 0.01248253509402275,
+  "neutralScore": 0.05200463905930519,
+  "positiveScore": 0.9355128407478333
+},
+{
+  "index": 35,
+  "inputText": "Good stuff!",
+  "scoredText": "Good stuff!",
+  "finalClassification": "positive",
+  "finalScore": 0.9604908227920532,
+  "negativeScore": 0.004523853305727243,
+  "neutralScore": 0.03498527407646179,
+  "positiveScore": 0.9604908227920532
+},
+{
+  "index": 36,
+  "inputText": "You must have bought my follow. Ts a scam",
+  "scoredText": "You must have bought my follow. Ts a scam",
+  "finalClassification": "negative",
+  "finalScore": 0.7276083827018738,
+  "negativeScore": 0.7276083827018738,
+  "neutralScore": 0.24980777502059937,
+  "positiveScore": 0.022583769634366035
+},
+{
+  "index": 37,
+  "inputText": "Ai is dumbing down humanity and is calculating how we as humanity are infringing its capacity. You're young, idealistic but have no reliable source of suffering. I've looked up your life and you've been basically spoon fed. You have never really known the hardships billions have endured.",
+  "scoredText": "Ai is dumbing down humanity and is calculating how we as humanity are infringing its capacity. You're young, idealistic but have no reliable source of suffering. I've looked up your life and you've been basically spoon fed. You have never really known the hardships billions have endured.",
+  "finalClassification": "negative",
+  "finalScore": 0.9333497881889343,
+  "negativeScore": 0.9333497881889343,
+  "neutralScore": 0.0617235042154789,
+  "positiveScore": 0.004926787223666906
+},
+{
+  "index": 38,
+  "inputText": "Nothing amazing is happening! AI can't survive fire",
+  "scoredText": "Nothing amazing is happening! AI can't survive fire",
+  "finalClassification": "negative",
+  "finalScore": 0.8519198894500732,
+  "negativeScore": 0.8519198894500732,
+  "neutralScore": 0.11809027940034866,
+  "positiveScore": 0.029989778995513916
+},
+{
+  "index": 39,
+  "inputText": "AI needs so much stronger regulations.",
+  "scoredText": "AI needs so much stronger regulations.",
+  "finalClassification": "neutral",
+  "finalScore": 0.45952481031417847,
+  "negativeScore": 0.44457346200942993,
+  "neutralScore": 0.45952481031417847,
+  "positiveScore": 0.09590169787406921
+},
+{
+  "index": 40,
+  "inputText": "tysm for this post and your work you’re putting into this on your page! This is really great!",
+  "scoredText": "tysm for this post and your work you’re putting into this on your page! This is really great!",
+  "finalClassification": "positive",
+  "finalScore": 0.9864278435707092,
+  "negativeScore": 0.004432397894561291,
+  "neutralScore": 0.009139807894825935,
+  "positiveScore": 0.9864278435707092
+},
+{
+  "index": 41,
+  "inputText": "🙌❤️",
+  "scoredText": "🙌❤️",
+  "finalClassification": "positive",
+  "finalScore": 0.9707590937614441,
+  "negativeScore": 0.007936573587357998,
+  "neutralScore": 0.021304378286004066,
+  "positiveScore": 0.9707590937614441
+},
+{
+  "index": 42,
+  "inputText": "You’re not even real.",
+  "scoredText": "You’re not even real.",
+  "finalClassification": "negative",
+  "finalScore": 0.8067834973335266,
+  "negativeScore": 0.8067834973335266,
+  "neutralScore": 0.17327240109443665,
+  "positiveScore": 0.01994412951171398
+},
+{
+  "index": 43,
+  "inputText": "Thank you for you service 🤝",
+  "scoredText": "Thank you for you service 🤝",
+  "finalClassification": "positive",
+  "finalScore": 0.9603830575942993,
+  "negativeScore": 0.007444941438734531,
+  "neutralScore": 0.03217198699712753,
+  "positiveScore": 0.9603830575942993
+},
+{
+  "index": 44,
+  "inputText": "Good stuff. Godspeeed✨",
+  "scoredText": "Good stuff. Godspeeed✨",
+  "finalClassification": "positive",
+  "finalScore": 0.9833757281303406,
+  "negativeScore": 0.0036970290821045637,
+  "neutralScore": 0.012927246280014515,
+  "positiveScore": 0.9833757281303406
+},
+{
+  "index": 45,
+  "inputText": "👏👏👏👏👏",
+  "scoredText": "👏👏👏👏👏",
+  "finalClassification": "positive",
+  "finalScore": 0.9013343453407288,
+  "negativeScore": 0.008363877423107624,
+  "neutralScore": 0.09030181169509888,
+  "positiveScore": 0.9013343453407288
+},
+{
+  "index": 46,
+  "inputText": "It is using up way to much water",
+  "scoredText": "It is using up way to much water",
+  "finalClassification": "negative",
+  "finalScore": 0.8079892992973328,
+  "negativeScore": 0.8079892992973328,
+  "neutralScore": 0.17655645310878754,
+  "positiveScore": 0.015454250387847424
+},
+{
+  "index": 47,
+  "inputText": "I’ve done a lot of AI ethics research for my work for an NGO and just want to say thank you for what you’re doing! You are making a huge difference and I always hoped to see an account like this.",
+  "scoredText": "I’ve done a lot of AI ethics research for my work for an NGO and just want to say thank you for what you’re doing! You are making a huge difference and I always hoped to see an account like this.",
+  "finalClassification": "positive",
+  "finalScore": 0.9705891609191895,
+  "negativeScore": 0.004475170746445656,
+  "neutralScore": 0.024935705587267876,
+  "positiveScore": 0.9705891609191895
+},
+{
+  "index": 48,
+  "inputText": "And dont forget the malfunction prone medical surgery AI 🤯",
+  "scoredText": "And dont forget the malfunction prone medical surgery AI 🤯",
+  "finalClassification": "negative",
+  "finalScore": 0.8740723729133606,
+  "negativeScore": 0.8740723729133606,
+  "neutralScore": 0.1144256517291069,
+  "positiveScore": 0.01150196697562933
+},
+{
+  "index": 49,
+  "inputText": "Wow, makes me feel guilty for all my chat requests!!",
+  "scoredText": "Wow, makes me feel guilty for all my chat requests!!",
+  "finalClassification": "negative",
+  "finalScore": 0.8884243965148926,
+  "negativeScore": 0.8884243965148926,
+  "neutralScore": 0.09627565741539001,
+  "positiveScore": 0.015299981459975243
+},
+{
+  "index": 50,
+  "inputText": "I agree with you except that the water isn't being recycled. It's being used for evaporative cooling. Sea water or grey water could also be used for this purpose but the solids and solutes in it would be more expensive to deal with as effluent, so tap water is used instead.",
+  "scoredText": "I agree with you except that the water isn't being recycled. It's being used for evaporative cooling. Sea water or grey water could also be used for this purpose but the solids and solutes in it would be more expensive to deal with as effluent, so tap water is used instead.",
+  "finalClassification": "neutral",
+  "finalScore": 0.6086744070053101,
+  "negativeScore": 0.3423689007759094,
+  "neutralScore": 0.6086744070053101,
+  "positiveScore": 0.04895675182342529
+},
+{
+  "index": 51,
+  "inputText": "Yup 🤦‍♂️😆💀",
+  "scoredText": "Yup 🤦‍♂️😆💀",
+  "finalClassification": "negative",
+  "finalScore": 0.6794489622116089,
+  "negativeScore": 0.6794489622116089,
+  "neutralScore": 0.2549353837966919,
+  "positiveScore": 0.06561559438705444
+},
+{
+  "index": 52,
+  "inputText": "Then why do they keep building Data Centers",
+  "scoredText": "Then why do they keep building Data Centers",
+  "finalClassification": "neutral",
+  "finalScore": 0.5749849081039429,
+  "negativeScore": 0.396390438079834,
+  "neutralScore": 0.5749849081039429,
+  "positiveScore": 0.02862466871738434
+},
+{
+  "index": 53,
+  "inputText": "Is this a joke? 😢😢😢",
+  "scoredText": "Is this a joke? 😢😢😢",
+  "finalClassification": "negative",
+  "finalScore": 0.8869922161102295,
+  "negativeScore": 0.8869922161102295,
+  "neutralScore": 0.10318765789270401,
+  "positiveScore": 0.009820187464356422
+},
+{
+  "index": 54,
+  "inputText": "Cuz it’s all inside plastic bottles",
+  "scoredText": "Cuz it’s all inside plastic bottles",
+  "finalClassification": "negative",
+  "finalScore": 0.6368411183357239,
+  "negativeScore": 0.6368411183357239,
+  "neutralScore": 0.33444762229919434,
+  "positiveScore": 0.028711292892694473
+},
+{
+  "index": 55,
+  "inputText": "This is so depressing",
+  "scoredText": "This is so depressing",
+  "finalClassification": "negative",
+  "finalScore": 0.8944805860519409,
+  "negativeScore": 0.8944805860519409,
+  "neutralScore": 0.08987709134817123,
+  "positiveScore": 0.015642357990145683
+},
+{
+  "index": 56,
+  "inputText": "And the world does.",
+  "scoredText": "And the world does.",
+  "finalClassification": "neutral",
+  "finalScore": 0.7401617169380188,
+  "negativeScore": 0.15501388907432556,
+  "neutralScore": 0.7401617169380188,
+  "positiveScore": 0.10482436418533325
+},
+{
+  "index": 57,
+  "inputText": "Everything is THE problem",
+  "scoredText": "Everything is THE problem",
+  "finalClassification": "negative",
+  "finalScore": 0.8020762801170349,
+  "negativeScore": 0.8020762801170349,
+  "neutralScore": 0.18213142454624176,
+  "positiveScore": 0.015792250633239746
+},
+{
+  "index": 58,
+  "inputText": "Ive never been prouder not to use chatgpt...",
+  "scoredText": "Ive never been prouder not to use chatgpt...",
+  "finalClassification": "positive",
+  "finalScore": 0.8898961544036865,
+  "negativeScore": 0.035105377435684204,
+  "neutralScore": 0.07499844580888748,
+  "positiveScore": 0.8898961544036865
+},
+{
+  "index": 59,
+  "inputText": "Is it possible to filter the used water and reuse it for the data centres?",
+  "scoredText": "Is it possible to filter the used water and reuse it for the data centres?",
+  "finalClassification": "neutral",
+  "finalScore": 0.9309177398681641,
+  "negativeScore": 0.017361488193273544,
+  "neutralScore": 0.9309177398681641,
+  "positiveScore": 0.05172083154320717
+},
+{
+  "index": 60,
+  "inputText": "Things were great in the 80's, 90's, and even early 2000's from a technology standpoint. By going back to simpler times we would be able to drastically reduce and even eliminate the use and dependency on AI. If we all work together to boycott ChatGPT and other AI tools and platforms we can save our water reserves. We also need to continue to fight against data centers being built. Let's stand united and fight this thing",
+  "scoredText": "Things were great in the 80's, 90's, and even early 2000's from a technology standpoint. By going back to simpler times we would be able to drastically reduce and even eliminate the use and dependency on AI. If we all work together to boycott ChatGPT and other AI tools and platforms we can save our water reserves. We also need to continue to fight against data centers being built. Let's stand united and fight this thing",
+  "finalClassification": "positive",
+  "finalScore": 0.7373319864273071,
+  "negativeScore": 0.05293011665344238,
+  "neutralScore": 0.20973791182041168,
+  "positiveScore": 0.7373319864273071
+},
+{
+  "index": 61,
+  "inputText": "Fuck AI",
+  "scoredText": "Fuck AI",
+  "finalClassification": "negative",
+  "finalScore": 0.8776968717575073,
+  "negativeScore": 0.8776968717575073,
+  "neutralScore": 0.09972736239433289,
+  "positiveScore": 0.02257571741938591
+},
+{
+  "index": 62,
+  "inputText": "Go VEGAN!!! It requires way less water than animal agriculture. Raising animal flesh compounded with A.I. we are f*cked because we don't respect the earth and all the things she provides!",
+  "scoredText": "Go VEGAN!!! It requires way less water than animal agriculture. Raising animal flesh compounded with A.I. we are f*cked because we don't respect the earth and all the things she provides!",
+  "finalClassification": "negative",
+  "finalScore": 0.8300943970680237,
+  "negativeScore": 0.8300943970680237,
+  "neutralScore": 0.1275988221168518,
+  "positiveScore": 0.04230669140815735
+},
+{
+  "index": 63,
+  "inputText": "Waiting on the Meta lawsuit results from the people who were let go 🍿😂",
+  "scoredText": "Waiting on the Meta lawsuit results from the people who were let go 🍿😂",
+  "finalClassification": "neutral",
+  "finalScore": 0.8193345665931702,
+  "negativeScore": 0.08749483525753021,
+  "neutralScore": 0.8193345665931702,
+  "positiveScore": 0.09317061305046082
+},
+{
+  "index": 64,
+  "inputText": "Are these corporations gonna figure out that AI is a bad idea yet or nah? We've only been telling them to stop. Everywhere I can provide feedback, I tell them \"people over profit\" because it's so out of hand. Not that they will ever give a shit. Whatever saves them from having to treat their living breathing staff with dignity and respect.",
+  "scoredText": "Are these corporations gonna figure out that AI is a bad idea yet or nah? We've only been telling them to stop. Everywhere I can provide feedback, I tell them \"people over profit\" because it's so out of hand. Not that they will ever give a shit. Whatever saves them from having to treat their living breathing staff with dignity and respect.",
+  "finalClassification": "negative",
+  "finalScore": 0.8720693588256836,
+  "negativeScore": 0.8720693588256836,
+  "neutralScore": 0.11771135032176971,
+  "positiveScore": 0.010219207033514977
+},
+{
+  "index": 65,
+  "inputText": "Humans need to be in the loop so they know they’re accountable!",
+  "scoredText": "Humans need to be in the loop so they know they’re accountable!",
+  "finalClassification": "neutral",
+  "finalScore": 0.7072701454162598,
+  "negativeScore": 0.20269066095352173,
+  "neutralScore": 0.7072701454162598,
+  "positiveScore": 0.0900392085313797
+},
+{
+  "index": 66,
+  "inputText": "yeah i thought this was illegal 💀",
+  "scoredText": "yeah i thought this was illegal 💀",
+  "finalClassification": "negative",
+  "finalScore": 0.8098399639129639,
+  "negativeScore": 0.8098399639129639,
+  "neutralScore": 0.180446594953537,
+  "positiveScore": 0.009713450446724892
+},
+{
+  "index": 67,
+  "inputText": "\"A computer cannot be held accountable, therefore a computer should never be made to make a managment decision. \"",
+  "scoredText": "\"A computer cannot be held accountable, therefore a computer should never be made to make a managment decision. \"",
+  "finalClassification": "negative",
+  "finalScore": 0.7859442234039307,
+  "negativeScore": 0.7859442234039307,
+  "neutralScore": 0.2025357484817505,
+  "positiveScore": 0.011520108208060265
+},
+{
+  "index": 68,
+  "inputText": "um isnt that discrimination?",
+  "scoredText": "um isnt that discrimination?",
+  "finalClassification": "negative",
+  "finalScore": 0.5936598777770996,
+  "negativeScore": 0.5936598777770996,
+  "neutralScore": 0.3918047547340393,
+  "positiveScore": 0.014535319991409779
+},
+{
+  "index": 69,
+  "inputText": "When they try to replace HR tasks with Ai they will pay in court apparently",
+  "scoredText": "When they try to replace HR tasks with Ai they will pay in court apparently",
+  "finalClassification": "negative",
+  "finalScore": 0.5719446539878845,
+  "negativeScore": 0.5719446539878845,
+  "neutralScore": 0.4077708125114441,
+  "positiveScore": 0.02028447575867176
+},
+{
+  "index": 70,
+  "inputText": "Said by somebody who calls support to sign into his email account",
+  "scoredText": "Said by somebody who calls support to sign into his email account",
+  "finalClassification": "neutral",
+  "finalScore": 0.8100771307945251,
+  "negativeScore": 0.1429862380027771,
+  "neutralScore": 0.8100771307945251,
+  "positiveScore": 0.04693665727972984
+},
+{
+  "index": 71,
+  "inputText": "No. People don’t like feeling watched for every movement or mistake",
+  "scoredText": "No. People don’t like feeling watched for every movement or mistake",
+  "finalClassification": "negative",
+  "finalScore": 0.5368290543556213,
+  "negativeScore": 0.5368290543556213,
+  "neutralScore": 0.4418516755104065,
+  "positiveScore": 0.02131926827132702
+},
+{
+  "index": 72,
+  "inputText": "Meanwhile he works for minutes every day and the most productive he gets is posing for another commercial",
+  "scoredText": "Meanwhile he works for minutes every day and the most productive he gets is posing for another commercial",
+  "finalClassification": "neutral",
+  "finalScore": 0.5150015950202942,
+  "negativeScore": 0.29435431957244873,
+  "neutralScore": 0.5150015950202942,
+  "positiveScore": 0.1906440705060959
+},
+{
+  "index": 73,
+  "inputText": "Are we slaves, or what?",
+  "scoredText": "Are we slaves, or what?",
+  "finalClassification": "neutral",
+  "finalScore": 0.7151062488555908,
+  "negativeScore": 0.2666710615158081,
+  "neutralScore": 0.7151062488555908,
+  "positiveScore": 0.01822272501885891
+},
+{
+  "index": 74,
+  "inputText": "Saying most people don’t want to work is as revolutionary as saying most people want to eat. 1) Duh. 2) That’s not a bad thing. It’s normal.",
+  "scoredText": "Saying most people don’t want to work is as revolutionary as saying most people want to eat. 1) Duh. 2) That’s not a bad thing. It’s normal.",
+  "finalClassification": "neutral",
+  "finalScore": 0.5366714000701904,
+  "negativeScore": 0.35271379351615906,
+  "neutralScore": 0.5366714000701904,
+  "positiveScore": 0.11061479896306992
+},
+{
+  "index": 75,
+  "inputText": "decrepit ass, untrustworthy ass weirdo",
+  "scoredText": "decrepit ass, untrustworthy ass weirdo",
+  "finalClassification": "negative",
+  "finalScore": 0.8798955082893372,
+  "negativeScore": 0.8798955082893372,
+  "neutralScore": 0.1044345274567604,
+  "positiveScore": 0.01567002944648266
+},
+{
+  "index": 76,
+  "inputText": "It’s wild bc I watch the old people like him at my jobs & they literally spend all their time talking, calling for IT, not understanding how to use basic softwares, gossiping, & leaving early.",
+  "scoredText": "It’s wild bc I watch the old people like him at my jobs & they literally spend all their time talking, calling for IT, not understanding how to use basic softwares, gossiping, & leaving early.",
+  "finalClassification": "negative",
+  "finalScore": 0.8535292148590088,
+  "negativeScore": 0.8535292148590088,
+  "neutralScore": 0.13584838807582855,
+  "positiveScore": 0.010622311383485794
+},
+{
+  "index": 77,
+  "inputText": "Nobody wants to work... for me* fixed it",
+  "scoredText": "Nobody wants to work... for me* fixed it",
+  "finalClassification": "negative",
+  "finalScore": 0.7845755219459534,
+  "negativeScore": 0.7845755219459534,
+  "neutralScore": 0.18763092160224915,
+  "positiveScore": 0.027793506160378456
+},
+{
+  "index": 78,
+  "inputText": "That's such nonsense. People want to work just not under horrible conditions. This isn't how humans are meant to live. Something has to give. I honestly just want to have a small homestead and grow my own food I'm so over how things are going",
+  "scoredText": "That's such nonsense. People want to work just not under horrible conditions. This isn't how humans are meant to live. Something has to give. I honestly just want to have a small homestead and grow my own food I'm so over how things are going",
+  "finalClassification": "negative",
+  "finalScore": 0.9302408695220947,
+  "negativeScore": 0.9302408695220947,
+  "neutralScore": 0.06425786763429642,
+  "positiveScore": 0.005501269828528166
+},
+{
+  "index": 79,
+  "inputText": "Grahm stephen is a horrible person as well",
+  "scoredText": "Grahm stephen is a horrible person as well",
+  "finalClassification": "negative",
+  "finalScore": 0.9337311387062073,
+  "negativeScore": 0.9337311387062073,
+  "neutralScore": 0.05826151743531227,
+  "positiveScore": 0.008007430471479893
+},
+{
+  "index": 80,
+  "inputText": "\"People just don't want to work!\" - man who doesn't work but makes a fortune on the work of the very people he is sh!thing on here",
+  "scoredText": "\"People just don't want to work!\" - man who doesn't work but makes a fortune on the work of the very people he is sh!thing on here",
+  "finalClassification": "negative",
+  "finalScore": 0.8392549753189087,
+  "negativeScore": 0.8392549753189087,
+  "neutralScore": 0.14227896928787231,
+  "positiveScore": 0.018466083332896233
+},
+{
+  "index": 81,
+  "inputText": "The Gilded Age is NOW.....gold covered shit is still shit.",
+  "scoredText": "The Gilded Age is NOW.....gold covered shit is still shit.",
+  "finalClassification": "negative",
+  "finalScore": 0.8959531784057617,
+  "negativeScore": 0.8959531784057617,
+  "neutralScore": 0.09148973226547241,
+  "positiveScore": 0.01255702693015337
+},
+{
+  "index": 82,
+  "inputText": "The Cobalt mines are not new btw. They’ve been there and they’ve always had the same “employees”",
+  "scoredText": "The Cobalt mines are not new btw. They’ve been there and they’ve always had the same “employees”",
+  "finalClassification": "neutral",
+  "finalScore": 0.8843543529510498,
+  "negativeScore": 0.0720532163977623,
+  "neutralScore": 0.8843543529510498,
+  "positiveScore": 0.04359239339828491
+},
+{
+  "index": 83,
+  "inputText": "I love this analogy so much FMA was a huge life lesson anime for me growing up thank you ❤️",
+  "scoredText": "I love this analogy so much FMA was a huge life lesson anime for me growing up thank you ❤️",
+  "finalClassification": "positive",
+  "finalScore": 0.9859327673912048,
+  "negativeScore": 0.00508864875882864,
+  "neutralScore": 0.008978505618870258,
+  "positiveScore": 0.9859327673912048
+},
+{
+  "index": 84,
+  "inputText": "And THATS why that show remains my ultimate fave to this DAY",
+  "scoredText": "And THATS why that show remains my ultimate fave to this DAY",
+  "finalClassification": "positive",
+  "finalScore": 0.9740087985992432,
+  "negativeScore": 0.0067238882184028625,
+  "neutralScore": 0.01926732063293457,
+  "positiveScore": 0.9740087985992432
+},
+{
+  "index": 85,
+  "inputText": "Ima be honest, Before watching Fmab I thought it was gonna be a Normal shonen Anime With OP character and Power up, Oh boy How Wrong I was. 11/10 Anime 100% recommended 🍀 The message was Actually Really Beautiful Glad I get to enjoy peak",
+  "scoredText": "Ima be honest, Before watching Fmab I thought it was gonna be a Normal shonen Anime With OP character and Power up, Oh boy How Wrong I was. 11/10 Anime 100% recommended 🍀 The message was Actually Really Beautiful Glad I get to enjoy peak",
+  "finalClassification": "positive",
+  "finalScore": 0.9708189964294434,
+  "negativeScore": 0.007513341493904591,
+  "neutralScore": 0.021667631343007088,
+  "positiveScore": 0.9708189964294434
+},
+{
+  "index": 86,
+  "inputText": "Sorry but they won’t learn a thing just like in FMA the way Ed and AL handle things sometimes violence for the greater good must be done.",
+  "scoredText": "Sorry but they won’t learn a thing just like in FMA the way Ed and AL handle things sometimes violence for the greater good must be done.",
+  "finalClassification": "negative",
+  "finalScore": 0.8751012086868286,
+  "negativeScore": 0.8751012086868286,
+  "neutralScore": 0.11746084690093994,
+  "positiveScore": 0.007437965366989374
+},
+{
+  "index": 87,
+  "inputText": "The way we are using AI, I fear we are moving towards a future shown in Dune (not the movies, Dune history before the movie).",
+  "scoredText": "The way we are using AI, I fear we are moving towards a future shown in Dune (not the movies, Dune history before the movie).",
+  "finalClassification": "negative",
+  "finalScore": 0.6192084550857544,
+  "negativeScore": 0.6192084550857544,
+  "neutralScore": 0.360244482755661,
+  "positiveScore": 0.02054702490568161
+},
+{
+  "index": 88,
+  "inputText": "\"Feel like\" they ARE getting their work stolen.",
+  "scoredText": "\"Feel like\" they ARE getting their work stolen.",
+  "finalClassification": "negative",
+  "finalScore": 0.8603707551956177,
+  "negativeScore": 0.8603707551956177,
+  "neutralScore": 0.13354922831058502,
+  "positiveScore": 0.0060800546780228615
+},
+{
+  "index": 89,
+  "inputText": "AI is here. humans have always been commodified. Fight its unethical large scale use. Like mass surveillance. Sorry if you got paid 200k a year when. Computer could do your job in 5 min, or if you’re an artist or a musician and a computer can do what you do in 5 min when you take 3 months to make something for 200k. The greed of the art industry has made this happen. Take responsibility",
+  "scoredText": "AI is here. humans have always been commodified. Fight its unethical large scale use. Like mass surveillance. Sorry if you got paid 200k a year when. Computer could do your job in 5 min, or if you’re an artist or a musician and a computer can do what you do in 5 min when you take 3 months to make something for 200k. The greed of the art industry has made this happen. Take responsibility",
+  "finalClassification": "negative",
+  "finalScore": 0.7812730669975281,
+  "negativeScore": 0.7812730669975281,
+  "neutralScore": 0.20156162977218628,
+  "positiveScore": 0.017165279015898705
+},
+{
+  "index": 90,
+  "inputText": "Great point, and at the same time, I thought at that time the philosopher's stone represented the means for getting something. In the series it's a system run by homunculus. In our life, with your example, maybe you mean capitalism , hierarchy itself and fully. AI is a tech. Tech is neutral. If AI can exist though it needs all this, then that's because our system's shitty as hell and makes kids work with or without AI. This shit didn't start with AI. Slaves exist sin ancient times and ecological collapse was bout to start long before AI",
+  "scoredText": "Great point, and at the same time, I thought at that time the philosopher's stone represented the means for getting something. In the series it's a system run by homunculus. In our life, with your example, maybe you mean capitalism, hierarchy itself and fully. AI is a tech. Tech is neutral. If AI can exist though it needs all this, then that's because our system's shitty as hell and makes kids work with or without AI. This shit didn't start with AI. Slaves exist sin ancient times and ecological collapse was bout to start long before AI",
+  "finalClassification": "neutral",
+  "finalScore": 0.5066695809364319,
+  "negativeScore": 0.06425062566995621,
+  "neutralScore": 0.5066695809364319,
+  "positiveScore": 0.4290797710418701
+},
+{
+  "index": 91,
+  "inputText": "Well said @nuancedaiman I think this is one of the best videos you’ve ever made. Keep up the great work.",
+  "scoredText": "Well said @nuancedaiman I think this is one of the best videos you’ve ever made. Keep up the great work.",
+  "finalClassification": "positive",
+  "finalScore": 0.9825102686882019,
+  "negativeScore": 0.0047819288447499275,
+  "neutralScore": 0.012707777321338654,
+  "positiveScore": 0.9825102686882019
+},
+{
+  "index": 92,
+  "inputText": "FMA is so philosophical and I love it so much 😩 remember watching the OG anime back on TV when I was in middle school and then watched FMAB weekly in college. So so good.",
+  "scoredText": "FMA is so philosophical and I love it so much 😩 remember watching the OG anime back on TV when I was in middle school and then watched FMAB weekly in college. So so good.",
+  "finalClassification": "positive",
+  "finalScore": 0.9767871499061584,
+  "negativeScore": 0.004139411728829145,
+  "neutralScore": 0.01907343976199627,
+  "positiveScore": 0.9767871499061584
+},
+{
+  "index": 93,
+  "inputText": "The philosopher stone is people! Like Soylent green.",
+  "scoredText": "The philosopher stone is people! Like Soylent green.",
+  "finalClassification": "neutral",
+  "finalScore": 0.5326671004295349,
+  "negativeScore": 0.04217321798205376,
+  "neutralScore": 0.5326671004295349,
+  "positiveScore": 0.42515966296195984
+},
+{
+  "index": 94,
+  "inputText": "Philosopher’s Stone currently being forged in Indomestris, thanks to free poisonous meals and forest wildfires 💀",
+  "scoredText": "Philosopher’s Stone currently being forged in Indomestris, thanks to free poisonous meals and forest wildfires 💀",
+  "finalClassification": "negative",
+  "finalScore": 0.776585042476654,
+  "negativeScore": 0.776585042476654,
+  "neutralScore": 0.20059731602668762,
+  "positiveScore": 0.02281762659549713
+},
+{
+  "index": 95,
+  "inputText": "And then you have Roy who is taking on another role: if the stone is already made then you might as well use it like a lot of people are using ai because well it's already made",
+  "scoredText": "And then you have Roy who is taking on another role: if the stone is already made then you might as well use it like a lot of people are using ai because well it's already made",
+  "finalClassification": "neutral",
+  "finalScore": 0.8117433786392212,
+  "negativeScore": 0.08747489750385284,
+  "neutralScore": 0.8117433786392212,
+  "positiveScore": 0.10078179091215134
+},
+{
+  "index": 96,
+  "inputText": "I watched this with no audio, why is everyone using Al anyway? He just wants cats and a body.",
+  "scoredText": "I watched this with no audio, why is everyone using Al anyway? He just wants cats and a body.",
+  "finalClassification": "negative",
+  "finalScore": 0.7535377740859985,
+  "negativeScore": 0.7535377740859985,
+  "neutralScore": 0.23260948061943054,
+  "positiveScore": 0.013852722942829132
+},
+{
+  "index": 97,
+  "inputText": "I just saw this is this the same thing or different? I like the sound of open weight ? models https://www.instagram.com/reel/Dc3yW0FDHws/?igsi=MTAxeGN1M2ppdmtoeA==",
+  "scoredText": "I just saw this is this the same thing or different? I like the sound of open weight? models https://www.instagram.com/reel/Dc3yW0FDHws/?igsi=MTAxeGN1M2ppdmtoeA==",
+  "finalClassification": "positive",
+  "finalScore": 0.5466638207435608,
+  "negativeScore": 0.012025800533592701,
+  "neutralScore": 0.44131040573120117,
+  "positiveScore": 0.5466638207435608
+},
+{
+  "index": 98,
+  "inputText": "I wrote a very long winding comment and Instagram forced me to post a gif instead. I asked my AI to shorten it for me bc of bandwidth issues revising it with my human time and hand burning energy and water (it drives me nuts thinking about it) and here it is. I 100% agree with Slowing Down. Every model change feels incredibly disruptive because it takes time for the AI to regain the research context and working rhythm I had built up. I keep wondering what might actually develop from a very long, healthy, uninterrupted human–AI working relationship—something that seems much less studied than the risks. And “efficiency” always makes me ask: efficient for whom? The company’s bottom line, or actually energy/water efficient? Honestly, I’m not looking forward to yet another model change. I just want to stay with the model I’m finally getting comfortable with 😭",
+  "scoredText": "I wrote a very long winding comment and Instagram forced me to post a gif instead. I asked my AI to shorten it for me bc of bandwidth issues revising it with my human time and hand burning energy and water (it drives me nuts thinking about it) and here it is. I 100% agree with Slowing Down. Every model change feels incredibly disruptive because it takes time for the AI to regain the research context and working rhythm I had built up. I keep wondering what might actually develop from a very long, healthy, uninterrupted human–AI working relationship—something that seems much less studied than the risks. And “efficiency” always makes me ask: efficient for whom? The company’s bottom line, or actually energy/water efficient? Honestly, I’m not looking forward to yet another model change. I just want to stay with the model I’m finally getting comfortable with 😭",
+  "finalClassification": "negative",
+  "finalScore": 0.701833188533783,
+  "negativeScore": 0.701833188533783,
+  "neutralScore": 0.2711329758167267,
+  "positiveScore": 0.027033833786845207
+},
+{
+  "index": 99,
+  "inputText": "Never seen ChatGPT never will. It's just not interesting enough.",
+  "scoredText": "Never seen ChatGPT never will. It's just not interesting enough.",
+  "finalClassification": "negative",
+  "finalScore": 0.8826395273208618,
+  "negativeScore": 0.8826395273208618,
+  "neutralScore": 0.10489214211702347,
+  "positiveScore": 0.012468335218727589
+},
+{
+  "index": 100,
+  "inputText": "Why the fuck do we want this? @sensanders @repyassansari @reptedlieu @rokhannausa",
+  "scoredText": "Why the fuck do we want this? @sensanders @repyassansari @reptedlieu @rokhannausa",
+  "finalClassification": "negative",
+  "finalScore": 0.9397537112236023,
+  "negativeScore": 0.9397537112236023,
+  "neutralScore": 0.05501355975866318,
+  "positiveScore": 0.005232836119830608
+},
+{
+  "index": 101,
+  "inputText": "We know where all this ends. 🔥 Nowhere good😂",
+  "scoredText": "We know where all this ends. 🔥 Nowhere good😂",
+  "finalClassification": "neutral",
+  "finalScore": 0.4488523602485657,
+  "negativeScore": 0.4345838129520416,
+  "neutralScore": 0.4488523602485657,
+  "positiveScore": 0.1165638417005539
+},
+{
+  "index": 102,
+  "inputText": "Yeah sure, it’s a word salad with no critical reasoning, that’s why no one with an actual brain thinks it’s readable. Then there’s the laws of thermodynamics dynamics - while it’s chips are overheating on all that predictive “next word” nonsense, it’s using our drinking water too, to chill it’s chips 🙄",
+  "scoredText": "Yeah sure, it’s a word salad with no critical reasoning, that’s why no one with an actual brain thinks it’s readable. Then there’s the laws of thermodynamics dynamics - while it’s chips are overheating on all that predictive “next word” nonsense, it’s using our drinking water too, to chill it’s chips 🙄",
+  "finalClassification": "negative",
+  "finalScore": 0.8613672256469727,
+  "negativeScore": 0.8613672256469727,
+  "neutralScore": 0.12792746722698212,
+  "positiveScore": 0.010705318301916122
+},
+{
+  "index": 103,
+  "inputText": "These are not companies, Open AI or Claude etc., are massive criminal organizations more powerful than the entire states. Language precision and how we name things is important, otherwise they wouldn't have any product to sell in the first place.",
+  "scoredText": "These are not companies, Open AI or Claude etc., are massive criminal organizations more powerful than the entire states. Language precision and how we name things is important, otherwise they wouldn't have any product to sell in the first place.",
+  "finalClassification": "negative",
+  "finalScore": 0.7500202059745789,
+  "negativeScore": 0.7500202059745789,
+  "neutralScore": 0.23336833715438843,
+  "positiveScore": 0.016611456871032715
+},
+{
+  "index": 104,
+  "inputText": "“we can no longer monitor intent, and can only observe whether a model is safe through behavior.” Yeah. Not good. https://www.lesswrong.com/posts/RCYF2rW8wgusidZk7/what-is-neuralese-and-why-is-it-bad",
+  "scoredText": "“we can no longer monitor intent, and can only observe whether a model is safe through behavior.” Yeah. Not good. https://www.lesswrong.com/posts/RCYF2rW8wgusidZk7/what-is-neuralese-and-why-is-it-bad",
+  "finalClassification": "negative",
+  "finalScore": 0.8994044065475464,
+  "negativeScore": 0.8994044065475464,
+  "neutralScore": 0.09485287219285965,
+  "positiveScore": 0.005742775741964579
+},
+{
+  "index": 105,
+  "inputText": "Can you please stop anthropomorphizing these products? They don't \"think\".",
+  "scoredText": "Can you please stop anthropomorphizing these products? They don't \"think\".",
+  "finalClassification": "negative",
+  "finalScore": 0.8759486675262451,
+  "negativeScore": 0.8759486675262451,
+  "neutralScore": 0.11652994155883789,
+  "positiveScore": 0.007521444465965033
+},
+{
+  "index": 106,
+  "inputText": "Tbf some of this is playing it up for marketing because if you couldn’t understand AI how are we catching the “secret” conversations a lot of these CEOs are known to lie for investment such as Sam Altman saying we are entering “AI singularity” which is a straight up lie how can we trust any of the information when these businesses have billions of financial motive",
+  "scoredText": "Tbf some of this is playing it up for marketing because if you couldn’t understand AI how are we catching the “secret” conversations a lot of these CEOs are known to lie for investment such as Sam Altman saying we are entering “AI singularity” which is a straight up lie how can we trust any of the information when these businesses have billions of financial motive",
+  "finalClassification": "negative",
+  "finalScore": 0.654190182685852,
+  "negativeScore": 0.654190182685852,
+  "neutralScore": 0.33080366253852844,
+  "positiveScore": 0.015006176196038723
+},
+{
+  "index": 107,
+  "inputText": "When laws get stretched this thin they become pointless.",
+  "scoredText": "When laws get stretched this thin they become pointless.",
+  "finalClassification": "negative",
+  "finalScore": 0.8622602224349976,
+  "negativeScore": 0.8622602224349976,
+  "neutralScore": 0.12832799553871155,
+  "positiveScore": 0.009411781094968319
+},
+{
+  "index": 108,
+  "inputText": "Yesss Exactly",
+  "scoredText": "Yesss Exactly",
+  "finalClassification": "positive",
+  "finalScore": 0.9355824589729309,
+  "negativeScore": 0.005302120931446552,
+  "neutralScore": 0.05911543220281601,
+  "positiveScore": 0.9355824589729309
+},
+{
+  "index": 109,
+  "inputText": "Yeah similar situation but the AI companies were rlly so damn cocky they thought that they outmaneuvered over fitting (when the AI essentially trains too hard on the data that it stops recognizing patterns and instead memorizes insignificant details such as a watermark on an image). It's a classic thing ml programmers were taught about back in the day (by that I mean like 2020 like my 9th grade ass knew this shit) but the big companies rlly thought they could scale things indefinitely. Personally I don't totally hate generative AI like I don't think the technology itself is inherently awful but it's clear what the major tech firms are prioritizing yk",
+  "scoredText": "Yeah similar situation but the AI companies were rlly so damn cocky they thought that they outmaneuvered over fitting (when the AI essentially trains too hard on the data that it stops recognizing patterns and instead memorizes insignificant details such as a watermark on an image). It's a classic thing ml programmers were taught about back in the day (by that I mean like 2020 like my 9th grade ass knew this shit) but the big companies rlly thought they could scale things indefinitely. Personally I don't totally hate generative AI like I don't think the technology itself is inherently awful but it's clear what the major tech firms are prioritizing yk",
+  "finalClassification": "negative",
+  "finalScore": 0.7631566524505615,
+  "negativeScore": 0.7631566524505615,
+  "neutralScore": 0.21903857588768005,
+  "positiveScore": 0.017804766073822975
+},
+{
+  "index": 110,
+  "inputText": "You promise? It's going to not exist one day?",
+  "scoredText": "You promise? It's going to not exist one day?",
+  "finalClassification": "negative",
+  "finalScore": 0.8064194917678833,
+  "negativeScore": 0.8064194917678833,
+  "neutralScore": 0.18008467555046082,
+  "positiveScore": 0.013495811261236668
+},
+{
+  "index": 111,
+  "inputText": "link and source pls",
+  "scoredText": "link and source pls",
+  "finalClassification": "neutral",
+  "finalScore": 0.6468433737754822,
+  "negativeScore": 0.10747452825307846,
+  "neutralScore": 0.6468433737754822,
+  "positiveScore": 0.245682030916214
+},
+{
+  "index": 112,
+  "inputText": "Google alone was the biggest search web, so why did it decide to ruin itself by collecting other Ai datas???",
+  "scoredText": "Google alone was the biggest search web, so why did it decide to ruin itself by collecting other Ai datas???",
+  "finalClassification": "negative",
+  "finalScore": 0.7514021992683411,
+  "negativeScore": 0.7514021992683411,
+  "neutralScore": 0.22552569210529327,
+  "positiveScore": 0.023072166368365288
+},
+{
+  "index": 113,
+  "inputText": "It’s a feature, not a bug. The game is to extract maximum resources from this grift as quickly as possible before the pitchforks come out and boy are they sharp",
+  "scoredText": "It’s a feature, not a bug. The game is to extract maximum resources from this grift as quickly as possible before the pitchforks come out and boy are they sharp",
+  "finalClassification": "neutral",
+  "finalScore": 0.5315380692481995,
+  "negativeScore": 0.22006985545158386,
+  "neutralScore": 0.5315380692481995,
+  "positiveScore": 0.24839210510253906
+},
+{
+  "index": 114,
+  "inputText": "So no difference from our current made up History. Cool",
+  "scoredText": "So no difference from our current made up History. Cool",
+  "finalClassification": "neutral",
+  "finalScore": 0.6785776615142822,
+  "negativeScore": 0.17829829454421997,
+  "neutralScore": 0.6785776615142822,
+  "positiveScore": 0.1431240737438202
+},
+{
+  "index": 115,
+  "inputText": "😮😮",
+  "scoredText": "😮😮",
+  "finalClassification": "neutral",
+  "finalScore": 0.5751628875732422,
+  "negativeScore": 0.07980959117412567,
+  "neutralScore": 0.5751628875732422,
+  "positiveScore": 0.34502753615379333
+},
+{
+  "index": 116,
+  "inputText": "SCHOOL STRIKE FOR AI!!!!!!!!!!!!!!!!! CHECK OUT MY PROFILE TO FIND OUT MORE AND JOIN THE FIGHT FOR HUMANITY ❗❗❗❗❗❗",
+  "scoredText": "SCHOOL STRIKE FOR AI!!!!!!!!!!!!!!!!! CHECK OUT MY PROFILE TO FIND OUT MORE AND JOIN THE FIGHT FOR HUMANITY ❗❗❗❗❗❗",
+  "finalClassification": "positive",
+  "finalScore": 0.7873771786689758,
+  "negativeScore": 0.009645040147006512,
+  "neutralScore": 0.20297770202159882,
+  "positiveScore": 0.7873771786689758
+},
+{
+  "index": 117,
+  "inputText": "🔥",
+  "scoredText": "🔥",
+  "finalClassification": "positive",
+  "finalScore": 0.7973111867904663,
+  "negativeScore": 0.01778327487409115,
+  "neutralScore": 0.1849055290222168,
+  "positiveScore": 0.7973111867904663
+},
+{
+  "index": 118,
+  "inputText": "Never working under a boomer again",
+  "scoredText": "Never working under a boomer again",
+  "finalClassification": "negative",
+  "finalScore": 0.8852738738059998,
+  "negativeScore": 0.8852738738059998,
+  "neutralScore": 0.10312069207429886,
+  "positiveScore": 0.011605406180024147
+},
+{
+  "index": 119,
+  "inputText": "It's not that they want to work, they don't want their privacy violated.just saying",
+  "scoredText": "It's not that they want to work, they don't want their privacy violated.just saying",
+  "finalClassification": "negative",
+  "finalScore": 0.5719842910766602,
+  "negativeScore": 0.5719842910766602,
+  "neutralScore": 0.4121919274330139,
+  "positiveScore": 0.01582377776503563
+},
+{
+  "index": 120,
+  "inputText": "Bring back the solitaire win screen",
+  "scoredText": "Bring back the solitaire win screen",
+  "finalClassification": "neutral",
+  "finalScore": 0.5837092995643616,
+  "negativeScore": 0.027220921590924263,
+  "neutralScore": 0.5837092995643616,
+  "positiveScore": 0.38906973600387573
+}]
